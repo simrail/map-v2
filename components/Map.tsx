@@ -11,7 +11,7 @@ import { Station } from '../types/Station';
 import stationsJson from '../components/stations.json'
 
 type MapProps = {
-    serverId: string
+    serverId: string | string[]
 }
 
 const Map = (props: MapProps) => {
