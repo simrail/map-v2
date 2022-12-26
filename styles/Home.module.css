@@ -1,15 +1,9 @@
 .main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   padding: 1rem;
   text-align: center;
   min-height: 100vh;
   color: white;
   font-family: var(--font-mono);
-  background: url('/background-server-winter.jpg') no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
 
 }
 

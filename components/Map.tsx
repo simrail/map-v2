@@ -9,6 +9,7 @@ import { StationMarker } from "./StationMarker";
 import { Train } from "../types/Train";
 import { Station } from '../types/Station';
 import stationsJson from '../components/stations.json'
+import styles from '../styles/Home.module.css'
 
 type MapProps = {
     serverId: string | string[]
@@ -70,8 +71,13 @@ const Map = (props: MapProps) => {
     }, [])
 
 
-    if (!trains) return <p>Loading trains...</p>
-    if (!stations) return <p>Loading stations...</p>
+
+    if (!trains || !stations) return <main className={styles.main}>
+        <h1>Loading</h1>
+        {!trains && <span>Loading trains...</span>}
+        <br />        <br />
+        {!stations && <span>Loading stations...</span >}
+    </main >
 
 
     return (<MapContainer

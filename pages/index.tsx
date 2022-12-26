@@ -52,8 +52,6 @@ export default function Home() {
     }, [])
 
 
-    if (!servers) return <p>Loading...</p>
-
     const getStatusIndicatorStyle = (server: Server) => {
         if (server.IsActive) return styles.online;
         else return styles.offline;
@@ -68,9 +66,11 @@ export default function Home() {
         </Head>
         <main className={styles.main}>
             <h1>Select your server</h1>
+            {!servers && 'Loading servers...'}
             <div className={styles.serverList}>
 
-                {servers.map((server: Server) => <>
+                {/* {servers ? 'a' : 'b'} */}
+                {servers && servers.map((server: Server) => <>
                     <Link
                         id={server.ServerCode}
                         className={styles.server}
