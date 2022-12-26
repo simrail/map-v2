@@ -10,8 +10,14 @@ import { Train } from "../types/Train";
 import { Station } from '../types/Station';
 import stationsJson from '../components/stations.json'
 
-const Map = ({ serverId }) => {
+type MapProps = {
+    serverId: string
+}
 
+const Map = (props: MapProps) => {
+
+
+    let { serverId } = props
 
     const [trains, setTrains] = useState<Train[] | null>(null)
     const [stations, setStations] = useState(null)
