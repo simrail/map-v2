@@ -39,7 +39,7 @@ const Map = (props: MapProps) => {
                 let stationsData: Station[] = stations.data
 
 
-
+                // @ts-ignore
                 setStations(stationsData.concat(stationsJson))
             })
     }
