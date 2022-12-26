@@ -5,9 +5,12 @@ import styles from '../styles/Home.module.css'
 import Link from "next/link";
 import { Server } from '../types/Server';
 import { useEffect, useState } from 'react';
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const inter = Inter({ subsets: ['latin'] })
 import bg from '../public/background-server-winter.jpg'
+import FavoriteStar from '../components/FavoriteStar';
+import { ServerSettings } from '../types/ServerSettings';
 
 export default function Home() {
 
@@ -30,6 +33,15 @@ export default function Home() {
                             .filter(e => !e.ServerCode.startsWith('fr'))
                             .sort((a, b) => a.ServerCode.localeCompare(b.ServerCode))
                     );
+
+                serversData = serversData
+                    .sort(function (a, b) {
+                        let serverSettings1 = (JSON.parse(localStorage.getItem('server-' + a.id) ?? '{}') ?? { favorite: false }).favorite;
+                        let serverSettings2 = (JSON.parse(localStorage.getItem('server-' + b.id) ?? '{}') ?? { favorite: false }).favorite;
+
+                        return serverSettings1 - serverSettings2
+                    })
+
                 setServers(serversData)
             })
     }
@@ -47,7 +59,6 @@ export default function Home() {
 
 
         return () => clearInterval(interval)
-
 
     }, [])
 
@@ -76,6 +87,7 @@ export default function Home() {
                         className={styles.server}
                         key={server.id}
                         href={"/server/" + server.ServerCode}>
+                        <FavoriteStar server={server} />
                         <span className={`${styles.statusIndicator} ${getStatusIndicatorStyle(server)}`}></span>
                         <span className={styles.serverName}>{server.ServerName}</span>
                     </Link>
