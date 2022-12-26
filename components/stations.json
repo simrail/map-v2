@@ -1,0 +1,110 @@
+[
+  {
+    "Name": "Katowice",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.257830428514104,
+    "Longitude": 19.017074474342863,
+    "id": ""
+  },
+  {
+    "Name": "Mysłowice",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.23790508562325,
+    "Longitude": 19.141623443140155,
+    "id": ""
+  },
+  {
+    "Name": "Sosnowiec Południowy",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.269550321476046,
+    "Longitude": 19.125598915223183,
+    "id": ""
+  },
+  {
+    "Name": "Dąbrowa Górnicza Ząbkowice",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.367042520527505,
+    "Longitude": 19.264479901339488,
+    "id": ""
+  },
+  {
+    "Name": "Łazy",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.43012201015637,
+    "Longitude": 19.391871759516924,
+    "id": ""
+  },
+  {
+    "Name": "Starzyny",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.71272005979818,
+    "Longitude": 19.8013961821638,
+    "id": ""
+  },
+  {
+    "Name": "Żelisławice",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.80337865175368,
+    "Longitude": 19.858169169133415,
+    "id": ""
+  },
+  {
+    "Name": "Czarnca",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.823959976470775,
+    "Longitude": 19.94521227641923,
+    "id": ""
+  },
+  {
+    "Name": "Opoczno Południe",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 51.35911520671831,
+    "Longitude": 20.231589122331414,
+    "id": ""
+  }
+]
