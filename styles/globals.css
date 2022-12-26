@@ -17,7 +17,7 @@ html, body {
 body {
   color: white;
   background: #2D2F34;
-  background: url('/background-server-winter.jpg') no-repeat;
+  background: url('/background-server-winter.webp') no-repeat;
   background-size: cover;
   background-attachment: fixed;
 

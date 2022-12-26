@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@datadog/browser-rum': ^4.28.1
   '@next/font': 13.1.1
   '@types/leaflet': ^1.9.0
   '@types/node': 18.11.17
@@ -17,6 +18,7 @@ specifiers:
   typescript: 4.9.4
 
 dependencies:
+  '@datadog/browser-rum': 4.28.1
   '@next/font': 13.1.1
   '@types/node': 18.11.17
   '@types/react': 18.0.26
@@ -49,6 +51,28 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
+    dev: false
+
+  /@datadog/browser-core/4.28.1:
+    resolution: {integrity: sha512-BmMJA3SpZtI5VVukuxMKYc7ALBLcydnG+tRh5pXP/Tjjejh9sx611TdspeAd00rfpYQ4c51CcHkhem3oU/WJCQ==}
+    dev: false
+
+  /@datadog/browser-rum-core/4.28.1:
+    resolution: {integrity: sha512-uN9rjaQodDmYBF0LPeOzW5nH2z7Zcsrn/r0+PgEtdKuZKugGBF5vmFx8LthzFTF1F7e7LXsm1MbuDQS7LCYjiQ==}
+    dependencies:
+      '@datadog/browser-core': 4.28.1
+    dev: false
+
+  /@datadog/browser-rum/4.28.1:
+    resolution: {integrity: sha512-pHFgutFeFKDe4akDRhVE28wcqDSzlr2JBEOesSy6eJQOw9W006zUTC4c9zkjSlZpBved8ndj6zjcy9DAuQ7+7g==}
+    peerDependencies:
+      '@datadog/browser-logs': 4.28.1
+    peerDependenciesMeta:
+      '@datadog/browser-logs':
+        optional: true
+    dependencies:
+      '@datadog/browser-core': 4.28.1
+      '@datadog/browser-rum-core': 4.28.1
     dev: false
 
   /@eslint/eslintrc/1.4.0:
