@@ -38,6 +38,6 @@ export default async function handler(
     let username = steamProfileResponse.response.players[0].personaname
 
 
-    res.setHeader('Cache-Control', 's-maxage=86400');
+    res.setHeader('Cache-Control', 'public, s-maxage=86400');
     res.status(200).json({ avatarUrl: avatar, username: username })
 }
