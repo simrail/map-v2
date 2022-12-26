@@ -86,7 +86,7 @@ const Map = (props: MapProps) => {
 
 
         <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
     </MapContainer>)
