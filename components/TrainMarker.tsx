@@ -64,7 +64,7 @@ export const TrainMarker = (props: TrainMarkerProps) => {
         <Popup>
             <div>
                 Train: Nᵒ{train.TrainNoLocal}<br />
-                Speed: {Math.round(train.TrainData.Velocity)}<br />
+                Speed: {Math.round(train.TrainData.Velocity)} km/h<br />
                 Departure: {train.StartStation}<br />
                 Destination: {train.EndStation}<br />
             </div>
