@@ -60,7 +60,7 @@ const Map = (props: MapProps) => {
         }, 10000)
 
 
-        return () => function () {
+        return function () {
             clearInterval(interval1)
             clearInterval(interval2)
 
