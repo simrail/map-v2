@@ -16,10 +16,10 @@ type TrainData = {
     InBorderStationArea: boolean,
     Latititute: number,
     Longitute: number,
-    Velocity: bigint,
+    Velocity: number,
     SignalInFront: string,
     DistanceToSignalInFront: number,
     VDDelayedTimetableIndex: bigint,
 }
 
-export type {Train}
+export type { Train }

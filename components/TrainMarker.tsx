@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { Marker } from "react-leaflet";
+import { Marker, Popup } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { Train } from "../types/Train";
 import { ProfileResponse } from "../pages/api/profile";
@@ -61,10 +61,14 @@ export const TrainMarker = (props: TrainMarkerProps) => {
         title={"Driver - N°" + train.TrainNoLocal + " - " + username}
         position={[train.TrainData.Latititute, train.TrainData.Longitute]}
     >
-        {/*<Popup>*/}
-        {/*    Train: Nᵒ{train.TrainNoLocal}*/}
-        {/*    /!*Driver: {train.}*!/*/}
-        {/*</Popup>*/}
+        <Popup>
+            <div>
+                Train: Nᵒ{train.TrainNoLocal}<br />
+                Speed: {Math.round(train.TrainData.Velocity)}<br />
+                Departure: {train.StartStation}<br />
+                Destination: {train.EndStation}<br />
+            </div>
+        </Popup>
     </Marker>
 
 }
