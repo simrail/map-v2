@@ -60,6 +60,11 @@ export const TrainMarker = (props: TrainMarkerProps) => {
         icon={icon}
         title={"Driver - N°" + train.TrainNoLocal + " - " + username}
         position={[train.TrainData.Latititute, train.TrainData.Longitute]}
+        eventHandlers={{
+            mouseover: (event) => event.target.openPopup(),
+            mouseout: (event) => event.target.closePopup(),
+        }}
+
     >
         <Popup>
             <div>
