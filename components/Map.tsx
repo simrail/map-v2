@@ -20,7 +20,7 @@ const Map = (props: MapProps) => {
     let { serverId } = props
 
     const [trains, setTrains] = useState<Train[] | null>(null)
-    const [stations, setStations] = useState(null)
+    const [stations, setStations] = useState<Station[] | null>(null)
     const [isLoading, setLoading] = useState(false)
 
     function getTrains() {
