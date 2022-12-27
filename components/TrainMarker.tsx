@@ -67,6 +67,7 @@ export const TrainMarker = (props: TrainMarkerProps) => {
             'Elf/EN96-001': '/trains/EN76.png', // DONE
         }
 
+        // @ts-ignore
         return trains[train.Vehicles[0]]
     }
 
