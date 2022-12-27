@@ -23,7 +23,7 @@ const Post = () => {
 
     return <>
         <Head>
-            <title>{id}</title>
+            <title>{id.toString().toUpperCase()} - SimRail Map</title>
         </Head>
         <MapWithNoSSR serverId={id} />
     </>
