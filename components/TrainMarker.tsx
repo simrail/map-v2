@@ -3,6 +3,7 @@ import { Marker, Popup } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { Train } from "../types/Train";
 import { ProfileResponse } from "../pages/api/profile";
+import Image from 'next/image';
 
 type TrainMarkerProps = {
     train: Train
@@ -53,6 +54,22 @@ export const TrainMarker = (props: TrainMarkerProps) => {
     }
 
 
+
+    function getTrainImagePath() {
+        let trains = {
+            'Pendolino/ED250-018 Variant': '/trains/ED250.png', // DONE
+            'Elf/EN76-006': '/trains/EN76.png', // DONE
+            '4E/4E': '/trains/4EC.png', // DONE
+            'Traxx/E186-134': '/trains/E186.png', // DONE
+            'Traxx/Traxx': '/trains/E186.png', // DONE
+            '4E/EP07-135': '/trains/EP07.png', // DONE
+            '4E/EU07-096': '/trains/EP07.png', // DONE
+            'Elf/EN96-001': '/trains/EN76.png', // DONE
+        }
+
+        return trains[train.Vehicles[0]]
+    }
+
     if (!username) return null;
 
     return <Marker
@@ -67,7 +84,10 @@ export const TrainMarker = (props: TrainMarkerProps) => {
 
     >
         <Popup>
+
             <div>
+                <Image src={getTrainImagePath()} width={"64"} height={"64"} alt={train.Vehicles[0]} /><br />
+                Locomotive: {train.Vehicles[0]}<br />
                 Train: Nᵒ{train.TrainNoLocal}<br />
                 User: {username}<br />
                 Speed: {Math.round(train.TrainData.Velocity)} km/h<br />

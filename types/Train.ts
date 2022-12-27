@@ -3,7 +3,7 @@ type Train = {
     TrainName: string,
     StartStation: string,
     EndStation: string,
-    Vehicles: [],
+    Vehicles: string[],
     ServerCode: string,
     TrainData: TrainData,
     id: string,
