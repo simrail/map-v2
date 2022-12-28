@@ -25,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
   datadogRum.startSessionReplayRecording();
   return <>
 
+    <Script async src="https://arc.io/widget.min.js#sjty7yQ4"></script>
     <Script async src="https://www.googletagmanager.com/gtag/js?id=G-XEMEDP2BGJ"></Script>
     <Script id='gtag'>
       {`
