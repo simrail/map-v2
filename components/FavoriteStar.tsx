@@ -43,8 +43,10 @@ export default function FavoriteStar(props: FavoriteStarProps) {
         let serverSettings: ServerSettings = JSON.parse(localStorage.getItem('server-' + server.id) ?? '{}');
 
         if (favorite) {
+            // @ts-ignore
             return <AiFillStar color='gold' className={styles.star} onClick={toggleFavorite} />
         }
+        // @ts-ignore
         return <AiOutlineStar className={styles.star} onClick={toggleFavorite} />
     };
 
