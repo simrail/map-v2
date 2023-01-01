@@ -58,7 +58,7 @@ const Map = (props: MapProps) => {
     useEffect(() => {
 
         if (selectedTrain && map && trains) {
-            setSelectedTrain(trains.find(train => train.id === selectedTrain.id))
+            setSelectedTrain(trains.find(train => train.id === selectedTrain.id) ?? null)
             map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute])
 
         }
