@@ -4,7 +4,6 @@ import Script from 'next/script'
 import { datadogRum } from "@datadog/browser-rum";
 import CookieConsent, { getCookieConsentValue } from "react-cookie-consent";
 import { useRouter } from 'next/router'
-import AppContext from '../contexts/AppContext';
 
 export default function App({ Component, pageProps }: AppProps) {
 

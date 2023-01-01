@@ -8,8 +8,9 @@ export const SelectedTrainContext = React.createContext({
 
 export const useSelectedTrain = () => useContext(SelectedTrainContext)
 
+// @ts-ignore
 export const SelectedTrainProvider = ({ children }) => {
     const [selectedTrain, setSelectedTrain] = useState(null)
-
+    // @ts-ignore
     return <SelectedTrainContext.Provider value={{ selectedTrain, setSelectedTrain }}> {children} </SelectedTrainContext.Provider>
 }
