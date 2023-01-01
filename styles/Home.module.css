@@ -38,34 +38,32 @@
 
 }
 
-.serverName {
-  
-}
+.serverName {}
 
 .server:hover {
   background: #8B8E9F;
 }
 
 .statusIndicator {
-    border-radius: 9999px;
-    height: 12px;
-    min-width: 12px;
-    position: absolute;
-    left: 20px;
-    top: 16px;
+  border-radius: 9999px;
+  height: 12px;
+  min-width: 12px;
+  position: absolute;
+  left: 20px;
+  top: 16px;
 }
 
 .online {
-    background: #5FF347;
+  background: #5FF347;
 }
 
 .offline {
-    background: #F34747;
+  background: #F34747;
 }
 
 .star {
   position: absolute;
   right: 20px;
-  top: 14px;
-  cursor: ^;
+  top: 10px;
+  cursor: pointer;
 }

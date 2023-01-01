@@ -44,10 +44,10 @@ export default function FavoriteStar(props: FavoriteStarProps) {
 
         if (favorite) {
             // @ts-ignore
-            return <AiFillStar color='gold' className={styles.star} onClick={toggleFavorite} />
+            return <AiFillStar size={24} color='gold' className={styles.star} onClick={toggleFavorite} />
         }
         // @ts-ignore
-        return <AiOutlineStar className={styles.star} onClick={toggleFavorite} />
+        return <AiOutlineStar size={24} className={styles.star} onClick={toggleFavorite} />
     };
 
     return getStar()
