@@ -27,19 +27,24 @@ export default function Home() {
                 let serversData: Server[] = stations.data
 
                 serversData = serversData
-                    .filter(e => e.ServerCode.startsWith('fr'))
-                    .concat(
-                        serversData
-                            .filter(e => !e.ServerCode.startsWith('fr'))
-                            .sort((a, b) => a.ServerCode.localeCompare(b.ServerCode))
-                    );
-
-                serversData = serversData
                     .sort(function (a, b) {
-                        let serverSettings1 = (JSON.parse(localStorage.getItem('server-' + a.id) ?? '{}') ?? { favorite: false }).favorite;
-                        let serverSettings2 = (JSON.parse(localStorage.getItem('server-' + b.id) ?? '{}') ?? { favorite: false }).favorite;
+                        let serverSettings1 = (JSON.parse(localStorage.getItem('server-' + a.id) ?? '{"favorite": false}') ?? { favorite: false });
+                        let serverSettings2 = (JSON.parse(localStorage.getItem('server-' + b.id) ?? '{"favorite": false}') ?? { favorite: false });
 
-                        return serverSettings1 - serverSettings2
+                        if (serverSettings1.favorite && !serverSettings2.favorite) {
+                            return -1;
+                        } else if (!serverSettings1.favorite && serverSettings2.favorite) {
+                            return 1;
+                        } else {
+                            if (b.ServerName.startsWith("FR")) {
+                                return 1;
+                            } else if (a.ServerName.startsWith("FR")) {
+                                return -1;
+                            } else {
+                                return a.ServerCode.localeCompare(b.ServerCode);
+                            }
+                        }
+
                     })
 
                 setServers(serversData)
