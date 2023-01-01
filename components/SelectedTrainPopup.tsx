@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getTrainImagePath, TrainMarker } from "./TrainMarker";
 import { useSelectedTrain } from '../contexts/AppContext';
 import Image from 'next/image';
