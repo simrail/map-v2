@@ -2,14 +2,17 @@ import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
-import { useEffect, useState } from "react";
-import { TrainMarker } from "./TrainMarker";
-import L from "leaflet";
+import { useEffect, useRef, useState } from "react";
+import { getTrainImagePath, TrainMarker } from "./TrainMarker";
 import { StationMarker } from "./StationMarker";
 import { Train } from "../types/Train";
 import { Station } from '../types/Station';
 import stationsJson from '../components/stations.json'
 import styles from '../styles/Home.module.css'
+import { Map as LeafletMap } from 'leaflet';
+import { SelectedTrainProvider, useSelectedTrain } from '../contexts/AppContext';
+import Image from 'next/image';
+import SelectedTrainPopup from './SelectedTrainPopup';
 
 type MapProps = {
     serverId: string | string[]
@@ -19,16 +22,22 @@ const Map = (props: MapProps) => {
 
 
     let { serverId } = props
+    const [map, setMap] = useState<LeafletMap | null>(null);
+
 
     const [trains, setTrains] = useState<Train[] | null>(null)
+
+    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
+
+
     const [stations, setStations] = useState<Station[] | null>(null)
     const [isLoading, setLoading] = useState(false)
 
     function getTrains() {
         fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + serverId)
             .then((res) => res.json())
-            .then((trains) => {
-                setTrains(trains.data)
+            .then((fetchedTrains) => {
+                setTrains(fetchedTrains.data)
             })
     }
 
@@ -39,11 +48,25 @@ const Map = (props: MapProps) => {
 
                 let stationsData: Station[] = stations.data
 
-
                 // @ts-ignore
                 setStations(stationsData.concat(stationsJson))
             })
     }
+
+
+
+    useEffect(() => {
+
+        if (selectedTrain && map && trains) {
+            setSelectedTrain(trains.find(train => train.id === selectedTrain.id))
+            map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute])
+
+        }
+
+    }, [trains, selectedTrain])
+
+
+
 
     useEffect(() => {
         setLoading(true)
@@ -80,22 +103,30 @@ const Map = (props: MapProps) => {
     </main >
 
 
-    return (<MapContainer
-        center={[50.270908, 19.039993]}
-        zoom={10}
-        scrollWheelZoom={true}
-        style={{ height: "100vh", width: "100vw" }}
-    >
-        {trains.map(train => (<TrainMarker key={train.TrainNoLocal} train={train} />))}
-
-        {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
 
 
-        <TileLayer
-            attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-    </MapContainer>)
+    return (
+        <>
+            <SelectedTrainPopup />
+            <MapContainer
+                center={[50.270908, 19.039993]}
+                zoom={10}
+                ref={setMap}
+                scrollWheelZoom={true}
+                style={{ height: "100vh", width: "100vw" }}
+            >
+                {trains.map(train => (<TrainMarker key={train.TrainNoLocal} train={train} />))}
+
+                {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
+
+
+                <TileLayer
+                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+            </MapContainer>
+        </>
+    )
 }
 
 export default Map

@@ -20,6 +20,7 @@ body {
   background: url('/background-server-winter.webp') no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  font-family: var(--font-mono);
 
 }
 

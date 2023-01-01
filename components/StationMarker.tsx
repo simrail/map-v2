@@ -38,7 +38,6 @@ export const StationMarker = (props: StationMarkerProps) => {
 
 
     if (station.DispatchedBy[0] && avatar) {
-        // console.log('test')
 
         icon = L.icon({
             iconUrl: avatar,

@@ -1,23 +1,29 @@
 import L from 'leaflet';
-import { Marker, Popup } from "react-leaflet";
+import { Marker, Popup, useMap } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { Train } from "../types/Train";
 import { ProfileResponse } from "../pages/api/profile";
 import Image from 'next/image';
+import { useSelectedTrain } from '../contexts/AppContext';
 
 type TrainMarkerProps = {
-    train: Train
+    train: Train,
 }
 export const TrainMarker = (props: TrainMarkerProps) => {
 
     const { train } = props
 
+    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
+
+
+    const map = useMap();
 
     const [avatar, setAvatar] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
 
     useEffect(() => {
 
+        getData()
 
         async function getData() {
             if (train.TrainData.ControlledBySteamID) {
@@ -30,8 +36,16 @@ export const TrainMarker = (props: TrainMarkerProps) => {
             }
         }
 
-        getData();
+        const interval = setInterval(() => {
+            getData()
+        }, 30000)
+
+        return () => clearInterval(interval)
+
+
     }, [])
+
+
 
 
     let icon;
@@ -54,40 +68,28 @@ export const TrainMarker = (props: TrainMarkerProps) => {
     }
 
 
-
-    function getTrainImagePath() {
-        let trains = {
-            'Pendolino/ED250-018 Variant': '/trains/ED250.png', // DONE
-            'Elf/EN76-006': '/trains/EN76.png', // DONE
-            '4E/4E': '/trains/4EC.png', // DONE
-            'Traxx/E186-134': '/trains/E186.png', // DONE
-            'Traxx/Traxx': '/trains/E186.png', // DONE
-            '4E/EP07-135': '/trains/EP07.png', // DONE
-            '4E/EU07-096': '/trains/EP07.png', // DONE
-            'Elf/EN96-001': '/trains/EN76.png', // DONE
-        }
-
-        // @ts-ignore
-        return trains[train.Vehicles[0]]
-    }
-
     if (!username) return null;
+
+
+    function updateSelectedTrain(train: Train) {
+        setSelectedTrain(train)
+    }
 
     return <Marker
         key={train.TrainNoLocal}
         icon={icon}
-        // title={"Driver - N°" + train.TrainNoLocal + " - " + username}
         position={[train.TrainData.Latititute, train.TrainData.Longitute]}
         eventHandlers={{
             mouseover: (event) => event.target.openPopup(),
             mouseout: (event) => event.target.closePopup(),
+            mouseup: (event) => updateSelectedTrain(train)
         }}
 
     >
         <Popup>
 
             <div>
-                <Image src={getTrainImagePath()} width={"64"} height={"64"} alt={train.Vehicles[0]} /><br />
+                <Image src={getTrainImagePath(train)} width={"64"} height={"64"} alt={train.Vehicles[0]} /><br />
                 Locomotive: {train.Vehicles[0]}<br />
                 Train: Nᵒ{train.TrainNoLocal}<br />
                 User: {username}<br />
@@ -98,4 +100,22 @@ export const TrainMarker = (props: TrainMarkerProps) => {
         </Popup>
     </Marker>
 
+}
+
+
+
+export function getTrainImagePath(train: Train): string {
+    let trains = {
+        'Pendolino/ED250-018 Variant': '/trains/ED250.png', // DONE
+        'Elf/EN76-006': '/trains/EN76.png', // DONE
+        '4E/4E': '/trains/4EC.png', // DONE
+        'Traxx/E186-134': '/trains/E186.png', // DONE
+        'Traxx/Traxx': '/trains/E186.png', // DONE
+        '4E/EP07-135': '/trains/EP07.png', // DONE
+        '4E/EU07-096': '/trains/EP07.png', // DONE
+        'Elf/EN96-001': '/trains/EN76.png', // DONE
+    }
+
+    // @ts-ignore
+    return trains[train.Vehicles[0]]
 }

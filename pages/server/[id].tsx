@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { SelectedTrainProvider } from '../../contexts/AppContext';
 
 
 const Post = () => {
@@ -25,7 +26,9 @@ const Post = () => {
         <Head>
             <title>{id.toString().toUpperCase()} - SimRail Map</title>
         </Head>
-        <MapWithNoSSR serverId={id} />
+        <SelectedTrainProvider>
+            <MapWithNoSSR serverId={id} />
+        </SelectedTrainProvider>
     </>
 }
 
