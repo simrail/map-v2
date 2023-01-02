@@ -9,7 +9,6 @@ const SelectedTrainPopup = () => {
 
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
 
-
     return (
         <>
             {selectedTrain &&

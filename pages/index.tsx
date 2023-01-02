@@ -85,7 +85,6 @@ export default function Home() {
             {!servers && 'Loading servers...'}
             <div className={styles.serverList}>
 
-                {/* {servers ? 'a' : 'b'} */}
                 {servers && servers.map((server: Server) => <>
                     <Link
                         id={server.ServerCode}

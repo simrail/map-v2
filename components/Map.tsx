@@ -1,17 +1,16 @@
-import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet'
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
-import { useEffect, useRef, useState } from "react";
-import { getTrainImagePath, TrainMarker } from "./TrainMarker";
+import { useEffect, useState } from "react";
+import { TrainMarker } from "./TrainMarker";
 import { StationMarker } from "./StationMarker";
 import { Train } from "../types/Train";
 import { Station } from '../types/Station';
 import stationsJson from '../components/stations.json'
 import styles from '../styles/Home.module.css'
 import { Map as LeafletMap } from 'leaflet';
-import { SelectedTrainProvider, useSelectedTrain } from '../contexts/AppContext';
-import Image from 'next/image';
+import { useSelectedTrain } from '../contexts/AppContext';
 import SelectedTrainPopup from './SelectedTrainPopup';
 
 type MapProps = {
@@ -92,9 +91,7 @@ const Map = (props: MapProps) => {
 
         }
 
-
     }, [])
-
 
 
     if (!trains || !stations) return <main className={styles.main}>
