@@ -24,6 +24,8 @@ export const StationMarker = (props: StationMarkerProps) => {
             return
         }
 
+        getData()
+
         async function getData() {
             let avatarRequest = await fetch('/api/profile?steamid=' + station.DispatchedBy[0].SteamId);
             let profile: ProfileResponse = await avatarRequest.json();
