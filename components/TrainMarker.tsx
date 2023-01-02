@@ -97,7 +97,7 @@ export const TrainMarker = (props: TrainMarkerProps) => {
             <div>
                 <Image src={getTrainImagePath(train)} width={"64"} height={"64"} alt={train.Vehicles[0]} /><br />
                 Locomotive: {train.Vehicles[0]}<br />
-                Train: Nᵒ{train.TrainNoLocal}<br />
+                Train: {train.TrainName} {train.TrainNoLocal}<br />
                 User: {username}<br />
                 Speed: {Math.round(train.TrainData.Velocity)} km/h<br />
                 Departure: {train.StartStation}<br />
