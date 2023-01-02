@@ -24,13 +24,20 @@ export const StationMarker = (props: StationMarkerProps) => {
             return
         }
 
-        async function getToken() {
+        async function getData() {
             let avatarRequest = await fetch('/api/profile?steamid=' + station.DispatchedBy[0].SteamId);
             let profile: ProfileResponse = await avatarRequest.json();
             setAvatar(profile.avatarUrl)
             setUsername(profile.username)
         }
-        getToken();
+
+        const interval = setInterval(() => {
+            getData()
+        }, 30000)
+
+        return () => clearInterval(interval)
+
+
     }, [])
 
 
