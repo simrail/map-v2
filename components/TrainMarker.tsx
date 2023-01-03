@@ -33,6 +33,7 @@ export const TrainMarker = (props: TrainMarkerProps) => {
                 setUsername(profile.username)
             } else {
                 setUsername("BOT")
+                setAvatar(null)
             }
         }
 
