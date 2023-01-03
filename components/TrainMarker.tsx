@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { Marker, Popup, useMap } from "react-leaflet";
+import { Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { Train } from "../types/Train";
 import { ProfileResponse } from "../pages/api/profile";
@@ -68,6 +68,12 @@ export const TrainMarker = (props: TrainMarkerProps) => {
 
     }
 
+    useMapEvents({
+        click() {
+            setSelectedTrain(null)
+        },
+    })
+
 
     if (!username) return null;
 
@@ -92,7 +98,7 @@ export const TrainMarker = (props: TrainMarkerProps) => {
             <div>
                 <Image src={getTrainImagePath(train)} width={"64"} height={"64"} alt={train.Vehicles[0]} /><br />
                 Locomotive: {train.Vehicles[0]}<br />
-                Train: Nᵒ{train.TrainNoLocal}<br />
+                Train: {train.TrainName} {train.TrainNoLocal}<br />
                 User: {username}<br />
                 Speed: {Math.round(train.TrainData.Velocity)} km/h<br />
                 Departure: {train.StartStation}<br />

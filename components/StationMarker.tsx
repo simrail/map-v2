@@ -7,6 +7,7 @@ import { ProfileResponse } from "../pages/api/profile";
 type StationMarkerProps = {
     station: Station
 }
+
 export const StationMarker = (props: StationMarkerProps) => {
 
 
@@ -23,38 +24,35 @@ export const StationMarker = (props: StationMarkerProps) => {
             return
         }
 
-        async function getToken() {
+        getData()
+
+        async function getData() {
             let avatarRequest = await fetch('/api/profile?steamid=' + station.DispatchedBy[0].SteamId);
             let profile: ProfileResponse = await avatarRequest.json();
             setAvatar(profile.avatarUrl)
             setUsername(profile.username)
         }
-        getToken();
-    }, [])
 
+        const interval = setInterval(() => {
+            getData()
+        }, 30000)
+
+        return () => clearInterval(interval)
+
+
+    }, [])
 
 
     let icon;
 
+    let defaultAvatarUrl = 'https://cdn.discordapp.com/attachments/352493961153347584/1056616406562652211/bot-simrail.jpg';
 
-    if (station.DispatchedBy[0] && avatar) {
-
-        icon = L.icon({
-            iconUrl: avatar,
-            iconSize: [32, 32],
-            popupAnchor: [0, -16],
-            className: 'station-avatar'
-        });
-    } else {
-        icon = L.icon({
-            iconUrl: 'https://cdn.discordapp.com/attachments/352493961153347584/1056616406562652211/bot-simrail.jpg',
-            iconSize: [32, 32],
-            popupAnchor: [0, -16],
-            className: 'station-avatar'
-        });
-
-    }
-
+    icon = L.icon({
+        iconUrl: (station.DispatchedBy[0] && avatar ? avatar : defaultAvatarUrl),
+        iconSize: [32, 32],
+        popupAnchor: [0, -16],
+        className: 'station-avatar'
+    });
 
     if (!username) return null;
 
@@ -66,14 +64,7 @@ export const StationMarker = (props: StationMarkerProps) => {
         position={[station.Latititude, station.Longitude]}
         zIndexOffset={50}
     >
-        <Tooltip
-
-            offset={[3, 20]} direction={"bottom"} permanent={true}>{station.Name}</Tooltip>
-
-        {/*<Popup>*/}
-        {/*    <b>{station.Name}</b>*/}
-        {/*    /!*Driver: {train.}*!/*/}
-        {/*</Popup>*/}
+        <Tooltip offset={[3, 20]} direction={"bottom"} permanent={true}>{station.Name}</Tooltip>
     </Marker>
 
 }
