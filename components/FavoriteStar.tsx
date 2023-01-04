@@ -40,14 +40,11 @@ export default function FavoriteStar(props: FavoriteStarProps) {
 
 
     const getStar = (): JSX.Element => {
-        let serverSettings: ServerSettings = JSON.parse(localStorage.getItem('server-' + server.id) ?? '{}');
 
         if (favorite) {
-            // @ts-ignore
-            return <AiFillStar size={24} color='gold' className={styles.star} onClick={toggleFavorite} />
+            return <AiFillStar size={24} color='gold' className={styles.star} onClick={() => toggleFavorite} />
         }
-        // @ts-ignore
-        return <AiOutlineStar size={24} className={styles.star} onClick={toggleFavorite} />
+        return <AiOutlineStar size={24} className={styles.star} onClick={() => toggleFavorite} />
     };
 
     return getStar()
