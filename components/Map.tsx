@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet'
+import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, Popup, Rectangle, TileLayer, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
@@ -101,6 +101,11 @@ const Map = (props: MapProps) => {
         {!stations && <span>Loading stations...</span >}
     </main >
 
+    const center = [51.505, -0.09]
+    const rectangle = [
+        [51.49, -0.08],
+        [51.5, -0.06],
+    ]
 
 
 
@@ -119,10 +124,20 @@ const Map = (props: MapProps) => {
                 {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
 
 
-                <TileLayer
-                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
+                <LayersControl position="topright">
+                    <LayersControl.BaseLayer checked name="Day mode">
+                        <TileLayer
+                            attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                    </LayersControl.BaseLayer>
+                    <LayersControl.BaseLayer name="Night mode">
+                        <TileLayer
+                            attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
+                            url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
+                        />
+                    </LayersControl.BaseLayer>
+                </LayersControl>
             </MapContainer>
         </>
     )
