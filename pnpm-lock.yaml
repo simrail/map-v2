@@ -17,6 +17,7 @@ specifiers:
   react-dom: 18.2.0
   react-icons: ^4.7.1
   react-leaflet: ^4.2.0
+  react-leaflet-custom-control: ^1.3.1
   typescript: 4.9.4
 
 dependencies:
@@ -35,6 +36,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
   react-leaflet: 4.2.0_yydtlhsdonbqao6vgvkwhv2zki
+  react-leaflet-custom-control: 1.3.1_yydtlhsdonbqao6vgvkwhv2zki
   typescript: 4.9.4
 
 devDependencies:
@@ -1771,6 +1773,18 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+    dev: false
+
+  /react-leaflet-custom-control/1.3.1_yydtlhsdonbqao6vgvkwhv2zki:
+    resolution: {integrity: sha512-7nmSIglW4NHXmAvEC7VUCi1wopc6n7HZaipKYRWPenFh2e8bW0wPqL3BlnEcAsHD5i5BLmbCWjP6Pj6aweT+/g==}
+    peerDependencies:
+      leaflet: ^1.7.1
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    dependencies:
+      leaflet: 1.9.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
     dev: false
 
   /react-leaflet/4.2.0_yydtlhsdonbqao6vgvkwhv2zki:

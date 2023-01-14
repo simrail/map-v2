@@ -12,6 +12,7 @@ import styles from '../styles/Home.module.css'
 import { Map as LeafletMap } from 'leaflet';
 import { useSelectedTrain } from '../contexts/AppContext';
 import SelectedTrainPopup from './SelectedTrainPopup';
+import Control from 'react-leaflet-custom-control'
 
 type MapProps = {
     serverId: string | string[]
@@ -26,6 +27,7 @@ const Map = (props: MapProps) => {
 
     const [trains, setTrains] = useState<Train[] | null>(null)
 
+    const [theme, setTheme] = useState('light')
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
 
 
@@ -123,22 +125,36 @@ const Map = (props: MapProps) => {
 
                 {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
 
+                <Control prepend position='topright'>
+                    <div onClick={() => {
+                        setTheme(theme === 'light' ? 'dark' : 'light');
+                        document.body.className = (theme === 'light' ? 'dark' : 'light');
+                    }} className={styles.controls}>
 
-                <LayersControl position="topright">
-                    <LayersControl.BaseLayer checked name="Day mode">
+                        <span class="material-symbols-outlined">
+                            {theme === 'light' ? 'light_mode' : 'dark_mode'}
+                        </span>
+
+                    </div>
+                </Control>
+
+
+
+                {/* <LayersControl position="topright">
+                    <LayersControl.BaseLayer checked name="Day mode"> */}
+                <TileLayer className={styles.test}
+                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                {/* </LayersControl.BaseLayer> */}
+                {/* <LayersControl.BaseLayer name="Night mode">
                         <TileLayer
                             attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                         />
-                    </LayersControl.BaseLayer>
-                    <LayersControl.BaseLayer name="Night mode">
-                        <TileLayer
-                            attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
-                            url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
-                        />
-                    </LayersControl.BaseLayer>
-                </LayersControl>
-            </MapContainer>
+                    </LayersControl.BaseLayer> */}
+                {/* </LayersControl> */}
+            </MapContainer >
         </>
     )
 }
