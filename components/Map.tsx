@@ -28,6 +28,16 @@ const Map = (props: MapProps) => {
     const [trains, setTrains] = useState<Train[] | null>(null)
 
     const [theme, setTheme] = useState('light')
+
+    useEffect(() => {
+        let data = localStorage.getItem('theme')
+        if (data) {
+            setTheme(data)
+            document.body.className = data
+        }
+    }, [])
+
+
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
 
 
@@ -127,8 +137,13 @@ const Map = (props: MapProps) => {
 
                 <Control prepend position='topright'>
                     <div onClick={() => {
-                        setTheme(theme === 'light' ? 'dark' : 'light');
-                        document.body.className = (theme === 'light' ? 'dark' : 'light');
+                        let newTheme = (theme === 'light' ? 'dark' : 'light')
+                        setTheme(newTheme);
+                        document.body.className = newTheme;
+
+                        localStorage.removeItem('theme')
+                        localStorage.setItem('theme', newTheme)
+
                     }} className={styles.controls}>
 
                         <span className="material-symbols-outlined">
