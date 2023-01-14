@@ -131,7 +131,7 @@ const Map = (props: MapProps) => {
                         document.body.className = (theme === 'light' ? 'dark' : 'light');
                     }} className={styles.controls}>
 
-                        <span class="material-symbols-outlined">
+                        <span className="material-symbols-outlined">
                             {theme === 'light' ? 'light_mode' : 'dark_mode'}
                         </span>
 
