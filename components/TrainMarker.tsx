@@ -118,9 +118,11 @@ export function getTrainImagePath(train: Train): string {
         '4E/4E': '/trains/4EC.png', // DONE
         'Traxx/E186-134': '/trains/E186.png', // DONE
         'Traxx/Traxx': '/trains/E186.png', // DONE
-        '4E/EP07-135': '/trains/EP07.png', // DONE
         '4E/EU07-096': '/trains/EP07.png', // DONE
         'Elf/EN96-001': '/trains/EN76.png', // DONE
+        '4E/EU07-085': '/trains/4EIC-01.png', // DONE
+        '4E/EP07-135': '/trains/4EIC-01.png', // DONE
+        'Dragon2/ET25-002': '/trains/ET25-01.png', // DONE
     }
 
     // @ts-ignore
