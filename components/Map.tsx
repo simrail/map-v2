@@ -135,7 +135,7 @@ const Map = (props: MapProps) => {
 
                 {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
 
-                <Control prepend position='topright'>
+                <Control position='topleft'>
                     <div onClick={() => {
                         let newTheme = (theme === 'light' ? 'dark' : 'light')
                         setTheme(newTheme);
