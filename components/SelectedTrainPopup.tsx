@@ -44,8 +44,10 @@ const SelectedTrainPopup = () => {
 
     return (
         <>
-            <AiOutlineClose onClick={() => setSelectedTrain(null)} size={32} className={styles.closeButton} />
-            {selectedTrain && <div className={styles.popup}><TrainText train={selectedTrain} username={username} avatar={avatar} /></div>}
+            {selectedTrain && <div className={styles.popup}>
+                <AiOutlineClose onClick={() => setSelectedTrain(null)} size={32} className={styles.closeButton} />
+                <TrainText train={selectedTrain} username={username} avatar={avatar} /></div>
+            }
         </>
 
     )
