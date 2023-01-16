@@ -6,6 +6,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import styles from '../styles/SelectedTrainPopup.module.css'
 import { useEffect, useState } from "react";
 import TrainText from "./TrainText";
+import { useRouter } from "next/router";
 
 const SelectedTrainPopup = () => {
 
@@ -14,6 +15,9 @@ const SelectedTrainPopup = () => {
 
     const [avatar, setAvatar] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
+    const router = useRouter();
+    const { id } = router.query
+
 
 
     useEffect(() => {
@@ -45,7 +49,10 @@ const SelectedTrainPopup = () => {
     return (
         <>
             {selectedTrain && <div className={styles.popup}>
-                <AiOutlineClose onClick={() => setSelectedTrain(null)} size={32} className={styles.closeButton} />
+                <AiOutlineClose onClick={() => {
+                    setSelectedTrain(null);
+                    router.replace('/server/' + id);
+                }} size={32} className={styles.closeButton} />
                 <TrainText train={selectedTrain} username={username} avatar={avatar} /></div>
             }
         </>

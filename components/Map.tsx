@@ -27,6 +27,7 @@ const Map = (props: MapProps) => {
 
     const router = useRouter();
 
+    const { trainId } = router.query
 
     const [trains, setTrains] = useState<Train[] | null>(null)
 
@@ -82,6 +83,15 @@ const Map = (props: MapProps) => {
     }, [trains, selectedTrain])
 
 
+    useEffect(() => {
+        if (trainId) {
+            let trainsParam = trains?.filter((train) => train.TrainNoLocal == trainId)
+            if (trainsParam?.[0]) {
+                setSelectedTrain(trainsParam[0])
+                map?.setZoom(13)
+            }
+        }
+    }, [trains])
 
 
     useEffect(() => {
@@ -89,6 +99,7 @@ const Map = (props: MapProps) => {
 
         getTrains()
         getStations()
+
         setLoading(false)
 
         const interval1 = setInterval(() => {
