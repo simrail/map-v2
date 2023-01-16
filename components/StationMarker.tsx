@@ -18,19 +18,20 @@ export const StationMarker = (props: StationMarkerProps) => {
 
     useEffect(() => {
 
-        if (!station.DispatchedBy[0]) {
-            setAvatar(null);
-            setUsername("BOT");
-            return
-        }
 
         getData()
 
         async function getData() {
-            let avatarRequest = await fetch('/api/profile?steamid=' + station.DispatchedBy[0].SteamId);
-            let profile: ProfileResponse = await avatarRequest.json();
-            setAvatar(profile.avatarUrl)
-            setUsername(profile.username)
+            if (station.DispatchedBy[0]) {
+                let avatarRequest = await fetch('/api/profile?steamid=' + station.DispatchedBy[0].SteamId);
+                let profile: ProfileResponse = await avatarRequest.json();
+                setAvatar(profile.avatarUrl)
+                setUsername(profile.username)
+            } else {
+                setAvatar(null);
+                setUsername("BOT");
+            }
+
         }
 
         const interval = setInterval(() => {

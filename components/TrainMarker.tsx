@@ -5,6 +5,7 @@ import { Train } from "../types/Train";
 import { ProfileResponse } from "../pages/api/profile";
 import Image from 'next/image';
 import { useSelectedTrain } from '../contexts/AppContext';
+import TrainText from './TrainText';
 
 type TrainMarkerProps = {
     train: Train,
@@ -94,16 +95,7 @@ export const TrainMarker = (props: TrainMarkerProps) => {
 
     >
         <Popup>
-
-            <div>
-                <Image src={getTrainImagePath(train)} width={"64"} height={"64"} alt={train.Vehicles[0]} /><br />
-                Locomotive: {train.Vehicles[0]}<br />
-                Train: {train.TrainName} {train.TrainNoLocal}<br />
-                User: {username}<br />
-                Speed: {Math.round(train.TrainData.Velocity)} km/h<br />
-                Departure: {train.StartStation}<br />
-                Destination: {train.EndStation}<br />
-            </div>
+            <TrainText train={train} username={username} avatar={avatar} />
         </Popup>
     </Marker>
 
