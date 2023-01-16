@@ -13,6 +13,7 @@ import { Map as LeafletMap } from 'leaflet';
 import { useSelectedTrain } from '../contexts/AppContext';
 import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
+import { useRouter } from 'next/router';
 
 type MapProps = {
     serverId: string | string[]
@@ -23,6 +24,8 @@ const Map = (props: MapProps) => {
 
     let { serverId } = props
     const [map, setMap] = useState<LeafletMap | null>(null);
+
+    const router = useRouter();
 
 
     const [trains, setTrains] = useState<Train[] | null>(null)
@@ -135,7 +138,17 @@ const Map = (props: MapProps) => {
 
                 {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
 
+                <Control prepend position='topleft'>
+                    <div onClick={() => router.push('/')} className={styles.controls}>
+
+                        <span className="material-symbols-outlined">
+                            arrow_back
+                        </span>
+
+                    </div>
+                </Control>
                 <Control position='topleft'>
+
                     <div onClick={() => {
                         let newTheme = (theme === 'light' ? 'dark' : 'light')
                         setTheme(newTheme);
