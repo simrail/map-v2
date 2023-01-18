@@ -4,6 +4,9 @@
   min-height: 100vh;
   color: white;
   font-family: var(--font-mono);
+  background: url('/background-server-winter.webp') no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 
 }
 
@@ -12,11 +15,6 @@
 }
 
 .serverList {
-  /* display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin-left: auto;
-  margin-right: auto; */
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-gap: 4px;

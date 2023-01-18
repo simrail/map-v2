@@ -17,10 +17,7 @@ body {
 
 body {
   color: white;
-  background: #2D2F34;
-  background: url('/background-server-winter.webp') no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
+  background: #171821;
   font-family: var(--font-mono);
 
 }
