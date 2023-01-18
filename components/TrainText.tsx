@@ -1,9 +1,6 @@
 // @ts-nocheck
-import { getTrainImagePath, TrainMarker } from "./TrainMarker";
-import { useSelectedTrain } from '../contexts/AppContext';
+import { getTrainImagePath } from "./Markers/TrainMarker";
 import Image from 'next/image';
-import { AiOutlineClose } from 'react-icons/ai'
-import styles from '../styles/SelectedTrainPopup.module.css'
 
 type TrainTextProps = {
     train: Train
@@ -11,10 +8,7 @@ type TrainTextProps = {
     avatar: string | null
 }
 
-const TrainText = (props: TrainTextProps) => {
-
-    const { train, username } = props;
-
+const TrainText = ({ train, username }: TrainTextProps) => {
 
     return (
         <>

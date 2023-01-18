@@ -1,23 +1,18 @@
 import L from 'leaflet';
 import { Marker, Popup, useMap, useMapEvents } from "react-leaflet";
 import { useEffect, useState } from "react";
-import { Train } from "../types/Train";
-import { ProfileResponse } from "../pages/api/profile";
+import { Train } from "@simrail/types";
+import { ProfileResponse } from "../../pages/api/profile";
 import Image from 'next/image';
-import { useSelectedTrain } from '../contexts/AppContext';
-import TrainText from './TrainText';
+import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
+import TrainText from '../TrainText';
 
 type TrainMarkerProps = {
     train: Train,
 }
-export const TrainMarker = (props: TrainMarkerProps) => {
-
-    const { train } = props
+export const TrainMarker = ({ train }: TrainMarkerProps) => {
 
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
-
-
-    const map = useMap();
 
     const [avatar, setAvatar] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
@@ -45,29 +40,17 @@ export const TrainMarker = (props: TrainMarkerProps) => {
         return () => clearInterval(interval)
 
 
-    }, [])
+    }, [train.TrainData.ControlledBySteamID])
 
 
 
+    let icon = L.icon({
+        iconUrl: (train.TrainData.ControlledBySteamID && avatar) ? avatar : '/markers/icon-bot-simrail.jpg',
+        iconSize: [24, 24],
+        popupAnchor: [0, -12],
+        className: 'steam-avatar'
+    });
 
-    let icon;
-
-    if (train.TrainData.ControlledBySteamID && avatar) {
-        icon = L.icon({
-            iconUrl: avatar,
-            iconSize: [24, 24],
-            popupAnchor: [0, -12],
-            className: 'steam-avatar'
-        });
-    } else {
-        icon = L.icon({
-            iconUrl: 'https://cdn.discordapp.com/attachments/352493961153347584/1056616406562652211/bot-simrail.jpg',
-            iconSize: [24, 24],
-            popupAnchor: [0, -12],
-            className: 'steam-avatar'
-        });
-
-    }
 
     useMapEvents({
         click() {
@@ -78,19 +61,15 @@ export const TrainMarker = (props: TrainMarkerProps) => {
 
     if (!username) return null;
 
-
-    function updateSelectedTrain(train: Train) {
-        setSelectedTrain(train)
-    }
-
     return <Marker
         key={train.TrainNoLocal}
         icon={icon}
         position={[train.TrainData.Latititute, train.TrainData.Longitute]}
+        zIndexOffset={40}
         eventHandlers={{
             mouseover: (event) => event.target.openPopup(),
             mouseout: (event) => event.target.closePopup(),
-            mouseup: (event) => updateSelectedTrain(train)
+            mouseup: (event) => setSelectedTrain(train)
         }}
 
     >

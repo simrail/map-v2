@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { SelectedTrainProvider } from '../../contexts/AppContext';
+import { SelectedTrainProvider } from '../../contexts/SelectedTrainContext';
 
 
 const Post = () => {

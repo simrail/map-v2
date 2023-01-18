@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Train } from "../types/Train";
+import { Train } from "@simrail/types";
 
 export const SelectedTrainContext = React.createContext({
     selectedTrain: null,
