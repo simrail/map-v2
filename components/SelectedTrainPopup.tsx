@@ -1,7 +1,5 @@
 // @ts-nocheck
-import { getTrainImagePath, TrainMarker } from "./TrainMarker";
-import { useSelectedTrain } from '../contexts/AppContext';
-import Image from 'next/image';
+import { useSelectedTrain } from '../contexts/SelectedTrainContext';
 import { AiOutlineClose } from 'react-icons/ai'
 import styles from '../styles/SelectedTrainPopup.module.css'
 import { useEffect, useState } from "react";
@@ -16,7 +14,7 @@ const SelectedTrainPopup = () => {
     const [avatar, setAvatar] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
     const router = useRouter();
-    const { id } = router.query
+    const { id, trainId } = router.query
 
 
 
@@ -51,7 +49,7 @@ const SelectedTrainPopup = () => {
             {selectedTrain && <div className={styles.popup}>
                 <AiOutlineClose onClick={() => {
                     setSelectedTrain(null);
-                    router.replace('/server/' + id);
+                    if (trainId) router.replace('/server/' + id);
                 }} size={32} className={styles.closeButton} />
                 <TrainText train={selectedTrain} username={username} avatar={avatar} /></div>
             }

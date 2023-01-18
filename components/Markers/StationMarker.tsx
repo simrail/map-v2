@@ -1,17 +1,16 @@
 import L from 'leaflet';
 import { Marker, Popup, Tooltip } from "react-leaflet";
 import { useEffect, useState } from "react";
-import { Station } from "../types/Station";
-import { ProfileResponse } from "../pages/api/profile";
+import { Station } from "@simrail/types";
+import { ProfileResponse } from "../../pages/api/profile";
+import Image from 'next/image';
+import { Space } from '@mantine/core';
 
 type StationMarkerProps = {
     station: Station
 }
 
-export const StationMarker = (props: StationMarkerProps) => {
-
-
-    const { station } = props
+export const StationMarker = ({ station }: StationMarkerProps) => {
 
     const [avatar, setAvatar] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
@@ -41,15 +40,11 @@ export const StationMarker = (props: StationMarkerProps) => {
         return () => clearInterval(interval)
 
 
-    }, [])
+    }, [station.DispatchedBy])
 
 
-    let icon;
-
-    let defaultAvatarUrl = 'https://cdn.discordapp.com/attachments/352493961153347584/1056616406562652211/bot-simrail.jpg';
-
-    icon = L.icon({
-        iconUrl: (station.DispatchedBy[0] && avatar ? avatar : defaultAvatarUrl),
+    let icon = L.icon({
+        iconUrl: (station.DispatchedBy[0] && avatar ? avatar : '/markers/icon-bot-simrail.jpg'),
         iconSize: [32, 32],
         popupAnchor: [0, -16],
         className: 'station-avatar'
@@ -61,11 +56,20 @@ export const StationMarker = (props: StationMarkerProps) => {
     return <Marker
         key={station.id}
         icon={icon}
-        title={"Traffic Dispatcher - " + station.Name + " - " + username}
         position={[station.Latititude, station.Longitude]}
         zIndexOffset={50}
+        eventHandlers={{
+            mouseover: (event) => event.target.openPopup(),
+            mouseout: (event) => event.target.closePopup(),
+        }}
     >
+        <Popup>
+            <Image src={"/stations/" + station.Prefix + '.jpg'} alt={station.Name} width={200} height={75} style={{ borderRadius: '6px' }} /><br />
+            <Space />
+            Station: {station.Name}<br />
+            User: {username}<br />
+        </Popup>
         <Tooltip offset={[3, 20]} direction={"bottom"} permanent={true}>{station.Name}</Tooltip>
-    </Marker>
+    </Marker >
 
 }
