@@ -14,7 +14,6 @@ import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
 import { useRouter } from 'next/router';
 import { NonPlayableStationMarker } from './Markers/NonPlayableStationMarker';
-import { Center } from '@mantine/core';
 
 type MapProps = {
     serverId: string | string[]
@@ -22,37 +21,36 @@ type MapProps = {
 
 const Map = ({ serverId }: MapProps) => {
 
-
-    const [map, setMap] = useState<LeafletMap | null>(null);
-
     const router = useRouter();
-
     const { trainId } = router.query
-
-    const [trains, setTrains] = useState<Train[] | null>(null)
-
-    const [theme, setTheme] = useState('light')
-
-    useEffect(() => {
-        let data = localStorage.getItem('theme')
-        if (data) {
-            setTheme(data)
-            document.body.className = data
-        }
-    }, [])
-
-
-    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
-
-
-    const [stations, setStations] = useState<Station[] | null>(null)
-    const [isLoading, setLoading] = useState(false)
+    const [map, setMap] = useState<LeafletMap | null>(null);
+    const [trains, setTrains] = useState<Train[] | null>(null);
+    const [theme, setTheme] = useState('light');
+    const { selectedTrain, setSelectedTrain } = useSelectedTrain();
+    const [stations, setStations] = useState<Station[] | null>(null);
 
     function getTrains() {
         fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + serverId)
             .then((res) => res.json())
             .then((fetchedTrains) => {
                 setTrains(fetchedTrains.data)
+            })
+    }
+
+    function updateTrains() {
+        fetch('https://panel.simrail.eu:8084/train-positions-open?serverCode=' + serverId)
+            .then((res) => res.json())
+            .then((fetchedPositionsPerTrainID) => {
+                if (trains == null) { return }
+                const newTrains = trains.map(function (train: any) {
+                    const element = fetchedPositionsPerTrainID.data.find((fetchedTrain: any) => fetchedTrain.id === train.id);
+                    if (!element) { return train }
+                    train.TrainData.Latititute = element.Latitude;
+                    train.TrainData.Longitute = element.Longitude;
+                    train.TrainData.Velocity = element.Velocity;
+                    return train
+                });
+                setTrains(newTrains)
             })
     }
 
@@ -68,7 +66,13 @@ const Map = ({ serverId }: MapProps) => {
             })
     }
 
-
+    useEffect(() => {
+        let data = localStorage.getItem('theme')
+        if (data) {
+            setTheme(data)
+            document.body.className = data
+        }
+    }, [])
 
     useEffect(() => {
 
@@ -82,7 +86,6 @@ const Map = ({ serverId }: MapProps) => {
 
     }, [trains, selectedTrain, setSelectedTrain, map])
 
-
     useEffect(() => {
         if (trainId) {
             let trainsParam = trains?.filter((train) => train.TrainNoLocal == trainId)
@@ -93,32 +96,27 @@ const Map = ({ serverId }: MapProps) => {
         }
     }, [trains, map, setSelectedTrain, trainId])
 
-
     useEffect(() => {
-        setLoading(true)
 
         getTrains()
         getStations()
 
-        setLoading(false)
-
         const interval1 = setInterval(() => {
-            getTrains()
-        }, 2000)
+            updateTrains()
+            // Currently, deactivated, I need to find a way to use both simultaneously without interfering
+            // getTrains()
+        }, 5100)
 
         const interval2 = setInterval(() => {
             getStations()
         }, 10000)
 
-
         return function () {
             clearInterval(interval1)
             clearInterval(interval2)
-
         }
 
     }, [])
-
 
     if (!trains || !stations) return <main className={styles.main}>
         <h1>Loading</h1>
@@ -132,8 +130,6 @@ const Map = ({ serverId }: MapProps) => {
         [51.49, -0.08],
         [51.5, -0.06],
     ]
-
-
 
     return (
         <>
