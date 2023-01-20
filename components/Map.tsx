@@ -75,7 +75,6 @@ const Map = ({ serverId }: MapProps) => {
     }, [])
 
     useEffect(() => {
-
         if (selectedTrain && map && trains) {
             // @ts-ignore
             setSelectedTrain(trains.find(train => train.id === selectedTrain.id) ?? null)
@@ -83,7 +82,6 @@ const Map = ({ serverId }: MapProps) => {
             map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute])
 
         }
-
     }, [trains, selectedTrain, setSelectedTrain, map])
 
     useEffect(() => {
@@ -96,27 +94,18 @@ const Map = ({ serverId }: MapProps) => {
         }
     }, [trains, map, setSelectedTrain, trainId])
 
+    // Alternate between getting stations/trains and only updating positions
+    const [updatePosition, SetUpdatePosition] = useState(true);
     useEffect(() => {
-
-        getTrains()
-        getStations()
-
-        const interval1 = setInterval(() => {
-            updateTrains()
-            // Currently, deactivated, I need to find a way to use both simultaneously without interfering
-            // getTrains()
-        }, 5100)
-
-        const interval2 = setInterval(() => {
+        if (updatePosition) {
+            getTrains()
             getStations()
-        }, 10000)
-
-        return function () {
-            clearInterval(interval1)
-            clearInterval(interval2)
         }
-
-    }, [])
+        setTimeout(() => {
+            if (updatePosition) { updateTrains() }
+            SetUpdatePosition(!updatePosition)
+        }, 5200);
+    }, [updatePosition])
 
     if (!trains || !stations) return <main className={styles.main}>
         <h1>Loading</h1>
