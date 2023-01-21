@@ -14,7 +14,6 @@ import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
 import { useRouter } from 'next/router';
 import { NonPlayableStationMarker } from './Markers/NonPlayableStationMarker';
-import { Center } from '@mantine/core';
 
 type MapProps = {
     serverId: string | string[]
@@ -22,37 +21,36 @@ type MapProps = {
 
 const Map = ({ serverId }: MapProps) => {
 
-
-    const [map, setMap] = useState<LeafletMap | null>(null);
-
     const router = useRouter();
-
     const { trainId } = router.query
-
-    const [trains, setTrains] = useState<Train[] | null>(null)
-
-    const [theme, setTheme] = useState('light')
-
-    useEffect(() => {
-        let data = localStorage.getItem('theme')
-        if (data) {
-            setTheme(data)
-            document.body.className = data
-        }
-    }, [])
-
-
-    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
-
-
-    const [stations, setStations] = useState<Station[] | null>(null)
-    const [isLoading, setLoading] = useState(false)
+    const [map, setMap] = useState<LeafletMap | null>(null);
+    const [trains, setTrains] = useState<Train[] | null>(null);
+    const [theme, setTheme] = useState('light');
+    const { selectedTrain, setSelectedTrain } = useSelectedTrain();
+    const [stations, setStations] = useState<Station[] | null>(null);
 
     function getTrains() {
         fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + serverId)
             .then((res) => res.json())
             .then((fetchedTrains) => {
                 setTrains(fetchedTrains.data)
+            })
+    }
+
+    function updateTrains() {
+        fetch('https://panel.simrail.eu:8084/train-positions-open?serverCode=' + serverId)
+            .then((res) => res.json())
+            .then((fetchedPositionsPerTrainID) => {
+                if (trains == null) { return }
+                const newTrains = trains.map(function (train: any) {
+                    const element = fetchedPositionsPerTrainID.data.find((fetchedTrain: any) => fetchedTrain.id === train.id);
+                    if (!element) { return train }
+                    train.TrainData.Latititute = element.Latitude;
+                    train.TrainData.Longitute = element.Longitude;
+                    train.TrainData.Velocity = element.Velocity;
+                    return train
+                });
+                setTrains(newTrains)
             })
     }
 
@@ -68,10 +66,15 @@ const Map = ({ serverId }: MapProps) => {
             })
     }
 
-
+    useEffect(() => {
+        let data = localStorage.getItem('theme')
+        if (data) {
+            setTheme(data)
+            document.body.className = data
+        }
+    }, [])
 
     useEffect(() => {
-
         if (selectedTrain && map && trains) {
             // @ts-ignore
             setSelectedTrain(trains.find(train => train.id === selectedTrain.id) ?? null)
@@ -79,9 +82,7 @@ const Map = ({ serverId }: MapProps) => {
             map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute])
 
         }
-
     }, [trains, selectedTrain, setSelectedTrain, map])
-
 
     useEffect(() => {
         if (trainId) {
@@ -93,31 +94,19 @@ const Map = ({ serverId }: MapProps) => {
         }
     }, [trains, map, setSelectedTrain, trainId])
 
-
+    // Alternate between getting stations/trains and only updating positions
+    const [updatePosition, SetUpdatePosition] = useState(true);
     useEffect(() => {
-        setLoading(true)
-
-        getTrains()
-        getStations()
-
-        setLoading(false)
-
-        const interval1 = setInterval(() => {
+        if (updatePosition) {
             getTrains()
-        }, 2000)
-
-        const interval2 = setInterval(() => {
             getStations()
-        }, 10000)
-
-
-        return function () {
-            clearInterval(interval1)
-            clearInterval(interval2)
-
         }
+        setTimeout(() => {
+            if (updatePosition) { updateTrains() }
+            SetUpdatePosition(!updatePosition)
+        }, 5200);
+    }, [updatePosition])
 
-    }, [])
 
     useEffect(() => {
 
@@ -145,8 +134,6 @@ const Map = ({ serverId }: MapProps) => {
         [51.49, -0.08],
         [51.5, -0.06],
     ]
-
-
 
     return (
         <>
