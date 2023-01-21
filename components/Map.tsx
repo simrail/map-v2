@@ -197,7 +197,7 @@ const Map = ({ serverId }: MapProps) => {
                 />
                 <LayersControl position="bottomright" collapsed={false} >
                     <LayersControl.Overlay
-                        checked={localStorage.getItem('layer-trains') === 'true'}
+                        checked={localStorage.getItem('layer-trains') === null || localStorage.getItem('layer-trains') === 'true'}
                         name="Trains">
                         <LayerGroup eventHandlers={{
                             add: onLayerAdd('trains'),
@@ -207,7 +207,7 @@ const Map = ({ serverId }: MapProps) => {
                             {trains.map(train => (<TrainMarker key={train.TrainNoLocal} train={train} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked={localStorage.getItem('layer-stations') === 'true'} name="Dispatch stations">
+                    <LayersControl.Overlay checked={localStorage.getItem('layer-stations') === null || localStorage.getItem('layer-stations') === 'true'} name="Dispatch stations">
                         <LayerGroup eventHandlers={{
                             add: onLayerAdd('stations'),
                             remove: onLayerRemove('stations'),
@@ -215,7 +215,7 @@ const Map = ({ serverId }: MapProps) => {
                             {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked={localStorage.getItem('layer-unplayable_stations') === 'true'} name="Unplayable dispatch stations">
+                    <LayersControl.Overlay checked={localStorage.getItem('layer-unplayable_stations') === null || localStorage.getItem('layer-unplayable_stations') === 'true'} name="Unplayable dispatch stations">
                         <LayerGroup eventHandlers={{
                             add: onLayerAdd('unplayable_stations'),
                             remove: onLayerRemove('unplayable_stations'),
