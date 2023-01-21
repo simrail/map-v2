@@ -8,7 +8,7 @@ import { StationMarker } from "./Markers/StationMarker";
 import { Train, Station } from "@simrail/types";
 import stationsJson from '../components/stations.json'
 import styles from '../styles/Home.module.css'
-import { LeafletEvent, Map as LeafletMap } from 'leaflet';
+import { LayersControlEvent, LeafletEvent, Map as LeafletMap } from 'leaflet';
 import { useSelectedTrain } from '../contexts/SelectedTrainContext';
 import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
@@ -119,14 +119,19 @@ const Map = ({ serverId }: MapProps) => {
 
     }, [])
 
-    const onLayerAdd = (name: string) => (event: LeafletEvent) => {
-        localStorage.setItem('layer-' + name, 'true')
-    }
+    useEffect(() => {
 
-    const onLayerRemove = (name: string) => (event: LeafletEvent) => {
-        localStorage.setItem('layer-' + name, 'false')
-    }
+        if (!map) return;
 
+        map.on('overlayadd', function (event: LayersControlEvent) {
+            localStorage.setItem('layer-' + event.name.toLowerCase(), 'true')
+        });
+
+        map.on('overlayremove', function (event: LayersControlEvent) {
+            localStorage.setItem('layer-' + event.name.toLowerCase(), 'false')
+        });
+
+    })
 
     if (!trains || !stations) return <main className={styles.main}>
         <h1>Loading</h1>
@@ -199,27 +204,17 @@ const Map = ({ serverId }: MapProps) => {
                     <LayersControl.Overlay
                         checked={localStorage.getItem('layer-trains') === null || localStorage.getItem('layer-trains') === 'true'}
                         name="Trains">
-                        <LayerGroup eventHandlers={{
-                            add: onLayerAdd('trains'),
-                            remove: onLayerRemove('trains'),
-                        }}
-                        >
+                        <LayerGroup>
                             {trains.map(train => (<TrainMarker key={train.TrainNoLocal} train={train} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked={localStorage.getItem('layer-stations') === null || localStorage.getItem('layer-stations') === 'true'} name="Dispatch stations">
-                        <LayerGroup eventHandlers={{
-                            add: onLayerAdd('stations'),
-                            remove: onLayerRemove('stations'),
-                        }}>
+                    <LayersControl.Overlay checked={localStorage.getItem('layer-dispatch stations') === null || localStorage.getItem('layer-dispatch stations') === 'true'} name="Dispatch stations">
+                        <LayerGroup>
                             {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked={localStorage.getItem('layer-unplayable_stations') === null || localStorage.getItem('layer-unplayable_stations') === 'true'} name="Unplayable dispatch stations">
-                        <LayerGroup eventHandlers={{
-                            add: onLayerAdd('unplayable_stations'),
-                            remove: onLayerRemove('unplayable_stations'),
-                        }}>
+                    <LayersControl.Overlay checked={localStorage.getItem('layer-unplayable dispatch stations') === null || localStorage.getItem('layer-unplayable dispatch stations') === 'true'} name="Unplayable dispatch stations">
+                        <LayerGroup>
                             {stationsJson.map(station => (<NonPlayableStationMarker key={station.Name} station={station} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
