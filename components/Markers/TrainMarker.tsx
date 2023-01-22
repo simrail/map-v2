@@ -19,6 +19,8 @@ export const TrainMarker = ({ train }: TrainMarkerProps) => {
 
     useEffect(() => {
 
+        console.log("Train No.: " + train.TrainNoLocal + " Control: " + train.TrainData.ControlledBySteamID)
+
         getData()
 
         async function getData() {
