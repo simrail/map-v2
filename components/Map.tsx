@@ -62,7 +62,7 @@ const Map = ({ serverId }: MapProps) => {
             .then((fetchedPositionsPerTrainID) => {
                 alreadyTrains?.forEach((train) => {
                     const element = fetchedPositionsPerTrainID.data.find((fetchedTrain: any) => fetchedTrain.id === train.id);
-                    if (!element) { return train }
+                    if (!element) { return }
                     train.TrainData.Latititute = element.Latitude;
                     train.TrainData.Longitute = element.Longitude;
                     train.TrainData.Velocity = element.Velocity;
@@ -108,17 +108,16 @@ const Map = ({ serverId }: MapProps) => {
         }
     }, [trains, map, setSelectedTrain, trainId])
 
-    const [renewal, setRenewal] = useState(2);
+    const [renewal, setRenewal] = useState(0);
     function update() {
-        if (renewal == 2) {
+        getTrains()
+        if (renewal == 0) {
             console.log("Complete Renewal; code " + renewal)
             getStations()
-            getTrains()
-            setRenewal(0)
+            setRenewal(2)
         } else {
             console.log("Position Update; code " + renewal)
-            updateTrains(trains)
-            setRenewal(renewal + 1)
+            setRenewal(renewal - 1)
         }
     }
 
