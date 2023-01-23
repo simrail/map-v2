@@ -112,17 +112,15 @@ const Map = ({ serverId }: MapProps) => {
     function update() {
         getTrains()
         if (renewal == 0) {
-            console.log("Complete Renewal; code " + renewal)
             getStations()
             setRenewal(2)
         } else {
-            console.log("Position Update; code " + renewal)
             setRenewal(renewal - 1)
         }
     }
 
     useEffect(() => {
-        setTimeout(() => { update() }, 5000)
+        setTimeout(() => { update() }, 5500)
     }, [renewal]);
 
     useEffect(() => {
