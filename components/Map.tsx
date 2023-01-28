@@ -8,7 +8,7 @@ import { StationMarker } from "./Markers/StationMarker";
 import { Train, Station } from "@simrail/types";
 import stationsJson from '../components/stations.json'
 import styles from '../styles/Home.module.css'
-import { Map as LeafletMap } from 'leaflet';
+import { LayersControlEvent, LeafletEvent, Map as LeafletMap } from 'leaflet';
 import { useSelectedTrain } from '../contexts/SelectedTrainContext';
 import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
@@ -119,6 +119,19 @@ const Map = ({ serverId }: MapProps) => {
 
     }, [])
 
+    useEffect(() => {
+
+        if (!map) return;
+
+        map.on('overlayadd', function (event: LayersControlEvent) {
+            localStorage.setItem('layer-' + event.name.toLowerCase(), 'true')
+        });
+
+        map.on('overlayremove', function (event: LayersControlEvent) {
+            localStorage.setItem('layer-' + event.name.toLowerCase(), 'false')
+        });
+
+    })
 
     if (!trains || !stations) return <main className={styles.main}>
         <h1>Loading</h1>
@@ -187,19 +200,20 @@ const Map = ({ serverId }: MapProps) => {
                     attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {/* </LayersControl.BaseLayer> */}
                 <LayersControl position="bottomright" collapsed={false} >
-                    <LayersControl.Overlay checked name="Trains">
+                    <LayersControl.Overlay
+                        checked={localStorage.getItem('layer-trains') === null || localStorage.getItem('layer-trains') === 'true'}
+                        name="Trains">
                         <LayerGroup>
                             {trains.map(train => (<TrainMarker key={train.TrainNoLocal} train={train} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name="Dispatch stations">
+                    <LayersControl.Overlay checked={localStorage.getItem('layer-dispatch stations') === null || localStorage.getItem('layer-dispatch stations') === 'true'} name="Dispatch stations">
                         <LayerGroup>
                             {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name="Unplayable dispatch stations">
+                    <LayersControl.Overlay checked={localStorage.getItem('layer-unplayable dispatch stations') === null || localStorage.getItem('layer-unplayable dispatch stations') === 'true'} name="Unplayable dispatch stations">
                         <LayerGroup>
                             {stationsJson.map(station => (<NonPlayableStationMarker key={station.Name} station={station} />))}
                         </LayerGroup>
