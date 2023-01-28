@@ -17,7 +17,7 @@ app.prepare().then(() => {
             const parsedUrl = parse(req.url, true)
             const { pathname, query } = parsedUrl
 
-            console.log('debug', req.host, pathname, req.url, req)
+            console.log('debug', req.host, pathname, req.url, req.headers.host)
             if (req.host === 'map.simrail.app' && pathname === '/') {
                 await app.render(req, res, '/servers', query)
             } else {
