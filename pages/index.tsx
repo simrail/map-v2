@@ -21,6 +21,7 @@ export async function getServerSideProps({ req, res }) {
 
 export default function Home({host}) {
 
+    console.log(host)
 
     if (host === 'www.simrail.map') {
         return (<>
