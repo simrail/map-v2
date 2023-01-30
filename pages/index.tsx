@@ -23,7 +23,7 @@ export default function Home({host}) {
 
     console.log(host)
 
-    if (host === 'www.simrail.map') {
+    if (host === 'www.simrail.app') {
         return (<>
             <Head>
                 <title>SimRail - Home</title>
