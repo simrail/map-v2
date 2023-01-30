@@ -196,14 +196,9 @@ const Map = ({ serverId }: MapProps) => {
                 </Control>
 
 
-
                 <TileLayer className={styles.test}
                     attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <TileLayer className={styles.test}
-                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
-                url="https://{s}.tiles.openrailwaymap.org/maxspeed/{z}/{x}/{y}.png"
                 />
                 <LayersControl position="bottomright" collapsed={false} >
                     <LayersControl.Overlay
