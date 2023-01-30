@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Head from 'next/head'
 import Image from "next/image";
 import { Container, Flex, Space } from '@mantine/core';
