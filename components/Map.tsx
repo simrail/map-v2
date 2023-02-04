@@ -52,7 +52,22 @@ const Map = ({ serverId }: MapProps) => {
         fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + serverId)
             .then((res) => res.json())
             .then((fetchedTrains) => {
-                setTrains(fetchedTrains.data)
+                updateTrains(fetchedTrains.data)
+            })
+    }
+
+    function updateTrains(alreadyTrains: Train[] | null) {
+        fetch('https://panel.simrail.eu:8084/train-positions-open?serverCode=' + serverId)
+            .then((res) => res.json())
+            .then((fetchedPositionsPerTrainID) => {
+                alreadyTrains?.forEach((train) => {
+                    const element = fetchedPositionsPerTrainID.data.find((fetchedTrain: any) => fetchedTrain.id === train.id);
+                    if (!element) { return }
+                    train.TrainData.Latititute = element.Latitude;
+                    train.TrainData.Longitute = element.Longitude;
+                    train.TrainData.Velocity = element.Velocity;
+                });
+                setTrains(alreadyTrains)
             })
     }
 
@@ -93,31 +108,20 @@ const Map = ({ serverId }: MapProps) => {
         }
     }, [trains, map, setSelectedTrain, trainId])
 
+    const [renewal, setRenewal] = useState(0);
+    function update() {
+        getTrains()
+        if (renewal == 0) {
+            getStations()
+            setRenewal(2)
+        } else {
+            setRenewal(renewal - 1)
+        }
+    }
 
     useEffect(() => {
-        setLoading(true)
-
-        getTrains()
-        getStations()
-
-        setLoading(false)
-
-        const interval1 = setInterval(() => {
-            getTrains()
-        }, 2000)
-
-        const interval2 = setInterval(() => {
-            getStations()
-        }, 10000)
-
-
-        return function () {
-            clearInterval(interval1)
-            clearInterval(interval2)
-
-        }
-
-    }, [])
+        setTimeout(() => { update() }, 5500)
+    }, [renewal]);
 
     useEffect(() => {
 
