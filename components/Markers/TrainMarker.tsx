@@ -1,45 +1,37 @@
 import L from 'leaflet';
 import { Marker, Popup, useMap, useMapEvents } from "react-leaflet";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Train } from "@simrail/types";
 import { ProfileResponse } from "../../pages/api/profile";
 import Image from 'next/image';
 import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
 import TrainText from '../TrainText';
+import {getSteamProfileInfos} from "@/components/steamApi";
 
 type TrainMarkerProps = {
     train: Train,
 }
-export const TrainMarker = ({ train }: TrainMarkerProps) => {
+const TrainMarker = ({ train }: TrainMarkerProps) => {
 
-    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
+    const { setSelectedTrain } = useSelectedTrain()
 
     const [avatar, setAvatar] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
 
-    useEffect(() => {
-
-        getData()
-
-        async function getData() {
-            if (train.TrainData.ControlledBySteamID) {
-                let avatarRequest = await fetch('/api/profile?steamid=' + train.TrainData.ControlledBySteamID);
-                let profile: ProfileResponse = await avatarRequest.json();
-                setAvatar(profile.avatarUrl)
-                setUsername(profile.username)
-            } else {
-                setUsername("BOT")
-                setAvatar(null)
-            }
+    const getData = React.useCallback((maybeSteamId: string | null) => {
+        if (maybeSteamId) {
+            getSteamProfileInfos(maybeSteamId).then(({username, avatarUrl}) => {
+                setAvatar(avatarUrl)
+                setUsername(username);
+            })
+        } else {
+            setUsername("BOT")
+            setAvatar(null)
         }
+    }, [])
 
-        const interval = setInterval(() => {
-            getData()
-        }, 30000)
-
-        return () => clearInterval(interval)
-
-
+    useEffect(() => {
+        getData(train.TrainData.ControlledBySteamID)
     }, [train.TrainData.ControlledBySteamID])
 
 
@@ -77,8 +69,9 @@ export const TrainMarker = ({ train }: TrainMarkerProps) => {
             <TrainText train={train} username={username} avatar={avatar} />
         </Popup>
     </Marker>
-
 }
+
+export default React.memo(TrainMarker)
 
 
 
