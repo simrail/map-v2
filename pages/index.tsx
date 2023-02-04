@@ -19,7 +19,7 @@ export async function getServerSideProps({ req, res }) {
     };
 }
 
-export default function Home({host}) {
+export default function Home({ host }) {
 
     console.log(host)
 
@@ -36,7 +36,7 @@ export default function Home({host}) {
                         <Image alt="SimRail logo" src={"/logos/logo-fr.png"} width={258} height={82} />
                         <Flex style={{ marginTop: 50 }} direction={"column"} gap={48}>
                             <FeatureCard name='Live Map' href='https://map.simrail.app' image='/features/map.png' />
-                            <FeatureCard name='EDR' target="_blank" href='https://edr.simrail.fr' image='/features/edr.png' />
+                            <FeatureCard name='EDR' target="_blank" href='https://edr.simrail.app' image='/features/edr.png' />
                             <FeatureCard name='SOON ' href='servers' disabled image='/features/blog.png' />
                         </Flex>
                         <Space h="xl" />
@@ -48,6 +48,6 @@ export default function Home({host}) {
         </>)
 
     }
-    return <Servers/>
+    return <Servers />
 
 }
