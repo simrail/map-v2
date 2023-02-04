@@ -1,43 +1,13 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Script from 'next/script'
-import { datadogRum } from "@datadog/browser-rum";
-import CookieConsent, { getCookieConsentValue } from "react-cookie-consent";
-import { useRouter } from 'next/router'
 
 export default function Home({ Component, pageProps }: AppProps) {
 
-  const router = useRouter()
-
-
-  if (getCookieConsentValue() && process.env.NODE_ENV === 'production') {
-    datadogRum.init({
-      applicationId: '74158ece-75c7-4ec6-a16d-35a629a98124',
-      clientToken: 'pubab6b5a5079d46fbd6eb21a9b3448dc84',
-      site: 'datadoghq.com',
-      service: 'simrail-map',
-
-      // Specify a version number to identify the deployed version of your application in Datadog
-      // version: '1.0.0',
-      sampleRate: 100,
-      sessionReplaySampleRate: 20,
-      trackInteractions: true,
-      trackResources: true,
-      trackLongTasks: true,
-      defaultPrivacyLevel: 'mask-user-input'
-    });
-    datadogRum.startSessionReplayRecording();
-  }
-
-
   return <>
-    <CookieConsent buttonStyle={{ backgroundColor: 'white', borderRadius: "4px", padding: "6px 20px" }} style={{ zIndex: '10000', backgroundColor: "rgb(0, 0, 0, 0.4", backdropFilter: 'blur(20px)' }} onAccept={() => router.reload()} location="bottom">This website uses cookies to enhance the user experience.</CookieConsent>
-
-    {(getCookieConsentValue() && process.env.NODE_ENV === 'production') && <>
-      <Script async src="https://arc.io/widget.min.js#sjty7yQ4"></Script>
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-XEMEDP2BGJ"></Script>
-      <Script id='gtag'>
-        {`
+    <Script async src="https://www.googletagmanager.com/gtag/js?id=G-XEMEDP2BGJ"></Script>
+    <Script id='gtag'>
+      {`
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -45,10 +15,7 @@ export default function Home({ Component, pageProps }: AppProps) {
         gtag('config', 'G-XEMEDP2BGJ');
         `}
 
-      </Script>
-    </>
-
-    }
+    </Script>
     <Component {...pageProps} />
   </>
 }
