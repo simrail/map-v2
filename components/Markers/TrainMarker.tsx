@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
 import TrainText from '../TrainText';
 import {getSteamProfileInfos} from "@/components/steamApi";
+import {getSteamProfileOrBot} from "@/components/steam";
 
 type TrainMarkerProps = {
     train: Train,
@@ -19,19 +20,15 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
     const [username, setUsername] = useState<string | null>(null)
 
     const getData = React.useCallback((maybeSteamId: string | null) => {
-        if (maybeSteamId) {
-            getSteamProfileInfos(maybeSteamId).then(({username, avatarUrl}) => {
-                setAvatar(avatarUrl)
-                setUsername(username);
-            })
-        } else {
-            setUsername("BOT")
-            setAvatar(null)
-        }
+        return getSteamProfileOrBot(maybeSteamId).then(([avatarUrl, username]) => {
+            setAvatar(avatarUrl);
+            setUsername(username);
+        })
     }, [])
 
     useEffect(() => {
         getData(train.TrainData.ControlledBySteamID)
+            .catch(() => setTimeout(() => getData(train.TrainData.ControlledBySteamID), 1000))
     }, [train.TrainData.ControlledBySteamID])
 
 

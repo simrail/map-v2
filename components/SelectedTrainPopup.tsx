@@ -5,7 +5,7 @@ import styles from '../styles/SelectedTrainPopup.module.css'
 import { useEffect, useState } from "react";
 import TrainText from "./TrainText";
 import { useRouter } from "next/router";
-import {getSteamProfileInfos} from "@/components/steamApi";
+import {getSteamProfileOrBot} from "@/components/steam";
 
 const SelectedTrainPopup = () => {
 
@@ -17,16 +17,11 @@ const SelectedTrainPopup = () => {
     const router = useRouter();
     const { id, trainId } = router.query
 
-    const setData = ({username, avatarUrl}) => { setAvatar(avatarUrl); setUsername(username)};
+    const setData = ([avatarUrl, username]) => { setAvatar(avatarUrl); setUsername(username)};
 
     useEffect(() => {
-        if (selectedTrain) getSteamProfileInfos(selectedTrain.TrainData.ControlledBySteamID).then(setData)
-
-        const interval = setInterval(() => {
-            if (selectedTrain) getData(selectedTrain.TrainData.ControlledBySteamID).then(setData)
-        }, 30000)
-
-        return () => clearInterval(interval)
+        if (selectedTrain) getSteamProfileOrBot(selectedTrain.TrainData.ControlledBySteamID)
+            .then(setData)
     }, [selectedTrain])
 
     return selectedTrain
