@@ -5,7 +5,6 @@ import styles from '../styles/SelectedTrainPopup.module.css'
 import { useEffect, useState } from "react";
 import TrainText from "./TrainText";
 import { useRouter } from "next/router";
-import {getSteamProfileOrBot} from "@/components/steam";
 
 const SelectedTrainPopup = () => {
 
@@ -17,21 +16,46 @@ const SelectedTrainPopup = () => {
     const router = useRouter();
     const { id, trainId } = router.query
 
-    const setData = ([avatarUrl, username]) => { setAvatar(avatarUrl); setUsername(username)};
+
 
     useEffect(() => {
-        if (selectedTrain) getSteamProfileOrBot(selectedTrain.TrainData.ControlledBySteamID)
-            .then(setData)
+
+        if (selectedTrain) getData()
+
+
+        async function getData() {
+            if (selectedTrain.TrainData.ControlledBySteamID) {
+                let avatarRequest = await fetch('/api/profile?steamid=' + selectedTrain.TrainData.ControlledBySteamID);
+                let profile: ProfileResponse = await avatarRequest.json();
+                setAvatar(profile.avatarUrl)
+                setUsername(profile.username)
+            } else {
+                setUsername("BOT")
+                setAvatar(null)
+            }
+        }
+
+        const interval = setInterval(() => {
+            if (selectedTrain) getData()
+        }, 30000)
+
+        return () => clearInterval(interval)
+
+
     }, [selectedTrain])
 
-    return selectedTrain
-        ? <div className={styles.popup}>
+    return (
+        <>
+            {selectedTrain && <div className={styles.popup}>
                 <AiOutlineClose onClick={() => {
                     setSelectedTrain(null);
                     if (trainId) router.replace('/server/' + id);
                 }} size={32} className={styles.closeButton} />
                 <TrainText train={selectedTrain} username={username} avatar={avatar} /></div>
-        : null
+            }
+        </>
+
+    )
 }
 
 export default SelectedTrainPopup;

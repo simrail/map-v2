@@ -1,34 +1,45 @@
 import L from 'leaflet';
 import { Marker, Popup, useMap, useMapEvents } from "react-leaflet";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Train } from "@simrail/types";
 import { ProfileResponse } from "../../pages/api/profile";
 import Image from 'next/image';
 import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
 import TrainText from '../TrainText';
-import {getSteamProfileInfos} from "@/components/steamApi";
-import {getSteamProfileOrBot} from "@/components/steam";
 
 type TrainMarkerProps = {
     train: Train,
 }
-const TrainMarker = ({ train }: TrainMarkerProps) => {
+export const TrainMarker = ({ train }: TrainMarkerProps) => {
 
-    const { setSelectedTrain } = useSelectedTrain()
+    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
 
     const [avatar, setAvatar] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
 
-    const getData = React.useCallback((maybeSteamId: string | null) => {
-        return getSteamProfileOrBot(maybeSteamId).then(([avatarUrl, username]) => {
-            setAvatar(avatarUrl);
-            setUsername(username);
-        })
-    }, [])
-
     useEffect(() => {
-        getData(train.TrainData.ControlledBySteamID)
-            .catch(() => setTimeout(() => getData(train.TrainData.ControlledBySteamID), 1000))
+
+        getData()
+
+        async function getData() {
+            if (train.TrainData.ControlledBySteamID) {
+                let avatarRequest = await fetch('/api/profile?steamid=' + train.TrainData.ControlledBySteamID);
+                let profile: ProfileResponse = await avatarRequest.json();
+                setAvatar(profile.avatarUrl)
+                setUsername(profile.username)
+            } else {
+                setUsername("BOT")
+                setAvatar(null)
+            }
+        }
+
+        const interval = setInterval(() => {
+            getData()
+        }, 30000)
+
+        return () => clearInterval(interval)
+
+
     }, [train.TrainData.ControlledBySteamID])
 
 
@@ -66,9 +77,8 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
             <TrainText train={train} username={username} avatar={avatar} />
         </Popup>
     </Marker>
-}
 
-export default React.memo(TrainMarker)
+}
 
 
 

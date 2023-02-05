@@ -1,24 +1,28 @@
-import {  LayerGroup, LayersControl, MapContainer, TileLayer } from 'react-leaflet'
+import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, Popup, Rectangle, TileLayer, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
-import {useCallback, useEffect, useState} from "react";
+import { useEffect, useState } from "react";
+import { TrainMarker } from "./Markers/TrainMarker";
 import { StationMarker } from "./Markers/StationMarker";
 import { Train, Station } from "@simrail/types";
+import stationsJson from '../components/stations.json'
 import styles from '../styles/Home.module.css'
-import { LayersControlEvent, Map as LeafletMap } from 'leaflet';
+import { LayersControlEvent, LeafletEvent, Map as LeafletMap } from 'leaflet';
 import { useSelectedTrain } from '../contexts/SelectedTrainContext';
 import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
 import { useRouter } from 'next/router';
-import {TrainsList} from "@/components/TrainsList";
-import NonPlayableStations from "@/components/NonPlayableStations";
+import { NonPlayableStationMarker } from './Markers/NonPlayableStationMarker';
+import { Center } from '@mantine/core';
 
 type MapProps = {
     serverId: string | string[]
 }
 
 const Map = ({ serverId }: MapProps) => {
+
+
     const [map, setMap] = useState<LeafletMap | null>(null);
 
     const router = useRouter();
@@ -37,18 +41,22 @@ const Map = ({ serverId }: MapProps) => {
         }
     }, [])
 
-    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
-    const [stations, setStations] = useState<Station[] | null>(null)
 
-    const getTrains = useCallback(() => {
+    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
+
+
+    const [stations, setStations] = useState<Station[] | null>(null)
+    const [isLoading, setLoading] = useState(false)
+
+    function getTrains() {
         fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + serverId)
             .then((res) => res.json())
             .then((fetchedTrains) => {
                 setTrains(fetchedTrains.data)
             })
-    }, [serverId]);
+    }
 
-    const getStations = useCallback(() => {
+    function getStations() {
         fetch('https://panel.simrail.eu:8084/stations-open?serverCode=' + serverId)
             .then((res) => res.json())
             .then((stations) => {
@@ -58,18 +66,21 @@ const Map = ({ serverId }: MapProps) => {
                 // @ts-ignore
                 setStations(stationsData)
             })
-    }, [serverId]);
+    }
 
 
 
     useEffect(() => {
+
         if (selectedTrain && map && trains) {
             // @ts-ignore
             setSelectedTrain(trains.find(train => train.id === selectedTrain.id) ?? null)
             // @ts-ignore
             map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute])
+
         }
-    }, [trains, selectedTrain, map])
+
+    }, [trains, selectedTrain, setSelectedTrain, map])
 
 
     useEffect(() => {
@@ -80,12 +91,16 @@ const Map = ({ serverId }: MapProps) => {
                 map?.setZoom(13)
             }
         }
-    }, [trains, map, trainId])
+    }, [trains, map, setSelectedTrain, trainId])
 
 
     useEffect(() => {
+        setLoading(true)
+
         getTrains()
         getStations()
+
+        setLoading(false)
 
         const interval1 = setInterval(() => {
             getTrains()
@@ -99,6 +114,7 @@ const Map = ({ serverId }: MapProps) => {
         return function () {
             clearInterval(interval1)
             clearInterval(interval2)
+
         }
 
     }, [])
@@ -115,7 +131,7 @@ const Map = ({ serverId }: MapProps) => {
             localStorage.setItem('layer-' + event.name.toLowerCase(), 'false')
         });
 
-    }, [map]) // This caused an infinite loop
+    })
 
     if (!trains || !stations) return <main className={styles.main}>
         <h1>Loading</h1>
@@ -123,6 +139,14 @@ const Map = ({ serverId }: MapProps) => {
         <br />        <br />
         {!stations && <span>Loading stations...</span >}
     </main >
+
+    const center = [51.505, -0.09]
+    const rectangle = [
+        [51.49, -0.08],
+        [51.5, -0.06],
+    ]
+
+
 
     return (
         <>
@@ -181,7 +205,7 @@ const Map = ({ serverId }: MapProps) => {
                         checked={localStorage.getItem('layer-trains') === null || localStorage.getItem('layer-trains') === 'true'}
                         name="Trains">
                         <LayerGroup>
-                            <TrainsList trains={trains} />
+                            {trains.map(train => (<TrainMarker key={train.TrainNoLocal} train={train} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
                     <LayersControl.Overlay checked={localStorage.getItem('layer-dispatch stations') === null || localStorage.getItem('layer-dispatch stations') === 'true'} name="Dispatch stations">
@@ -191,7 +215,7 @@ const Map = ({ serverId }: MapProps) => {
                     </LayersControl.Overlay>
                     <LayersControl.Overlay checked={localStorage.getItem('layer-unplayable dispatch stations') === null || localStorage.getItem('layer-unplayable dispatch stations') === 'true'} name="Unplayable dispatch stations">
                         <LayerGroup>
-                            <NonPlayableStations />
+                            {stationsJson.map(station => (<NonPlayableStationMarker key={station.Name} station={station} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
                 </LayersControl>
