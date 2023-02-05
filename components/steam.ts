@@ -8,5 +8,5 @@ export async function getSteamProfileOrBot(steamId: string | null | undefined) {
         return getSteamProfileInfos(steamId)
             .then((profile) => [profile.avatarUrl, profile.username])
     else
-        return Promise.resolve(["BOT", null]);
+        return Promise.resolve([null, "BOT"]);
 }
