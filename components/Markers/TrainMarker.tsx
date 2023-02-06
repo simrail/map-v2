@@ -6,7 +6,6 @@ import { ProfileResponse } from "../../pages/api/profile";
 import Image from 'next/image';
 import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
 import TrainText from '../TrainText';
-import {getSteamProfileInfos} from "@/components/steamApi";
 import {getSteamProfileOrBot} from "@/components/steam";
 
 type TrainMarkerProps = {
