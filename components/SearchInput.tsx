@@ -37,7 +37,7 @@ export const SearchInput = ({ trains }: SearchInputProps) => {
                 <ul className={style.list}>
                     {searchInput && searchedTrains.map(train =>
 
-                        <li className={style.item} onClick={() => {
+                        <li key={train.id} className={style.item} onClick={() => {
                             setSearch('')
                             setSelectedTrain(train)
                             map?.setZoom(13)
