@@ -25,7 +25,7 @@ export default function Home({ host }) {
         return (<>
             <Head>
                 <title>SimRail - Home</title>
-                <meta name="description" content="Discover the tools created by the community" />
+                <meta name="description" content="Discover the ultimate SimRail experience with our Live Map and EDR tools, crafted by the talented community. Enhance your simulation gameplay now." />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <main >
