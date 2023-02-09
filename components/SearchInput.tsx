@@ -23,7 +23,7 @@ export const SearchInput = ({ trains }: SearchInputProps) => {
         <div className={style.container}>
             <div className={style.content}>
                 <div className={style.inputBox}>
-                    <input className={style.input} type="text" value={searchInput} placeholder="Saisissez le numéro d'un train"
+                    <input className={style.input} type="text" value={searchInput} placeholder="Select your train number"
                         onKeyDown={(event) => {
                             if (event.code === 'Enter') {
                                 setSelectedTrain(searchedTrains[0])
