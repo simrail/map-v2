@@ -68,6 +68,7 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
             <Space h="sm" />
             Station: {station.Name}<br />
             User: {username}<br />
+            Difficulty: {station.DifficultyLevel}<br />
         </Popup>
         <Tooltip offset={[3, 20]} direction={"bottom"} permanent={true}>{station.Name}</Tooltip>
     </Marker >

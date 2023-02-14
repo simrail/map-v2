@@ -1,8 +1,8 @@
-import {  LayerGroup, LayersControl, MapContainer, TileLayer } from 'react-leaflet'
+import { LayerGroup, LayersControl, MapContainer, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
-import {useCallback, useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 import { StationMarker } from "./Markers/StationMarker";
 import { Train, Station } from "@simrail/types";
 import styles from '../styles/Home.module.css'
@@ -11,8 +11,9 @@ import { useSelectedTrain } from '../contexts/SelectedTrainContext';
 import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
 import { useRouter } from 'next/router';
-import {TrainsList} from "@/components/TrainsList";
+import { TrainsList } from "@/components/TrainsList";
 import NonPlayableStations from "@/components/NonPlayableStations";
+import { SearchInput } from './SearchInput';
 
 type MapProps = {
     serverId: string | string[]
@@ -24,6 +25,7 @@ const Map = ({ serverId }: MapProps) => {
     const router = useRouter();
 
     const { trainId } = router.query
+
 
     const [trains, setTrains] = useState<Train[] | null>(null)
 
@@ -115,7 +117,7 @@ const Map = ({ serverId }: MapProps) => {
             localStorage.setItem('layer-' + event.name.toLowerCase(), 'false')
         });
 
-    }, [map]) // This caused an infinite loop
+    }, [map])
 
     if (!trains || !stations) return <main className={styles.main}>
         <h1>Loading</h1>
@@ -135,6 +137,7 @@ const Map = ({ serverId }: MapProps) => {
                 style={{ height: "100vh", width: "100vw" }}
             >
 
+                <SearchInput trains={trains} />
 
                 <Control prepend position='topleft'>
                     <div onClick={() => router.push('/servers')} className={styles.controls}>

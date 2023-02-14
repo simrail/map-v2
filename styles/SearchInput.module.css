@@ -1,0 +1,53 @@
+.wrapper {
+    position: absolute;
+    top: 8px;
+    z-index: 500;
+    width: 100vw
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+}
+
+.content {
+    width: 250px;
+    padding: 8px 16px;
+    /* background: white; */
+}
+
+.inputBox {
+    padding: 8px 16px;
+    background: white;
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 9999px;
+}
+
+.input {
+    width: 100%;
+    background: white;
+}
+
+.list {
+    margin-top: 16px;
+    list-style: none;
+    background: white;
+    color: black;
+    text-align: center;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.1);
+}
+
+.item {
+    padding: 4px 0;
+    cursor: pointer;
+}
+
+.item:not(:last-child) {
+    text-align: center;
+    border-bottom: 1px solid #00000050;
+}
