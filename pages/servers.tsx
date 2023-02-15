@@ -4,6 +4,31 @@ import Link from "next/link";
 import { Server } from '@simrail/types';
 import { useEffect, useState } from 'react';
 import FavoriteStar from '../components/FavoriteStar';
+import { IncomingMessage, ServerResponse } from 'http';
+
+type ServersProps = {
+    req: IncomingMessage,
+    res: ServerResponse,
+}
+
+export async function getServerSideProps({ req, res }: ServersProps) {
+
+    if (req.headers.host === 'www.simrail.app') {
+        return {
+            notFound: true,
+        }
+    }
+
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=1, stale-while-revalidate=59'
+    );
+
+    return {
+        props: {
+        }
+    };
+}
 
 export default function Servers() {
 
