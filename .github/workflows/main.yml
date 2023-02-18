@@ -51,14 +51,14 @@ jobs:
         uses: imranismail/setup-kustomize@v1
         with:
           kustomize-version: "3.6.1"
-      - name: Update Kubernetes resources
-        run: |
-          cd .kubernetes/
-          kustomize edit set image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${GITHUB_SHA}
-          mkdir ../deploy
-          kustomize build > ../deploy/build.yaml
-          cat ../deploy/build.yaml
-          cd ../deploy
+      # - name: Update Kubernetes resources
+      #   run: |
+      #     cd .kubernetes/
+      #     kustomize edit set image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${GITHUB_SHA}
+      #     mkdir ../deploy
+      #     kustomize build > ../deploy/build.yaml
+      #     cat ../deploy/build.yaml
+      #     cd ../deploy
       - name: "Sync ArgoCD Application"
         uses: omegion/argocd-app-actions@master
         with:
