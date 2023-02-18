@@ -2,8 +2,8 @@ name: Create and publish a Docker image
 
 on:
   push:
-#    branches:
-#      - 'main'
+   branches:
+     - 'main'
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
@@ -39,3 +39,28 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+  deploy:
+    needs: build-and-push-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Setup Kustomize
+        uses: imranismail/setup-kustomize@v1
+        with:
+          kustomize-version: "3.6.1"
+      - name: Update Kubernetes resources
+        run: |
+          cd .kubernetes/
+          kustomize edit set image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${GITHUB_SHA}
+          mkdir ../deploy
+          kustomize build > ../deploy/build.yaml
+          cat ../deploy/build.yaml
+          cd ../deploy
+      - name: "Sync ArgoCD Application"
+        uses: omegion/argocd-app-actions@master
+        with:
+          address: ${{ secrets.ARGOCD_ADDRESS }}
+          token: ${{ secrets.ARGOCD_TOKEN }}
+          appName: map-v2
+          action: sync
