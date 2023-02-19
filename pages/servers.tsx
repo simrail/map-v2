@@ -99,7 +99,7 @@ export default function Servers() {
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <main className={styles.main}>
-            <h1>Select your server</h1>
+            <h1>Hello, select your server</h1>
             {!servers && 'Loading servers...'}
             <div className={styles.serverList}>
 
