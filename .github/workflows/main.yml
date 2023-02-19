@@ -46,7 +46,7 @@ jobs:
         with:
           kustomize-version: 5.0.0
       - run: kustomize edit set image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-        working-directory: apps/${{env.APP_NAME}}/base
+        working-directory: apps/${{ github.event.repository.name }}/base
       - run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
