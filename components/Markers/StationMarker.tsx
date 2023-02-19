@@ -16,10 +16,6 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
     const [username, setUsername] = useState<string | null>(null)
 
     useEffect(() => {
-
-
-        getData()
-
         async function getData() {
             if (station.DispatchedBy[0]) {
                 let avatarRequest = await fetch('/api/profile?steamid=' + station.DispatchedBy[0].SteamId);
@@ -32,15 +28,8 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
             }
 
         }
-
-        const interval = setInterval(() => {
-            getData()
-        }, 30000)
-
-        return () => clearInterval(interval)
-
-
-    }, [station.DispatchedBy])
+        getData();
+    }, [station.DispatchedBy?.[0]?.SteamId])
 
 
     let icon = L.icon({

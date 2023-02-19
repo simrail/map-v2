@@ -1,9 +1,7 @@
 import L from 'leaflet';
-import { Marker, Popup, useMap, useMapEvents } from "react-leaflet";
+import { Marker, Popup, useMapEvents } from "react-leaflet";
 import React, { useEffect, useState } from "react";
 import { Train } from "@simrail/types";
-import { ProfileResponse } from "../../pages/api/profile";
-import Image from 'next/image';
 import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
 import TrainText from '../TrainText';
 import {getSteamProfileOrBot} from "@/components/steam";
