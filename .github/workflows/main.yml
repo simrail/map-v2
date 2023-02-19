@@ -26,19 +26,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
   deploy:
@@ -52,7 +46,7 @@ jobs:
       - uses: imranismail/setup-kustomize@v1
         with:
           kustomize-version: 5.0.0
-      - run: kustomize edit set image ${{env.APP_IMAGE}}:${GITHUB_REF#refs/*/}
+      - run: kustomize edit set image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
         working-directory: apps/${{env.APP_NAME}}/overlays/test
       - run: |
           git config user.email "actions@github.com"
