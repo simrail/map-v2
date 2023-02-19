@@ -46,10 +46,10 @@ jobs:
         with:
           kustomize-version: 5.0.0
       - run: kustomize edit set image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-        working-directory: apps/${{env.APP_NAME}}/overlays/test
+        working-directory: apps/${{env.APP_NAME}}/base
       - run: |
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git commit -am "Gitops update to $APP_NAME"
+          git commit -am "Update $APP_NAME"
           git pull --rebase
           git push
