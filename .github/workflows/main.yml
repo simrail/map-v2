@@ -45,24 +45,18 @@ jobs:
     needs: build-and-push-image
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-      - name: Setup Kustomize
-        uses: imranismail/setup-kustomize@v1
+      - uses: actions/checkout@v3
         with:
-          kustomize-version: "3.6.1"
-      # - name: Update Kubernetes resources
-      #   run: |
-      #     cd .kubernetes/
-      #     kustomize edit set image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${GITHUB_SHA}
-      #     mkdir ../deploy
-      #     kustomize build > ../deploy/build.yaml
-      #     cat ../deploy/build.yaml
-      #     cd ../deploy
-      - name: "Sync ArgoCD Application"
-        uses: omegion/argocd-app-actions@master
+          repository: ${{env.GITOPS_REPO}}
+          token: ${{secrets.REPO_TOKEN}}
+      - uses: imranismail/setup-kustomize@v1
         with:
-          address: ${{ secrets.ARGOCD_ADDRESS }}
-          token: ${{ secrets.ARGOCD_TOKEN }}
-          appName: map-v2
-          action: sync
+          kustomize-version: 5.0.0
+      - run: kustomize edit set image ${{env.APP_IMAGE}}:${GITHUB_REF#refs/*/}
+        working-directory: apps/${{env.APP_NAME}}/overlays/test
+      - run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git commit -am "Gitops update to $APP_NAME"
+          git pull --rebase
+          git push
