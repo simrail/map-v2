@@ -24,18 +24,6 @@
     "id": ""
   },
   {
-    "Name": "Sosnowiec Południowy",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.269550321476046,
-    "Longitude": 19.125598915223183,
-    "id": ""
-  },
-  {
     "Name": "Dąbrowa Górnicza Ząbkowice",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -240,18 +228,6 @@
     "id": ""
   },
   {
-    "Name": "Dąbrowa Górnicza Wschodnia",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.30337,
-    "Longitude": 19.31125,
-    "id": ""
-  },
-  {
     "Name": "Będzin Ksawera",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -285,18 +261,6 @@
     "DispatchedBy": [],
     "Latititude": 50.258875,
     "Longitude": 19.092237,
-    "id": ""
-  },
-  {
-    "Name": "Idzikowice",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 51.45015,
-    "Longitude": 20.31392,
     "id": ""
   },
   {
