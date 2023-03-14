@@ -7,8 +7,8 @@
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 50.257830428514104,
-    "Longitude": 19.017074474342863,
+    "Latititude": 50.256732080652974,
+    "Longitude": 19.021499279360807,
     "id": ""
   },
   {
@@ -153,18 +153,6 @@
     "DispatchedBy": [],
     "Latititude": 50.385874,
     "Longitude": 19.340057,
-    "id": ""
-  },
-  {
-    "Name": "Katowice Szopienice Południowe",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.258875,
-    "Longitude": 19.092237,
     "id": ""
   },
   {
