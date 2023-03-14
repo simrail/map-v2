@@ -156,54 +156,6 @@
     "id": ""
   },
   {
-    "Name": "Dąbrowa Górnicza Pogoria",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.350499,
-    "Longitude": 19.240848,
-    "id": ""
-  },
-  {
-    "Name": "Dąbrowa Górnicza Gołonóg",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.343768,
-    "Longitude": 19.225709,
-    "id": ""
-  },
-  {
-    "Name": "Będzin Ksawera",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.330515,
-    "Longitude": 19.157925,
-    "id": ""
-  },
-  {
-    "Name": "Będzin Miasto",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.319178,
-    "Longitude": 19.135523,
-    "id": ""
-  },
-  {
     "Name": "Katowice Szopienice Południowe",
     "Prefix": "",
     "DifficultyLevel": 0,
