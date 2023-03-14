@@ -288,63 +288,27 @@
     "id": ""
   },
   {
-    "Name": "Jaktorów",
+    "Name": "Korytów",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 52.0868088,
-    "Longitude": 20.5520155,
+    "Latititude": 52.0200658,
+    "Longitude": 20.4954014,
     "id": ""
   },
   {
-    "Name": "Grodzisk Mazowiecki",
+    "Name": "Żyrardów",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 52.1101932,
-    "Longitude": 20.6231492,
-    "id": ""
-  },
-  {
-    "Name": "Milanówek",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 52.1248885,
-    "Longitude": 20.6670406,
-    "id": ""
-  },
-  {
-    "Name": "Brwinów",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 52.1417056,
-    "Longitude": 20.7185405,
-    "id": ""
-  },
-  {
-    "Name": "Parzniew",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 52.1570244,
-    "Longitude": 20.7638017,
+    "Latititude": 52.05283204,
+    "Longitude": 20.45168499,
     "id": ""
   },
   {
@@ -355,8 +319,8 @@
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 52.1681255,
-    "Longitude": 20.7978013,
+    "Latititude": 52.1666447,
+    "Longitude": 20.7947273,
     "id": ""
   },
   {
