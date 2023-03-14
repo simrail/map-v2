@@ -36,15 +36,15 @@
     "id": ""
   },
   {
-    "Name": "Łazy",
+    "Name": "Łazy ŁB",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 50.43012201015637,
-    "Longitude": 19.391871759516924,
+    "Latititude": 50.43978712187275,
+    "Longitude": 19.40459475825095,
     "id": ""
   },
   {
@@ -120,7 +120,7 @@
     "id": ""
   },
   {
-    "Name": "Łazy Ła",
+    "Name": "Łazy ŁA",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
@@ -180,27 +180,15 @@
     "id": ""
   },
   {
-    "Name": "Chruszczobród",
+    "Name": "Przemiarki",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 50.400345,
-    "Longitude": 19.329007,
-    "id": ""
-  },
-  {
-    "Name": "Dąbrowa Górnicza Sikorka",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.388950,
-    "Longitude": 19.299095,
+    "Latititude": 50.385874,
+    "Longitude": 19.340057,
     "id": ""
   },
   {
