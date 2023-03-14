@@ -336,6 +336,54 @@
     "id": ""
   },
   {
+    "Name": "Kozioł",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.30827041951533,
+    "Longitude": 19.383104570811348,
+    "id": ""
+  },
+  {
+    "Name": "Dąbrowa Górnicza Towarowa",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.32932205558977,
+    "Longitude": 19.377640767189607,
+    "id": ""
+  },
+  {
+    "Name": "Dąbrowa Górnicza Strzemieszyce",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.31140078325932,
+    "Longitude": 19.267317086518855,
+    "id": ""
+  },
+  {
+    "Name": "Dorota",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.28277153042797,
+    "Longitude": 19.280647603096167,
+    "id": ""
+  },
+  {
     "Name": "Sławków",
     "Prefix": "",
     "DifficultyLevel": 0,
