@@ -192,18 +192,6 @@
     "id": ""
   },
   {
-    "Name": "Korytów",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 52.0200658,
-    "Longitude": 20.4954014,
-    "id": ""
-  },
-  {
     "Name": "Żyrardów",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -323,16 +311,52 @@
     "Longitude": 19.267317086518855,
     "id": ""
   },
-  {
-    "Name": "Dorota",
+	{
+    "Name": "Dąbrowa Górnicza Południowa",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 50.28277153042797,
-    "Longitude": 19.280647603096167,
+    "Latititude": 50.30376041301196,
+    "Longitude": 19.286930814601774,
+    "id": ""
+  },
+  {
+    "Name": "Juliusz",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.27225053790993,
+    "Longitude": 19.225115820679413,
+    "id": ""
+  },
+	{
+    "Name": "Sosnowiec Maczki",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.258592821403184,
+    "Longitude": 19.272513244520184,
+    "id": ""
+  },
+  {
+    "Name": "Sosnowiec Jęzor",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.243520135290744,
+    "Longitude": 19.203652380369107,
     "id": ""
   },
   {
