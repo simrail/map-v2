@@ -288,6 +288,18 @@
     "id": ""
   },
   {
+    "Name": "Warszawa Wschodnia",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 52.25305636317541,
+    "Longitude": 21.058287726145462,
+    "id": ""
+  },
+  {
     "Name": "Kozioł",
     "Prefix": "",
     "DifficultyLevel": 0,
