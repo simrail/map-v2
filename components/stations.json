@@ -384,18 +384,6 @@
     "id": ""
   },
   {
-    "Name": "Bukowno Przymiarki",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.27553,
-    "Longitude": 19.40916,
-    "id": ""
-  },
-  {
     "Name": "Bukowno",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -403,8 +391,8 @@
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 50.26395,
-    "Longitude": 19.45888,
+    "Latititude": 50.26409953366265,
+    "Longitude": 19.452869337282888,
     "id": ""
   },
   {
