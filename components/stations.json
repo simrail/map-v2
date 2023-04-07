@@ -444,30 +444,6 @@
     "id": ""
   },
   {
-    "Name": "Jeżówka",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.39929,
-    "Longitude": 19.81571,
-    "id": ""
-  },
-  {
-    "Name": "Gajówka",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.39461,
-    "Longitude": 19.87859,
-    "id": ""
-  },
-  {
     "Name": "Tunel",
     "Prefix": "",
     "DifficultyLevel": 0,
