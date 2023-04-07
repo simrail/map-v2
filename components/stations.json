@@ -538,5 +538,17 @@
     "Latititude": 50.56586,
     "Longitude": 20.05488,
     "id": ""
+  },
+  {
+    "Name": "Miechów",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.35469185330557,
+    "Longitude": 20.01172180533395,
+    "id": ""
   }
 ]
