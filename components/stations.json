@@ -347,7 +347,19 @@
     "Longitude": 19.267317086518855,
     "id": ""
   },
-	{
+  {
+    "Name": "Dąbrowa Górnicza Huta Katowice",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.33525286581736,
+    "Longitude": 19.26021711755751,
+    "id": ""
+  },
+  {
     "Name": "Dąbrowa Górnicza Południowa",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -371,7 +383,7 @@
     "Longitude": 19.225115820679413,
     "id": ""
   },
-	{
+  {
     "Name": "Sosnowiec Maczki",
     "Prefix": "",
     "DifficultyLevel": 0,
