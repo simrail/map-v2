@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { Marker, Popup, useMapEvents } from "react-leaflet";
+import { Marker, Popup, useMapEvents, Tooltip } from "react-leaflet";
 import React, { useEffect, useState } from "react";
 import { Train } from "@simrail/types";
 import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
@@ -62,6 +62,7 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
         <Popup>
             <TrainText train={train} username={username} avatar={avatar} />
         </Popup>
+        <Tooltip offset={[2, -10]} direction={"top"} opacity={0.8} permanent={true}>{train.TrainNoLocal}</Tooltip>
     </Marker>
 }
 
