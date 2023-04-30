@@ -204,15 +204,27 @@
     "id": ""
   },
   {
-    "Name": "Szeligi",
+    "Name": "Biała Rawska",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 51.942969,
-    "Longitude": 20.4571999,
+    "Latititude": 51.794795799990865,
+    "Longitude": 20.439772087828576,
+    "id": ""
+  },
+  {
+    "Name": "Marków",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 51.96781803398308,
+    "Longitude": 20.49848973897488,
     "id": ""
   },
   {
