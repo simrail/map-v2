@@ -348,6 +348,18 @@
     "id": ""
   },
   {
+    "Name": "Warszawa Grochów",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 52.25382855010197,
+    "Longitude": 21.09513806297933,
+    "id": ""
+  },
+  {
     "Name": "Kozioł",
     "Prefix": "",
     "DifficultyLevel": 0,
