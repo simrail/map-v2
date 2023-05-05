@@ -64,6 +64,9 @@ dependencies:
   react-leaflet-custom-control:
     specifier: ^1.3.1
     version: 1.3.1(leaflet@1.9.3)(react-dom@18.2.0)(react@18.2.0)
+  react-leaflet-drift-marker:
+    specifier: ^4.0.0
+    version: 4.0.0(leaflet@1.9.3)(react-leaflet@4.2.0)(react@18.2.0)
   sharp:
     specifier: ^0.31.3
     version: 0.31.3
@@ -2300,6 +2303,14 @@ packages:
     resolution: {integrity: sha512-vDBFdlUAwjSEGep9ih8kfJilf6yN8V9zTbF5NC/1ZwLeGko3RUQepspPnGCRMFV51dY3Lb3hziboicrFz+rxQA==}
     dev: false
 
+  /leaflet-drift-marker@2.0.0(leaflet@1.9.3):
+    resolution: {integrity: sha512-dmYMW5A/rpNA2YGnakMzhhQNGJADjJG1L6THa/UKMYZ/CI3podhmsCaWCNh0/DnqcxRaSCR/8JBp+iimNx7lEQ==}
+    peerDependencies:
+      leaflet: '>=1.2.0'
+    dependencies:
+      leaflet: 1.9.3
+    dev: false
+
   /leaflet-geosearch@3.7.0:
     resolution: {integrity: sha512-pvDiBc+gnl0eCazT8Ls88cbCQN6NVFoYYqlK6wtQFxObkNlzlj1p919XKuhKJwrLQiF97GxY8pny5mcV9kCe6g==}
     optionalDependencies:
@@ -2729,6 +2740,19 @@ packages:
       leaflet: 1.9.3
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-leaflet-drift-marker@4.0.0(leaflet@1.9.3)(react-leaflet@4.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-lOGVYEXOtKqS+g+XvcH2fabntfkFw3L7CG09SOcrqAslhv9cOwSgqG8kpXXaJYDGnKhpJQtb01AGu0o9Trmesg==}
+    peerDependencies:
+      leaflet: '>=1.7'
+      react: '>=18.0.0'
+      react-leaflet: '>=4.x'
+    dependencies:
+      leaflet: 1.9.3
+      leaflet-drift-marker: 2.0.0(leaflet@1.9.3)
+      react: 18.2.0
+      react-leaflet: 4.2.0(leaflet@1.9.3)(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /react-leaflet@4.2.0(leaflet@1.9.3)(react-dom@18.2.0)(react@18.2.0):
