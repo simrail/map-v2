@@ -53,7 +53,7 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
         }}
     >
         <Popup>
-            <Image src={"/stations/" + station.id + '.jpg'} alt={station.Name} width={200} height={75} style={{ borderRadius: '6px' }} /><br />
+            <Image src={station.MainImageURL} alt={station.Name} width={200} height={86} style={{ borderRadius: '6px' }} /><br />
             <Space h="sm" />
             Station: {station.Name}<br />
             User: {username}<br />
