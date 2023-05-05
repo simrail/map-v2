@@ -48,6 +48,18 @@
     "id": ""
   },
   {
+    "Name": "Katowice Janów",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.23756415590628,
+    "Longitude": 19.07915703523147,
+    "id": ""
+  },
+  {
     "Name": "Dąbrowa Górnicza Ząbkowice",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -187,8 +199,20 @@
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 51.46685425059842,
-    "Longitude": 20.39587091070566,
+    "Latititude": 51.47348405723441,
+    "Longitude": 20.37363669889725,
+    "id": ""
+  },
+  {
+    "Name": "Sprowa",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.59304492206253,
+    "Longitude": 19.88301571264459,
     "id": ""
   },
   {
@@ -204,15 +228,27 @@
     "id": ""
   },
   {
-    "Name": "Szeligi",
+    "Name": "Biała Rawska",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 51.942969,
-    "Longitude": 20.4571999,
+    "Latititude": 51.794795799990865,
+    "Longitude": 20.439772087828576,
+    "id": ""
+  },
+  {
+    "Name": "Marków",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 51.96781803398308,
+    "Longitude": 20.49848973897488,
     "id": ""
   },
   {
@@ -312,6 +348,18 @@
     "id": ""
   },
   {
+    "Name": "Warszawa Grochów",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 52.25382855010197,
+    "Longitude": 21.09513806297933,
+    "id": ""
+  },
+  {
     "Name": "Kozioł",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -347,7 +395,19 @@
     "Longitude": 19.267317086518855,
     "id": ""
   },
-	{
+  {
+    "Name": "Dąbrowa Górnicza Huta Katowice",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.33525286581736,
+    "Longitude": 19.26021711755751,
+    "id": ""
+  },
+  {
     "Name": "Dąbrowa Górnicza Południowa",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -355,23 +415,11 @@
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 50.30376041301196,
-    "Longitude": 19.286930814601774,
+    "Latititude": 50.312566909772805,
+    "Longitude": 19.287130878339372,
     "id": ""
   },
   {
-    "Name": "Juliusz",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.27225053790993,
-    "Longitude": 19.225115820679413,
-    "id": ""
-  },
-	{
     "Name": "Sosnowiec Maczki",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -444,15 +492,15 @@
     "id": ""
   },
   {
-    "Name": "Chrząstowice Olkuskie",
+    "Name": "Zarzecze APO",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 50.3451,
-    "Longitude": 19.68608,
+    "Latititude": 50.35678857895427,
+    "Longitude": 19.69180795502556,
     "id": ""
   },
   {
@@ -465,6 +513,18 @@
     "DispatchedBy": [],
     "Latititude": 50.3759,
     "Longitude": 19.7723,
+    "id": ""
+  },
+  {
+    "Name": "Charsznica",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.396613769760606,
+    "Longitude": 19.934853049956352,
     "id": ""
   },
   {
@@ -513,6 +573,18 @@
     "DispatchedBy": [],
     "Latititude": 50.56586,
     "Longitude": 20.05488,
+    "id": ""
+  },
+  {
+    "Name": "Miechów",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.35469185330557,
+    "Longitude": 20.01172180533395,
     "id": ""
   }
 ]
