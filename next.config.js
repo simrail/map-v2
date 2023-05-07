@@ -3,7 +3,14 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'standalone',
   images: {
-    domains: ['api1.aws.simrail.eu'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api1.aws.simrail.eu',
+        port: '8082',
+        pathname: '/**',
+      },
+    ],
   },
 }
 
