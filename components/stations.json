@@ -1,14 +1,28 @@
 [
   {
-    "Name": "Katowice",
+    "Name": "Katowice Tow. KTC",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 50.256732080652974,
-    "Longitude": 19.021499279360807,
+    "Latititude": 50.26528905318747,
+    "Longitude": 18.98548711536283,
+    "id": ""
+  },
+  {
+    "Name": "Brynów",
+    "Prefix": "",
+    "DifficultyLevel": 0,
+    "MainImageURL": "",
+    "AdditionalImage1URL": "",
+    "AdditionalImage2URL": "",
+    "DispatchedBy": [],
+    "Latititude": 50.248255774194334,
+    "Longitude": 18.988992476762228,
+    "id": ""
+  },
     "id": ""
   },
   {
