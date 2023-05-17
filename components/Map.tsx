@@ -69,7 +69,11 @@ const Map = ({ serverId }: MapProps) => {
             // @ts-ignore
             setSelectedTrain(trains.find(train => train.id === selectedTrain.id) ?? null)
             // @ts-ignore
-            map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute], undefined, { animate: true, duration: 5, easeLinearity: 0.5 })
+            map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute], undefined, {
+                animate: true,
+                duration: 4,
+                easeLinearity: 0.4
+            })
         }
     }, [trains, selectedTrain, map])
 
