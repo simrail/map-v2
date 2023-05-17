@@ -30,7 +30,7 @@ const SelectedTrainPopup = () => {
                     setSelectedTrain(null);
                     if (trainId) router.replace('/server/' + id);
                 }} size={32} className={styles.closeButton} />
-                <TrainText train={selectedTrain} username={username} avatar={avatar} /></div>
+                <TrainText train={selectedTrain} username={username} details={true} server={id} avatar={avatar} /></div>
         : null
 }
 
