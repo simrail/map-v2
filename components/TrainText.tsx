@@ -12,7 +12,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
 
     return (
         <>
-            <Image src={getTrainImagePath(train)} width={"64"} height={"64"} alt={train.Vehicles[0]} /><br />
+            <Image src={getTrainImagePath(train)} width={"256"} height={"108"} alt={train.Vehicles[0]} class="train-image" /><br />
             Locomotive: {train.Vehicles[0]}<br />
             Train: {train.TrainName} {train.TrainNoLocal}<br />
             User: {username}<br />
