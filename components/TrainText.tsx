@@ -6,6 +6,8 @@ type TrainTextProps = {
     train: Train
     username: string
     avatar: string | null
+    details: boolean,
+    server: string
 }
 
 const TrainText = ({ train, username, details, server }: TrainTextProps) => {
