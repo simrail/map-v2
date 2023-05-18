@@ -74,7 +74,5 @@ export default React.memo(TrainMarker)
 
 export function getTrainImagePath(train: Train): string {
     var [prefix, suffix] = train.Vehicles[0].split('/');
-    // TODO: get image for E6ACTa-014
-    if (suffix === 'E6ACTa-014') suffix = 'E6ACTad';
     return `/trains/${suffix}.png`;
 }
