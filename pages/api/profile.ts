@@ -32,6 +32,11 @@ export default async function handler(
     
         
         let data = await fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + process.env.STEAM_TOKEN + "&steamids=" + steamid)
+        let errorCode = result.ok ? false : result.statusCode
+        if (errorCode) {
+            console.log(result, errorCode)
+            res.status(500).json({ error: true });
+        }
         let steamProfileResponse: SteamProfileResponse = await data.json()
     
     
@@ -44,6 +49,6 @@ export default async function handler(
         res.setHeader('Cache-Control', 'public, s-maxage=86400');
         res.status(200).json({ avatarUrl: avatar, username: username })
     } catch (e) {
-        return console.error(e); // error in the above string (in this case, yes)!
+        console.error(e);
     }
 }
