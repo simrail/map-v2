@@ -18,10 +18,10 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
     useEffect(() => {
         async function getData() {
             if (station.DispatchedBy[0]) {
-                let avatarRequest = await fetch('/api/profile?steamid=' + station.DispatchedBy[0].SteamId);
+                let avatarRequest = await fetch('https://simrail-edr.emeraldnetwork.xyz/steam/' + station.DispatchedBy[0].SteamId);
                 let profile: ProfileResponse = await avatarRequest.json();
-                setAvatar(profile.avatarUrl)
-                setUsername(profile.username)
+                setAvatar(profile.avatar)
+                setUsername(profile.personaname)
             } else {
                 setAvatar(null);
                 setUsername("BOT");
