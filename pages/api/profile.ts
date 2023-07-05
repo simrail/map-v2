@@ -34,7 +34,7 @@ export default async function handler(
         let data = await fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + process.env.STEAM_TOKEN + "&steamids=" + steamid)
         let errorCode = data.ok ? false : data.status
         if (errorCode) {
-            console.log(result, errorCode)
+            console.log(data, errorCode)
             res.status(500).json({ error: true });
         }
         let steamProfileResponse: SteamProfileResponse = await data.json()
