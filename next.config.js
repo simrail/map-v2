@@ -7,7 +7,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'api1.aws.simrail.eu',
-        port: '8082',
+        port: '8083',
         pathname: '/**',
       },
     ],
