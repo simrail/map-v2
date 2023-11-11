@@ -62,7 +62,7 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 
     >
         <Popup>
-            <TrainText train={train} username={username} avatar={avatar} />
+            <TrainText train={train} username={username} details={false} server={''} avatar={avatar} />
         </Popup>
         <Tooltip offset={[2, -10]} direction={"top"} opacity={0.8} permanent={true}>{train.TrainNoLocal}</Tooltip>
     </ReactLeafletDriftMarker>
@@ -73,25 +73,6 @@ export default React.memo(TrainMarker)
 
 
 export function getTrainImagePath(train: Train): string {
-    let trains = {
-        'Pendolino/ED250-018 Variant': '/trains/ED250.png', // DONE
-        'Elf/EN76-006': '/trains/EN76.png', // DONE
-        '4E/4E': '/trains/4EC.png', // DONE
-        'Traxx/E186-134': '/trains/E186.png', // DONE
-        'Traxx/Traxx:G': '/trains/E186.png', // DONE
-        'Traxx/Traxx': '/trains/E186.png', // DONE
-        '4E/EU07-096': '/trains/EP07.png', // DONE
-        '4E/EP08-001': '/trains/EP08.png', // DONE
-        'Elf/EN96-001': '/trains/EN76.png', // DONE
-        '4E/EU07-085': '/trains/4EIC-01.png', // DONE
-        '4E/EP07-135': '/trains/4EIC-01.png', // DONE
-        '4E/4E:G': '/trains/4EIC-01.png', // DONE
-        'Dragon2/ET25-002': '/trains/ET25-01.png', // DONE
-        'Dragon2/ET25-002:G': '/trains/ET25-01.png', // DONE
-        'Dragon2/E6ACTad': '/trains/ET25-01.png', // DONE
-        'Elf/EN76-022': '/trains/EN76.png', // DONE
-    }
-
-    // @ts-ignore
-    return trains[train.Vehicles[0]]
+    var [prefix, suffix] = train.Vehicles[0].split('/');
+    return `/trains/${suffix}.png`;
 }
