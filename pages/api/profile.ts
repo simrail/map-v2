@@ -16,28 +16,40 @@ type SteamProfilePlayer = {
 }
 
 type ProfileResponse = {
-    avatarUrl: string,
-    username: string,
+    avatar: string,
+    personaname: string,
 }
 export type { ProfileResponse }
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<ProfileResponse | { error: true }>
 ) {
-    const { steamid } = req.query
 
-    if (!steamid) return res.status(400).json({ error: true });
+    // try {
+    //     const { steamid } = req.query
 
-    let data = await fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + process.env.STEAM_TOKEN + "&steamids=" + steamid)
-    let steamProfileResponse: SteamProfileResponse = await data.json()
-
-
-    if (!steamProfileResponse.response.players[0]) return res.status(400).json({ error: true });
-
-    let avatar = steamProfileResponse.response.players[0].avatarmedium
-    let username = steamProfileResponse.response.players[0].personaname
+    //     if (!steamid) return res.status(400).json({ error: true });
 
 
-    res.setHeader('Cache-Control', 'public, s-maxage=86400');
-    res.status(200).json({ avatarUrl: avatar, username: username })
+    //     let data = await fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" + process.env.STEAM_TOKEN + "&steamids=" + steamid)
+    //     let errorCode = data.ok ? false : data.status
+    //     if (errorCode) {
+    //         console.log(data, errorCode)
+    //         res.status(500).json({ error: true });
+    //     }
+    //     let steamProfileResponse: SteamProfileResponse = await data.json()
+
+
+    //     if (!steamProfileResponse.response.players[0]) return res.status(400).json({ error: true });
+
+    //     let avatar = steamProfileResponse.response.players[0].avatarmedium
+    //     let username = steamProfileResponse.response.players[0].personaname
+
+
+    //     res.setHeader('Cache-Control', 'public, s-maxage=86400');
+    //     res.status(200).json({ avatarUrl: avatar, username: username })
+    // } catch (e) {
+    //     console.error(e);
+    // }
+    res.status(500)
 }
