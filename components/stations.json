@@ -180,18 +180,6 @@
     "id": ""
   },
   {
-    "Name": "Łazy Ła",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.453913618832836,
-    "Longitude": 19.42040567304847,
-    "id": ""
-  },
-  {
     "Name": "Myszków",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -441,18 +429,6 @@
     "DispatchedBy": [],
     "Latititude": 50.243520135290744,
     "Longitude": 19.203652380369107,
-    "id": ""
-  },
-  {
-    "Name": "Sławków",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.29491,
-    "Longitude": 19.37465,
     "id": ""
   },
   {
