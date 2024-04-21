@@ -96,18 +96,6 @@
     "id": ""
   },
   {
-    "Name": "Łazy",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.4311991244477,
-    "Longitude": 19.393816030257934,
-    "id": ""
-  },
-  {
     "Name": "Starzyny",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -165,18 +153,6 @@
     "DispatchedBy": [],
     "Latititude": 50.26578,
     "Longitude": 19.17415,
-    "id": ""
-  },
-  {
-    "Name": "Sosnowiec Kazimierz",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.28986,
-    "Longitude": 19.23246,
     "id": ""
   },
   {
@@ -252,39 +228,15 @@
     "id": ""
   },
   {
-    "Name": "Pruszków",
+    "Name": "Józefinów",
     "Prefix": "",
     "DifficultyLevel": 0,
     "MainImageURL": "",
     "AdditionalImage1URL": "",
     "AdditionalImage2URL": "",
     "DispatchedBy": [],
-    "Latititude": 52.1666447,
-    "Longitude": 20.7947273,
-    "id": ""
-  },
-  {
-    "Name": "Piastów",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 52.1828604,
-    "Longitude": 20.8422705,
-    "id": ""
-  },
-  {
-    "Name": "Warszawa Ursus-Niedźwiadek",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 52.19132,
-    "Longitude": 20.86959,
+    "Latititude": 52.18587897581022,
+    "Longitude": 20.85313515843776,
     "id": ""
   },
   {
@@ -384,18 +336,6 @@
     "id": ""
   },
   {
-    "Name": "Dąbrowa Górnicza Huta Katowice",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.33525286581736,
-    "Longitude": 19.26021711755751,
-    "id": ""
-  },
-  {
     "Name": "Dąbrowa Górnicza Południowa",
     "Prefix": "",
     "DifficultyLevel": 0,
@@ -429,18 +369,6 @@
     "DispatchedBy": [],
     "Latititude": 50.243520135290744,
     "Longitude": 19.203652380369107,
-    "id": ""
-  },
-  {
-    "Name": "Bukowno",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.26409953366265,
-    "Longitude": 19.452869337282888,
     "id": ""
   },
   {
@@ -501,30 +429,6 @@
     "DispatchedBy": [],
     "Latititude": 50.396613769760606,
     "Longitude": 19.934853049956352,
-    "id": ""
-  },
-  {
-    "Name": "Tunel",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.432503775609625,
-    "Longitude": 19.990391777415322,
-    "id": ""
-  },
-  {
-    "Name": "Kozłów",
-    "Prefix": "",
-    "DifficultyLevel": 0,
-    "MainImageURL": "",
-    "AdditionalImage1URL": "",
-    "AdditionalImage2URL": "",
-    "DispatchedBy": [],
-    "Latititude": 50.48154,
-    "Longitude": 20.01581,
     "id": ""
   },
   {
