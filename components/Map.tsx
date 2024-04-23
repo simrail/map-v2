@@ -31,6 +31,8 @@ const Map = ({ serverId }: MapProps) => {
 
     const [theme, setTheme] = useState('light')
 
+    const [ETCS, setETCS] = useState(false);
+
     useEffect(() => {
         let data = localStorage.getItem('theme')
         if (data) {
@@ -41,6 +43,7 @@ const Map = ({ serverId }: MapProps) => {
 
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
     const [stations, setStations] = useState<Station[] | null>(null)
+
 
     const getTrains = useCallback(() => {
         fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + serverId)
@@ -174,9 +177,8 @@ const Map = ({ serverId }: MapProps) => {
                     </div>
                 </Control>
 
-
                 <TileLayer className={styles.test}
-                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
+                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <LayersControl position="bottomright" collapsed={false} >
@@ -187,14 +189,29 @@ const Map = ({ serverId }: MapProps) => {
                             <TrainsList trains={trains} />
                         </LayerGroup>
                     </LayersControl.Overlay>
+
                     <LayersControl.Overlay checked={localStorage.getItem('layer-dispatch stations') === null || localStorage.getItem('layer-dispatch stations') === 'true'} name="Dispatch stations">
                         <LayerGroup>
                             {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked={localStorage.getItem('layer-unplayable dispatch stations') === null || localStorage.getItem('layer-unplayable dispatch stations') === 'true'} name="Unplayable dispatch stations">
+
+                    <LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-unplayable dispatch stations') === null || localStorage.getItem('layer-unplayable dispatch stations') === 'true'}
+                        name="Unplayable dispatch stations">
                         <LayerGroup>
                             <NonPlayableStations />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+
+                    <LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-ETCS') === null || localStorage.getItem('layer-ETCS') === 'true'} 
+                        name="ETCS">
+                        <LayerGroup>
+                            <TileLayer
+                                url="https://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png"
+                                opacity={1.0}
+                            />
                         </LayerGroup>
                     </LayersControl.Overlay>
                 </LayersControl>
