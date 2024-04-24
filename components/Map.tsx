@@ -178,7 +178,7 @@ const Map = ({ serverId }: MapProps) => {
                 </Control>
 
                 <TileLayer className={styles.test}
-                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
+                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
                 <LayersControl position="bottomright" collapsed={false} >
@@ -205,12 +205,12 @@ const Map = ({ serverId }: MapProps) => {
                     </LayersControl.Overlay>
 
                     <LayersControl.Overlay 
-                        checked={localStorage.getItem('layer-ETCS') === null || localStorage.getItem('layer-ETCS') === 'true'} 
-                        name="ETCS">
+                        checked={localStorage.getItem('layer-Signalling') === null || localStorage.getItem('layer-Signalling') === 'true'} 
+                        name="Signalling">
                         <LayerGroup>
                             <TileLayer
-                                url="https://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png"
-                                opacity={1.0}
+                                url="https://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png" 
+                                // Looks a bit wired in dark mode due to .css putting everything in a greyscale but it is still possible to differ the signalling systems.
                             />
                         </LayerGroup>
                     </LayersControl.Overlay>
