@@ -94,3 +94,8 @@ body.dark .leaflet-tile {
 body.light .leaflet-tile {
   filter: none;
 }
+
+.train-image {
+  margin: auto;
+  display: block;
+}
