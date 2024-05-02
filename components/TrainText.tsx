@@ -17,6 +17,8 @@ const TrainText = ({ train, username }: TrainTextProps) => {
             trainAmount++;
         }
     }
+    if(train.Vehicles[0].includes('EN57') == true)
+        trainAmount = train.Vehicles.length;
 
     let trainAmountString = '';
     if (trainAmount > 1) 
@@ -24,7 +26,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
 
     let wagonsAmount = train.Vehicles.length - trainAmount;
     let wagonsAmountString = ''
-    if (wagonsAmount > 0 && train.Vehicles[0].includes('EN57') == false) // Some EN57 show wagons = 1 one for some reason so just ignore them
+    if (wagonsAmount > 0 && train.Vehicles[0].includes('EN57') == false) // En57 works in wierd ways, code above fixes that second part of statment is not necessary
         wagonsAmountString = <>Wagons: x{wagonsAmount} <br /></>;
 
     let distanceToSignal = (train.TrainData.DistanceToSignalInFront/1000).toFixed(1) + "km"
