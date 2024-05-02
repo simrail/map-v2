@@ -1,37 +1,37 @@
-import { Circle, FeatureGroup, LayerGroup, LayersControl, MapContainer, Marker, Popup, Rectangle, TileLayer, useMapEvents } from 'react-leaflet'
+import { LayerGroup, LayersControl, MapContainer, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
-import { useEffect, useState } from "react";
-import { TrainMarker } from "./Markers/TrainMarker";
+import { useCallback, useEffect, useState } from "react";
 import { StationMarker } from "./Markers/StationMarker";
 import { Train, Station } from "@simrail/types";
-import stationsJson from '../components/stations.json'
 import styles from '../styles/Home.module.css'
-import { Map as LeafletMap } from 'leaflet';
+import { LayersControlEvent, Map as LeafletMap } from 'leaflet';
 import { useSelectedTrain } from '../contexts/SelectedTrainContext';
 import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
 import { useRouter } from 'next/router';
-import { NonPlayableStationMarker } from './Markers/NonPlayableStationMarker';
-import { Center } from '@mantine/core';
+import { TrainsList } from "@/components/TrainsList";
+import NonPlayableStations from "@/components/NonPlayableStations";
+import { SearchInput } from './SearchInput';
 
 type MapProps = {
     serverId: string | string[]
 }
 
 const Map = ({ serverId }: MapProps) => {
-
-
     const [map, setMap] = useState<LeafletMap | null>(null);
 
     const router = useRouter();
 
     const { trainId } = router.query
 
+
     const [trains, setTrains] = useState<Train[] | null>(null)
 
     const [theme, setTheme] = useState('light')
+
+    const [ETCS, setETCS] = useState(false);
 
     useEffect(() => {
         let data = localStorage.getItem('theme')
@@ -41,22 +41,19 @@ const Map = ({ serverId }: MapProps) => {
         }
     }, [])
 
-
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
-
-
     const [stations, setStations] = useState<Station[] | null>(null)
-    const [isLoading, setLoading] = useState(false)
 
-    function getTrains() {
+
+    const getTrains = useCallback(() => {
         fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + serverId)
             .then((res) => res.json())
             .then((fetchedTrains) => {
                 setTrains(fetchedTrains.data)
             })
-    }
+    }, [serverId]);
 
-    function getStations() {
+    const getStations = useCallback(() => {
         fetch('https://panel.simrail.eu:8084/stations-open?serverCode=' + serverId)
             .then((res) => res.json())
             .then((stations) => {
@@ -66,21 +63,18 @@ const Map = ({ serverId }: MapProps) => {
                 // @ts-ignore
                 setStations(stationsData)
             })
-    }
+    }, [serverId]);
 
 
 
     useEffect(() => {
-
         if (selectedTrain && map && trains) {
             // @ts-ignore
             setSelectedTrain(trains.find(train => train.id === selectedTrain.id) ?? null)
             // @ts-ignore
-            map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute])
-
+            map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute], undefined, { animate: true, duration: 5, easeLinearity: 0.5 })
         }
-
-    }, [trains, selectedTrain, setSelectedTrain, map])
+    }, [trains, selectedTrain, map])
 
 
     useEffect(() => {
@@ -91,16 +85,12 @@ const Map = ({ serverId }: MapProps) => {
                 map?.setZoom(13)
             }
         }
-    }, [trains, map, setSelectedTrain, trainId])
+    }, [trains, map, trainId])
 
 
     useEffect(() => {
-        setLoading(true)
-
         getTrains()
         getStations()
-
-        setLoading(false)
 
         const interval1 = setInterval(() => {
             getTrains()
@@ -114,11 +104,23 @@ const Map = ({ serverId }: MapProps) => {
         return function () {
             clearInterval(interval1)
             clearInterval(interval2)
-
         }
 
     }, [])
 
+    useEffect(() => {
+
+        if (!map) return;
+
+        map.on('overlayadd', function (event: LayersControlEvent) {
+            localStorage.setItem('layer-' + event.name.toLowerCase(), 'true')
+        });
+
+        map.on('overlayremove', function (event: LayersControlEvent) {
+            localStorage.setItem('layer-' + event.name.toLowerCase(), 'false')
+        });
+
+    }, [map])
 
     if (!trains || !stations) return <main className={styles.main}>
         <h1>Loading</h1>
@@ -126,14 +128,6 @@ const Map = ({ serverId }: MapProps) => {
         <br />        <br />
         {!stations && <span>Loading stations...</span >}
     </main >
-
-    const center = [51.505, -0.09]
-    const rectangle = [
-        [51.49, -0.08],
-        [51.5, -0.06],
-    ]
-
-
 
     return (
         <>
@@ -146,6 +140,7 @@ const Map = ({ serverId }: MapProps) => {
                 style={{ height: "100vh", width: "100vw" }}
             >
 
+                <SearchInput trains={trains} />
 
                 <Control prepend position='topleft'>
                     <div onClick={() => router.push('/servers')} className={styles.controls}>
@@ -182,26 +177,41 @@ const Map = ({ serverId }: MapProps) => {
                     </div>
                 </Control>
 
-
                 <TileLayer className={styles.test}
-                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
+                    attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                {/* </LayersControl.BaseLayer> */}
                 <LayersControl position="bottomright" collapsed={false} >
-                    <LayersControl.Overlay checked name="Trains">
+                    <LayersControl.Overlay
+                        checked={localStorage.getItem('layer-trains') === null || localStorage.getItem('layer-trains') === 'true'}
+                        name="Trains">
                         <LayerGroup>
-                            {trains.map(train => (<TrainMarker key={train.TrainNoLocal} train={train} />))}
+                            <TrainsList trains={trains} />
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name="Dispatch stations">
+
+                    <LayersControl.Overlay checked={localStorage.getItem('layer-dispatch stations') === null || localStorage.getItem('layer-dispatch stations') === 'true'} name="Dispatch stations">
                         <LayerGroup>
                             {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
                         </LayerGroup>
                     </LayersControl.Overlay>
-                    <LayersControl.Overlay checked name="Unplayable dispatch stations">
+
+                    <LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-unplayable dispatch stations') === null || localStorage.getItem('layer-unplayable dispatch stations') === 'true'}
+                        name="Unplayable dispatch stations">
                         <LayerGroup>
-                            {stationsJson.map(station => (<NonPlayableStationMarker key={station.Name} station={station} />))}
+                            <NonPlayableStations />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+
+                    <LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-Signalling') === null || localStorage.getItem('layer-Signalling') === 'true'} 
+                        name="Signalling">
+                        <LayerGroup>
+                            <TileLayer
+                                url="https://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png" 
+                                // Looks a bit wired in dark mode due to .css putting everything in a greyscale but it is still possible to differ the signalling systems.
+                            />
                         </LayerGroup>
                     </LayersControl.Overlay>
                 </LayersControl>

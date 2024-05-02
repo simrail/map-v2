@@ -16,31 +16,20 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
     const [username, setUsername] = useState<string | null>(null)
 
     useEffect(() => {
-
-
-        getData()
-
         async function getData() {
             if (station.DispatchedBy[0]) {
-                let avatarRequest = await fetch('/api/profile?steamid=' + station.DispatchedBy[0].SteamId);
+                let avatarRequest = await fetch('https://simrail-edr.emeraldnetwork.xyz/steam/' + station.DispatchedBy[0].SteamId);
                 let profile: ProfileResponse = await avatarRequest.json();
-                setAvatar(profile.avatarUrl)
-                setUsername(profile.username)
+                setAvatar(profile.avatar)
+                setUsername(profile.personaname)
             } else {
                 setAvatar(null);
                 setUsername("BOT");
             }
 
         }
-
-        const interval = setInterval(() => {
-            getData()
-        }, 30000)
-
-        return () => clearInterval(interval)
-
-
-    }, [station.DispatchedBy])
+        getData();
+    }, [station.DispatchedBy?.[0]?.SteamId])
 
 
     let icon = L.icon({
@@ -64,10 +53,11 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
         }}
     >
         <Popup>
-            <Image src={"/stations/" + station.Prefix + '.jpg'} alt={station.Name} width={200} height={75} style={{ borderRadius: '6px' }} /><br />
+            <Image src={station.MainImageURL} alt={station.Name} width={200} height={86} style={{ borderRadius: '6px' }} /><br />
             <Space h="sm" />
             Station: {station.Name}<br />
             User: {username}<br />
+            Difficulty: {station.DifficultyLevel}<br />
         </Popup>
         <Tooltip offset={[3, 20]} direction={"bottom"} permanent={true}>{station.Name}</Tooltip>
     </Marker >
