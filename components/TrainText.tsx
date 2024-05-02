@@ -13,12 +13,10 @@ const TrainText = ({ train, username }: TrainTextProps) => {
     let trainType = train.Vehicles[0];
     let trainAmount = 1
     for (let i = 1; i < train.Vehicles.length; i++) {
-        if (train.Vehicles[i] === trainType) {
+        if (train.Vehicles[i] === trainType || train.Vehicles[i].split("/")[0] == trainType.split("/")[0]) { // Loco num can vary hence the before /
             trainAmount++;
         }
     }
-    if(train.Vehicles[0].includes('EN57') == true)
-        trainAmount = train.Vehicles.length;
 
     let trainAmountString = '';
     if (trainAmount > 1) 
@@ -26,7 +24,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
 
     let wagonsAmount = train.Vehicles.length - trainAmount;
     let wagonsAmountString = ''
-    if (wagonsAmount > 0 && train.Vehicles[0].includes('EN57') == false) // En57 works in wierd ways, code above fixes that second part of statment is not necessary
+    if (wagonsAmount > 0 && train.Vehicles[0].includes('EN57') == false)
         wagonsAmountString = <>Wagons: x{wagonsAmount} <br /></>;
 
     let distanceToSignal = (train.TrainData.DistanceToSignalInFront/1000).toFixed(1) + "km"
