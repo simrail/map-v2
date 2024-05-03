@@ -100,12 +100,13 @@ export function getTrainImagePath(train: Train): string {
 
         '4E/EP07-135': '/trains/EP07-135.png',
         '4E/EP07-174': '/trains/EP07-174.png',
-        '4E/EP08-001': '/trains/EP07-001.png',
-        '4E/EP08-013': '/trains/EP07-013.png',
+
+        '4E/EP08-001': '/trains/EP08-001.png',
+        '4E/EP08-013': '/trains/EP08-013.png',
 
         '201E/ET22-243': '/trains/ET22-243.png',
         '201E/ET22-256:': '/trains/ET22-256.png',
-        '201E/ET22-664': '/trains/ET22-664.png',
+        '201E/ET22-644': '/trains/ET22-644.png',
         '201E/ET22-836': '/trains/ET22-836.png',
         '201E/ET22-911': '/trains/ET22-911.png',
         '201E/ET22-1163': '/trains/ET22-1163.png',
