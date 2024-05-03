@@ -6,7 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api1.aws.simrail.eu',
+        hostname: 'api.simrail.eu',
         port: '8083',
         pathname: '/**',
       },
