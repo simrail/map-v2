@@ -33,7 +33,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
 
     return (
         <>
-            <Image src={getTrainImagePath(train)} width={"64"} height={"64"} alt={train.Vehicles[0]} /><br />
+            <Image src={getTrainImagePath(train)} width={"200"} height={"85"} alt={train.Vehicles[0]} /><br />
             Type: {train.Vehicles[0]} {trainAmountString}<br />
             Train: {train.TrainName} {train.TrainNoLocal}<br />
             {wagonsAmountString}
