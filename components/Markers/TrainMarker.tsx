@@ -72,7 +72,7 @@ export default React.memo(TrainMarker)
 
 
 
-export function getTrainImagePath(train: Train): string {
+export function getTrainImagePath(train: string): string {
     let trains = { // Order after images names so we can keep track of it instead of whatever last order was
         'Dragon2/E6ACTa-014': '/trains/E6ACTa-014.png',
         'Dragon2/E6ACTa-016': '/trains/E6ACTa-016.png',
@@ -130,5 +130,5 @@ export function getTrainImagePath(train: Train): string {
     }
 
     // @ts-ignore
-    return trains[train.Vehicles[0]]
+    return trains[train]
 }

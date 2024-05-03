@@ -11,10 +11,13 @@ type TrainTextProps = {
 const TrainText = ({ train, username }: TrainTextProps) => {
 
     let trainType = train.Vehicles[0];
-    let trainAmount = 1
+    let trainAmount = 1;
+    let trainImages = [];
+    trainImages.push(<><Image src={getTrainImagePath(train.Vehicles[0])} width={"200"} height={"85"} alt={train.Vehicles[0]} /><br /></>); // first train image
     for (let i = 1; i < train.Vehicles.length; i++) {
         if (train.Vehicles[i] === trainType || train.Vehicles[i].split("/")[0] == trainType.split("/")[0]) { // Loco num can vary hence the before /
             trainAmount++;
+            trainImages.push(<><Image src={getTrainImagePath(train.Vehicles[i])} width={"200"} height={"85"} alt={train.Vehicles[i]} /><br /></>);
         }
     }
 
@@ -33,7 +36,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
 
     return (
         <>
-            <Image src={getTrainImagePath(train)} width={"200"} height={"85"} alt={train.Vehicles[0]} /><br />
+            {trainImages}
             Type: {train.Vehicles[0]} {trainAmountString}<br />
             Train: {train.TrainName} {train.TrainNoLocal}<br />
             {wagonsAmountString}
