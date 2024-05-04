@@ -10,7 +10,7 @@ export const TrainsList: FC<Props> = ({trains}) => (
     <>
         {trains.map(train => {
             return (
-            train.TrainData.Latititute !== null || train.TrainData.Longitute !== null ? (
+            train.TrainData.Latititute !== null ? (
                     <TrainMarker key={train.TrainNoLocal} train={train} />
                 ) : null // Might be a bit more optimal to not even try and render invalid trains 
             );
