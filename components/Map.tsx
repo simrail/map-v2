@@ -205,7 +205,7 @@ const Map = ({ serverId }: MapProps) => {
                     </LayersControl.Overlay>
 
                     <LayersControl.Overlay 
-                        checked={localStorage.getItem('layer-Signalling') === null || localStorage.getItem('layer-Signalling') === 'true'} 
+                        checked={localStorage.getItem('layer-Signalling') === 'true'} 
                         name="Signalling">
                         <LayerGroup>
                             <TileLayer
