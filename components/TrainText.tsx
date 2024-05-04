@@ -57,7 +57,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
         distanceToSignal = Math.round(train.TrainData.DistanceToSignalInFront) + "m"
 
     let signalInfront = '';
-    if(train.TrainData.SignalInFront.includes("@") && train.TrainData.SignalInFront != null)
+    if(train.TrainData.SignalInFront != null && train.TrainData.SignalInFront.includes("@"))
         signalInfront = train.TrainData.SignalInFront.split("@")[0];
 
     return (
