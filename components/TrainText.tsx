@@ -38,7 +38,10 @@ const TrainText = ({ train, username }: TrainTextProps) => {
             trainAmountString = '';
             if (trainAmount > 1) 
                 trainAmountString = `x${trainAmount}`;
-            trainTypes.push(<>Type: {train.Vehicles[i]} {trainAmountString}<br /></>)
+            if (train.Vehicles[i].split("/")[0] == "201E")
+                trainTypes.push(<>Type: {train.Vehicles[i]} {trainAmountString} - cold<br /></>)
+            else
+                trainTypes.push(<>Type: {train.Vehicles[i]} {trainAmountString}<br /></>)
             trainImages.push(<><Image src={getTrainImagePath(train.Vehicles[i])} width={"200"} height={"85"} alt={"Failed to load " + train.Vehicles[i]} /><br /></>);
             totalTrainAmount++;
         }
