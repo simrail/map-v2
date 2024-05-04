@@ -31,8 +31,6 @@ const Map = ({ serverId }: MapProps) => {
 
     const [theme, setTheme] = useState('light')
 
-    const [ETCS, setETCS] = useState(false);
-
     useEffect(() => {
         let data = localStorage.getItem('theme')
         if (data) {
@@ -210,6 +208,17 @@ const Map = ({ serverId }: MapProps) => {
                         <LayerGroup>
                             <TileLayer
                                 url="https://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png" 
+                                // Looks a bit wired in dark mode due to .css putting everything in a greyscale but it is still possible to differ the signalling systems.
+                            />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+
+                    <LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-Speed') === 'true'} 
+                        name="Track Speed (Not 100% accurate)">
+                        <LayerGroup>
+                            <TileLayer
+                                url="https://{s}.tiles.openrailwaymap.org/maxspeed/{z}/{x}/{y}.png" 
                                 // Looks a bit wired in dark mode due to .css putting everything in a greyscale but it is still possible to differ the signalling systems.
                             />
                         </LayerGroup>
