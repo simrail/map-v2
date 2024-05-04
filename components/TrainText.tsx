@@ -55,7 +55,9 @@ const TrainText = ({ train, username }: TrainTextProps) => {
     let distanceToSignal = (train.TrainData.DistanceToSignalInFront/1000).toFixed(1) + "km"
     if (train.TrainData.DistanceToSignalInFront < 1000)
         distanceToSignal = Math.round(train.TrainData.DistanceToSignalInFront) + "m"
-
+    train.TrainData.SignalInFront.includes("@")
+        let signalInfront = train.TrainData.SignalInFront.split("@")[0]
+        
     return (
         <>
             {trainImages}
@@ -66,7 +68,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
             Speed: {Math.round(train.TrainData.Velocity)} km/h<br />
             Departure: {train.StartStation}<br />
             Destination: {train.EndStation}<br />
-            Distance to signal {train.TrainData.SignalInFront.split("@")[0]}: {distanceToSignal}<br />
+            Distance to signal {signalInfront}: {distanceToSignal}<br />
         </>
     )
 }
