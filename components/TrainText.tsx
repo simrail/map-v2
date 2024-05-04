@@ -66,7 +66,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
             Speed: {Math.round(train.TrainData.Velocity)} km/h<br />
             Departure: {train.StartStation}<br />
             Destination: {train.EndStation}<br />
-            Distance to signal: {distanceToSignal}<br />
+            Distance to signal {train.TrainData.SignalInFront.split("@")[0]}: {distanceToSignal}<br />
         </>
     )
 }
