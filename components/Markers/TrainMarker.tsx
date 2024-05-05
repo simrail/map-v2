@@ -46,7 +46,7 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
     })
 
 
-    if (!username) return null;
+    if (!username || !train.TrainData.Latititute || !train.TrainData.Longitute) return null;
 
     return <ReactLeafletDriftMarker
         key={train.TrainNoLocal}
