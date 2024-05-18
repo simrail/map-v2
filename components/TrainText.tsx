@@ -6,10 +6,12 @@ type TrainTextProps = {
     train: Train
     username: string
     avatar: string | null
+    renderImages: boolean
 }
 
-const TrainText = ({ train, username }: TrainTextProps) => {
+const TrainText = ({ train, username, renderImages }: TrainTextProps) => {
 
+    // This code is trash as it needs comments, should just be rewritten
     let originTrainType = train.Vehicles[0];
     let trainTypes = [];
     let trainAmount = 1;
@@ -28,6 +30,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
         trainAmountString = `x${trainAmount}`;
     trainTypes.push(<>Type: {train.Vehicles[0]} {trainAmountString}<br /></>)
 
+    //This loop is for multiple locos / EMU's
     for (let i = 1; i < train.Vehicles.length; i++) {
         trainAmount = 0;
         if (train.Vehicles[i].split("/")[0] == originTrainType.split("/")[0] && train.Vehicles[i] != originTrainType) { // If  it is a diffrent subversion of train type
@@ -47,11 +50,13 @@ const TrainText = ({ train, username }: TrainTextProps) => {
         }
     }
 
+    //This code is for the wagons text
     let wagonsAmount = train.Vehicles.length - totalTrainAmount;
     let wagonsAmountString = ''
-    if (wagonsAmount > 0 && train.Vehicles[0].includes('EN57') == false)
+    if (wagonsAmount > 0)
         wagonsAmountString = <>Wagons: x{wagonsAmount} <br /></>;
 
+    // This code is for the signal infront text
     let distanceToSignal = (train.TrainData.DistanceToSignalInFront/1000).toFixed(1) + "km"
     if (train.TrainData.DistanceToSignalInFront < 1000)
         distanceToSignal = Math.round(train.TrainData.DistanceToSignalInFront) + "m"
