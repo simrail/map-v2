@@ -19,6 +19,8 @@ type MapProps = {
     serverId: string | string[]
 }
 
+let renderTrainPopups = true;
+
 const Map = ({ serverId }: MapProps) => {
     const [map, setMap] = useState<LeafletMap | null>(null);
 
@@ -38,6 +40,32 @@ const Map = ({ serverId }: MapProps) => {
             document.body.className = data
         }
     }, [])
+
+    const [renderPopup, setRenderPopup] = useState<boolean>()
+
+    useEffect(() => {
+        let data = localStorage.getItem('renderPopup')
+        if (data) {
+            let dataBool
+            switch(data) {
+                case 'true':
+                    dataBool = true;
+                    break;
+
+                case 'false':
+                    dataBool = false;
+                    break;
+                
+                default:
+                    dataBool = true;
+                    break;
+            }
+            setRenderPopup(dataBool)
+            renderTrainPopups = dataBool;
+            //document.body.className = data
+            // Comment lower down, please fix this
+        }
+    }, [setRenderPopup])
 
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
     const [stations, setStations] = useState<Station[] | null>(null)
@@ -156,6 +184,7 @@ const Map = ({ serverId }: MapProps) => {
                         </svg>
                     </a>
                 </Control>
+                
                 <Control position='topleft'>
 
                     <div onClick={() => {
@@ -170,6 +199,26 @@ const Map = ({ serverId }: MapProps) => {
 
                         <span className="material-symbols-outlined">
                             {theme === 'light' ? 'light_mode' : 'dark_mode'}
+                        </span>
+
+                    </div>
+                </Control>
+
+                <Control position='topleft'>
+
+                    <div onClick={() => {
+                        let newRenderPopup = (renderPopup === true ? false : true)
+                        setRenderPopup(newRenderPopup);
+                        // document.body.className = newRenderPopup.valueOf().toString(); 
+                        // This ruins the theme, anyone that knows the programing language unlike me should be able to fix this
+
+                        localStorage.removeItem('renderPopup')
+                        localStorage.setItem('renderPopup', newRenderPopup.valueOf().toString())
+
+                    }} className={styles.controls}>
+
+                        <span className="material-symbols-outlined">
+                            {renderPopup === true ? 'Speaker_Notes' : 'Speaker_Notes_Off'}
                         </span>
 
                     </div>
@@ -231,3 +280,4 @@ const Map = ({ serverId }: MapProps) => {
 }
 
 export default Map
+export { renderTrainPopups }

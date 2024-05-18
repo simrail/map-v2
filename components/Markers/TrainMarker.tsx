@@ -6,6 +6,7 @@ import { Train } from "@simrail/types";
 import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
 import TrainText from '../TrainText';
 import {getSteamProfileOrBot} from "@/components/steam";
+import {renderTrainPopups} from "../Map"
 
 type TrainMarkerProps = {
     train: Train,
@@ -61,9 +62,11 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
         }}
 
     >
-        <Popup>
-            <TrainText train={train} username={username} avatar={avatar} />
-        </Popup>
+        {renderTrainPopups ? (
+                <Popup>
+                    <TrainText train={train} username={username} avatar={avatar} />
+                </Popup>
+            ) : null}
         <Tooltip offset={[2, -10]} direction={"top"} opacity={0.8} permanent={true}>{train.TrainNoLocal}</Tooltip>
     </ReactLeafletDriftMarker>
 }
