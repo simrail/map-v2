@@ -6,10 +6,9 @@ type TrainTextProps = {
     train: Train
     username: string
     avatar: string | null
-    renderImages: boolean
 }
 
-const TrainText = ({ train, username, renderImages }: TrainTextProps) => {
+const TrainText = ({ train, username }: TrainTextProps) => {
 
     // This code is trash as it needs comments, should just be rewritten
     let originTrainType = train.Vehicles[0];
