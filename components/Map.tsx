@@ -19,8 +19,6 @@ type MapProps = {
     serverId: string | string[]
 }
 
-let renderTrainPopups = true;
-
 const Map = ({ serverId }: MapProps) => {
     const [map, setMap] = useState<LeafletMap | null>(null);
 
@@ -61,7 +59,6 @@ const Map = ({ serverId }: MapProps) => {
                     break;
             }
             setRenderPopup(dataBool)
-            renderTrainPopups = dataBool;
             //document.body.className = data
             // Comment lower down, please fix this
         }
@@ -280,4 +277,3 @@ const Map = ({ serverId }: MapProps) => {
 }
 
 export default Map
-export { renderTrainPopups }

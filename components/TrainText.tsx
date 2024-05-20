@@ -63,7 +63,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
     let signalInfront = '';
     if(train.TrainData.SignalInFront != null && train.TrainData.SignalInFront.includes("@"))
         signalInfront = train.TrainData.SignalInFront.split("@")[0];
-
+    
     return (
         <>
             {trainImages}
