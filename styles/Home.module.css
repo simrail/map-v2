@@ -66,12 +66,25 @@
   cursor: pointer;
 }
 
-.controls {
+.controlsLight {
   background-color: white;
   border: 2px solid rgba(0, 0, 0, 0.2);
   background-clip: padding-box;
   border-radius: 5px;
   color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.controlsDark {
+  background-color: rgb(34, 34, 34);
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  background-clip: padding-box;
+  border-radius: 5px;
+  color: rgb(255, 255, 255);
   display: flex;
   justify-content: center;
   align-items: center;
