@@ -59,20 +59,24 @@ const TrainText = ({ train, username }: TrainTextProps) => {
     let distanceToSignal = (train.TrainData.DistanceToSignalInFront/1000).toFixed(1) + "km"
     if (train.TrainData.DistanceToSignalInFront < 1000)
         distanceToSignal = Math.round(train.TrainData.DistanceToSignalInFront) + "m"
+    if (train.TrainData.SignalInFront == null )
+        distanceToSignal = '> 5km'
 
     let signalInfront = '';
     if(train.TrainData.SignalInFront != null && train.TrainData.SignalInFront.includes("@"))
-        signalInfront = train.TrainData.SignalInFront.split("@")[0];
+        signalInfront = ' ' + train.TrainData.SignalInFront.split("@")[0];
     
     let SignalInFrontSpeed = train.TrainData.SignalInFrontSpeed + ' km/h'
     if (SignalInFrontSpeed == '32767 km/h')
         SignalInFrontSpeed = 'vmax';
+    if (train.TrainData.SignalInFront == null )
+        SignalInFrontSpeed = 'Signal too far away'
 
     let signalInfo = <></>
     if (localStorage.getItem('showSignalInfo') == 'true') {
         signalInfo = 
         <>
-        Distance to signal {signalInfront}: {distanceToSignal}<br />
+        Distance to signal{signalInfront}: {distanceToSignal}<br />
         Signal speed: {SignalInFrontSpeed} <br />
         </>
     }
