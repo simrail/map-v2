@@ -64,7 +64,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
     if(train.TrainData.SignalInFront != null && train.TrainData.SignalInFront.includes("@"))
         signalInfront = train.TrainData.SignalInFront.split("@")[0];
     
-    let SignalInFrontSpeed = toString(train.TrainData.SignalInFrontSpeed) + ' km/h'
+    let SignalInFrontSpeed = train.TrainData.SignalInFrontSpeed + ' km/h'
     if (SignalInFrontSpeed == '32767 km/h')
         SignalInFrontSpeed = 'vmax';
 
