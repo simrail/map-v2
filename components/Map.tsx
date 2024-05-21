@@ -64,6 +64,31 @@ const Map = ({ serverId }: MapProps) => {
         }
     }, [setRenderPopup])
 
+    const [showSignalInfo, setShowSignalInfo] = useState<boolean>()
+
+    useEffect(() => {
+        let data = localStorage.getItem('showSignalInfo')
+        if (data) {
+            let dataBool
+            switch(data) {
+                case 'true':
+                    dataBool = true;
+                    break;
+
+                case 'false':
+                    dataBool = false;
+                    break;
+                
+                default:
+                    dataBool = true;
+                    break;
+            }
+            setShowSignalInfo(dataBool)
+            //document.body.className = data
+            // Comment lower down, please fix this
+        }
+    }, [setShowSignalInfo])
+
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
     const [stations, setStations] = useState<Station[] | null>(null)
 
@@ -216,6 +241,26 @@ const Map = ({ serverId }: MapProps) => {
 
                         <span className="material-symbols-outlined">
                             {renderPopup === true ? 'Speaker_Notes' : 'Speaker_Notes_Off'}
+                        </span>
+
+                    </div>
+                </Control>
+
+                <Control position='topleft'>
+
+                    <div onClick={() => {
+                        let newShowSignalInfo = (showSignalInfo === true ? false : true)
+                        setShowSignalInfo(newShowSignalInfo);
+                        // document.body.className = newRenderPopup.valueOf().toString(); 
+                        // This ruins the theme, anyone that knows the programing language unlike me should be able to fix this
+
+                        localStorage.removeItem('showSignalInfo')
+                        localStorage.setItem('showSignalInfo', newShowSignalInfo.valueOf().toString())
+
+                    }} className={styles.controls}>
+
+                        <span className="material-symbols-outlined">
+                            {showSignalInfo === true ? 'Speaker_Notes' : 'Speaker_Notes_Off'}
                         </span>
 
                     </div>
