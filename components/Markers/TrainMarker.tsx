@@ -6,7 +6,6 @@ import { Train } from "@simrail/types";
 import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
 import TrainText from '../TrainText';
 import {getSteamProfileOrBot} from "@/components/steam";
-import style from '../../styles/SearchInput.module.css';
 
 type TrainMarkerProps = {
     train: Train,
