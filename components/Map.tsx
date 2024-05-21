@@ -260,7 +260,7 @@ const Map = ({ serverId }: MapProps) => {
                     }} className={styles.controls}>
 
                         <span className="material-symbols-outlined">
-                            {showSignalInfo === true ? 'Speaker_Notes' : 'Speaker_Notes_Off'}
+                            {showSignalInfo === true ? 'infoarrow_drop_down' : 'infoarrow_drop_up'}
                         </span>
 
                     </div>
