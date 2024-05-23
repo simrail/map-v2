@@ -31,9 +31,12 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
         getData();
     }, [station.DispatchedBy?.[0]?.SteamId])
 
+    let botIcon = '/markers/icon-bot-simrail.jpg';
+    if (localStorage.getItem('theme') === 'dark')
+        botIcon = '/markers/icon-bot-simrail-dark.jpg'
 
     let icon = L.icon({
-        iconUrl: (station.DispatchedBy[0] && avatar ? avatar : '/markers/icon-bot-simrail.jpg'),
+        iconUrl: (station.DispatchedBy[0] && avatar ? avatar : botIcon),
         iconSize: [32, 32],
         popupAnchor: [0, -16],
         className: 'station-avatar'

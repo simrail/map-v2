@@ -10,9 +10,8 @@ import {getSteamProfileOrBot} from "@/components/steam";
 type TrainMarkerProps = {
     train: Train,
 }
-const TrainMarker = ({ train }: TrainMarkerProps) => {
 
-    const renderPopup = localStorage.getItem('renderPopup') === 'true';
+const TrainMarker = ({ train }: TrainMarkerProps) => {
 
     const { setSelectedTrain } = useSelectedTrain()
 
@@ -31,10 +30,12 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
             .catch(() => setTimeout(() => getData(train.TrainData.ControlledBySteamID), 1000))
     }, [train.TrainData.ControlledBySteamID])
 
-
+    let botIcon = '/markers/icon-bot-simrail.jpg';
+    if (localStorage.getItem('theme') === 'dark')
+        botIcon = '/markers/icon-bot-simrail-dark.jpg'
 
     let icon = L.icon({
-        iconUrl: (train.TrainData.ControlledBySteamID && avatar) ? avatar : '/markers/icon-bot-simrail.jpg',
+        iconUrl: (train.TrainData.ControlledBySteamID && avatar) ? avatar : botIcon,
         iconSize: [24, 24],
         popupAnchor: [0, -12],
         className: 'steam-avatar'
