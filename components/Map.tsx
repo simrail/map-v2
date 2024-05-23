@@ -267,7 +267,7 @@ const Map = ({ serverId }: MapProps) => {
                         localStorage.removeItem('showSignalInfo')
                         localStorage.setItem('showSignalInfo', newShowSignalInfo.valueOf().toString())
 
-                    }} className={styles.controls}>
+                    }} className={controlTheme}>
 
                         <span className="material-symbols-outlined">
                             {showSignalInfo === true ? 'infoarrow_drop_down' : 'infoarrow_drop_up'}
