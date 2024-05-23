@@ -16,3 +16,29 @@
     right: 16px;
     cursor: pointer;
 }
+
+.noPopup {
+    position: absolute;
+    right: 0;
+    background: rgb(0 0 0 / 40%);
+    z-index: 9999;
+    padding: 32px 32px;
+    margin: 8px;
+    border-radius: 7px;
+    backdrop-filter: blur(10px);
+}
+
+.closeButtonNoPopup {
+    color: #F34747;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    cursor: pointer;
+}
+
+.outline {
+    border: 2px solid #F34747;
+    border-radius: 50%;
+    padding: 2px;
+    box-sizing: border-box;
+}

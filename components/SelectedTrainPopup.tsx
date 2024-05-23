@@ -10,7 +10,7 @@ import {getSteamProfileOrBot} from "@/components/steam";
 const SelectedTrainPopup = () => {
 
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
-
+    const renderPopup = localStorage.getItem('renderPopup') === 'true';
 
     const [avatar, setAvatar] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
@@ -24,14 +24,26 @@ const SelectedTrainPopup = () => {
             .then(setData)
     }, [selectedTrain])
 
+    if (renderPopup === true) {
     return selectedTrain
         ? <div className={styles.popup}>
                 <AiOutlineClose onClick={() => {
                     setSelectedTrain(null);
                     if (trainId) router.replace('/server/' + id);
                 }} size={32} className={styles.closeButton} />
-                <TrainText train={selectedTrain} username={username} avatar={avatar} /></div>
+                    <TrainText train={selectedTrain} username={username} avatar={avatar} />
+                </div>
         : null
+    } else {
+        return selectedTrain
+        ? <div className={styles.noPopup}>
+                <AiOutlineClose onClick={() => {
+                    setSelectedTrain(null);
+                    if (trainId) router.replace('/server/' + id);
+                }} size={32} className={styles.closeButtonNoPopup} />
+                </div>
+        : null
+    }
 }
 
 export default SelectedTrainPopup;

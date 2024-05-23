@@ -12,6 +12,8 @@ type TrainMarkerProps = {
 }
 const TrainMarker = ({ train }: TrainMarkerProps) => {
 
+    const renderPopup = localStorage.getItem('renderPopup') === 'true';
+
     const { setSelectedTrain } = useSelectedTrain()
 
     const [avatar, setAvatar] = useState<string | null>(null)
@@ -61,10 +63,12 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
         }}
 
     >
-        <Popup>
-            <TrainText train={train} username={username} avatar={avatar} />
-        </Popup>
-        <Tooltip offset={[2, -10]} direction={"top"} opacity={0.8} permanent={true}>{train.TrainNoLocal}</Tooltip>
+
+    <Popup>
+        <TrainText train={train} username={username} avatar={avatar} />
+    </Popup>
+
+    <Tooltip offset={[2, -10]} direction={"top"} opacity={0.8} permanent={true}>{train.TrainNoLocal}</Tooltip>
     </ReactLeafletDriftMarker>
 }
 
