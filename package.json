@@ -14,7 +14,7 @@
     "@mantine/core": "^5.10.0",
     "@mantine/hooks": "^5.10.1",
     "@next/font": "13.1.1",
-    "@simrail/types": "^0.0.1",
+    "@simrail/types": "^0.0.3",
     "@types/node": "18.11.17",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",

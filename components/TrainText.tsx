@@ -16,11 +16,11 @@ const TrainText = ({ train, username }: TrainTextProps) => {
     let trainAmount = 1;
     let totalTrainAmount = 1;
     let trainImages = [];
-    trainImages.push(<><Image src={getTrainImagePath(train.Vehicles[0])} width={"200"} height={"85"} alt={train.Vehicles[0]} /><br /></>); // first train image
+    trainImages.push(<><Image src={getTrainImagePath(train.Vehicles[0])} width={"195"} height={"80"} alt={train.Vehicles[0]} /><br /></>); // first train image
     for (let i = 1; i < train.Vehicles.length; i++) {
         if (train.Vehicles[i] === originTrainType) {
             trainAmount++, totalTrainAmount++;
-            trainImages.push(<><Image src={getTrainImagePath(train.Vehicles[i])} width={"200"} height={"85"} alt={train.Vehicles[i]} /><br /></>);
+            trainImages.push(<><Image src={getTrainImagePath(train.Vehicles[i])} width={"195"} height={"80"} alt={train.Vehicles[i]} /><br /></>);
         }
     }
 
@@ -40,7 +40,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
             trainAmountString = '';
             if (trainAmount > 1) 
                 trainAmountString = `x${trainAmount}`;
-            if (train.Vehicles[i].split("/")[0] == "201E")
+            if (train.Vehicles[i].split("/")[0] == "201E") // 201E not capable of multi traction
                 trainTypes.push(<>Type: {train.Vehicles[i]} {trainAmountString} - cold<br /></>)
             else
                 trainTypes.push(<>Type: {train.Vehicles[i]} {trainAmountString}<br /></>)
@@ -59,11 +59,28 @@ const TrainText = ({ train, username }: TrainTextProps) => {
     let distanceToSignal = (train.TrainData.DistanceToSignalInFront/1000).toFixed(1) + "km"
     if (train.TrainData.DistanceToSignalInFront < 1000)
         distanceToSignal = Math.round(train.TrainData.DistanceToSignalInFront) + "m"
+    if (train.TrainData.SignalInFront == null )
+        distanceToSignal = '> 5km'
 
     let signalInfront = '';
     if(train.TrainData.SignalInFront != null && train.TrainData.SignalInFront.includes("@"))
-        signalInfront = train.TrainData.SignalInFront.split("@")[0];
+        signalInfront = ' ' + train.TrainData.SignalInFront.split("@")[0];
     
+    let SignalInFrontSpeed = train.TrainData.SignalInFrontSpeed + ' km/h'
+    if (SignalInFrontSpeed == '32767 km/h')
+        SignalInFrontSpeed = 'vmax';
+    if (train.TrainData.SignalInFront == null )
+        SignalInFrontSpeed = 'Signal too far away'
+
+    let signalInfo = <></>
+    if (localStorage.getItem('showSignalInfo') == 'true') {
+        signalInfo = 
+        <>
+        Distance to signal{signalInfront}: {distanceToSignal}<br />
+        Signal speed: {SignalInFrontSpeed} <br />
+        </>
+    }
+
     return (
         <>
             {trainImages}
@@ -74,7 +91,7 @@ const TrainText = ({ train, username }: TrainTextProps) => {
             Speed: {Math.round(train.TrainData.Velocity)} km/h<br />
             Departure: {train.StartStation}<br />
             Destination: {train.EndStation}<br />
-            Distance to signal {signalInfront}: {distanceToSignal}<br />
+            {signalInfo}
         </>
     )
 }
