@@ -30,7 +30,6 @@ function getTrainDisplayName(rawTrainName: string, trainNumber: string): string 
             // results in f. ex. 'ROJ 91352 (RE1)'
             return `${nameParts[0]} ${trainNumber} (${nameParts[1]})`;
         } else {
-            console.log(nameParts[0]);
             // usual case for passenger trains: the train type is the second identifier
             // results in f. ex. 'IC 13125'
             return `${nameParts[1]} ${trainNumber}`;
