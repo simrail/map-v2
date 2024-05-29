@@ -54,10 +54,10 @@ function extractVehicleInformation(rawVehicleName: string): [string, number | nu
     }
 }
 
-function resolveTrainRailcarInfo(train: Train): TrainRailcarInfo[] {
-    return train.Vehicles.map((rawVehicleName, index) => {
+const TrainText = ({train, username}: TrainTextProps) => {
+    const usedRailcarInfo = useMemo(() => train.Vehicles.map((rawVehicleName, index) => {
         const [vehicleName, loadWeight] = extractVehicleInformation(rawVehicleName);
-        const railcar = railcarJson.filter((info) => info.apiName === vehicleName).shift();
+        const railcar = railcarJson.filter((info) => info.apiName === vehicleName).at(0);
         if (railcar) {
             return {
                 index,
@@ -65,11 +65,7 @@ function resolveTrainRailcarInfo(train: Train): TrainRailcarInfo[] {
                 loadWeight: loadWeight,
             }
         }
-    }).filter((item): item is TrainRailcarInfo => !!item);
-}
-
-const TrainText = ({train, username}: TrainTextProps) => {
-    const usedRailcarInfo = useMemo(() => resolveTrainRailcarInfo(train), [train]);
+    }).filter((item): item is TrainRailcarInfo => !!item), [train.Vehicles]);
 
     // get all wagons and locomotives/EMUs used in the set
     const wagons = usedRailcarInfo.filter((info) => info.railcar.railcarType === "WAGON");
