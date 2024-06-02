@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import style from '../styles/FeatureCard.module.css';
-import { Saira } from '@next/font/google'
+import { Saira } from "next/font/google"
 import { Center } from '@mantine/core';
 import Image from 'next/image';
 
