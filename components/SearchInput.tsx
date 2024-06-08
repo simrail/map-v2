@@ -74,9 +74,7 @@ export const SearchInput = ({ trains }: SearchInputProps) => {
             let train = trains[j]
             for (let i = 0; i < usernames.length; i++) {
                 if (train.TrainData.ControlledBySteamID != null) {
-                    // console.log(searchInput + "\n" + train.TrainData.ControlledBySteamID + "\n" + usernames[i].steamID)
                     if (usernames[i].username.toLowerCase().startsWith(searchInput.toLowerCase()) && train.TrainData.ControlledBySteamID === usernames[i].steamID) {
-                        // console.log(train.TrainData.ControlledBySteamID + "\n" + usernames[i].steamID)
                         searchedTrains.push(train)
                         break
                     }
