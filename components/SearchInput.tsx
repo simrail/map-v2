@@ -7,7 +7,6 @@ import { useMap } from 'react-leaflet';
 import style from '../styles/SearchInput.module.css';
 import { getSteamProfileOrBot } from '@/components/steam';
 
-
 type SearchInputProps = {
     trains: Train[]
 }
@@ -67,7 +66,9 @@ export const SearchInput = ({ trains }: SearchInputProps) => {
     }
 
     let searchedTrains: Train[] = trains.filter((train) => train.TrainNoLocal.startsWith(searchInput)).slice(0, 5)
-
+    let searchedTrainTypes: Train[] = trains.filter((train) => train.TrainName.toLowerCase().includes(searchInput.toLowerCase())).slice(0, 5)
+    let searchedTrainLocomotives: Train[] = trains.filter((train) => train.Vehicles[0].toLowerCase().includes(searchInput.toLowerCase())).slice(0,5)
+    
     if (searchedTrains.length === 0) {
         getUsernames(userIDs)
         for (let j = 0; j < trains.length; j++) {
@@ -93,15 +94,23 @@ export const SearchInput = ({ trains }: SearchInputProps) => {
     }
     return "Error"
    }
-
+   
     return <div className={style.wrapper}>
         <div className={style.container}>
             <div className={style.content}>
                 <div className={inputBoxTheme}>
-                    <input className={inputTheme} type="text" value={searchInput} placeholder="Enter a train number or username"
+                    <input className={inputTheme} type="text" value={searchInput} placeholder="Enter Train/Username/Station"
                         onKeyDown={(event) => {
                             if (event.code === 'Enter') {
-                                setSelectedTrain(searchedTrains[0])
+                                if (searchedTrains.length != 0){
+                                    setSelectedTrain(searchedTrains[0])
+                                }
+                                else if (searchedTrainTypes.length != 0) {
+                                    setSelectedTrain(searchedTrainTypes[0])
+                                }
+                                else if (searchedTrainLocomotives.length != 0 ) {
+                                    setSelectedTrain(searchedTrainLocomotives[0])
+                                }
                                 setSearch('')
                                 map?.setZoom(13)
                             }
@@ -110,13 +119,25 @@ export const SearchInput = ({ trains }: SearchInputProps) => {
                 </div>
                 <ul className={listTheme}>
                     {searchInput && searchedTrains.map(train =>
-
                         <li key={train.id} className={style.item} onClick={() => {
                             setSearch('')
                             setSelectedTrain(train)
                             map?.setZoom(13)
-
-                        }}>{ControlledByToString(train.TrainData.ControlledBySteamID)} - {train.TrainNoLocal} - {train.TrainName}</li>
+                        }}>{train.TrainNoLocal} - {ControlledByToString(train.TrainData.ControlledBySteamID)} - {train.TrainName}</li>
+                    )}
+                    {searchInput && searchedTrainTypes.map(train =>
+                        <li key={train.id} className={style.item} onClick={() => {
+                            setSearch('')
+                            setSelectedTrain(train)
+                            map?.setZoom(13)
+                        }}>{train.TrainNoLocal} - {ControlledByToString(train.TrainData.ControlledBySteamID)} - {train.TrainName}</li>
+                    )}
+                    {searchInput && searchedTrainLocomotives.map(train =>
+                        <li key={train.id} className={style.item} onClick={() => {
+                            setSearch('')
+                            setSelectedTrain(train)
+                            map?.setZoom(13)
+                        }}>{train.TrainNoLocal} - {ControlledByToString(train.TrainData.ControlledBySteamID)} - {train.TrainName}</li>
                     )}
                 </ul>
             </div>
