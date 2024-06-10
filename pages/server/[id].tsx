@@ -25,6 +25,11 @@ const Post = () => {
     return <>
         <Head>
             <title>{id.toString().toUpperCase()} - SimRail Map</title>
+            <link
+                rel="canonical"
+                href={"https://map.simrail.app/server/" + id}
+                key="canonical"
+            />
         </Head>
         <SelectedTrainProvider>
             <MapWithNoSSR serverId={id} />

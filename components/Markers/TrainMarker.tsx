@@ -126,8 +126,8 @@ export function getTrainImagePath(train: string): string {
         '4E/EU07-241': '/trains/EU07-241.png',
 
         //Trains that did not have image but looked close enough
-        'EN57/EN57-614': '/trains/EN57-1219.png',
-        'EN57/EN57-1755': '/trains/EN57-1219.png',
+        'EN57/EN57-614':'/trains/EN57-1003.png',
+        'EN57/EN57-1755': '/trains/EN57-1003.png',
 
         //Left from last time, not found in the images found in AppData/LocalLow/SimKol/SimRail/Sprites/
         '4E/4E': '/trains/4EC.png', // DONE
