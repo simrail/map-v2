@@ -6,9 +6,12 @@ import { useState } from 'react';
 import { useMap } from 'react-leaflet';
 import style from '../styles/SearchInput.module.css';
 import { getSteamProfileOrBot } from '@/components/steam';
+import { Station } from '@simrail/types'
+import { LatLng } from 'leaflet';
 
 type SearchInputProps = {
     trains: Train[]
+    stations: Station[]
 }
 
 class user {
@@ -22,7 +25,7 @@ class user {
 
 export var usernames: user[] = []
 
-export const SearchInput = ({ trains }: SearchInputProps) => {
+export const SearchInput = ({ trains, stations }: SearchInputProps) => {
 
     const [searchInput, setSearch] = useState('');
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
@@ -68,7 +71,8 @@ export const SearchInput = ({ trains }: SearchInputProps) => {
     let searchedTrains: Train[] = trains.filter((train) => train.TrainNoLocal.startsWith(searchInput)).slice(0, 5)
     let searchedTrainTypes: Train[] = trains.filter((train) => train.TrainName.toLowerCase().includes(searchInput.toLowerCase())).slice(0, 5)
     let searchedTrainLocomotives: Train[] = trains.filter((train) => train.Vehicles[0].toLowerCase().includes(searchInput.toLowerCase())).slice(0,5)
-    
+    let searchedStations: Station[] = stations.filter((station) => station.Name.toLowerCase().startsWith(searchInput.toLowerCase())).slice(0, 5)
+
     if (searchedTrains.length === 0) {
         getUsernames(userIDs)
         for (let j = 0; j < trains.length; j++) {
@@ -111,6 +115,9 @@ export const SearchInput = ({ trains }: SearchInputProps) => {
                                 else if (searchedTrainLocomotives.length != 0 ) {
                                     setSelectedTrain(searchedTrainLocomotives[0])
                                 }
+                                else if (searchedStations.length != 0){
+                                    map?.panTo(new LatLng(searchedStations[0].Latititude, searchedStations[0].Longitude))
+                                }
                                 setSearch('')
                                 map?.setZoom(13)
                             }
@@ -138,6 +145,13 @@ export const SearchInput = ({ trains }: SearchInputProps) => {
                             setSelectedTrain(train)
                             map?.setZoom(13)
                         }}>{train.TrainNoLocal} - {ControlledByToString(train.TrainData.ControlledBySteamID)} - {train.TrainName}</li>
+                    )}
+                    {searchInput && searchedStations.map(station =>
+                        <li key={station.id} className={style.item} onClick={() => {
+                            setSearch('')
+                            map?.panTo(new LatLng(station.Latititude, station.Longitude))
+                            map?.setZoom(13)
+                        }}>{station.Name} - {station.Prefix}</li>
                     )}
                 </ul>
             </div>
