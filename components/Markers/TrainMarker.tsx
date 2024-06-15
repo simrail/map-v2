@@ -41,13 +41,11 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
         className: 'steam-avatar'
     });
 
-
     useMapEvents({
         click() {
             setSelectedTrain(null)
         },
     })
-
 
     if (!username || !train.TrainData.Latititute || !train.TrainData.Longitute) return null;
 
