@@ -198,7 +198,7 @@ const Map = ({ serverId }: MapProps) => {
                 style={{ height: "100vh", width: "100vw"}}
             >
 
-                <SearchInput trains={trains} />
+                <SearchInput trains={trains} stations={stations} />
 
                 <Control prepend position='topleft'>
                     <div onClick={() => router.push('/servers')} className={controlTheme}>
