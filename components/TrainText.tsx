@@ -1,12 +1,45 @@
 // @ts-nocheck
 import { getTrainImagePath } from "./Markers/TrainMarker";
 import Image from 'next/image';
+const { useState, useEffect } = require('react')
 
 type TrainTextProps = {
     train: Train
     username: string
     avatar: string | null
 }
+
+const getSignalState = (signalSpeed) => {
+  if (signalSpeed === 'vmax' || signalSpeed === 32767) {
+    return 'open';
+  }
+
+  if (signalSpeed === 0) {
+    return 'closed';
+  }
+
+  if (signalSpeed <= 40) {
+    return 'limited40';
+  }
+
+  if (signalSpeed <= 60) {
+    return 'limited60';
+  }
+
+  if (signalSpeed <= 100) {
+    return 'limited100';
+  }
+
+  return null;
+};
+
+const signalStates = {
+  open: 'signal-open.png',
+  limited40: 'signal-limited-40.png',
+  limited60: 'signal-limited-60.png',
+  limited100: 'signal-limited-100.png',
+  closed: 'signal-closed.png'
+};
 
 const TrainText = ({ train, username }: TrainTextProps) => {
 
@@ -67,18 +100,45 @@ const TrainText = ({ train, username }: TrainTextProps) => {
         signalInfront = ' ' + train.TrainData.SignalInFront.split("@")[0];
     
     let SignalInFrontSpeed = train.TrainData.SignalInFrontSpeed + ' km/h'
-    if (SignalInFrontSpeed == '32767 km/h')
+    let signalState = 'open';
+    if (SignalInFrontSpeed === '32767 km/h') {
         SignalInFrontSpeed = 'vmax';
-    if (train.TrainData.SignalInFront == null )
-        SignalInFrontSpeed = 'Signal too far away'
+      } else if (train.TrainData.SignalInFront === null) {
+        SignalInFrontSpeed = 'Signal too far away';
+        signalState = null;
+      } else if (train.TrainData.SignalInFrontSpeed === 0) {
+        signalState = 'closed';
+      } else if (train.TrainData.SignalInFrontSpeed <= 40) {
+        signalState = 'limited40';
+      } else if (train.TrainData.SignalInFrontSpeed <= 60) {
+        signalState = 'limited60';
+      } else if (train.TrainData.SignalInFrontSpeed <= 100) {
+        signalState = 'limited100';
+      }
 
-    let signalInfo = <></>
-    if (localStorage.getItem('showSignalInfo') == 'true') {
-        signalInfo = 
+    let signalInfo = <></>;
+
+    if (localStorage.getItem('showSignalInfo') === 'true') {
+      const signalSpeed = train.TrainData.SignalInFrontSpeed;
+      const signalState = getSignalState(signalSpeed);
+      const signalImageSrc = signalState ? `/signals/${signalStates[signalState]}` : null;
+
+      signalInfo = (
         <>
-        Distance to signal{signalInfront}: {distanceToSignal}<br />
-        Signal speed: {SignalInFrontSpeed} <br />
+          Distance to signal{signalInfront}: {distanceToSignal}<br />
+          Signal speed: {SignalInFrontSpeed}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <span style={{ fontSize: '0.8rem' }}>Signal Status</span>
+            {signalSpeed !== 'Signal too far away' ? (
+              signalImageSrc ? (
+                <Image src={signalImageSrc} alt={signalState} width={32} height={32} />
+              ) : null
+            ) : (
+              <span style={{ fontSize: '0.8rem' }}>Signal too far away</span>
+            )}
+          </div>
         </>
+      );
     }
 
     return (
