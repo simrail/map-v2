@@ -2,7 +2,7 @@
     position: absolute;
     top: 8px;
     z-index: 500;
-    width: 100vw
+    width: 100%;
 }
 
 .container {
