@@ -11,39 +11,6 @@ type TrainTextProps = {
     avatar: string | null
 }
 
-const signalStates = {
-  open: 'signal-open.png',
-  limited40: 'signal-limited-40.png',
-  limited60: 'signal-limited-60.png',
-  limited100: 'signal-limited-100.png',
-  closed: 'signal-closed.png'
-};
-
-
-const getSignalState = (signalSpeed: number | string) => {
-  if (signalSpeed === 'vmax' || signalSpeed === 32767) {
-    return 'open';
-  }
-
-  if (signalSpeed === 0) {
-    return 'closed';
-  }
-
-  if (typeof signalSpeed === 'number' && signalSpeed <= 40) {
-    return 'limited40';
-  }
-
-  if (typeof signalSpeed === 'number' && signalSpeed <= 60) {
-    return 'limited60';
-  }
-
-  if (typeof signalSpeed === 'number' && signalSpeed <= 100) {
-    return 'limited100';
-  }
-
-  return null;
-};
-
 interface TrainRailcarInfo {
     /** The index in the train where the railcar is located */
     index: number,
@@ -153,60 +120,8 @@ const TrainText = ({train, username}: TrainTextProps) => {
         })
         .reduce((partial, current) => partial + current, 0);
 
-  // Definition of signalInfront
-  let signalInfront = '';
-  if (train.TrainData.SignalInFront !== null && train.TrainData.SignalInFront.includes('@')) {
-    signalInfront = ' ' + train.TrainData.SignalInFront.split('@')[0];
-  }
-
-  // Definition of distanceToSignal
-  let distanceToSignal;
-if (train.TrainData.DistanceToSignalInFront === null || train.TrainData.DistanceToSignalInFront === 0) {
-  distanceToSignal = '> 5km';
-} else if (train.TrainData.DistanceToSignalInFront < 1000) {
-  distanceToSignal = Math.round(train.TrainData.DistanceToSignalInFront) + 'm';
-} else {
-  distanceToSignal = (train.TrainData.DistanceToSignalInFront / 1000).toFixed(1) + 'km';
-}
-
-// Definition of SignalInFrontSpeed
-let SignalInFrontSpeed;
-if (train.TrainData.SignalInFrontSpeed === null || train.TrainData.SignalInFrontSpeed === 0) {
-  SignalInFrontSpeed = 'Signal too far away';
-} else if (train.TrainData.SignalInFrontSpeed === 32767) {
-  SignalInFrontSpeed = 'vmax';
-} else {
-  SignalInFrontSpeed = train.TrainData.SignalInFrontSpeed + ' km/h';
-}
-
-
-let signalInfo = <></>;
-if (localStorage.getItem('showSignalInfo') === 'true') {
-  const signalSpeed = train.TrainData.SignalInFrontSpeed;
-  const signalState = getSignalState(signalSpeed);
-  const signalImageSrc = signalState ? `/signals/${signalStates[signalState]}` : null;
-
-  signalInfo = (
-    <>
-      Distance to signal{signalInfront}: {distanceToSignal}<br />
-      Signal speed: {SignalInFrontSpeed}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <span style={{ fontSize: '0.8rem' }}>Signal Status</span>
-        {SignalInFrontSpeed !== 'Signal too far away' ? (
-          signalImageSrc ? (
-            <Image src={signalImageSrc} alt={signalState ?? ''} width={32} height={32} />
-            ) : null
-          ) : (
-            <span style={{ fontSize: '0.8rem' }}>Signal too far away</span>
-          )}
-      </div>
-    </>
-  );
-}
-
-
-        return (
-          <>
+    return (
+        <>
             {locomotiveImages}
             Train: {getTrainDisplayName(train.TrainName, train.TrainNoLocal)}<br/>
             Main Unit: {tractionUnitInfo}<br/>
@@ -217,9 +132,9 @@ if (localStorage.getItem('showSignalInfo') === 'true') {
             Speed: {Math.round(train.TrainData.Velocity)} km/h<br/>
             Departure: {train.StartStation}<br/>
             Destination: {train.EndStation}<br/>
-            {signalInfo}
-          </>
-        );
-      };
-      
-      export default TrainText;
+            {localStorage.getItem('showSignalInfo') === "true" && <><TrainUpcomingSignal train={train}/><br/></>}
+        </>
+    )
+}
+
+export default TrainText;
