@@ -127,7 +127,7 @@ const TrainText = ({train, username}: TrainTextProps) => {
             Main Unit: {tractionUnitInfo}<br/>
             {additionalUnitCount > 0 && <>Other Units: x{additionalUnitCount}<br/></>}
             {wagonCount > 0 && <>Wagons: x{wagonCount} (P: {passengerWagonCount}, F: {freightWagonCount})<br/></>}
-            Length / Weight: {trainLength}m / {trainWeight}t<br/>
+            Length / Weight: {trainLength.toString().replace(/\./g, ',')}m / {trainWeight.toString().replace(/\./g, ',')}t<br/>
             User: {username}<br/>
             Speed: {Math.round(train.TrainData.Velocity)} km/h<br/>
             Departure: {train.StartStation}<br/>

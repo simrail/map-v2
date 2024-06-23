@@ -9,10 +9,10 @@ function formatSignalDistance(distanceMeters: number): string {
     if (distanceMeters > 1000) {
         // signal is more than 1 kilometer away, display in kilometers
         const distanceKilometers = (distanceMeters / 1000).toFixed(1);
-        return `${distanceKilometers} km`;
+        return `${distanceKilometers.toString().replace(/\./g, ',')} km`;
     } else {
         // closer than 1 kilometer, display in kilometers
-        return `${distanceMeters.toFixed(1)} m`;
+        return `${distanceMeters.toFixed(1).toString().replace(/\./g, ',')} m`;
     }
 }
 
