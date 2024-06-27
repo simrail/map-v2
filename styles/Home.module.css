@@ -91,3 +91,16 @@
   padding: 3px;
   cursor: pointer;
 }
+
+.icon {
+    border: white solid 2px;
+    border-radius: 8px;
+    line-height: 0;
+    height: 35px;
+    width: 35px;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
