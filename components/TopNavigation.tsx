@@ -24,6 +24,9 @@ export default function TopNavigation() {
 
     });
 
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+
     const router = useRouter()
     const { id } = router.query
 
@@ -55,7 +58,7 @@ export default function TopNavigation() {
             </div>
         </div>
         <div className={style.datetime}>
-            <span className={style.time}>{date.getHours()}:{date.getMinutes()}</span>
+            <span className={style.time}>{hours}:{minutes}</span>
             <span className={style.date}>{date.toLocaleDateString()}</span>
         </div>
         <div className={style.right}>
