@@ -13,6 +13,8 @@ import Control from 'react-leaflet-custom-control'
 import { useRouter } from 'next/router';
 import { TrainsList } from "@/components/TrainsList";
 import NonPlayableStations from "@/components/NonPlayableStations";
+import Signals from "@/components/Signals"
+
 import { SearchInput } from './SearchInput';
 
 type MapProps = {
@@ -300,6 +302,14 @@ const Map = ({ serverId }: MapProps) => {
                         name="Unplayable dispatch stations">
                         <LayerGroup>
                             <NonPlayableStations />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+
+                    <LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-signals') === null || localStorage.getItem('layer-signals') === 'true'}
+                        name="Signals">
+                        <LayerGroup>
+                            <Signals />
                         </LayerGroup>
                     </LayersControl.Overlay>
 
