@@ -81,7 +81,7 @@ const TrainText = ({train, username}: TrainTextProps) => {
         }, [] as TrainRailcarInfo[])
         .map((info) => {
             return (<>
-                <Image src={`/trains/${info.railcar.id}.png`}
+                <img src={`/trains/${info.railcar.id}.png`}
                        key={`${info.railcar.id}@${info.index}`}
                        alt={info.railcar.id}
                        width={"195"}
