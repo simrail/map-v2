@@ -12,6 +12,7 @@
     "@emotion/react": "^11.11.4",
     "@mantine/core": "^5.10.5",
     "@mantine/hooks": "^5.10.5",
+    "@next/third-parties": "^14.2.4",
     "@simrail/types": "^0.0.3",
     "@types/node": "18.11.17",
     "@types/react": "18.0.26",
@@ -21,7 +22,7 @@
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "leaflet-geosearch": "^3.11.1",
-    "next": "14.2.3",
+    "next": "14.2.4",
     "react": "18.3.1",
     "react-cookie-consent": "^8.0.1",
     "react-dom": "18.3.1",
@@ -29,7 +30,7 @@
     "react-leaflet": "^4.2.1",
     "react-leaflet-custom-control": "^1.4.0",
     "react-leaflet-drift-marker": "^4.0.0",
-    "sharp": "^0.31.3",
+    "sharp": "^0.32.6",
     "typescript": "4.9.4"
   },
   "devDependencies": {

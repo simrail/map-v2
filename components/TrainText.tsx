@@ -92,8 +92,6 @@ const TrainText = ({train, username}: TrainTextProps) => {
 
     // get some general information about the wagon count
     const wagonCount = wagons.length;
-    const freightWagonCount = wagons.filter((wagon) => wagon.railcar.freightTransportation).length;
-    const passengerWagonCount = wagons.filter((wagon) => wagon.railcar.passengerTransportation).length;
 
     // only the first unit is responsible for train traction at the moment, so this is just safe to assume
     // however, this might be wrong in case the first unit is not yet registered in railcars.json, so we just
@@ -120,18 +118,23 @@ const TrainText = ({train, username}: TrainTextProps) => {
         })
         .reduce((partial, current) => partial + current, 0);
 
+    // get the lowest speed of the consist
+    const minMaxSpeed = usedRailcarInfo
+        .map((info) => info.railcar.maxSpeed)
+        .reduce((minSpeed, currentSpeed) => Math.min(minSpeed, currentSpeed), Infinity);
+
     return (
         <>
             {locomotiveImages}
-            Train: {getTrainDisplayName(train.TrainName, train.TrainNoLocal)}<br/>
+            {getTrainDisplayName(train.TrainName, train.TrainNoLocal)}<br/>
+            {train.StartStation} - {train.EndStation}<br/>
             Main Unit: {tractionUnitInfo}<br/>
             {additionalUnitCount > 0 && <>Other Units: x{additionalUnitCount}<br/></>}
-            {wagonCount > 0 && <>Wagons: x{wagonCount} (P: {passengerWagonCount}, F: {freightWagonCount})<br/></>}
+            {wagonCount > 0 && <>Wagons: x{wagonCount} <br/></>}
             Length / Weight: {trainLength}m / {trainWeight}t<br/>
             User: {username}<br/>
+            Vmax: {minMaxSpeed} km/h<br/>
             Speed: {Math.round(train.TrainData.Velocity)} km/h<br/>
-            Departure: {train.StartStation}<br/>
-            Destination: {train.EndStation}<br/>
             {localStorage.getItem('showSignalInfo') === "true" && <><TrainUpcomingSignal train={train}/><br/></>}
         </>
     )
