@@ -1,6 +1,5 @@
 import { Train } from "@simrail/types";
 import React from "react";
-import Image from "next/image";
 
 type TrainSignalProps = {
   train: Train;
@@ -41,6 +40,31 @@ const getSignalState = (signalSpeed: number | string) => {
   }
 
   return null;
+};
+
+const signalStyles = {
+  container: {
+    display: "flex",
+    gap: "0.25rem",
+  },
+  row: {
+    display: "flex",
+    alignItems: "center",
+  },
+  label: {
+    marginRight: "0.5rem",
+  },
+  value: {
+    fontWeight: "bold",
+  },
+  statusLabel: {
+    fontSize: "0.9rem",
+    marginRight: "0.5rem",
+  },
+  statusValue: {
+    fontSize: "0.8rem",
+    color: "gray",
+  },
 };
 
 const TrainUpcomingSignal = ({ train }: TrainSignalProps) => {
@@ -86,40 +110,47 @@ const TrainUpcomingSignal = ({ train }: TrainSignalProps) => {
     ? `/signals/${signalStates[signalState]}`
     : null;
 
+  const isSignalTooFar = distanceToSignal === "> 5km";
+
   return (
-    <>
-      Distance to signal{signalInfront}: {distanceToSignal}
-      <br />
-      Signal speed: {SignalInFrontSpeed}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <span style={{ fontSize: "0.8rem" }}>Signal Status</span>
-        {SignalInFrontSpeed === "Signal too far away" ? (
-          <span style={{ fontSize: "0.8rem" }}>Signal too far away</span>
-        ) : SignalInFrontSpeed === "0 km/h" ? (
-          <Image
-            src={`/signals/${signalStates.closed}`}
-            alt="closed"
-            width={32}
-            height={32}
-          />
-        ) : (
-          signalImageSrc && (
-            <Image
-              src={signalImageSrc}
-              alt={signalState ?? ""}
-              width={32}
-              height={32}
-            />
-          )
-        )}
+    <div style={{ ...signalStyles.container, flexDirection: "column" }}>
+      <div style={signalStyles.row}>
+        <span style={signalStyles.label}>
+          Distance to signal{signalInfront}:
+        </span>
+        <span style={signalStyles.value}>{distanceToSignal}</span>
       </div>
-    </>
+      {!isSignalTooFar && (
+        <>
+          <div style={signalStyles.row}>
+            <span style={signalStyles.label}>Signal speed:</span>
+            <span style={signalStyles.value}>{SignalInFrontSpeed}</span>
+          </div>
+          <div style={signalStyles.row}>
+            <span style={signalStyles.statusLabel}>Signal Status :</span>
+            {SignalInFrontSpeed === "Signal too far away" ? (
+              <span style={signalStyles.statusValue}>Signal too far away</span>
+            ) : SignalInFrontSpeed === "0 km/h" ? (
+              <img
+                src={`/signals/${signalStates.closed}`}
+                alt="closed"
+                width={40}
+                height={40}
+              />
+            ) : (
+              signalImageSrc && (
+                <img
+                  src={signalImageSrc}
+                  alt={signalState ?? ""}
+                  width={30}
+                  height={30}
+                />
+              )
+            )}
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 
