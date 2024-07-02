@@ -31,7 +31,7 @@ export default function Home({ host }) {
             <main >
                 <Container style={{ marginTop: 50 }}>
                     <Flex align="center" direction={"column"}>
-                        <Image alt="SimRail logo" src={"/logos/logo_simrailapp.png"} width={258} height={82} />
+                        <img alt="SimRail logo" src={"/logos/logo_simrailapp.png"} width={258} height={82} />
                         <Flex style={{ marginTop: 50 }} direction={"column"} gap={48}>
                             <FeatureCard name='Live Map' href='https://map.simrail.app' image='/features/map.png' />
                             <FeatureCard name='EDR' target="_blank" href='https://edr.simrail.app' image='/features/edr.png' />
