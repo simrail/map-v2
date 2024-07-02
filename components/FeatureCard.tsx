@@ -21,7 +21,7 @@ const saira = Saira({
 export const FeatureCard = ({ name, href, image, target, disabled = false }: FeatureCardProps) => {
 
     return <Link href={href} target={target} className={[style.link, saira.className, (disabled ? style.linkDisabled : '')].join(" ")}>
-        <Image loading={"eager"} src={image} alt={name} style={{ objectFit: "cover" }} width={541} height={150} className={style.image} />
+        <img loading={"eager"} src={image} alt={name} style={{ objectFit: "cover" }} width={541} height={150} className={style.image} />
         <Center className={style.title}>{name}</Center>
     </Link>
 }
