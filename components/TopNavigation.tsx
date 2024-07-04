@@ -4,6 +4,7 @@ import { Saira } from 'next/font/google';
 import { MdDarkMode, MdLightMode, MdMenu } from "react-icons/md";
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import serverTimes from '@/components/serverTimes.json'
 
 const saira = Saira({
     weight: ['400', '900'],
@@ -12,7 +13,7 @@ const saira = Saira({
 
 export default function TopNavigation() {
 
-
+    var [serverDate, setServerDate] = useState(new Date());
     var [date, setDate] = useState(new Date());
 
     useEffect(() => {
@@ -24,13 +25,23 @@ export default function TopNavigation() {
 
     });
 
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-
     const router = useRouter()
     const { id } = router.query
 
+    useEffect(() => {
+        if (id) {
+            const server = serverTimes.find(server => server.Name === id);
+            if (server) {
+                const currentHour = date.getUTCHours();
+                const newDate = new Date();
+                newDate.setHours(currentHour + server.UTCOff);
+                setServerDate(newDate);
+            }
+        }
+    }, [id]);
 
+    const hours = serverDate.getHours().toString().padStart(2, '0');
+    const minutes = serverDate.getMinutes().toString().padStart(2, '0');
 
     const [theme, setTheme] = useState('light')
 
