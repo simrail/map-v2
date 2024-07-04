@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import Link from "next/link";
 import { Server } from '@simrail/types';
 import { useEffect, useState } from 'react';
 import FavoriteStar from '../components/FavoriteStar';
@@ -106,7 +105,7 @@ export default function Servers() {
             <div className={styles.serverList}>
 
                 {servers && servers.map((server: Server) => <>
-                    <Link
+                    <a
                         id={server.ServerCode}
                         className={styles.server}
                         key={server.id}
@@ -114,7 +113,7 @@ export default function Servers() {
                         <FavoriteStar server={server} />
                         <span className={`${styles.statusIndicator} ${getStatusIndicatorStyle(server)}`}></span>
                         <span className={styles.serverName}>{server.ServerName}</span>
-                    </Link>
+                    </a>
                 </>
                 )
                 }
