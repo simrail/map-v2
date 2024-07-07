@@ -4,6 +4,7 @@ import { Server } from '@simrail/types';
 import { useEffect, useState } from 'react';
 import FavoriteStar from '../components/FavoriteStar';
 import { IncomingMessage, ServerResponse } from 'http';
+import TopNavigation  from './TopNavigation'
 
 type ServersProps = {
     req: IncomingMessage,
@@ -97,6 +98,7 @@ export default function Servers() {
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
+        <TopNavigation/>
         <main className={styles.main}>
             <h1>Hello, select your server</h1>
             {!servers && 'Loading servers...'}
