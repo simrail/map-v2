@@ -134,8 +134,8 @@ const TrainUpcomingSignal = ({ train }: TrainSignalProps) => {
               <img
                 src={`/signals/${signalStates.closed}`}
                 alt="closed"
-                width={40}
-                height={40}
+                width={30}
+                height={30}
               />
             ) : (
               signalImageSrc && (
