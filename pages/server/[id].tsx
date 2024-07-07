@@ -1,9 +1,10 @@
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
 
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Head from "next/head";
+import { useEffect, useState } from "react";
 import { SelectedTrainProvider } from '../../contexts/SelectedTrainContext';
-import TopNavigation from '@/components/TopNavigation';
 
 
 const Post = () => {
@@ -16,6 +17,7 @@ const Post = () => {
     const { id } = router.query
 
 
+    //z>No profile data</p>
 
     if (!id) return;
 
@@ -29,12 +31,9 @@ const Post = () => {
                 key="canonical"
             />
         </Head>
-        <div style={{height: "100vh", width: '100vw', display: 'flex', flexDirection: 'column'}}>
-        <TopNavigation/>
         <SelectedTrainProvider>
             <MapWithNoSSR serverId={id} />
-            </SelectedTrainProvider>
-        </div>
+        </SelectedTrainProvider>
     </>
 }
 
