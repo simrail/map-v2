@@ -29,7 +29,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "../home/src/components/Footer.tsx", "../home/src/components/FeatureCard.tsx"  ],
   "exclude": [
     "node_modules"
   ]
