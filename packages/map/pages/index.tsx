@@ -1,36 +1,15 @@
+// @ts-nocheck
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import { Server } from '@simrail/types';
+import Image from "next/image";
+import { Container, Flex, Space } from '@mantine/core';
+import { FeatureCard } from '../../home/src/components/FeatureCard';
+import { Footer } from '../../home/src/components/Footer';
+import Servers from "./servers";
+import FavoriteStar from '@/components/FavoriteStar';
 import { useEffect, useState } from 'react';
-import FavoriteStar from '../components/FavoriteStar';
-import { IncomingMessage, ServerResponse } from 'http';
+import styles from '../styles/Home.module.css'
 
-type ServersProps = {
-    req: IncomingMessage,
-    res: ServerResponse,
-}
-
-export async function getServerSideProps({ req, res }: ServersProps) {
-
-    if (req.headers.host === 'www.simrail.app') {
-        return {
-            notFound: true,
-        }
-    }
-
-    res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=1, stale-while-revalidate=59'
-    );
-
-    return {
-        props: {
-        }
-    };
-}
-
-export default function Servers() {
-
+export default function Home({ host }) {
 
     const [servers, setServers] = useState<Server[] | null>(null)
 

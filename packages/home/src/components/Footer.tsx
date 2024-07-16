@@ -1,5 +1,4 @@
 import { Center, Flex, Space } from '@mantine/core';
-import Script from 'next/script';
 import style from '../styles/Footer.module.css';
 
 export const Footer = () => {
