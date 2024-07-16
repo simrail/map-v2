@@ -6,12 +6,13 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { SelectedTrainProvider } from '../../contexts/SelectedTrainContext';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { Server } from '@simrail/types';
 
 export const getStaticPaths = (async () => {
     const res = await fetch('https://panel.simrail.eu:8084/servers-open')
     const servers = await res.json()
 
-    const paths = servers.data.map(server => ({
+    const paths = servers.data.map((server: Server) => ({
         params: { id: server.ServerCode }
     }));
 
