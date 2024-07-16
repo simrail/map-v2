@@ -1,4 +1,4 @@
-import { ProfileResponse } from "../pages/api/profile";
+import { ProfileResponse } from "types/SteamProfile";
 
 const getSteamProfileInfos = (steamId: string): Promise<ProfileResponse> =>
     fetch('https://simrail-edr.emeraldnetwork.xyz/steam/' + steamId).then((r) => r.json());
