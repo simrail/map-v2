@@ -201,7 +201,7 @@ const Map = ({ serverId }: MapProps) => {
                 <SearchInput trains={trains} stations={stations} />
 
                 <Control prepend position='topleft'>
-                    <div onClick={() => router.push('/servers')} className={controlTheme}>
+                    <div onClick={() => router.push('/')} className={controlTheme}>
 
                         <span className="material-symbols-outlined">
                             arrow_back

@@ -85,7 +85,7 @@ export default function Home({ host }) {
                     <a
                         id={server.ServerCode}
                         className={styles.server}
-                        key={server.id}
+                        key={server.ServerCode}
                         href={"/server/" + server.ServerCode}>
                         <FavoriteStar server={server} />
                         <span className={`${styles.statusIndicator} ${getStatusIndicatorStyle(server)}`}></span>
