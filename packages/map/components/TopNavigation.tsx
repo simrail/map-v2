@@ -10,6 +10,7 @@ import { Spotlight, spotlight, SpotlightActionData } from '@mantine/spotlight';
 
 export const TopNavigation = () => {
 
+    const [blinking, setBlinking] = useState(false);
     const [serverDate, setServerDate] = useState(new Date());
     const [date, setDate] = useState(new Date());
 
@@ -31,6 +32,7 @@ export const TopNavigation = () => {
 
     useEffect(() => {
         let timer = setInterval(() => {
+            setBlinking((currentBlinking) => !currentBlinking)
             const newDate = new Date();
             if (id) {
                 const server = serverTimes.find(server => server.Name === id);
@@ -63,7 +65,11 @@ export const TopNavigation = () => {
                 <span className={style.online} />
             </div>
             <div className={style.datetime}>
-                <span className={style.time}>{date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>
+                <span className={style.time}>
+                    {date.getHours().toString().padStart(2, '0')}
+                    <span style={{ color: (blinking ? 'black' : '#FF9900')}}>:</span>
+                    {date.toLocaleTimeString('fr-FR', { minute: '2-digit' })}
+                </span>
                 <span className={style.date}> {date.toLocaleDateString('fr-FR')}</span>
             </div >
             <div className={style.right}>
