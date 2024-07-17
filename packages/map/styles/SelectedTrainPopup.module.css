@@ -8,6 +8,7 @@
     margin: 8px;
     border-radius: 7px;
     backdrop-filter: blur(10px);
+    top: 64px;
 }
 
 .closeButton {

@@ -53,8 +53,8 @@ const Post = () => {
             />
         </Head>
         <div style={{ height: "100vh", width: '100vw', display: 'flex', flexDirection: 'column' }}>
-            <TopNavigation />
             <SelectedTrainProvider>
+                <TopNavigation />
                 <MapWithNoSSR serverId={id} />
             </SelectedTrainProvider>
         </div>

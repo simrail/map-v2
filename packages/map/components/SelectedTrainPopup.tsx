@@ -35,14 +35,7 @@ const SelectedTrainPopup = () => {
                 </div>
         : null
     } else {
-        return selectedTrain
-        ? <div className={styles.noPopup}>
-                <AiOutlineClose onClick={() => {
-                    setSelectedTrain(null);
-                    if (trainId) router.replace('/server/' + id);
-                }} size={32} className={styles.closeButtonNoPopup} />
-                </div>
-        : null
+        return null
     }
 }
 

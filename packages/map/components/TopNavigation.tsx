@@ -1,22 +1,24 @@
 import { useEffect, useState } from 'react';
 import style from '../styles/TopNavigation.module.css';
-import { MdIcecream, MdMenu, MdOutlineDarkMode, MdOutlineLightMode, MdSearch } from 'react-icons/md';
+import { MdClose, MdMenu, MdOutlineDarkMode, MdOutlineLightMode, MdSearch } from 'react-icons/md';
 import { NavigationDropdown } from './NavigationDropdown';
 import { useRouter } from 'next/router';
 import { useTheme } from 'contexts/ThemeContext';
 // import { NavigationDropdown } from './NavigationDropdown';
 import serverTimes from '@/components/serverTimes.json'
 import { Spotlight, spotlight, SpotlightActionData } from '@mantine/spotlight';
+import { useSelectedTrain } from 'contexts/SelectedTrainContext';
 
 export const TopNavigation = () => {
 
     const [blinking, setBlinking] = useState(false);
     const [serverDate, setServerDate] = useState(new Date());
     const [date, setDate] = useState(new Date());
+    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
 
 
     const router = useRouter()
-    const { id } = router.query
+    const { id, trainId } = router.query
 
     useEffect(() => {
         if (id) {
@@ -77,6 +79,13 @@ export const TopNavigation = () => {
                 {/* <div className="search-input-container">
                     <input className={[style.searchInput].join(" ")} placeholder='Enter a train number' />
                 </div> */}
+
+                {selectedTrain &&
+                    <MdClose color='#F34747' className={style.icons} size={24} onClick={() => {
+                        setSelectedTrain(null);
+                        if (trainId) router.replace('/server/' + id);
+                    }} />    
+                }
 
                 <MdSearch onClick={spotlight.open} className={[style.icons, "search_icon"].join(" ")}
                     size={24}
