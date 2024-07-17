@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { SelectedTrainProvider } from '../../contexts/SelectedTrainContext';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { Server } from '@simrail/types';
+import { TopNavigation } from '@/components/TopNavigation';
 
 export const getStaticPaths = (async () => {
     const res = await fetch('https://panel.simrail.eu:8084/servers-open')
@@ -51,9 +52,12 @@ const Post = () => {
                 key="canonical"
             />
         </Head>
-        <SelectedTrainProvider>
-            <MapWithNoSSR serverId={id} />
-        </SelectedTrainProvider>
+        <div style={{ height: "100vh", width: '100vw', display: 'flex', flexDirection: 'column' }}>
+            <TopNavigation />
+            <SelectedTrainProvider>
+                <MapWithNoSSR serverId={id} />
+            </SelectedTrainProvider>
+        </div>
     </>
 }
 

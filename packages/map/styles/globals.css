@@ -8,6 +8,10 @@
 
 }
 
+*, ::before, ::after {
+  box-sizing: unset !important;
+}
+
 input {
   border: 0;
   outline: 0;
@@ -32,9 +36,9 @@ body {
 
 
 body {
-  color: white;
+  color: white !important;
   background: #171821;
-  font-family: var(--font-mono);
+  font-family: var(--font-mono) !important;
 
 }
 
