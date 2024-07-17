@@ -14,7 +14,7 @@ export const NavigationDropdown = () => {
         <div className={[style.dropdownList].join(' ')}>
         {/* <div className={[style.dropdownList, ].join(' ')}> */}
             <Link className={style.dropdownLink} href="https://www.simrail.app/"><AiFillHome /> Return Home</Link>
-            <Link className={style.dropdownLink} href="https://www.simrail.app/servers"><AiOutlineSwap /> Change server</Link>
+            <a className={style.dropdownLink} href="/"><AiOutlineSwap /> Change server</a>
         </div>
         {/* <h2 className={[style.dropdownTitle].join(" ")}>Layer</h2>
         <fieldset>
