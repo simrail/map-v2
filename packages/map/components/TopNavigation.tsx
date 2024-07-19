@@ -53,6 +53,8 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
         };
     }, [id]);
 
+    if (!serverDate) return null
+
     const { theme, setTheme } = useTheme();
     const [dropdown, setDropdown] = useState<boolean>(false);
 
