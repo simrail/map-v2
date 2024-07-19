@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
 import { Server } from '@simrail/types';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { ServerSettings } from '../types/ServerSettings';
 import { useRouter } from 'next/router';
@@ -17,7 +17,8 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 
     const [favorite, SetFavorite] = useState<boolean>(serverSettings.favorite ?? false)
 
-    const toggleFavorite = (event) => {
+    const toggleFavorite = (event: MouseEventHandler) => {
+        // @ts-expect-error todo
         event.preventDefault()
         serverSettings.favorite = !favorite
         SetFavorite(!favorite)
