@@ -62,15 +62,15 @@
   min-width: 12px;
   position: absolute;
   left: 20px;
-  top: 16px;
+  top: 20px;
 }
 
 .online {
-  background: #5FF347;
+  background: #43E366;
 }
 
 .offline {
-  background: #F34747;
+  background: #DF3838;
 }
 
 .star {
