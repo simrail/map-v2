@@ -27,7 +27,7 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 
 
     if (favorite) {
-        return <AiFillStar size={24} color='gold' className={styles.star} onClick={toggleFavorite} />
+        return <AiFillStar size={24} color='#FF9900' className={styles.star} onClick={toggleFavorite} />
     }
     return <AiOutlineStar size={24} className={styles.star} onClick={toggleFavorite} />
 
