@@ -5,6 +5,7 @@ import { ThemeProvider } from 'contexts/ThemeContext'
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
 import '@mantine/spotlight/styles.css';
+import 'mantine-flagpack/styles.css';
 
 export default function Home({ Component, pageProps }: AppProps) {
 

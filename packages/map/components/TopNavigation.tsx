@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import style from '../styles/TopNavigation.module.css';
-import { MdClose, MdMenu, MdOutlineDarkMode, MdOutlineLightMode, MdSearch } from 'react-icons/md';
+import { MdArrowBack, MdClose, MdHome, MdMenu, MdOutlineDarkMode, MdOutlineLightMode, MdSearch } from 'react-icons/md';
 import { NavigationDropdown } from './NavigationDropdown';
 import { useRouter } from 'next/router';
 import { useTheme } from 'contexts/ThemeContext';
@@ -9,7 +9,11 @@ import serverTimes from '@/components/serverTimes.json'
 import { Spotlight, spotlight, SpotlightActionData } from '@mantine/spotlight';
 import { useSelectedTrain } from 'contexts/SelectedTrainContext';
 
-export const TopNavigation = () => {
+type TopNavigationProps = {
+    disableMapFeatures?: boolean;
+};
+
+export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 
     const [blinking, setBlinking] = useState(false);
     const [serverDate, setServerDate] = useState(new Date());
@@ -60,43 +64,53 @@ export const TopNavigation = () => {
         <nav className={style.navigation}>
 
             <div className={style.left}>
-                <MdMenu onClick={() => setDropdown(!dropdown)} className={style.icons} size={24} />
+                {disableMapFeatures ? <>
+                    <MdHome onClick={() => { window.location.href = "https://www.simrail.app" }} size={24} className={style.icons} />
+                </> : <>
+                    <MdArrowBack onClick={() => router.push('/')} className={style.icons} size={24} />
+                    <MdMenu onClick={() => setDropdown(!dropdown)} className={style.icons} size={24} />
+                </>}
                 <img src='/logos/icon.png' alt='SimRail Community Development Logo' width={36} height={36} />
                 <h1 className="title" >SimRail Live Map</h1>
-                <span className={style.saira}>FR1</span>
-                <span className={style.online} />
+                <span className={style.saira}>{id?.toString().toUpperCase()}</span>
+                {!disableMapFeatures && <span className={style.online} />}
             </div>
             <div className={style.datetime}>
                 <span className={style.time}>
                     {date.getHours().toString().padStart(2, '0')}
-                    <span style={{ color: (blinking ? 'black' : '#FF9900')}}>:</span>
-                    {date.toLocaleTimeString('fr-FR', { minute: '2-digit' })}
+                    <span style={{ color: (blinking ? 'black' : '#FF9900') }}>:</span>
+                    {date.getMinutes().toString().padStart(2, '0')}
                 </span>
                 <span className={style.date}> {date.toLocaleDateString('fr-FR')}</span>
             </div >
-            <div className={style.right}>
 
-                {/* <div className="search-input-container">
+            <div className={style.right}>
+                {!disableMapFeatures && <>
+
+                    {/* <div className="search-input-container">
                     <input className={[style.searchInput].join(" ")} placeholder='Enter a train number' />
                 </div> */}
 
-                {selectedTrain &&
-                    <MdClose color='#F34747' className={style.icons} size={24} onClick={() => {
-                        setSelectedTrain(null);
-                        if (trainId) router.replace('/server/' + id);
-                    }} />    
+                    {selectedTrain &&
+                        <MdClose color='#F34747' className={style.icons} size={24} onClick={() => {
+                            setSelectedTrain(null);
+                            if (trainId) router.replace('/server/' + id);
+                        }} />
+                    }
+
+                    <MdSearch onClick={spotlight.open} className={[style.icons, "search_icon"].join(" ")}
+                        size={24}
+                    />
+
+
+                    <Icon
+                        onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                        className={style.icons}
+                        size={24}
+                    />
+                </>
                 }
 
-                <MdSearch onClick={spotlight.open} className={[style.icons, "search_icon"].join(" ")}
-                    size={24}
-                />
-            
-
-                <Icon
-                    onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-                    className={style.icons}
-                    size={24}
-                />
 
             </div>
 
@@ -136,7 +150,7 @@ export const TopNavigation = () => {
         </style>
 
 
-  
+
 
     </div >;
 };

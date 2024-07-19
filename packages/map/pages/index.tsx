@@ -8,6 +8,8 @@ import Servers from "./servers";
 import FavoriteStar from '@/components/FavoriteStar';
 import { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css'
+import { TopNavigation } from '@/components/TopNavigation';
+import dynamic from 'next/dynamic';
 
 export default function Home({ host }) {
 
@@ -76,25 +78,54 @@ export default function Home({ host }) {
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
+        <TopNavigation disableMapFeatures={true} />
         <main className={styles.main}>
-            <h1>Hello, select your server</h1>
+            <h1 className={styles.title}>Select your server</h1>
             {!servers && 'Loading servers...'}
             <div className={styles.serverList}>
 
-                {servers && servers.map((server: Server) => <>
-                    <a
-                        id={server.ServerCode}
-                        className={styles.server}
-                        key={server.ServerCode}
-                        href={"/server/" + server.ServerCode}>
-                        <FavoriteStar server={server} />
-                        <span className={`${styles.statusIndicator} ${getStatusIndicatorStyle(server)}`}></span>
-                        <span className={styles.serverName}>{server.ServerName}</span>
-                    </a>
-                </>
-                )
+                {servers && servers.map((server: Server) => {
+                    return <>
+                        <a
+                            id={server.ServerCode}
+                            className={styles.server}
+                            key={server.ServerCode}
+                            href={"/server/" + server.ServerCode}>
+                            <FavoriteStar server={server} />
+                            <span className={`${styles.statusIndicator} ${getStatusIndicatorStyle(server)}`}></span>
+                            <span className={styles.serverName}>
+                                <FlagIcon  code={server.ServerCode.slice(0, 2).toUpperCase()} />
+                                <span>{server.ServerName}</span>
+                            </span>
+                        </a>
+                    </>
+                })
                 }
             </div>
         </main>
     </>)
 }
+
+const FlagIcon = ({ code }) => {
+    const [Component, setComponent] = useState(null);
+
+    useEffect(() => {
+        if (code) {
+            import('mantine-flagpack')
+                .then((mod) => {
+                    let lang = code.toUpperCase();
+                    if (lang === 'EN') lang = 'GB'
+                    setComponent(() => mod[lang + 'Flag']);
+                })
+                .catch((err) => {
+                    console.error('Failed to load flag icon', err);
+                });
+        }
+    }, [code]);
+
+    if (!Component) {
+        return null; // Or some fallback UI
+    }
+
+    return <Component w={28} />;
+};

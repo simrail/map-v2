@@ -35,7 +35,7 @@ const Post = () => {
     });
 
     const router = useRouter()
-    const { id } = router.query
+    const { id, trainId } = router.query
 
 
     //z>No profile data</p>
@@ -54,7 +54,7 @@ const Post = () => {
         </Head>
         <div style={{ height: "100vh", width: '100vw', display: 'flex', flexDirection: 'column' }}>
             <SelectedTrainProvider>
-                <TopNavigation />
+                {!trainId && <TopNavigation />}
                 <MapWithNoSSR serverId={id} />
             </SelectedTrainProvider>
         </div>

@@ -23,6 +23,7 @@
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "leaflet-geosearch": "^3.11.1",
+    "mantine-flagpack": "^4.0.1",
     "next": "14.2.4",
     "react": "18.3.1",
     "react-cookie-consent": "^8.0.1",
