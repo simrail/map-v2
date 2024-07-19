@@ -17,7 +17,8 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 
     const [favorite, SetFavorite] = useState<boolean>(serverSettings.favorite ?? false)
 
-    const toggleFavorite = () => {
+    const toggleFavorite = (event) => {
+        event.preventDefault()
         serverSettings.favorite = !favorite
         SetFavorite(!favorite)
         localStorage.setItem('server-' + server.id, JSON.stringify(serverSettings))
@@ -26,8 +27,8 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 
 
     if (favorite) {
-        return <AiFillStar size={24} color='gold' className={styles.star} onClick={() => toggleFavorite()} />
+        return <AiFillStar size={24} color='gold' className={styles.star} onClick={toggleFavorite} />
     }
-    return <AiOutlineStar size={24} className={styles.star} onClick={() => toggleFavorite()} />
+    return <AiOutlineStar size={24} className={styles.star} onClick={toggleFavorite} />
 
 }
