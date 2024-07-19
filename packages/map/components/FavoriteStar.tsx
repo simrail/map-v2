@@ -17,8 +17,8 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 
     const [favorite, SetFavorite] = useState<boolean>(serverSettings.favorite ?? false)
 
-    const toggleFavorite = (event: MouseEventHandler) => {
-        // @ts-expect-error todo
+    // @ts-expect-error todo
+    const toggleFavorite = (event) => {
         event.preventDefault()
         serverSettings.favorite = !favorite
         SetFavorite(!favorite)
