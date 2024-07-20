@@ -1,4 +1,4 @@
-import { LayerGroup, LayersControl, MapContainer, TileLayer } from 'react-leaflet'
+import { LayerGroup, LayersControl, MapContainer, TileLayer, Tooltip } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
 import "leaflet-defaulticon-compatibility";
@@ -15,10 +15,11 @@ import { TrainsList } from "@/components/TrainsList";
 import NonPlayableStations from "@/components/NonPlayableStations";
 import { useTheme } from 'contexts/ThemeContext';
 import style from '../styles/BottomLeftControls.module.css';
-import { MdFullscreen, MdFullscreenExit, MdIcecream, MdOutlineTraffic, MdSearch, MdSpeakerNotes, MdSpeakerNotesOff, MdTraffic, MdZoomIn, MdZoomOut } from 'react-icons/md';
+import { MdFullscreen, MdFullscreenExit, MdOutlineTraffic, MdSpeakerNotes, MdSpeakerNotesOff, MdTraffic, MdZoomIn, MdZoomOut } from 'react-icons/md';
 import { useFullscreen } from '@mantine/hooks';
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import SpotlightSearch from './SpotlightSearch';
+import { Tooltip as MantineTooltip, TooltipProps } from '@mantine/core';
 
 type MapProps = {
     serverId: string | string[]
@@ -118,7 +119,7 @@ const Map = ({ serverId }: MapProps) => {
             })
     }, [serverId]);
 
-   
+
 
     useEffect(() => {
         if (selectedTrain && map && trains) {
@@ -193,7 +194,11 @@ const Map = ({ serverId }: MapProps) => {
     </main >
 
 
-
+    const Tooltip = ({ label, children }: TooltipProps) => (
+        <MantineTooltip label={label} position='right' zIndex={99999}>
+            {children}
+        </MantineTooltip>
+    );
 
 
     return (
@@ -210,37 +215,68 @@ const Map = ({ serverId }: MapProps) => {
 
                 <Control position='bottomleft'>
                     <div className={style.container}>
-                        <a href='https://github.com/simrail/map-v2' rel="noreferrer" target="_blank" className={style.icon}  >
-                            <FaGithub color='white' size={32} />
-                        </a>
-                        <a href='https://discord.gg/d65Q8gWM5W' rel="noreferrer" target="_blank" className={[style.icon, style.discord].join(" ")}>
-                            <FaDiscord color='white' size={32} />
-                        </a>
+                        <Tooltip label="Our GitHub" position='right'>
+                            <a href='https://github.com/simrail/map-v2' rel="noreferrer" target="_blank" className={style.icon}  >
+                                <FaGithub color='white' size={32} />
+                            </a>
+                        </Tooltip>
+
+                        <Tooltip label="Our Discord (French)" position='right'>
+
+                            <a href='https://discord.gg/d65Q8gWM5W' rel="noreferrer" target="_blank" className={[style.icon, style.discord].join(" ")}>
+                                <FaDiscord color='white' size={32} />
+                            </a>
+                        </Tooltip>
+
                         {map && <>
-                            <MdZoomIn onClick={() => map.zoomIn()} className={style.icon} size={24} />
-                            <MdZoomOut onClick={() => map.zoomOut()} className={style.icon} size={24} />
+                            <Tooltip label="Zoom in" position='right'>
+                                <button className={style.icon}>
+                                    <MdZoomIn onClick={() => map.zoomIn()} size={24} />
+                                </button>
+                            </Tooltip>
+                            <Tooltip label="Zoom out" position='right'>
+                                <button className={style.icon}>
+                                    <MdZoomOut onClick={() => map.zoomOut()} size={24} />
+                                </button>
+                            </Tooltip>
                         </>
                         }
-                        <RenderPopupIcon onClick={() => {
-                            let newRenderPopup = (renderPopup === true ? false : true)
-                            setRenderPopup(newRenderPopup);
-                            // document.body.className = newRenderPopup.valueOf().toString(); 
-                            // This ruins the theme, anyone that knows the programing language unlike me should be able to fix this
+                        <Tooltip label={(renderPopup ? 'Hide' : 'Show') + ' train pop-up'} position='right'>
+                            <button className={style.icon}>
+                                <RenderPopupIcon onClick={() => {
+                                    let newRenderPopup = (renderPopup === true ? false : true)
+                                    setRenderPopup(newRenderPopup);
+                                    // document.body.className = newRenderPopup.valueOf().toString(); 
+                                    // This ruins the theme, anyone that knows the programing language unlike me should be able to fix this
 
-                            localStorage.removeItem('renderPopup')
-                            localStorage.setItem('renderPopup', newRenderPopup.valueOf().toString())
+                                    localStorage.removeItem('renderPopup')
+                                    localStorage.setItem('renderPopup', newRenderPopup.valueOf().toString())
 
-                        }} className={style.icon} size={24} />
-                        <ShowSignalStatusIcon onClick={() => {
-                            let newShowSignalInfo = (showSignalInfo === true ? false : true)
-                            setShowSignalInfo(newShowSignalInfo);
-                            // document.body.className = newRenderPopup.valueOf().toString(); 
-                            // This ruins the theme, anyone that knows the programing language unlike me should be able to fix this
-                            localStorage.removeItem('showSignalInfo')
-                            localStorage.setItem('showSignalInfo', newShowSignalInfo.valueOf().toString())
+                                }} size={24} />
+                            </button>
 
-                        }} className={style.icon} size={24} />
-                        <FullscreenIcon onClick={() => toggleFullscreen()} className={style.icon} size={24} />
+                        </Tooltip>
+                        <Tooltip label={(showSignalInfo ? 'Hide' : 'Show') + ' signal info'} position='right'>
+                            <button className={style.icon}>
+
+                                <ShowSignalStatusIcon onClick={() => {
+                                    let newShowSignalInfo = (showSignalInfo === true ? false : true)
+                                    setShowSignalInfo(newShowSignalInfo);
+                                    // document.body.className = newRenderPopup.valueOf().toString(); 
+                                    // This ruins the theme, anyone that knows the programing language unlike me should be able to fix this
+                                    localStorage.removeItem('showSignalInfo')
+                                    localStorage.setItem('showSignalInfo', newShowSignalInfo.valueOf().toString())
+
+                                }} size={24} />
+                            </button>
+                        </Tooltip>
+
+                        <Tooltip label={fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'} position='right'>
+                            <button className={style.icon}>
+                                <FullscreenIcon onClick={() => toggleFullscreen()} size={24} />
+                            </button>
+                        </Tooltip>
+
                     </div>
                 </Control>
 
