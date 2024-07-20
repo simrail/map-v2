@@ -27,7 +27,7 @@ export default function SpotlightSearch({ trains, stations }: SpotlightSearchPro
 
     const map = useMap();
     const [spotlightActions, setSpotlightActions] = useState<SpotlightActionGroupData[]>([])
-    const { selectedTrain, setSelectedTrain } = useSelectedTrain()
+    const { setSelectedTrain } = useSelectedTrain()
     const usernamesCache = useRef<Map<string, string>>(new Map());
     const [open, setOpen] = useState(false)
 

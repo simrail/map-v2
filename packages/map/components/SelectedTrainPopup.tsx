@@ -27,11 +27,7 @@ const SelectedTrainPopup = () => {
     if (renderPopup === true) {
     return selectedTrain
         ? <div className={styles.popup}>
-                <AiOutlineClose onClick={() => {
-                    setSelectedTrain(null);
-                    if (trainId) router.replace('/server/' + id);
-                }} size={32} className={styles.closeButton} />
-                    <TrainText train={selectedTrain} username={username} avatar={avatar} />
+                <TrainText train={selectedTrain} username={username} avatar={avatar} />
                 </div>
         : null
     } else {

@@ -1,9 +1,12 @@
-import Image from 'next/image';
 import railcarJson from "@/components/railcars.json";
 import {Train} from "@simrail/types";
 import {Railcar} from "../types/Railcar";
 import {useMemo} from "react";
 import TrainUpcomingSignal from "@/components/TrainUpcomingSignal";
+import { ActionIcon, Avatar, Box, Button, Flex, Title } from '@mantine/core';
+import { useRouter } from "next/router";
+import { MdClose } from "react-icons/md";
+import { useSelectedTrain } from "contexts/SelectedTrainContext";
 
 type TrainTextProps = {
     train: Train
@@ -54,7 +57,13 @@ function extractVehicleInformation(rawVehicleName: string): [string, number | nu
     }
 }
 
-const TrainText = ({train, username}: TrainTextProps) => {
+const TrainText = ({ train, username, avatar }: TrainTextProps) => {
+
+    const router = useRouter();
+    const { id, trainId } = router.query
+
+    const { setSelectedTrain } = useSelectedTrain()
+
     const usedRailcarInfo = useMemo(() => train.Vehicles.map((rawVehicleName, index) => {
         const [vehicleName, loadWeight] = extractVehicleInformation(rawVehicleName);
         const railcar = railcarJson.filter((info) => info.apiName === vehicleName).at(0);
@@ -125,17 +134,39 @@ const TrainText = ({train, username}: TrainTextProps) => {
 
     return (
         <>
+            <Flex gap={12} align="center" justify={"space-between"} >
+                <Flex gap={12} align="center" py={16} >
+                    <Avatar src={avatar ?? '/markers/icon-bot-simrail.jpg'} alt={username + "'s avatar"} />
+                    <Title order={3}>{username}</Title>
+                </Flex>
+                <ActionIcon onClick={() => {
+                    if (trainId) router.replace('/server/' + id);
+                    setSelectedTrain(null);
+                }} size={29} color="red" variant="transparent" aria-label="Close pop-up">
+                    <MdClose size={48} />
+                </ActionIcon>
+            </Flex>
             {locomotiveImages}
             {getTrainDisplayName(train.TrainName, train.TrainNoLocal)}<br/>
-            {train.StartStation} - {train.EndStation}<br/>
-            Main Unit: {tractionUnitInfo}<br/>
             {additionalUnitCount > 0 && <>Other Units: x{additionalUnitCount}<br/></>}
             {wagonCount > 0 && <>Wagons: x{wagonCount} <br/></>}
-            Length / Weight: {trainLength}m / {trainWeight}t<br/>
-            User: {username}<br/>
-            Vmax: {minMaxSpeed} km/h<br/>
+            Length / Weight: {trainLength}m / {trainWeight}t<br />
+            <Title order={3}>Informations</Title>
+            Locomotive: {tractionUnitInfo}<br/>
+
+            <Title order={3}>Route</Title>
+            Departure: {train.StartStation}<br/>
+            Destination: {train.EndStation}<br/>
             Speed: {Math.round(train.TrainData.Velocity)} km/h<br/>
-            {localStorage.getItem('showSignalInfo') === "true" && <><TrainUpcomingSignal train={train}/><br/></>}
+            Vmax: {minMaxSpeed} km/h<br/>
+            {localStorage.getItem('showSignalInfo') === "true" && <>
+                <Title order={3}>Next Signal</Title>
+                <TrainUpcomingSignal train={train} /><br />
+            </>}
+            <Flex gap={8} align="center" justify="center" py={16} direction={"column"}>
+                {/* <Button w={"100%"}>View Stops</Button> */}
+                <Button component="a" target="_blank" href={"https://edr.simrail.app/" + id + "/train/" + train.TrainNoLocal} color="orange" w={"100%"}>See on EDR</Button>
+            </Flex>
         </>
     )
 }

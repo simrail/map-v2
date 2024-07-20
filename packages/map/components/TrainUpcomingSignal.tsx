@@ -33,8 +33,8 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({train}) => {
 
     return (
         <>
-            {signalName && <>Distance to signal {signalName}: {formatSignalDistance(DistanceToSignalInFront)}</>}
-            {!signalName && <>Distance to signal: {">5km"}</>}
+            {signalName && <>Distance to: {formatSignalDistance(DistanceToSignalInFront)}</>}
+            {!signalName && <>Distance to: {">5km"}</>}
             {signalName && <><br/>Signal speed: {formatSignalSpeed(SignalInFrontSpeed)}</>}
         </>
     );
