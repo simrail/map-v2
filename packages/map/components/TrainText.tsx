@@ -13,6 +13,7 @@ type TrainTextProps = {
     train: Train
     username: string
     avatar: string | null
+    minified: boolean | null
 }
 
 interface TrainRailcarInfo {
@@ -58,7 +59,7 @@ function extractVehicleInformation(rawVehicleName: string): [string, number | nu
     }
 }
 
-const TrainText = ({ train, username, avatar }: TrainTextProps) => {
+const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps) => {
 
     const router = useRouter();
     const { id, trainId } = router.query
@@ -141,36 +142,41 @@ const TrainText = ({ train, username, avatar }: TrainTextProps) => {
                     <Avatar src={avatar ?? '/markers/icon-bot-simrail.jpg'} alt={username + "'s avatar"} />
                     <Title order={3}>{username}</Title>
                 </Flex>
-                <ActionIcon onClick={() => {
-                    if (trainId) router.replace('/server/' + id);
-                    setSelectedTrain(null);
-                }} size={29} color="red" variant="transparent" aria-label="Close pop-up">
-                    <MdClose size={48} />
-                </ActionIcon>
+                {!minified &&
+                    <ActionIcon onClick={() => {
+                        if (trainId) router.replace('/server/' + id);
+                        setSelectedTrain(null);
+                    }} size={29} color="red" variant="transparent" aria-label="Close pop-up">
+                        <MdClose size={48} />
+                    </ActionIcon>}
             </Flex>
-            <Carousel slideSize="100%" slidesToScroll={1} withIndicators height={120}>
+            <Carousel slideSize="100%" slidesToScroll={1} withIndicators withControls={!minified} height={120}>
                 {locomotiveImages}
                 </Carousel>
-            {getTrainDisplayName(train.TrainName, train.TrainNoLocal)}<br/>
-            {additionalUnitCount > 0 && <>Other Units: x{additionalUnitCount}<br/></>}
-            {wagonCount > 0 && <>Wagons: x{wagonCount} <br/></>}
+            {getTrainDisplayName(train.TrainName, train.TrainNoLocal)}<br />
+            {!minified && <Title order={3}>Informations</Title>}
+            Locomotive: {tractionUnitInfo}<br />
+            {additionalUnitCount > 0 && <>Other Units: x{additionalUnitCount}<br /></>}
+            {wagonCount > 0 && <>Wagons: x{wagonCount} <br /></>}
             Length / Weight: {trainLength}m / {trainWeight}t<br />
-            <Title order={3}>Informations</Title>
-            Locomotive: {tractionUnitInfo}<br/>
 
-            <Title order={3}>Route</Title>
+            {!minified && <Title order={3}>Route</Title>}
             Departure: {train.StartStation}<br/>
             Destination: {train.EndStation}<br/>
             Speed: {Math.round(train.TrainData.Velocity)} km/h<br/>
-            Vmax: {minMaxSpeed} km/h<br/>
+            Vmax: {minMaxSpeed} km/h<br />
+
+            {!minified && <>
+
             {localStorage.getItem('showSignalInfo') === "true" && <>
                 <Title order={3}>Next Signal</Title>
                 <TrainUpcomingSignal train={train} /><br />
             </>}
-            <Flex gap={8} align="center" justify="center" py={16} direction={"column"}>
-                {/* <Button w={"100%"}>View Stops</Button> */}
-                <Button component="a" target="_blank" href={"https://edr.simrail.app/" + id + "/train/" + train.TrainNoLocal} color="orange" w={"100%"}>See on EDR</Button>
-            </Flex>
+                <Flex gap={8} align="center" justify="center" py={16} direction={"column"}>
+                    {/* <Button w={"100%"}>View Stops</Button> */}
+                    <Button component="a" target="_blank" href={"https://edr.simrail.app/" + id + "/train/" + train.TrainNoLocal} color="orange" w={"100%"}>See on EDR</Button>
+                </Flex >
+            </>}
         </>
     )
 }

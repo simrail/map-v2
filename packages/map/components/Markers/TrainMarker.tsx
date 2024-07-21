@@ -64,7 +64,7 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
     >
 
     <Popup>
-        <TrainText train={train} username={username} avatar={avatar} />
+            <TrainText train={train} username={username} avatar={avatar} minified={true} />
     </Popup>
 
     <Tooltip offset={[2, -10]} direction={"top"} opacity={0.8} permanent={true}>{train.TrainNoLocal}</Tooltip>
