@@ -3,10 +3,11 @@ import {Train} from "@simrail/types";
 import {Railcar} from "../types/Railcar";
 import {useMemo} from "react";
 import TrainUpcomingSignal from "@/components/TrainUpcomingSignal";
-import { ActionIcon, Avatar, Box, Button, Flex, Title } from '@mantine/core';
+import { ActionIcon, Avatar, Box, Button, Flex, Image, Title } from '@mantine/core';
 import { useRouter } from "next/router";
 import { MdClose } from "react-icons/md";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
+import { Carousel } from "@mantine/carousel";
 
 type TrainTextProps = {
     train: Train
@@ -89,14 +90,15 @@ const TrainText = ({ train, username, avatar }: TrainTextProps) => {
             return acc;
         }, [] as TrainRailcarInfo[])
         .map((info) => {
-            return (<>
+            return (<Carousel.Slide>
                 <img src={`/trains/${info.railcar.id}.png`}
                        key={`${info.railcar.id}@${info.index}`}
                        alt={info.railcar.id}
-                       width={"195"}
-                       height={"80"}/>
-                <br/>
-            </>)
+                    // w="auto"
+                    // fit="contain"
+                    height={"100%"}
+                />
+            </Carousel.Slide>)
         });
 
     // get some general information about the wagon count
@@ -146,7 +148,9 @@ const TrainText = ({ train, username, avatar }: TrainTextProps) => {
                     <MdClose size={48} />
                 </ActionIcon>
             </Flex>
-            {locomotiveImages}
+            <Carousel slideSize="100%" slidesToScroll={1} withIndicators height={120}>
+                {locomotiveImages}
+                </Carousel>
             {getTrainDisplayName(train.TrainName, train.TrainNoLocal)}<br/>
             {additionalUnitCount > 0 && <>Other Units: x{additionalUnitCount}<br/></>}
             {wagonCount > 0 && <>Wagons: x{wagonCount} <br/></>}
