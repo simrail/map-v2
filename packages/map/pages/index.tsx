@@ -88,7 +88,7 @@ export default function Home({ host }) {
                     return <>
                         <a
                             id={server.ServerCode}
-                            className={styles.server}
+                            className='server'
                             key={server.ServerCode}
                             href={"/server/" + server.ServerCode}>
                             <FavoriteStar server={server} />
@@ -103,6 +103,31 @@ export default function Home({ host }) {
                 }
             </div>
         </main>
+        <style jsx>{`
+        .server {
+            background: rgba(54, 54, 58, 0.8);
+            padding: 8px 32px;
+            margin: 8px;
+            border-radius: 12px;
+            width: 60%;
+            flex-direction: row;
+            transition: all 200ms ease-in-out;
+            align-self: center;
+            justify-self: center;
+            position: relative;
+            text-align: start;
+            font-size: 23px;
+        }
+            
+        @media (max-width: 1280px) {
+            .server {
+                width: 80%;
+            }
+
+        }
+
+        `}
+        </style>
     </>)
 }
 
