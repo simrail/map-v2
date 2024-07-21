@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useTheme } from 'contexts/ThemeContext';
 // import { NavigationDropdown } from './NavigationDropdown';
 import serverTimes from '@/components/serverTimes.json'
-import { Spotlight, spotlight, SpotlightActionData } from '@mantine/spotlight';
+import { spotlight } from '@mantine/spotlight';
 import { useSelectedTrain } from 'contexts/SelectedTrainContext';
 
 type TopNavigationProps = {
@@ -63,7 +63,7 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 
 
     return <div>
-        <nav className={style.navigation}>
+        <nav className='navigation'>
 
             <div className={style.left}>
                 {disableMapFeatures ? <>
@@ -75,9 +75,9 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
                 <img src='/logos/icon.png' alt='SimRail Community Development Logo' width={36} height={36} />
                 <h1 className="title" >SimRail Live Map</h1>
                 <span className={style.saira}>{id?.toString().toUpperCase()}</span>
-                {!disableMapFeatures && <span className={style.online} />}
+                {!disableMapFeatures && <span className='online' />}
             </div>
-            <div className={style.datetime}>
+            <div className='datetime'>
                 <span className={style.time}>
                     {date.getHours().toString().padStart(2, '0')}
                     <span style={{ color: (blinking ? 'black' : '#FF9900') }}>:</span>
@@ -100,7 +100,7 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
                         }} />
                     }
 
-                    <MdSearch onClick={spotlight.open} className={[style.icons, "search_icon"].join(" ")}
+                    <MdSearch onClick={spotlight.open} className={[style.icons, "search-icon"].join(" ")}
                         size={24}
                     />
 
@@ -128,7 +128,7 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
             padding: 6px 6px;
         }
 
-        .search_icon {
+        .search-icon {
             display: none;
         }
 
@@ -139,12 +139,47 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
             font-family: 'Saira';
         }
 
+        .datetime {
+            font-weight: bold;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+            
+        .navigation {
+            overflow: hidden;
+            background-color: #111114;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            vertical-align: middle;
+            height: 54px;
+        }
+
+        .online {
+            height: 12px;
+            width: 12px;
+            background-color: #43E366;
+            border-radius: 9999px;
+        }
 
         @media (max-width: 1280px) {
             .title {
                 display: none;
             }
             .search-input-container {
+                display: none;
+            }
+        }
+        @media (max-width: 640px) {
+            .datetime {
+                display: none;
+            }
+            .navigation {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .online {
                 display: none;
             }
         }
