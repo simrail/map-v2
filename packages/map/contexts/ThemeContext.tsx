@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 
 interface Theme {
-    theme: string;
+    theme: 'light' | 'dark';
     setTheme: (theme: string) => void;
 }
 
