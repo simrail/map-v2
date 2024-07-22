@@ -15,7 +15,7 @@ function App() {
                         <Flex style={{ marginTop: 50 }} direction={"column"} gap={48}>
                             <FeatureCard name='Live Map' href='https://map.simrail.app' image='/features/map.webp' />
                             <FeatureCard name='EDR' target="_blank" href='https://edr.simrail.app' image='/features/edr.webp' />
-                            <FeatureCard name='SOON ' href='servers' disabled image='/features/blog.wepb' />
+                            <FeatureCard name='SOON ' href='servers' disabled image='/features/blog.webp' />
                         </Flex>
                         <Space h="xl" />
                         <Footer />
