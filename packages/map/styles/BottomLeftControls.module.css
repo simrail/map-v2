@@ -9,6 +9,7 @@
     align-items: center;
     display: flex;
     cursor: pointer;
+    box-sizing: unset;
 }
 
 

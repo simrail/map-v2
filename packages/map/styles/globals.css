@@ -3,10 +3,6 @@
   --border-radius: 12px;
 }
 
-*, ::before, ::after {
-  box-sizing: unset !important;
-}
-
 input {
   border: 0;
   outline: 0;

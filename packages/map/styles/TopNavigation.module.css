@@ -38,6 +38,7 @@
     border-radius: 8px;
     padding: 4px;
     cursor: pointer;
+    box-sizing: unset;
 }
 
 .navigationDropdown {
