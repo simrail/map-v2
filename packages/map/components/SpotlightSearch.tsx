@@ -133,6 +133,11 @@ export default function SpotlightSearch({ trains, stations }: SpotlightSearchPro
         actions={spotlightActions}
         nothingFound="Nothing found..."
         highlightQuery
+        styles={{
+            actionLabel: {
+                color: 'var(--mantine-color-text)'
+            }
+        }}
         onSpotlightOpen={() => setOpen(true)}
         onSpotlightClose={() => setOpen(false)}
         limit={5}
