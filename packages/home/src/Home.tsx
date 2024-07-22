@@ -13,9 +13,9 @@ function App() {
                     <Flex align="center" direction={"column"}>
                         <img alt="SimRail logo" src={logo} width={258} height={82} />
                         <Flex style={{ marginTop: 50 }} direction={"column"} gap={48}>
-                            <FeatureCard name='Live Map' href='https://map.simrail.app' image='/features/map.png' />
-                            <FeatureCard name='EDR' target="_blank" href='https://edr.simrail.app' image='/features/edr.png' />
-                            <FeatureCard name='SOON ' href='servers' disabled image='/features/blog.png' />
+                            <FeatureCard name='Live Map' href='https://map.simrail.app' image='/features/map.webp' />
+                            <FeatureCard name='EDR' target="_blank" href='https://edr.simrail.app' image='/features/edr.webp' />
+                            <FeatureCard name='SOON ' href='servers' disabled image='/features/blog.wepb' />
                         </Flex>
                         <Space h="xl" />
                         <Footer />
