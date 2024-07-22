@@ -22,7 +22,11 @@ export default function Home({ Component, pageProps }: AppProps) {
   </>
 }
 
-function Mantine({children}) {
+type MantineProps = {
+  children: string | JSX.Element | JSX.Element[]
+}
+
+function Mantine({children}: MantineProps) {
   const mantineTheme: MantineThemeOverride = createTheme({
     headings: { fontFamily: 'Saira' },
     colors: {

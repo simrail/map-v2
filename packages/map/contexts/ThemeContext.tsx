@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 
 interface Theme {
     theme: 'light' | 'dark';
-    setTheme: (theme: string) => void;
+    setTheme: (theme: 'light' | 'dark') => void;
 }
 
 interface ThemeProviderProps {
@@ -11,7 +11,7 @@ interface ThemeProviderProps {
 
 export const ThemeContext = React.createContext<Theme>({
     theme: "light",
-    setTheme: (theme: string) => { },
+    setTheme: (theme: 'light' | 'dark') => { },
 });
 
 export const useTheme = () => useContext(ThemeContext);
