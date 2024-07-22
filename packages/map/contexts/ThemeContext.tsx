@@ -19,7 +19,7 @@ export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
-    const [theme, setTheme] = useState<string>(() => {
+    const [theme, setTheme] = useState<"dark"|"light">(() => {
         // Check if the theme is already stored in the local storage
         if (typeof window !== "undefined") {
             const storedTheme = localStorage.getItem("theme");
@@ -27,13 +27,13 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
             let finalTheme = storedTheme ? storedTheme : "light";
             document.body.className = finalTheme;
 
-            return finalTheme;
+            return finalTheme as "dark" | "light";
         }
 
         return "light";
     });
 
-    const handleSetTheme = (theme: string) => {
+    const handleSetTheme = (theme: "dark" | "light") => {
         setTheme(theme);
         if (typeof window !== "undefined") {
             document.body.className = theme;
