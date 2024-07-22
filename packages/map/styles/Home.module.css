@@ -5,7 +5,7 @@
   color: white;
   font-family: var(--font-mono);
   background:linear-gradient( rgba(0, 0, 0, 0.7) 100%, rgba(0, 0, 0, 0.7)100%),url("/background-server-summer.webp") no-repeat;
-
+  background-position: center;
   background-size: cover;
   background-attachment: fixed;
 
