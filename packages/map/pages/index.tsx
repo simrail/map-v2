@@ -86,11 +86,11 @@ export default function Home({ host }) {
             <div className={styles.serverList}>
 
                 {servers && servers.map((server: Server) => {
-                    return <>
+                    return (
                         <a
                             id={server.ServerCode}
                             className='server'
-                            key={server.ServerCode}
+                            key={server.id}
                             href={"/server/" + server.ServerCode}>
                             <FavoriteStar server={server} />
                             <span className={`${styles.statusIndicator} ${getStatusIndicatorStyle(server)}`}></span>
@@ -99,7 +99,7 @@ export default function Home({ host }) {
                                 <span>{server.ServerName}</span>
                             </span>
                         </a>
-                    </>
+                    )
                 })
                 }
             </div>
