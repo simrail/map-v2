@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Head from 'next/head'
 import Image from "next/image";
-import { Container, Flex, Space } from '@mantine/core';
+import {Container, Flex, Space } from '@mantine/core';
 import { FeatureCard } from '../../home/src/components/FeatureCard';
 import { Footer } from '../../home/src/components/Footer';
 import Servers from "./servers";
@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css'
 import { TopNavigation } from '@/components/TopNavigation';
 import dynamic from 'next/dynamic';
+import EUFlag from '@/components/EUFlag';
 
 export default function Home({ host }) {
 
@@ -140,6 +141,11 @@ const FlagIcon = ({ code }) => {
                 .then((mod) => {
                     let lang = code.toUpperCase();
                     if (lang === 'EN') lang = 'GB'
+                    if (lang === 'EU') {
+                        setComponent(() => EUFlag)
+                        return;
+                    }
+
                     setComponent(() => mod[lang + 'Flag']);
                 })
                 .catch((err) => {
