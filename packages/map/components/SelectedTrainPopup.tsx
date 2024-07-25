@@ -26,7 +26,7 @@ const SelectedTrainPopup = () => {
 
     if (renderPopup === true) {
     return selectedTrain
-        ? <div className={styles.popup}>
+        ? <div className={styles.popup} style={trainId ? {top: '0px'} : {}}>
                 <TrainText train={selectedTrain} username={username} avatar={avatar} />
                 </div>
         : null
