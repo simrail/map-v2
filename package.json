@@ -3,30 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "dev": "pnpm run --filter \"./packages/**\" --parallel dev",
     "build": "pnpm run --filter \"./packages/**\" --parallel build"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@next/third-parties": "^14.2.4",
     "@simrail/types": "^0.0.3",
-    "@types/node": "18.11.17",
+    "@types/node": "^20.14.12",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",
     "eslint": "8.30.0",
-    "eslint-config-next": "14.2.3",
-    "leaflet": "^1.9.4",
-    "leaflet-defaulticon-compatibility": "^0.1.2",
-    "leaflet-geosearch": "^3.11.1",
-    "next": "14.2.4",
+    "eslint-config-next": "14.2.5",
+    "next": "14.2.5",
     "react": "18.3.1",
-    "react-cookie-consent": "^8.0.1",
     "react-dom": "18.3.1",
-    "react-icons": "^4.12.0",
-    "react-leaflet": "^4.2.1",
-    "react-leaflet-custom-control": "^1.4.0",
-    "react-leaflet-drift-marker": "^4.0.0",
-    "sharp": "^0.32.6",
     "typescript": "4.9.4"
   },
   "devDependencies": {
@@ -34,8 +24,8 @@
   },
   "pnpm": {
     "overrides": {
-        "@types/react": "18.0.26",
-        "@types/react-dom": "18.0.10"
+      "@types/react": "18.0.26",
+      "@types/react-dom": "18.0.10"
     }
   }
 }
