@@ -38,14 +38,14 @@ const Post = () => {
     const { id, trainId } = router.query
 
 
-    //z>No profile data</p>
+    const pageTitle = id?.toString().toUpperCase() + ' - ' + 'SimRail Map'
 
     if (!id) return;
 
 
     return <>
         <Head>
-            <title>{id.toString().toUpperCase()} - SimRail Map</title>
+            <title>{pageTitle}</title>
             <link
                 rel="canonical"
                 href={"https://map.simrail.app/server/" + id}
