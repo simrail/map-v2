@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { SelectedTrainProvider } from '../../contexts/SelectedTrainContext';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { Server } from '@simrail/types';
+import { TopNavigation } from '@/components/TopNavigation';
 
 export const getStaticPaths = (async () => {
     const res = await fetch('https://panel.simrail.eu:8084/servers-open')
@@ -34,26 +35,29 @@ const Post = () => {
     });
 
     const router = useRouter()
-    const { id } = router.query
+    const { id, trainId } = router.query
 
 
-    //z>No profile data</p>
+    const pageTitle = id?.toString().toUpperCase() + ' - ' + 'SimRail Map'
 
     if (!id) return;
 
 
     return <>
         <Head>
-            <title>{id.toString().toUpperCase()} - SimRail Map</title>
+            <title>{pageTitle}</title>
             <link
                 rel="canonical"
                 href={"https://map.simrail.app/server/" + id}
                 key="canonical"
             />
         </Head>
-        <SelectedTrainProvider>
-            <MapWithNoSSR serverId={id} />
-        </SelectedTrainProvider>
+        <div style={{ height: "100vh", width: '100vw', display: 'flex', flexDirection: 'column' }}>
+            <SelectedTrainProvider>
+                {!trainId && <TopNavigation />}
+                <MapWithNoSSR serverId={id} />
+            </SelectedTrainProvider>
+        </div>
     </>
 }
 

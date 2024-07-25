@@ -4,14 +4,16 @@
   min-height: 100vh;
   color: white;
   font-family: var(--font-mono);
-  background: url('/background-server-winter.webp') no-repeat;
+  background:linear-gradient( rgba(0, 0, 0, 0.7) 100%, rgba(0, 0, 0, 0.7)100%),url("/background-server-summer.webp") no-repeat;
+  background-position: center;
   background-size: cover;
   background-attachment: fixed;
 
 }
 
-.main h1 {
-  padding: 32px 0;
+.title {
+  font-family: 'Saira';
+  font-size: 48px;
 }
 
 .serverList {
@@ -22,24 +24,21 @@
 
 }
 
-.server {
-  background: #585A65;
-  padding: 12px 32px;
-  margin: 8px;
-  border-radius: 12px;
-  width: 70%;
-  flex-direction: row;
-  transition: all 150ms ease-in-out;
-  align-self: center;
-  justify-self: center;
-  position: relative;
 
+.serverName {
+  margin-left: 32px;
+  transition: all 200ms ease-in-out;
+  display: flex;
+  gap: 16px;
+  font-weight: 600;
+  align-items: center;
 }
 
-.serverName {}
-
+.server:hover .serverName {
+  margin-left: 48px; 
+}
 .server:hover {
-  background: #8B8E9F;
+  background: #111114;
 }
 
 .statusIndicator {
@@ -48,21 +47,21 @@
   min-width: 12px;
   position: absolute;
   left: 20px;
-  top: 16px;
+  top: 20px;
 }
 
 .online {
-  background: #5FF347;
+  background: #43E366;
 }
 
 .offline {
-  background: #F34747;
+  background: #DF3838;
 }
 
 .star {
   position: absolute;
   right: 20px;
-  top: 10px;
+  top: 14px;
   cursor: pointer;
 }
 

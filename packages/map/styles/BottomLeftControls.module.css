@@ -1,0 +1,30 @@
+.icon {
+    border: white 2px solid;
+    background: black;
+    border-radius: 8px;
+    padding: 4px;
+    height: 24px;
+    width: 24px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    box-sizing: unset;
+    color: white;
+}
+
+
+.container {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.discord {
+    background: #5865F2;
+}
+

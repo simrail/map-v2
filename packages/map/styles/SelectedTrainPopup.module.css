@@ -1,13 +1,14 @@
 .popup {
     position: absolute;
     right: 0;
-    background: rgb(0 0 0 / 40%);
+    background: rgb(54,54,58, 80%);
     z-index: 9999;
     color: white;
-    padding: 16px 32px;
+    padding: 8px 32px;
     margin: 8px;
     border-radius: 7px;
     backdrop-filter: blur(10px);
+    top: 64px;
 }
 
 .closeButton {
