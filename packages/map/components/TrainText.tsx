@@ -92,11 +92,11 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
         }, [] as TrainRailcarInfo[])
         .map((info) => {
             return (<Carousel.Slide>
-                <img src={`/trains/${info.railcar.id}.png`}
+                <Image src={`/trains/${info.railcar.id}.png`}
                        key={`${info.railcar.id}@${info.index}`}
                        alt={info.railcar.id}
-                    // w="auto"
-                    // fit="contain"
+                        w="auto"
+                        fit="contain"
                     height={"100%"}
                 />
             </Carousel.Slide>)
@@ -150,9 +150,11 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
                         <MdClose size={48} />
                     </ActionIcon>}
             </Flex>
-            <Carousel slideSize="100%" slidesToScroll={1} withIndicators withControls={!minified} height={120}>
-                {locomotiveImages}
+            <div style={{display: 'flex', width: '300px'}}>
+                <Carousel withIndicators withControls={!minified} height={120} style={{flex: '1', width: '300px'}} slideSize={"300px"}> 
+                    {locomotiveImages}
                 </Carousel>
+            </div>
             {getTrainDisplayName(train.TrainName, train.TrainNoLocal)}<br />
             {!minified && <Title order={3}>Informations</Title>}
             Locomotive: {tractionUnitInfo}<br />
