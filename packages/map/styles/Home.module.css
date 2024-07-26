@@ -24,23 +24,6 @@
 
 }
 
-
-.serverName {
-  margin-left: 32px;
-  transition: all 200ms ease-in-out;
-  display: flex;
-  gap: 16px;
-  font-weight: 600;
-  align-items: center;
-}
-
-.server:hover .serverName {
-  margin-left: 48px; 
-}
-.server:hover {
-  background: #111114;
-}
-
 .statusIndicator {
   border-radius: 9999px;
   height: 12px;

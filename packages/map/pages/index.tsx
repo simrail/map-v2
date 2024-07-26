@@ -94,7 +94,7 @@ export default function Home({ host }) {
                             href={"/server/" + server.ServerCode}>
                             <FavoriteStar server={server} />
                             <span className={`${styles.statusIndicator} ${getStatusIndicatorStyle(server)}`}></span>
-                            <span className={styles.serverName}>
+                            <span className="serverName">
                                 <FlagIcon  code={server.ServerCode.slice(0, 2).toUpperCase()} />
                                 <span>{server.ServerName}</span>
                             </span>
@@ -119,7 +119,23 @@ export default function Home({ host }) {
             text-align: start;
             font-size: 23px;
         }
-            
+
+        .serverName {
+            margin-left: 32px;
+            transition: all 200ms ease-in-out;
+            display: flex;
+            gap: 16px;
+            font-weight: 600;
+            align-items: center;
+        }
+
+        .server:hover .serverName {
+            margin-left: 48px; 
+        }
+        .server:hover {
+            background: #111114;
+        }
+                    
         @media (max-width: 1280px) {
             .server {
                 width: 80%;
