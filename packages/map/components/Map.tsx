@@ -309,7 +309,7 @@ const Map = ({ serverId }: MapProps) => {
                     </LayersControl.Overlay>
 
                     <LayersControl.Overlay 
-                        checked={localStorage.getItem('layer-mainline-signals') === null || localStorage.getItem('layer-mainline-signals') === 'true'}
+                        checked={localStorage.getItem('layer-mainline-signals') === 'true'}
                         name="Mainline signals">
                         <LayerGroup>
                             <MainlineSignals />
@@ -317,7 +317,7 @@ const Map = ({ serverId }: MapProps) => {
                     </LayersControl.Overlay>
 
                     <LayersControl.Overlay 
-                        checked={localStorage.getItem('layer-other-signals') === null || localStorage.getItem('layer-other-signals') === 'true'}
+                        checked={localStorage.getItem('layer-other-signals') === 'true'}
                         name="Other signals">
                         <LayerGroup>
                             <OtherSignals />
