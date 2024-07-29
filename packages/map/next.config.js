@@ -4,6 +4,7 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true
   },
+  transpilePackages: ['common'],
   output: 'export',
   distDir: 'dist',
   images: {

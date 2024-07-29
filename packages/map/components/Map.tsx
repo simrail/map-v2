@@ -17,7 +17,7 @@ import { useTheme } from 'contexts/ThemeContext';
 import style from '../styles/BottomLeftControls.module.css';
 import { MdFullscreen, MdFullscreenExit, MdOutlineTraffic, MdSpeakerNotes, MdSpeakerNotesOff, MdTraffic, MdZoomIn, MdZoomOut } from 'react-icons/md';
 import { useFullscreen, useLocalStorage } from '@mantine/hooks';
-import { FaDiscord, FaGithub } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaLanguage } from "react-icons/fa";
 import SpotlightSearch from './SpotlightSearch';
 import { Tooltip as MantineTooltip, TooltipProps } from '@mantine/core';
 
@@ -177,6 +177,12 @@ const Map = ({ serverId }: MapProps) => {
 
                 <Control position='bottomleft'>
                     <div className={style.container}>
+                        <Tooltip label="Our GitHub" position='right'>
+                            <a href='https://github.com/simrail/map-v2' rel="noreferrer" target="_blank" className={style.icon}  >
+                                <FaLanguage size={32} />
+                                {/* <FaGithub color='white' size={32} /> */}
+                            </a>
+                        </Tooltip>
                         <Tooltip label="Our GitHub" position='right'>
                             <a href='https://github.com/simrail/map-v2' rel="noreferrer" target="_blank" className={style.icon}  >
                                 <FaGithub color='white' size={32} />
