@@ -43,38 +43,19 @@ const Map = ({ serverId }: MapProps) => {
         defaultValue: true,
     })
 
+    const [showSignalInfo, setShowSignalInfo] = useLocalStorage({
+        key: 'showSignalInfo',
+        defaultValue: true,
+    })
+
     const { toggle: toggleFullscreen, fullscreen } = useFullscreen();
     let FullscreenIcon = (fullscreen ? MdFullscreenExit : MdFullscreen);
 
 
 
-    const [showSignalInfo, setShowSignalInfo] = useState<boolean>()
     let ShowSignalStatusIcon = (showSignalInfo === true ? MdTraffic : MdOutlineTraffic)
     let RenderPopupIcon = (renderPopup === true ? MdSpeakerNotes : MdSpeakerNotesOff)
 
-
-    useEffect(() => {
-        let data = localStorage.getItem('showSignalInfo')
-        if (data) {
-            let dataBool
-            switch (data) {
-                case 'true':
-                    dataBool = true;
-                    break;
-
-                case 'false':
-                    dataBool = false;
-                    break;
-
-                default:
-                    dataBool = true;
-                    break;
-            }
-            setShowSignalInfo(dataBool)
-            //document.body.className = data
-            // Comment lower down, please fix this
-        }
-    }, [setShowSignalInfo])
 
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
     const [stations, setStations] = useState<Station[] | null>(null)
@@ -224,31 +205,14 @@ const Map = ({ serverId }: MapProps) => {
                         }
                         <Tooltip label={(renderPopup ? 'Hide' : 'Show') + ' train pop-up'} position='right'>
                             <button className={style.icon}>
-                                <RenderPopupIcon onClick={() => {
-                                    let newRenderPopup = (renderPopup === true ? false : true)
-                                    setRenderPopup(newRenderPopup);
-                                    // document.body.className = newRenderPopup.valueOf().toString(); 
-                                    // This ruins the theme, anyone that knows the programing language unlike me should be able to fix this
-
-                                    localStorage.removeItem('renderPopup')
-                                    localStorage.setItem('renderPopup', newRenderPopup.valueOf().toString())
-
-                                }} size={24} />
+                                <RenderPopupIcon onClick={() => setRenderPopup((prevState) => !prevState)} size={24} />
                             </button>
 
                         </Tooltip>
                         <Tooltip label={(showSignalInfo ? 'Hide' : 'Show') + ' signal info'} position='right'>
                             <button className={style.icon}>
 
-                                <ShowSignalStatusIcon onClick={() => {
-                                    let newShowSignalInfo = (showSignalInfo === true ? false : true)
-                                    setShowSignalInfo(newShowSignalInfo);
-                                    // document.body.className = newRenderPopup.valueOf().toString(); 
-                                    // This ruins the theme, anyone that knows the programing language unlike me should be able to fix this
-                                    localStorage.removeItem('showSignalInfo')
-                                    localStorage.setItem('showSignalInfo', newShowSignalInfo.valueOf().toString())
-
-                                }} size={24} />
+                                <ShowSignalStatusIcon onClick={() => setShowSignalInfo((prevState) => !prevState)} size={24} />
                             </button>
                         </Tooltip>
 
