@@ -6,11 +6,15 @@ import { useEffect, useState } from "react";
 import TrainText from "./TrainText";
 import { useRouter } from "next/router";
 import {getSteamProfileOrBot} from "@/components/steam";
+import { readLocalStorageValue, useLocalStorage } from '@mantine/hooks';
 
 const SelectedTrainPopup = () => {
 
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
-    const renderPopup = localStorage.getItem('renderPopup') === 'true';
+    const renderPopup = readLocalStorageValue({
+        key: 'renderPopup',
+        defaultValue: true,
+    });
 
     const [avatar, setAvatar] = useState<string | null>(null)
     const [username, setUsername] = useState<string | null>(null)
