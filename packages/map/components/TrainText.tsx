@@ -170,9 +170,12 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
 
             {!minified && <>
 
+            <Title order={3}>Next Signal</Title>
             {localStorage.getItem('showSignalInfo') === "true" && <>
-                <Title order={3}>Next Signal</Title>
-                <TrainUpcomingSignal train={train} /><br />
+                <TrainUpcomingSignal train={train} showMoreInfo={true} /><br />
+            </>}
+            {localStorage.getItem('showSignalInfo') === "false" && <>
+                <TrainUpcomingSignal train={train} showMoreInfo={false} /><br />
             </>}
                 <Flex gap={8} align="center" justify="center" py={16} direction={"column"}>
                     {/* <Button w={"100%"}>View Stops</Button> */}
