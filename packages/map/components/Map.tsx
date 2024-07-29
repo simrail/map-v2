@@ -16,7 +16,7 @@ import NonPlayableStations from "@/components/NonPlayableStations";
 import { useTheme } from 'contexts/ThemeContext';
 import style from '../styles/BottomLeftControls.module.css';
 import { MdFullscreen, MdFullscreenExit, MdOutlineTraffic, MdSpeakerNotes, MdSpeakerNotesOff, MdTraffic, MdZoomIn, MdZoomOut } from 'react-icons/md';
-import { useFullscreen } from '@mantine/hooks';
+import { useFullscreen, useLocalStorage } from '@mantine/hooks';
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import SpotlightSearch from './SpotlightSearch';
 import { Tooltip as MantineTooltip, TooltipProps } from '@mantine/core';
@@ -38,30 +38,11 @@ const Map = ({ serverId }: MapProps) => {
     const { theme, setTheme } = useTheme();
 
 
-    const [renderPopup, setRenderPopup] = useState<boolean>()
+    const [renderPopup, setRenderPopup] = useLocalStorage({
+        key: 'renderPopup',
+        defaultValue: true,
+    })
 
-    useEffect(() => {
-        let data = localStorage.getItem('renderPopup')
-        if (data) {
-            let dataBool
-            switch (data) {
-                case 'true':
-                    dataBool = true;
-                    break;
-
-                case 'false':
-                    dataBool = false;
-                    break;
-
-                default:
-                    dataBool = true;
-                    break;
-            }
-            setRenderPopup(dataBool)
-            //document.body.className = data
-            // Comment lower down, please fix this
-        }
-    }, [setRenderPopup])
     const { toggle: toggleFullscreen, fullscreen } = useFullscreen();
     let FullscreenIcon = (fullscreen ? MdFullscreenExit : MdFullscreen);
 
