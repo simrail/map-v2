@@ -20,6 +20,7 @@ import { useFullscreen } from '@mantine/hooks';
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import SpotlightSearch from './SpotlightSearch';
 import { Tooltip as MantineTooltip, TooltipProps } from '@mantine/core';
+import { MainlineSignals, OtherSignals } from "@/components/Signals"
 
 type MapProps = {
     serverId: string | string[]
@@ -307,9 +308,25 @@ const Map = ({ serverId }: MapProps) => {
                         </LayerGroup>
                     </LayersControl.Overlay>
 
+                    <LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-mainline-signals') === null || localStorage.getItem('layer-mainline-signals') === 'true'}
+                        name="Mainline signals">
+                        <LayerGroup>
+                            <MainlineSignals />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+
+                    <LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-other-signals') === null || localStorage.getItem('layer-other-signals') === 'true'}
+                        name="Other signals">
+                        <LayerGroup>
+                            <OtherSignals />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+
                     <LayersControl.Overlay
                         checked={localStorage.getItem('layer-Signalling') === 'true'}
-                        name="Signalling">
+                        name="Signalling (Not 100% accurate)">
                         <LayerGroup>
                             <TileLayer
                                 url="https://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png"
