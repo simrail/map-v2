@@ -1,70 +1,70 @@
 [
-    {
-        "Name": "de4",
-        "UTCOff": -8
-    },
-    {
-        "Name": "en3",
-        "UTCOff": -5
-    },
-    {
-        "Name": "en1",
-        "UTCOff": 0
-    },
-    {
-        "Name": "cn1",
-        "UTCOff": 8
-    },
-    {
-        "Name": "ua1",
-        "UTCOff": 2
-    },
-    {
-        "Name": "de3",
-        "UTCOff": 2
-    },
-    {
-        "Name": "pl3",
-        "UTCOff": -8
-    },
-    {
-        "Name": "pl8",
-        "UTCOff": -4
-    },
-    {
-        "Name": "de1",
-        "UTCOff": 2
-    },
-    {
-        "Name": "pl4",
-        "UTCOff": 2
-    },
-    {
-        "Name": "cz1",
-        "UTCOff": 2
-    },
-    {
-        "Name": "en2",
-        "UTCOff": -12
-    },
-    {
-        "Name": "es1",
-        "UTCOff": 2
-    },
-    {
-        "Name": "eu3",
-        "UTCOff": 0
-    },
-    {
-        "Name": "hu1",
-        "UTCOff": 0
-    },
-    {
-        "Name": "fr1",
-        "UTCOff": 2
-    },
-    {
-        "Name": "pl2",
-        "UTCOff": 2
-    }
+	{
+		"Name": "de4",
+		"UTCOff": -8
+	},
+	{
+		"Name": "en3",
+		"UTCOff": -5
+	},
+	{
+		"Name": "en1",
+		"UTCOff": 0
+	},
+	{
+		"Name": "cn1",
+		"UTCOff": 8
+	},
+	{
+		"Name": "ua1",
+		"UTCOff": 2
+	},
+	{
+		"Name": "de3",
+		"UTCOff": 2
+	},
+	{
+		"Name": "pl3",
+		"UTCOff": -8
+	},
+	{
+		"Name": "pl8",
+		"UTCOff": -4
+	},
+	{
+		"Name": "de1",
+		"UTCOff": 2
+	},
+	{
+		"Name": "pl4",
+		"UTCOff": 2
+	},
+	{
+		"Name": "cz1",
+		"UTCOff": 2
+	},
+	{
+		"Name": "en2",
+		"UTCOff": -12
+	},
+	{
+		"Name": "es1",
+		"UTCOff": 2
+	},
+	{
+		"Name": "eu3",
+		"UTCOff": 0
+	},
+	{
+		"Name": "hu1",
+		"UTCOff": 0
+	},
+	{
+		"Name": "fr1",
+		"UTCOff": 2
+	},
+	{
+		"Name": "pl2",
+		"UTCOff": 2
+	}
 ]

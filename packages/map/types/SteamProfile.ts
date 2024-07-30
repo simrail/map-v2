@@ -1,18 +1,18 @@
 type SteamProfileResponse = {
-    response: SteamProfilePlayerList,
-}
+	response: SteamProfilePlayerList;
+};
 
 type SteamProfilePlayerList = {
-    players: SteamProfilePlayer[]
-}
+	players: SteamProfilePlayer[];
+};
 
 type SteamProfilePlayer = {
-    avatarmedium: string,
-    personaname: string,
-}
+	avatarmedium: string;
+	personaname: string;
+};
 
 type ProfileResponse = {
-    avatar: string,
-    personaname: string,
-}
-export type { ProfileResponse }
+	avatar: string;
+	personaname: string;
+};
+export type { ProfileResponse };

@@ -1,8 +1,13 @@
-import React, {FC} from "react";
+import { NonPlayableStationMarker } from "@/components/Markers/NonPlayableStationMarker";
 import stationsJson from "@/components/stations.json";
-import {NonPlayableStationMarker} from "@/components/Markers/NonPlayableStationMarker";
+import React, { type FC } from "react";
 
-const NonPlayableStations: FC = () =>
-    <>{stationsJson.map(station => (<NonPlayableStationMarker key={station.Name} station={station} />))}</>
+const NonPlayableStations: FC = () => (
+	<>
+		{stationsJson.map((station) => (
+			<NonPlayableStationMarker key={station.Name} station={station} />
+		))}
+	</>
+);
 
 export default React.memo(NonPlayableStations);
