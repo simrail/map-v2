@@ -63,7 +63,7 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 
 
     return <div>
-        <nav className='navigation'>
+        <nav className={`${style.navigation} ${theme === 'light' ? style.lightTheme : ''}`}>
 
             <div className={style.left}>
                 {disableMapFeatures ? <>

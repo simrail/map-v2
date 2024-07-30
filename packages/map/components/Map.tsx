@@ -176,10 +176,10 @@ const Map = ({ serverId }: MapProps) => {
             >
 
                 <Control position='bottomleft'>
-                    <div className={style.container}>
+                <div className={style.container}>
                         <Tooltip label="Our GitHub" position='right'>
-                            <a href='https://github.com/simrail/map-v2' rel="noreferrer" target="_blank" className={style.icon}  >
-                                <FaGithub color='white' size={32} />
+                        <a href='https://github.com/simrail/map-v2' rel="noreferrer" target="_blank" className={`${style.icon} ${theme === 'light' ? style.lightTheme : style.darkTheme}`}>
+                                <FaGithub size={32} />
                             </a>
                         </Tooltip>
 
@@ -192,32 +192,32 @@ const Map = ({ serverId }: MapProps) => {
 
                         {map && <>
                             <Tooltip label="Zoom in" position='right'>
-                                <button className={style.icon}>
+                            <button className={`${style.icon} ${theme === 'light' ? style.lightTheme : style.darkTheme}`}>
                                     <MdZoomIn onClick={() => map.zoomIn()} size={24} />
                                 </button>
                             </Tooltip>
                             <Tooltip label="Zoom out" position='right'>
-                                <button className={style.icon}>
+                            <button className={`${style.icon} ${theme === 'light' ? style.lightTheme : style.darkTheme}`}>
                                     <MdZoomOut onClick={() => map.zoomOut()} size={24} />
                                 </button>
                             </Tooltip>
                         </>
                         }
                         <Tooltip label={(renderPopup ? 'Hide' : 'Show') + ' train pop-up'} position='right'>
-                            <button className={style.icon}>
+                        <button className={`${style.icon} ${theme === 'light' ? style.lightTheme : style.darkTheme}`}>
                                 <RenderPopupIcon onClick={() => setRenderPopup((prevState) => !prevState)} size={24} />
                             </button>
 
                         </Tooltip>
                         <Tooltip label={(showSignalInfo ? 'Hide' : 'Show') + ' signal info'} position='right'>
-                            <button className={style.icon}>
+                            <button className={`${style.icon} ${theme === 'light' ? style.lightTheme : style.darkTheme}`}>
 
                                 <ShowSignalStatusIcon onClick={() => setShowSignalInfo((prevState) => !prevState)} size={24} />
                             </button>
                         </Tooltip>
 
                         <Tooltip label={fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'} position='right'>
-                            <button className={style.icon}>
+                            <button className={`${style.icon} ${theme === 'light' ? style.lightTheme : style.darkTheme}`}>
                                 <FullscreenIcon onClick={() => toggleFullscreen()} size={24} />
                             </button>
                         </Tooltip>

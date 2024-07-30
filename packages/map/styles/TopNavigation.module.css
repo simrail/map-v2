@@ -1,3 +1,23 @@
+.navigation {
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    vertical-align: middle;
+    height: 54px;
+  }
+  
+  /* Style par défaut (thème sombre) */
+  .navigation { 
+    background-color: #111114;
+    color: white; /* Couleur du texte par défaut */
+  }
+  
+  /* Style pour le thème clair */
+  .lightTheme {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
 .left,
 .right {
     max-height: 52px;
@@ -21,7 +41,7 @@
 }
 
 .date {
-    color: #ABABAB;
+    color: currentColor;
 }
 
 
@@ -34,7 +54,7 @@
 }
 
 .icons {
-    border: white 2px solid;
+    border: currentColor 2px solid;
     border-radius: 8px;
     padding: 4px;
     cursor: pointer;
