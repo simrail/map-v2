@@ -34,10 +34,10 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
                 setServerDate(newDate);
             }
         }
-    }, [id]);
+    }, [id, date.getUTCHours]);
 
     useEffect(() => {
-        let timer = setInterval(() => {
+        const timer = setInterval(() => {
             setBlinking((currentBlinking) => !currentBlinking)
             const newDate = new Date();
             if (id) {
@@ -92,7 +92,7 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
                     {selectedTrain &&
                         <MdClose color='#F34747' className={style.icons} size={24} onClick={() => {
                             setSelectedTrain(null);
-                            if (trainId) router.replace('/server/' + id);
+                            if (trainId) router.replace(`/server/${id}`);
                         }} />
                     }
 

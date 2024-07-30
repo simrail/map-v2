@@ -1,5 +1,5 @@
-import { Train } from "@simrail/types";
-import React from "react";
+import type { Train } from "@simrail/types";
+import type React from "react";
 
 type TrainSignalProps = {
   train: Train;
@@ -17,20 +17,18 @@ const signalStates = {
 function formatSignalDistance(distanceMeters: number): string {
   if (distanceMeters > 5000) {
     return "> 5km";
-  } else if (distanceMeters > 1000) {
+  }if (distanceMeters > 1000) {
     const distanceKilometers = (distanceMeters / 1000).toFixed(1);
     return `${distanceKilometers} km`;
-  } else {
-    return `${distanceMeters.toFixed(1)} m`;
   }
+    return `${distanceMeters.toFixed(1)} m`;
 }
 
 function formatSignalSpeed(rawSpeedLimit: number): string {
   if (rawSpeedLimit === 32767) {
     return "vmax";
-  } else {
-    return `${rawSpeedLimit} km/h`;
   }
+    return `${rawSpeedLimit} km/h`;
 }
 
 const getSignalState = (signalSpeed: number | string): string | null => {

@@ -24,7 +24,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         if (typeof window !== "undefined") {
             const storedTheme = localStorage.getItem("theme");
 
-            let finalTheme = storedTheme ? storedTheme : "light";
+            const finalTheme = storedTheme ? storedTheme : "light";
             document.body.className = finalTheme;
 
             return finalTheme as "dark" | "light";

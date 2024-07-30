@@ -4,9 +4,9 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import { useCallback, useEffect, useState } from "react";
 import { StationMarker } from "./Markers/StationMarker";
-import { Train, Station } from "@simrail/types";
+import type { Train, Station } from "@simrail/types";
 import styles from '../styles/Home.module.css'
-import { LatLng, LayersControlEvent, Map as LeafletMap } from 'leaflet';
+import { LatLng, type LayersControlEvent, type Map as LeafletMap } from 'leaflet';
 import { useSelectedTrain } from '../contexts/SelectedTrainContext';
 import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
@@ -19,13 +19,13 @@ import { MdFullscreen, MdFullscreenExit, MdOutlineTraffic, MdSpeakerNotes, MdSpe
 import { useFullscreen, useLocalStorage } from '@mantine/hooks';
 import { FaDiscord, FaGithub, FaLanguage } from "react-icons/fa";
 import SpotlightSearch from './SpotlightSearch';
-import { Tooltip as MantineTooltip, TooltipProps } from '@mantine/core';
+import { Tooltip as MantineTooltip, type TooltipProps } from '@mantine/core';
 
 type MapProps = {
     serverId: string | string[]
 }
 
-const Map = ({ serverId }: MapProps) => {
+const LeaftletMap = ({ serverId }: MapProps) => {
     const [map, setMap] = useState<LeafletMap | null>(null);
 
     const router = useRouter();
@@ -49,12 +49,12 @@ const Map = ({ serverId }: MapProps) => {
     })
 
     const { toggle: toggleFullscreen, fullscreen } = useFullscreen();
-    let FullscreenIcon = (fullscreen ? MdFullscreenExit : MdFullscreen);
+    const FullscreenIcon = (fullscreen ? MdFullscreenExit : MdFullscreen);
 
 
 
-    let ShowSignalStatusIcon = (showSignalInfo === true ? MdTraffic : MdOutlineTraffic)
-    let RenderPopupIcon = (renderPopup === true ? MdSpeakerNotes : MdSpeakerNotesOff)
+    const ShowSignalStatusIcon = (showSignalInfo === true ? MdTraffic : MdOutlineTraffic)
+    const RenderPopupIcon = (renderPopup === true ? MdSpeakerNotes : MdSpeakerNotesOff)
 
 
     const { selectedTrain, setSelectedTrain } = useSelectedTrain()
@@ -62,7 +62,7 @@ const Map = ({ serverId }: MapProps) => {
 
 
     const getTrains = useCallback(() => {
-        fetch('https://panel.simrail.eu:8084/trains-open?serverCode=' + serverId)
+        fetch(`https://panel.simrail.eu:8084/trains-open?serverCode=${serverId}`)
             .then((res) => res.json())
             .then((fetchedTrains) => {
                 setTrains(fetchedTrains.data)
@@ -70,11 +70,11 @@ const Map = ({ serverId }: MapProps) => {
     }, [serverId]);
 
     const getStations = useCallback(() => {
-        fetch('https://panel.simrail.eu:8084/stations-open?serverCode=' + serverId)
+        fetch(`https://panel.simrail.eu:8084/stations-open?serverCode=${serverId}`)
             .then((res) => res.json())
             .then((stations) => {
 
-                let stationsData: Station[] = stations.data
+                const stationsData: Station[] = stations.data
 
                 // @ts-ignore
                 setStations(stationsData)
@@ -90,20 +90,20 @@ const Map = ({ serverId }: MapProps) => {
             // @ts-ignore
             map.setView([selectedTrain?.TrainData.Latititute, selectedTrain?.TrainData.Longitute], undefined, { animate: true, duration: 5, easeLinearity: 0.5 })
         }
-    }, [trains, selectedTrain, map])
+    }, [trains, selectedTrain, map, setSelectedTrain])
 
 
     useEffect(() => {
         if (trainId) {
-            let trainsParam = trains?.filter((train) => train.TrainNoLocal == trainId)
+            const trainsParam = trains?.filter((train) => train.TrainNoLocal === trainId)
             if (trainsParam?.[0]) {
                 setSelectedTrain(trainsParam[0])
                 map?.setZoom(13)
             }
         }
-    }, [trains, map, trainId])
+    }, [trains, map, trainId, setSelectedTrain])
 
-    var controlTheme
+    let controlTheme: string
     switch (theme) {
         case 'dark':
             controlTheme = styles.controlsDark
@@ -127,23 +127,23 @@ const Map = ({ serverId }: MapProps) => {
         }, 10000)
 
 
-        return function () {
+        return () => {
             clearInterval(interval1)
             clearInterval(interval2)
         }
 
-    }, [])
+    }, [getTrains, getStations])
 
     useEffect(() => {
 
         if (!map) return;
 
-        map.on('overlayadd', function (event: LayersControlEvent) {
-            localStorage.setItem('layer-' + event.name.toLowerCase(), 'true')
+        map.on('overlayadd', (event: LayersControlEvent) => {
+            localStorage.setItem(`layer-${event.name.toLowerCase()}`, 'true')
         });
 
-        map.on('overlayremove', function (event: LayersControlEvent) {
-            localStorage.setItem('layer-' + event.name.toLowerCase(), 'false')
+        map.on('overlayremove', (event: LayersControlEvent) => {
+            localStorage.setItem(`layer-${event.name.toLowerCase()}`, 'false')
         });
 
     }, [map])
@@ -192,32 +192,32 @@ const Map = ({ serverId }: MapProps) => {
 
                         {map && <>
                             <Tooltip label="Zoom in" position='right'>
-                                <button className={style.icon}>
+                                <button type='button' className={style.icon}>
                                     <MdZoomIn onClick={() => map.zoomIn()} size={24} />
                                 </button>
                             </Tooltip>
                             <Tooltip label="Zoom out" position='right'>
-                                <button className={style.icon}>
+                                <button type='button' className={style.icon}>
                                     <MdZoomOut onClick={() => map.zoomOut()} size={24} />
                                 </button>
                             </Tooltip>
                         </>
                         }
-                        <Tooltip label={(renderPopup ? 'Hide' : 'Show') + ' train pop-up'} position='right'>
-                            <button className={style.icon}>
+                        <Tooltip label={`${renderPopup ? 'Hide' : 'Show'} train pop-up`} position='right'>
+                            <button type='button' className={style.icon}>
                                 <RenderPopupIcon onClick={() => setRenderPopup((prevState) => !prevState)} size={24} />
                             </button>
 
                         </Tooltip>
-                        <Tooltip label={(showSignalInfo ? 'Hide' : 'Show') + ' signal info'} position='right'>
-                            <button className={style.icon}>
+                        <Tooltip label={`${showSignalInfo ? 'Hide' : 'Show'} signal info`} position='right'>
+                            <button type='button' className={style.icon}>
 
                                 <ShowSignalStatusIcon onClick={() => setShowSignalInfo((prevState) => !prevState)} size={24} />
                             </button>
                         </Tooltip>
 
                         <Tooltip label={fullscreen ? 'Exit fullscreen' : 'Enter fullscreen'} position='right'>
-                            <button className={style.icon}>
+                            <button type='button' className={style.icon}>
                                 <FullscreenIcon onClick={() => toggleFullscreen()} size={24} />
                             </button>
                         </Tooltip>
@@ -280,4 +280,4 @@ const Map = ({ serverId }: MapProps) => {
     )
 }
 
-export default Map
+export default LeaftletMap

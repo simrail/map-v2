@@ -1,4 +1,4 @@
-import { colorsTuple, createTheme, MantineThemeOverride } from '@mantine/core'
+import { colorsTuple, createTheme, type MantineThemeOverride } from '@mantine/core'
 
 const mantineTheme: MantineThemeOverride = createTheme({
     headings: { fontFamily: 'Saira' },

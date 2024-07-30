@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { Marker, Popup } from "react-leaflet";
-import { Station } from "@simrail/types";
+import type { Station } from "@simrail/types";
 
 type StationMarkerProps = {
     station: Station
@@ -8,7 +8,7 @@ type StationMarkerProps = {
 
 export const NonPlayableStationMarker = ({ station }: StationMarkerProps) => {
 
-    let icon = L.icon({
+    const icon = L.icon({
         iconUrl: '/markers/icon-train-station.png',
         iconSize: [16, 16],
         popupAnchor: [0, -16],

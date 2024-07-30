@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import FavoriteStar from '@/components/FavoriteStar';
-import { ComponentType, useEffect, useState } from 'react';
+import { type ComponentType, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css'
 import { TopNavigation } from '@/components/TopNavigation';
 import EUFlag from '@/components/EUFlag';
-import { Server } from '@simrail/types';
+import type { Server } from '@simrail/types';
 
 export default function Home() {
 
@@ -20,23 +20,21 @@ export default function Home() {
                 let serversData: Server[] = stations.data
 
                 serversData = serversData
-                    .sort(function (a, b) {
-                        let serverSettings1 = (JSON.parse(localStorage.getItem('server-' + a.id) ?? '{"favorite": false}') ?? { favorite: false });
-                        let serverSettings2 = (JSON.parse(localStorage.getItem('server-' + b.id) ?? '{"favorite": false}') ?? { favorite: false });
+                    .sort((a, b) => {
+                        const serverSettings1 = (JSON.parse(localStorage.getItem(`server-${a.id}`) ?? '{"favorite": false}') ?? { favorite: false });
+                        const serverSettings2 = (JSON.parse(localStorage.getItem(`server-${b.id}`) ?? '{"favorite": false}') ?? { favorite: false });
 
                         if (serverSettings1.favorite && !serverSettings2.favorite) {
                             return -1;
-                        } else if (!serverSettings1.favorite && serverSettings2.favorite) {
+                        }if (!serverSettings1.favorite && serverSettings2.favorite) {
                             return 1;
-                        } else {
+                        }
                             if (b.ServerName.startsWith("FR")) {
                                 return 1;
-                            } else if (a.ServerName.startsWith("FR")) {
+                            }if (a.ServerName.startsWith("FR")) {
                                 return -1;
-                            } else {
-                                return a.ServerCode.localeCompare(b.ServerCode);
                             }
-                        }
+                                return a.ServerCode.localeCompare(b.ServerCode);
 
                     })
 
@@ -46,6 +44,7 @@ export default function Home() {
 
 
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies:
     useEffect(() => {
         // setLoading(true)
 
@@ -63,7 +62,7 @@ export default function Home() {
 
     const getStatusIndicatorStyle = (server: Server) => {
         if (server.IsActive) return styles.online;
-        else return styles.offline;
+        return styles.offline;
     };
 
     return (<>
@@ -79,15 +78,15 @@ export default function Home() {
             {!servers && 'Loading servers...'}
             <div className={styles.serverList}>
 
-                {servers && servers.map((server: Server) => {
+                {servers?.map((server: Server) => {
                     return (
                         <a
                             id={server.ServerCode}
                             className='server'
                             key={server.id}
-                            href={"/server/" + server.ServerCode}>
+                            href={`/server/${server.ServerCode}`}>
                             <FavoriteStar server={server} />
-                            <span className={`${styles.statusIndicator} ${getStatusIndicatorStyle(server)}`}></span>
+                            <span className={`${styles.statusIndicator} ${getStatusIndicatorStyle(server)}`} />
                             <span className="serverName">
                                 <FlagIcon  code={server.ServerCode.slice(0, 2).toUpperCase()} />
                                 <span>{server.ServerName}</span>

@@ -2,7 +2,7 @@ import L from 'leaflet';
 import { Popup, useMapEvents, Tooltip } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker"
 import React, { useEffect, useState } from "react";
-import { Train } from "@simrail/types";
+import type { Train } from "@simrail/types";
 import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
 import TrainText from '../TrainText';
 import {getSteamProfileOrBot} from "@/components/steam";
@@ -28,13 +28,13 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
     useEffect(() => {
         getData(train.TrainData.ControlledBySteamID)
             .catch(() => setTimeout(() => getData(train.TrainData.ControlledBySteamID), 1000))
-    }, [train.TrainData.ControlledBySteamID])
+    }, [train.TrainData.ControlledBySteamID, getData])
 
     let botIcon = '/markers/icon-bot-simrail.jpg';
     if (localStorage.getItem('theme') === 'dark')
         botIcon = '/markers/icon-bot-simrail-dark.jpg'
 
-    let icon = L.icon({
+    const icon = L.icon({
         iconUrl: (train.TrainData.ControlledBySteamID && avatar) ? avatar : botIcon,
         iconSize: [24, 24],
         popupAnchor: [0, -12],

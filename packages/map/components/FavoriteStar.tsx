@@ -1,8 +1,8 @@
 import styles from '../styles/Home.module.css'
-import { Server } from '@simrail/types';
+import type { Server } from '@simrail/types';
 import { MouseEventHandler, useState } from 'react';
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { ServerSettings } from '../types/ServerSettings';
+import type { ServerSettings } from '../types/ServerSettings';
 import { useRouter } from 'next/router';
 
 
@@ -12,7 +12,7 @@ type FavoriteStarProps = {
 
 export default function FavoriteStar({ server }: FavoriteStarProps) {
 
-    let serverSettings: ServerSettings = JSON.parse(localStorage.getItem('server-' + server.id) ?? '{}');
+    const serverSettings: ServerSettings = JSON.parse(localStorage.getItem(`server-${server.id}`) ?? '{}');
     const router = useRouter()
 
     const [favorite, SetFavorite] = useState<boolean>(serverSettings.favorite ?? false)
@@ -22,7 +22,7 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
         event.preventDefault()
         serverSettings.favorite = !favorite
         SetFavorite(!favorite)
-        localStorage.setItem('server-' + server.id, JSON.stringify(serverSettings))
+        localStorage.setItem(`server-${server.id}`, JSON.stringify(serverSettings))
         router.reload();
     }
 

@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {type FC} from "react";
 import stationsJson from "@/components/stations.json";
 import {NonPlayableStationMarker} from "@/components/Markers/NonPlayableStationMarker";
 

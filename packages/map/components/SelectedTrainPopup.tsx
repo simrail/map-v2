@@ -23,6 +23,7 @@ const SelectedTrainPopup = () => {
 
     const setData = ([avatarUrl, username]) => { setAvatar(avatarUrl); setUsername(username)};
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies:
     useEffect(() => {
         if (selectedTrain) getSteamProfileOrBot(selectedTrain.TrainData.ControlledBySteamID)
             .then(setData)
@@ -34,9 +35,8 @@ const SelectedTrainPopup = () => {
                 <TrainText train={selectedTrain} username={username} avatar={avatar} />
                 </div>
         : null
-    } else {
-        return null
     }
+        return null
 }
 
 export default SelectedTrainPopup;

@@ -1,6 +1,6 @@
 import railcarJson from "@/components/railcars.json";
-import {Train} from "@simrail/types";
-import {Railcar} from "../types/Railcar";
+import type {Train} from "@simrail/types";
+import type {Railcar} from "../types/Railcar";
 import {useMemo} from "react";
 import TrainUpcomingSignal from "@/components/TrainUpcomingSignal";
 import { ActionIcon, Avatar, Box, Button, Flex, Image, Title } from '@mantine/core';
@@ -35,16 +35,14 @@ function getTrainDisplayName(rawTrainName: string, trainNumber: string): string 
             // special case: local trains have a line identifier appended to them, display that as well
             // results in f. ex. 'ROJ 91352 (RE1)'
             return `${nameParts[0]} ${trainNumber} (${nameParts[1]})`;
-        } else {
+        }
             // usual case for passenger trains: the train type is the second identifier
             // results in f. ex. 'IC 13125'
             return `${nameParts[1]} ${trainNumber}`;
-        }
-    } else {
+    }
         // usual case for all freight trains, they don't have an additional special identifier
         // results in f. ex. 'PWJ 146035'
         return `${nameParts[0]} ${trainNumber}`;
-    }
 }
 
 function extractVehicleInformation(rawVehicleName: string): [string, number | null] {
@@ -54,10 +52,9 @@ function extractVehicleInformation(rawVehicleName: string): [string, number | nu
         const vehicleNameParts = rawVehicleName.split(":");
         const loadWeight = vehicleNameParts[2].split("@")[0];
         return [vehicleNameParts[0], +loadWeight];
-    } else {
+    }
         // raw vehicle name is just the name of the vehicle
         return [rawVehicleName, null];
-    }
 }
 
 const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps) => {
@@ -92,9 +89,8 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
             return acc;
         }, [] as TrainRailcarInfo[])
         .map((info) => {
-            return (<Carousel.Slide>
+            return (<Carousel.Slide key={`${info.railcar.id}@${info.index}`}>
                 <Image src={`/trains/${info.railcar.id}.png`}
-                       key={`${info.railcar.id}@${info.index}`}
                        alt={info.railcar.id}
                         w="auto"
                         fit="contain"
@@ -134,7 +130,7 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
     // get the lowest speed of the consist
     const minMaxSpeed = usedRailcarInfo
         .map((info) => info.railcar.maxSpeed)
-        .reduce((minSpeed, currentSpeed) => Math.min(minSpeed, currentSpeed), Infinity);
+        .reduce((minSpeed, currentSpeed) => Math.min(minSpeed, currentSpeed), Number.POSITIVE_INFINITY);
 
     const showSignalInfo = readLocalStorageValue({
         key: 'showSignalInfo',
@@ -146,12 +142,12 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
         <>
             <Flex gap={12} align="center" justify={"space-between"} >
                 <Flex gap={12} align="center" py={16} >
-                    <Avatar src={avatar ?? '/markers/icon-bot-simrail.jpg'} alt={username + "'s avatar"} />
+                    <Avatar src={avatar ?? '/markers/icon-bot-simrail.jpg'} alt={`${username}'s avatar`} />
                     <Title order={3}>{username}</Title>
                 </Flex>
                 {!minified &&
                     <ActionIcon onClick={() => {
-                        if (trainId) router.replace('/server/' + id);
+                        if (trainId) router.replace(`/server/${id}`);
                         setSelectedTrain(null);
                     }} size={29} color="red" variant="transparent" aria-label="Close pop-up">
                         <MdClose size={48} />
@@ -183,7 +179,7 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
                 </>}
                 <Flex gap={8} align="center" justify="center" py={16} direction={"column"}>
                     {/* <Button w={"100%"}>View Stops</Button> */}
-                    <Button component="a" target="_blank" href={"https://edr.simrail.app/" + id + "/train/" + train.TrainNoLocal} color="orange" w={"100%"}>See on EDR</Button>
+                    <Button component="a" target="_blank" href={`https://edr.simrail.app/${id}/train/${train.TrainNoLocal}`} color="orange" w={"100%"}>See on EDR</Button>
                 </Flex >
             </>}
         </>

@@ -5,8 +5,8 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { SelectedTrainProvider } from '../../contexts/SelectedTrainContext';
-import { GetStaticPaths, GetStaticProps } from 'next';
-import { Server } from '@simrail/types';
+import type { GetStaticPaths, GetStaticProps } from 'next';
+import type { Server } from '@simrail/types';
 import { TopNavigation } from '@/components/TopNavigation';
 
 export const getStaticPaths = (async () => {
@@ -38,7 +38,7 @@ const Post = () => {
     const { id, trainId } = router.query
 
 
-    const pageTitle = id?.toString().toUpperCase() + ' - ' + 'SimRail Map'
+    const pageTitle = `${id?.toString().toUpperCase()} - SimRail Map`
 
     if (!id) return;
 
@@ -48,7 +48,7 @@ const Post = () => {
             <title>{pageTitle}</title>
             <link
                 rel="canonical"
-                href={"https://map.simrail.app/server/" + id}
+                href={`https://map.simrail.app/server/${id}`}
                 key="canonical"
             />
         </Head>

@@ -9,7 +9,7 @@ import './styles/globals.css'
 
 
 
-
+// biome-ignore lint/style/noNonNullAssertion:
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <MantineProvider theme={mantineTheme} withGlobalClasses={false}>

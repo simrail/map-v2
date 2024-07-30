@@ -1,5 +1,5 @@
-import { Spotlight, SpotlightActionGroupData } from "@mantine/spotlight";
-import { Station, Train } from "@simrail/types";
+import { Spotlight, type SpotlightActionGroupData } from "@mantine/spotlight";
+import type { Station, Train } from "@simrail/types";
 import { useEffect, useRef, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import { useMap } from "react-leaflet";
@@ -13,14 +13,14 @@ type SpotlightSearchProps = {
 }
 
 class user {
-    username: string = "";
-    steamID: string = "";
+    username = "";
+    steamID = "";
     constructor(username: string, steamID: string) {
         this.username = username
         this.steamID = steamID
     }
 }
-export var usernames: user[] = []
+export const usernames: user[] = []
 
 
 export default function SpotlightSearch({ trains, stations }: SpotlightSearchProps) {
@@ -37,7 +37,7 @@ export default function SpotlightSearch({ trains, stations }: SpotlightSearchPro
         for (let i = 0; i < userIDs.length; i++) {
             const steamID = userIDs[i];
             if (steamID && !usernamesCache.current.has(steamID)) {
-                let profile = await getSteamProfileOrBot(steamID);
+                const profile = await getSteamProfileOrBot(steamID);
                 if (profile[1]) {
                     usernamesCache.current.set(steamID, profile[1]);
                 }
@@ -45,13 +45,14 @@ export default function SpotlightSearch({ trains, stations }: SpotlightSearchPro
         }
     }
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies:
     useEffect(() => {
 
-        let actionsGroups: SpotlightActionGroupData[] = [];
+        const actionsGroups: SpotlightActionGroupData[] = [];
 
         if (!open) return
 
-        var userIDs = []
+        const userIDs = []
         for (let i = 0; i < trains.length; i++) {
             if (trains[i].Type === "user" && trains[i] != null)
                 userIDs.push(trains[i].TrainData.ControlledBySteamID)
@@ -124,7 +125,7 @@ export default function SpotlightSearch({ trains, stations }: SpotlightSearchPro
         setSpotlightActions(actionsGroups)
 
 
-    }, [trains, stations, open])
+    }, [trains, stations, open, map?.panTo, setSelectedTrain, map?.setZoom])
 
 
 
