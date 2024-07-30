@@ -177,10 +177,10 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
 
             {!minified && <>
 
-                {showSignalInfo && <>
+                <>
                     <Title order={3}>Next Signal</Title>
-                    <TrainUpcomingSignal train={train} /><br />
-                </>}
+                    <TrainUpcomingSignal train={train} showMoreInfo={showSignalInfo} /><br />
+                </>
                 <Flex gap={8} align="center" justify="center" py={16} direction={"column"}>
                     {/* <Button w={"100%"}>View Stops</Button> */}
                     <Button component="a" target="_blank" href={"https://edr.simrail.app/" + id + "/train/" + train.TrainNoLocal} color="orange" w={"100%"}>See on EDR</Button>
