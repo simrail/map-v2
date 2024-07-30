@@ -14,7 +14,10 @@ export const NonPlayableStationMarker = ({ station }: StationMarkerProps) => {
         popupAnchor: [0, -16],
     });
 
-
+    let displayText = station.Name
+    if (station.Prefix != "") {
+        displayText + " [" + station.Prefix + "]"
+    }
 
     return <Marker
         key={station.id}
@@ -27,7 +30,7 @@ export const NonPlayableStationMarker = ({ station }: StationMarkerProps) => {
         }}
     >
         <Popup>
-            {station.Name} [{station.Prefix}]<br />
+            {displayText}<br />
         </Popup>
     </Marker >
 
