@@ -27,7 +27,7 @@ export const NonPlayableStationMarker = ({ station }: StationMarkerProps) => {
         }}
     >
         <Popup>
-            {station.Name}<br />
+            {station.Name} [{station.Prefix}]<br />
         </Popup>
     </Marker >
 

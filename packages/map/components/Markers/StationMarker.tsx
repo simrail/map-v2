@@ -57,11 +57,11 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
         <Popup>
             <img src={station.MainImageURL} alt={station.Name} width={200} height={86} style={{ borderRadius: '6px' }} /><br />
             <Space h="sm" />
-            Station: {station.Name}<br />
+            Station: {station.Name} [{station.Prefix}]<br />
             User: {username}<br />
             Difficulty: {station.DifficultyLevel}<br />
         </Popup>
-        <Tooltip offset={[3, 20]} direction={"bottom"} permanent={true}>{station.Name}</Tooltip>
+        <Tooltip offset={[0, 20]} direction={"bottom"} permanent={true}>{station.Name} [{station.Prefix}]</Tooltip>
     </Marker >
 
 }
