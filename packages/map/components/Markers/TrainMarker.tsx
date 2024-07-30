@@ -67,7 +67,7 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
             <TrainText train={train} username={username} avatar={avatar} minified={true} />
     </Popup>
 
-    <Tooltip offset={[2, -10]} direction={"top"} opacity={0.8} permanent={true}>{train.TrainNoLocal}</Tooltip>
+    <Tooltip offset={[0, -10]} direction={"top"} opacity={0.8} permanent={true}>{train.TrainNoLocal}</Tooltip>
     </ReactLeafletDriftMarker>
 }
 
