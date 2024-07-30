@@ -1,8 +1,8 @@
 // import { NavigationDropdown } from './NavigationDropdown';
 import serverTimes from "@/components/serverTimes.json";
+import { useMantineColorScheme } from "@mantine/core";
 import { spotlight } from "@mantine/spotlight";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
-import { useTheme } from "contexts/ThemeContext";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import {
@@ -61,10 +61,10 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 
 	if (!serverDate) return null;
 
-	const { theme, setTheme } = useTheme();
+	const { colorScheme, setColorScheme } = useMantineColorScheme();
 	const [dropdown, setDropdown] = useState<boolean>(false);
 
-	const Icon = theme === "dark" ? MdOutlineLightMode : MdOutlineDarkMode;
+	const Icon = colorScheme === "dark" ? MdOutlineLightMode : MdOutlineDarkMode;
 
 	return (
 		<div>
@@ -138,7 +138,7 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 							/>
 
 							<Icon
-								onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+								onClick={() => setColorScheme(colorScheme === "light" ? "dark" : "light")}
 								className={style.icons}
 								size={24}
 							/>

@@ -13,7 +13,6 @@ import { TrainsList } from "@/components/TrainsList";
 import { Tooltip as MantineTooltip, type TooltipProps } from "@mantine/core";
 import { useFullscreen, useLocalStorage } from "@mantine/hooks";
 import type { Station, Train } from "@simrail/types";
-import { useTheme } from "contexts/ThemeContext";
 import {
 	LatLng,
 	type LayersControlEvent,
@@ -52,8 +51,6 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 	const { trainId } = router.query;
 
 	const [trains, setTrains] = useState<Train[] | null>(null);
-
-	const { theme, setTheme } = useTheme();
 
 	const [renderPopup, setRenderPopup] = useLocalStorage({
 		key: "renderPopup",
@@ -125,16 +122,6 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		}
 	}, [trains, map, trainId, setSelectedTrain]);
 
-	let controlTheme: string;
-	switch (theme) {
-		case "dark":
-			controlTheme = styles.controlsDark;
-			break;
-
-		case "light":
-			controlTheme = styles.controlsLight;
-			break;
-	}
 
 	useEffect(() => {
 		getTrains();

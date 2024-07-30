@@ -6,6 +6,7 @@ import { Popup, Tooltip, useMapEvents } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
 import TrainText from "../TrainText";
+import { useMantineColorScheme } from "@mantine/core";
 
 type TrainMarkerProps = {
 	train: Train;
@@ -30,8 +31,11 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 		);
 	}, [train.TrainData.ControlledBySteamID, getData]);
 
+	const { colorScheme } = useMantineColorScheme();
+
+
 	let botIcon = "/markers/icon-bot-simrail.jpg";
-	if (localStorage.getItem("theme") === "dark")
+	if (colorScheme === "dark")
 		botIcon = "/markers/icon-bot-simrail-dark.jpg";
 
 	const icon = L.icon({

@@ -1,4 +1,4 @@
-import { Space } from "@mantine/core";
+import { Space, useMantineColorScheme } from "@mantine/core";
 import type { Station } from "@simrail/types";
 import L from "leaflet";
 import { useEffect, useState } from "react";
@@ -30,8 +30,10 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 		getData();
 	}, [station.DispatchedBy?.[0]]);
 
+	const { colorScheme } = useMantineColorScheme();
+
 	let botIcon = "/markers/icon-bot-simrail.jpg";
-	if (localStorage.getItem("theme") === "dark")
+	if (colorScheme === "dark")
 		botIcon = "/markers/icon-bot-simrail-dark.jpg";
 
 	const icon = L.icon({
