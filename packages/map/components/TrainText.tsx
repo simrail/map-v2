@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { MdClose } from "react-icons/md";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import { Carousel } from "@mantine/carousel";
+import { readLocalStorageValue } from "@mantine/hooks";
 
 type TrainTextProps = {
     train: Train
@@ -135,6 +136,12 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
         .map((info) => info.railcar.maxSpeed)
         .reduce((minSpeed, currentSpeed) => Math.min(minSpeed, currentSpeed), Infinity);
 
+    const showSignalInfo = readLocalStorageValue({
+        key: 'showSignalInfo',
+        defaultValue: true,
+    });
+
+
     return (
         <>
             <Flex gap={12} align="center" justify={"space-between"} >
@@ -170,10 +177,10 @@ const TrainText = ({ train, username, avatar, minified = false }: TrainTextProps
 
             {!minified && <>
 
-            <Title order={3}>Next Signal</Title>
-            <>
-                <TrainUpcomingSignal train={train} showMoreInfo={localStorage.getItem('showSignalInfo') === "true"} /><br />
-            </>
+                {showSignalInfo && <>
+                    <Title order={3}>Next Signal</Title>
+                    <TrainUpcomingSignal train={train} /><br />
+                </>}
                 <Flex gap={8} align="center" justify="center" py={16} direction={"column"}>
                     {/* <Button w={"100%"}>View Stops</Button> */}
                     <Button component="a" target="_blank" href={"https://edr.simrail.app/" + id + "/train/" + train.TrainNoLocal} color="orange" w={"100%"}>See on EDR</Button>
