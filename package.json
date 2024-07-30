@@ -5,7 +5,9 @@
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
 		"dev": "pnpm run --filter \"./packages/**\" --parallel dev",
-		"build": "pnpm run --filter \"./packages/**\" --parallel build"
+		"build": "pnpm run --filter \"./packages/**\" --parallel build",
+		"check": "biome check",
+		"fix": "biome check --fix"
 	},
 	"dependencies": {
 		"@simrail/types": "^0.0.3",

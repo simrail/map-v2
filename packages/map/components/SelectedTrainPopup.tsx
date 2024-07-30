@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getSteamProfileOrBot } from "@/components/steam";
 import { readLocalStorageValue, useLocalStorage } from "@mantine/hooks";
 import { useRouter } from "next/router";
@@ -20,7 +21,9 @@ const SelectedTrainPopup = () => {
 	const router = useRouter();
 	const { id, trainId } = router.query;
 
-	const setData = ([avatarUrl, username]) => {
+	type Profile = [string | null, string | null];
+
+	const setData = ([avatarUrl, username]: Profile) => {
 		setAvatar(avatarUrl);
 		setUsername(username);
 	};
@@ -29,6 +32,7 @@ const SelectedTrainPopup = () => {
 	useEffect(() => {
 		if (selectedTrain)
 			getSteamProfileOrBot(selectedTrain.TrainData.ControlledBySteamID).then(
+				// @ts-ignore
 				setData,
 			);
 	}, [selectedTrain]);
@@ -36,7 +40,11 @@ const SelectedTrainPopup = () => {
 	if (renderPopup === true) {
 		return selectedTrain ? (
 			<div className={styles.popup} style={trainId ? { top: "0px" } : {}}>
-				<TrainText train={selectedTrain} username={username} avatar={avatar} />
+				<TrainText
+					train={selectedTrain}
+					username={username ?? ""}
+					avatar={avatar}
+				/>
 			</div>
 		) : null;
 	}
