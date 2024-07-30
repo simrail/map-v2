@@ -1,6 +1,6 @@
+import type { Station } from "@simrail/types";
 import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
-import type { Station } from "@simrail/types";
 
 type StationMarkerProps = {
 	station: Station;

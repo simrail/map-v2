@@ -1,7 +1,7 @@
 import {
+	type MantineThemeOverride,
 	colorsTuple,
 	createTheme,
-	type MantineThemeOverride,
 } from "@mantine/core";
 
 const mantineTheme: MantineThemeOverride = createTheme({

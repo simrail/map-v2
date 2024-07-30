@@ -1,12 +1,12 @@
-// @ts-nocheck
-import { useSelectedTrain } from "../contexts/SelectedTrainContext";
-import { AiOutlineClose } from "react-icons/ai";
-import styles from "../styles/SelectedTrainPopup.module.css";
-import { useEffect, useState } from "react";
-import TrainText from "./TrainText";
-import { useRouter } from "next/router";
 import { getSteamProfileOrBot } from "@/components/steam";
 import { readLocalStorageValue, useLocalStorage } from "@mantine/hooks";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+// @ts-nocheck
+import { useSelectedTrain } from "../contexts/SelectedTrainContext";
+import styles from "../styles/SelectedTrainPopup.module.css";
+import TrainText from "./TrainText";
 
 const SelectedTrainPopup = () => {
 	const { selectedTrain, setSelectedTrain } = useSelectedTrain();

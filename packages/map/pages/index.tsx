@@ -1,10 +1,10 @@
-import Head from "next/head";
+import EUFlag from "@/components/EUFlag";
 import FavoriteStar from "@/components/FavoriteStar";
+import { TopNavigation } from "@/components/TopNavigation";
+import type { Server } from "@simrail/types";
+import Head from "next/head";
 import { type ComponentType, useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
-import { TopNavigation } from "@/components/TopNavigation";
-import EUFlag from "@/components/EUFlag";
-import type { Server } from "@simrail/types";
 
 export default function Home() {
 	const [servers, setServers] = useState<Server[] | null>(null);

@@ -1,11 +1,11 @@
-import L from "leaflet";
-import { Popup, useMapEvents, Tooltip } from "react-leaflet";
-import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
-import React, { useEffect, useState } from "react";
+import { getSteamProfileOrBot } from "@/components/steam";
 import type { Train } from "@simrail/types";
+import L from "leaflet";
+import React, { useEffect, useState } from "react";
+import { Popup, Tooltip, useMapEvents } from "react-leaflet";
+import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
 import TrainText from "../TrainText";
-import { getSteamProfileOrBot } from "@/components/steam";
 
 type TrainMarkerProps = {
 	train: Train;

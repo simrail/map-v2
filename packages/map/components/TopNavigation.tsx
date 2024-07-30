@@ -1,5 +1,10 @@
+// import { NavigationDropdown } from './NavigationDropdown';
+import serverTimes from "@/components/serverTimes.json";
+import { spotlight } from "@mantine/spotlight";
+import { useSelectedTrain } from "contexts/SelectedTrainContext";
+import { useTheme } from "contexts/ThemeContext";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import style from "../styles/TopNavigation.module.css";
 import {
 	MdArrowBack,
 	MdClose,
@@ -9,13 +14,8 @@ import {
 	MdOutlineLightMode,
 	MdSearch,
 } from "react-icons/md";
+import style from "../styles/TopNavigation.module.css";
 import { NavigationDropdown } from "./NavigationDropdown";
-import { useRouter } from "next/router";
-import { useTheme } from "contexts/ThemeContext";
-// import { NavigationDropdown } from './NavigationDropdown';
-import serverTimes from "@/components/serverTimes.json";
-import { spotlight } from "@mantine/spotlight";
-import { useSelectedTrain } from "contexts/SelectedTrainContext";
 
 type TopNavigationProps = {
 	disableMapFeatures?: boolean;

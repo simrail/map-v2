@@ -1,13 +1,13 @@
-import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { TopNavigation } from "@/components/TopNavigation";
+import type { Server } from "@simrail/types";
+import type { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { SelectedTrainProvider } from "../../contexts/SelectedTrainContext";
-import type { GetStaticPaths, GetStaticProps } from "next";
-import type { Server } from "@simrail/types";
-import { TopNavigation } from "@/components/TopNavigation";
 
 export const getStaticPaths = (async () => {
 	const res = await fetch("https://panel.simrail.eu:8084/servers-open");

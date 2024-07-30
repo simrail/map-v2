@@ -1,8 +1,6 @@
-import railcarJson from "@/components/railcars.json";
-import type { Train } from "@simrail/types";
-import type { Railcar } from "../types/Railcar";
-import { useMemo } from "react";
 import TrainUpcomingSignal from "@/components/TrainUpcomingSignal";
+import railcarJson from "@/components/railcars.json";
+import { Carousel } from "@mantine/carousel";
 import {
 	ActionIcon,
 	Avatar,
@@ -12,11 +10,13 @@ import {
 	Image,
 	Title,
 } from "@mantine/core";
-import { useRouter } from "next/router";
-import { MdClose } from "react-icons/md";
-import { useSelectedTrain } from "contexts/SelectedTrainContext";
-import { Carousel } from "@mantine/carousel";
 import { readLocalStorageValue } from "@mantine/hooks";
+import type { Train } from "@simrail/types";
+import { useSelectedTrain } from "contexts/SelectedTrainContext";
+import { useRouter } from "next/router";
+import { useMemo } from "react";
+import { MdClose } from "react-icons/md";
+import type { Railcar } from "../types/Railcar";
 
 type TrainTextProps = {
 	train: Train;

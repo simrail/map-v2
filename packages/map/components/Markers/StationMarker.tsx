@@ -1,8 +1,8 @@
-import L from "leaflet";
-import { Marker, Popup, Tooltip } from "react-leaflet";
-import { useEffect, useState } from "react";
-import type { Station } from "@simrail/types";
 import { Space } from "@mantine/core";
+import type { Station } from "@simrail/types";
+import L from "leaflet";
+import { useEffect, useState } from "react";
+import { Marker, Popup, Tooltip } from "react-leaflet";
 import type { ProfileResponse } from "types/SteamProfile";
 
 type StationMarkerProps = {

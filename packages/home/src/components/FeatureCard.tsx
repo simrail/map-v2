@@ -1,5 +1,5 @@
-import style from "../styles/FeatureCard.module.css";
 import { Center } from "@mantine/core";
+import style from "../styles/FeatureCard.module.css";
 
 type FeatureCardProps = {
 	name: string;
@@ -36,6 +36,3 @@ export const FeatureCard = ({
 		</a>
 	);
 };
-er>
-    </a>
-}

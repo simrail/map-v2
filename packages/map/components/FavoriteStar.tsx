@@ -1,9 +1,9 @@
-import styles from "../styles/Home.module.css";
 import type { Server } from "@simrail/types";
+import { useRouter } from "next/router";
 import { MouseEventHandler, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import styles from "../styles/Home.module.css";
 import type { ServerSettings } from "../types/ServerSettings";
-import { useRouter } from "next/router";
 
 type FavoriteStarProps = {
 	server: Server;

@@ -1,8 +1,8 @@
+import { MantineProvider } from "@mantine/core";
+import { mantineTheme } from "common";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import Home from "./Home.tsx";
-import { MantineProvider } from "@mantine/core";
-import { mantineTheme } from "common";
 
 import "@mantine/core/styles.css";
 import "./styles/globals.css";

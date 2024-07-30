@@ -1,9 +1,9 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
-import { GoogleTagManager } from "@next/third-parties/google";
-import { ThemeProvider, useTheme } from "contexts/ThemeContext";
-import { mantineTheme } from "common";
 import { MantineProvider } from "@mantine/core";
+import { GoogleTagManager } from "@next/third-parties/google";
+import { mantineTheme } from "common";
+import { ThemeProvider, useTheme } from "contexts/ThemeContext";
+import type { AppProps } from "next/app";
 import "@mantine/core/styles.css";
 import "@mantine/spotlight/styles.css";
 import "mantine-flagpack/styles.css";

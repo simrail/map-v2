@@ -8,23 +8,20 @@ import {
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
-import { useCallback, useEffect, useState } from "react";
-import { StationMarker } from "./Markers/StationMarker";
-import type { Train, Station } from "@simrail/types";
-import styles from "../styles/Home.module.css";
+import NonPlayableStations from "@/components/NonPlayableStations";
+import { TrainsList } from "@/components/TrainsList";
+import { Tooltip as MantineTooltip, type TooltipProps } from "@mantine/core";
+import { useFullscreen, useLocalStorage } from "@mantine/hooks";
+import type { Station, Train } from "@simrail/types";
+import { useTheme } from "contexts/ThemeContext";
 import {
 	LatLng,
 	type LayersControlEvent,
 	type Map as LeafletMap,
 } from "leaflet";
-import { useSelectedTrain } from "../contexts/SelectedTrainContext";
-import SelectedTrainPopup from "./SelectedTrainPopup";
-import Control from "react-leaflet-custom-control";
 import { useRouter } from "next/router";
-import { TrainsList } from "@/components/TrainsList";
-import NonPlayableStations from "@/components/NonPlayableStations";
-import { useTheme } from "contexts/ThemeContext";
-import style from "../styles/BottomLeftControls.module.css";
+import { useCallback, useEffect, useState } from "react";
+import { FaDiscord, FaGithub, FaLanguage } from "react-icons/fa";
 import {
 	MdFullscreen,
 	MdFullscreenExit,
@@ -35,10 +32,13 @@ import {
 	MdZoomIn,
 	MdZoomOut,
 } from "react-icons/md";
-import { useFullscreen, useLocalStorage } from "@mantine/hooks";
-import { FaDiscord, FaGithub, FaLanguage } from "react-icons/fa";
+import Control from "react-leaflet-custom-control";
+import { useSelectedTrain } from "../contexts/SelectedTrainContext";
+import style from "../styles/BottomLeftControls.module.css";
+import styles from "../styles/Home.module.css";
+import { StationMarker } from "./Markers/StationMarker";
+import SelectedTrainPopup from "./SelectedTrainPopup";
 import SpotlightSearch from "./SpotlightSearch";
-import { Tooltip as MantineTooltip, type TooltipProps } from "@mantine/core";
 
 type MapProps = {
 	serverId: string | string[];

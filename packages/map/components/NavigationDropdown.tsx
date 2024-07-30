@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import style from "../styles/TopNavigation.module.css";
-import { AiFillHome, AiOutlineSwap } from "react-icons/ai";
 import Link from "next/link";
+import { AiFillHome, AiOutlineSwap } from "react-icons/ai";
+import style from "../styles/TopNavigation.module.css";
 // import { saira, sourceCodePro } from 'src/pages/_app';
 
 export const NavigationDropdown = () => {
