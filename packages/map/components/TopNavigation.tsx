@@ -138,7 +138,9 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 							/>
 
 							<Icon
-								onClick={() => setColorScheme(colorScheme === "light" ? "dark" : "light")}
+								onClick={() =>
+									setColorScheme(colorScheme === "light" ? "dark" : "light")
+								}
 								className={style.icons}
 								size={24}
 							/>

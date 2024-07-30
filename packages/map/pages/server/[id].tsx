@@ -5,8 +5,6 @@ import { TopNavigation } from "@/components/TopNavigation";
 import type { Server } from "@simrail/types";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { SelectedTrainProvider } from "../../contexts/SelectedTrainContext";
 
 export const getStaticPaths = (async () => {

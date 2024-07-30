@@ -33,8 +33,7 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 	const { colorScheme } = useMantineColorScheme();
 
 	let botIcon = "/markers/icon-bot-simrail.jpg";
-	if (colorScheme === "dark")
-		botIcon = "/markers/icon-bot-simrail-dark.jpg";
+	if (colorScheme === "dark") botIcon = "/markers/icon-bot-simrail-dark.jpg";
 
 	const icon = L.icon({
 		iconUrl: station.DispatchedBy[0] && avatar ? avatar : botIcon,

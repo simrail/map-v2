@@ -1,26 +1,15 @@
-import {
-	LayerGroup,
-	LayersControl,
-	MapContainer,
-	TileLayer,
-	Tooltip,
-} from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import "leaflet-defaulticon-compatibility";
 import NonPlayableStations from "@/components/NonPlayableStations";
 import { TrainsList } from "@/components/TrainsList";
 import { Tooltip as MantineTooltip, type TooltipProps } from "@mantine/core";
 import { useFullscreen, useLocalStorage } from "@mantine/hooks";
 import type { Station, Train } from "@simrail/types";
-import {
-	LatLng,
-	type LayersControlEvent,
-	type Map as LeafletMap,
-} from "leaflet";
+import type { LayersControlEvent, Map as LeafletMap } from "leaflet";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import "leaflet/dist/leaflet.css";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
-import { FaDiscord, FaGithub, FaLanguage } from "react-icons/fa";
+import { FaDiscord, FaGithub } from "react-icons/fa";
 import {
 	MdFullscreen,
 	MdFullscreenExit,
@@ -31,6 +20,12 @@ import {
 	MdZoomIn,
 	MdZoomOut,
 } from "react-icons/md";
+import {
+	LayerGroup,
+	LayersControl,
+	MapContainer,
+	TileLayer,
+} from "react-leaflet";
 import Control from "react-leaflet-custom-control";
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
 import style from "../styles/BottomLeftControls.module.css";
@@ -121,7 +116,6 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 			}
 		}
 	}, [trains, map, trainId, setSelectedTrain]);
-
 
 	useEffect(() => {
 		getTrains();

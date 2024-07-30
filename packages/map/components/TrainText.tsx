@@ -1,15 +1,7 @@
 import TrainUpcomingSignal from "@/components/TrainUpcomingSignal";
 import railcarJson from "@/components/railcars.json";
 import { Carousel } from "@mantine/carousel";
-import {
-	ActionIcon,
-	Avatar,
-	Box,
-	Button,
-	Flex,
-	Image,
-	Title,
-} from "@mantine/core";
+import { ActionIcon, Avatar, Button, Flex, Image, Title } from "@mantine/core";
 import { readLocalStorageValue } from "@mantine/hooks";
 import type { Train } from "@simrail/types";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
@@ -22,7 +14,7 @@ type TrainTextProps = {
 	train: Train;
 	username: string;
 	avatar: string | null;
-	minified: boolean | null;
+	minified?: boolean | null;
 };
 
 interface TrainRailcarInfo {

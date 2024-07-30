@@ -7,7 +7,6 @@ import "@mantine/core/styles.css";
 import "@mantine/spotlight/styles.css";
 import "mantine-flagpack/styles.css";
 import "@mantine/carousel/styles.css";
-import { useEffect } from "react";
 
 export default function Home({ Component, pageProps }: AppProps) {
 	return (
@@ -16,6 +15,6 @@ export default function Home({ Component, pageProps }: AppProps) {
 				<GoogleTagManager gtmId="GTM-TWKQ769Q" />
 			)}
 			<Component {...pageProps} />
-		</MantineProvider >
+		</MantineProvider>
 	);
 }

@@ -1,4 +1,5 @@
 import { getSteamProfileOrBot } from "@/components/steam";
+import { useMantineColorScheme } from "@mantine/core";
 import type { Train } from "@simrail/types";
 import L from "leaflet";
 import React, { useEffect, useState } from "react";
@@ -6,7 +7,6 @@ import { Popup, Tooltip, useMapEvents } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
 import TrainText from "../TrainText";
-import { useMantineColorScheme } from "@mantine/core";
 
 type TrainMarkerProps = {
 	train: Train;
@@ -33,10 +33,8 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 
 	const { colorScheme } = useMantineColorScheme();
 
-
 	let botIcon = "/markers/icon-bot-simrail.jpg";
-	if (colorScheme === "dark")
-		botIcon = "/markers/icon-bot-simrail-dark.jpg";
+	if (colorScheme === "dark") botIcon = "/markers/icon-bot-simrail-dark.jpg";
 
 	const icon = L.icon({
 		iconUrl: train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon,
@@ -64,7 +62,7 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 			eventHandlers={{
 				mouseover: (event) => event.target.openPopup(),
 				mouseout: (event) => event.target.closePopup(),
-				mouseup: (event) => setSelectedTrain(train),
+				mouseup: () => setSelectedTrain(train),
 			}}
 		>
 			<Popup>
