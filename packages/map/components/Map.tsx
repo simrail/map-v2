@@ -179,12 +179,6 @@ const Map = ({ serverId }: MapProps) => {
                     <div className={style.container}>
                         <Tooltip label="Our GitHub" position='right'>
                             <a href='https://github.com/simrail/map-v2' rel="noreferrer" target="_blank" className={style.icon}  >
-                                <FaLanguage size={32} />
-                                {/* <FaGithub color='white' size={32} /> */}
-                            </a>
-                        </Tooltip>
-                        <Tooltip label="Our GitHub" position='right'>
-                            <a href='https://github.com/simrail/map-v2' rel="noreferrer" target="_blank" className={style.icon}  >
                                 <FaGithub color='white' size={32} />
                             </a>
                         </Tooltip>
