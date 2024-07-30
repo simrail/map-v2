@@ -89,10 +89,6 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
             <div className={style.right}>
                 {!disableMapFeatures && <>
 
-                    {/* <div className="search-input-container">
-                    <input className={[style.searchInput].join(" ")} placeholder='Enter a train number' />
-                </div> */}
-
                     {selectedTrain &&
                         <MdClose color='#F34747' className={style.icons} size={24} onClick={() => {
                             setSelectedTrain(null);

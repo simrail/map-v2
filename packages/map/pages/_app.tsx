@@ -2,7 +2,8 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import { GoogleTagManager } from '@next/third-parties/google'
 import { ThemeProvider, useTheme } from 'contexts/ThemeContext'
-import { colorsTuple, createTheme, MantineProvider, MantineThemeOverride, useMantineColorScheme } from '@mantine/core'
+import { mantineTheme } from 'common';
+import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
 import '@mantine/spotlight/styles.css';
 import 'mantine-flagpack/styles.css';
@@ -26,15 +27,7 @@ type MantineProps = {
   children: string | JSX.Element | JSX.Element[]
 }
 
-function Mantine({children}: MantineProps) {
-  const mantineTheme: MantineThemeOverride = createTheme({
-    headings: { fontFamily: 'Saira' },
-    colors: {
-      blue: colorsTuple("#55C1F6"),
-      orange: colorsTuple("#FF9900"),
-      red: colorsTuple("#DF3838"),
-    }
-  })
+function Mantine({ children }: MantineProps) {
 
   const { theme } = useTheme();
 

@@ -1,5 +1,4 @@
 import style from '../styles/FeatureCard.module.css';
-// import { Saira } from "next/font/google"
 import { Center } from '@mantine/core';
 
 type FeatureCardProps = {
@@ -9,12 +8,6 @@ type FeatureCardProps = {
     target?: string,
     disabled?: boolean
 }
-
-// const saira = Saira({
-//     weight: '900',
-//     subsets: ['latin'],
-// })
-
 
 export const FeatureCard = ({ name, href, image, target, disabled = false }: FeatureCardProps) => {
 

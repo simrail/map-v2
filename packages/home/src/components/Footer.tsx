@@ -1,11 +1,10 @@
-import { Center, Flex, Space } from '@mantine/core';
-import style from '../styles/Footer.module.css';
+import { Center, Flex, Space, Text } from '@mantine/core';
 
 export const Footer = () => {
 
 
-    return <>
-        <footer className={style.footer}>
+    return (
+        <Text component='footer' ta="center">
             <Flex gap={16} justify={'center'} align="center">
                 <a aria-label="Twitter" href='https://twitter.com/SimRailFR'>
                     <Center>
@@ -32,9 +31,9 @@ export const Footer = () => {
 
             </Flex>
             <Space h="sm" />
-            <span className={style.footerText}>Website created by the french community of SimRail</span>
+            <Text component='span' mt='18px' size='13px' >Website created by the french community of SimRail</Text>
             <Space h="lg" />
-        </footer >
-    </>
+        </Text >
+    )
 
 }

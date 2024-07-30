@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@mantine/core": "^5.10.5",
+    "common": "workspace:*",
+    "@mantine/core": "^7.11.2",
+    "@mantine/hooks": "^7.11.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
