@@ -33,6 +33,7 @@ import styles from "../styles/Home.module.css";
 import { StationMarker } from "./Markers/StationMarker";
 import SelectedTrainPopup from "./SelectedTrainPopup";
 import SpotlightSearch from "./SpotlightSearch";
+import { MainlineSignals, OtherSignals } from "./Signals"
 
 type MapProps = {
 	serverId: string | string[];
@@ -263,6 +264,22 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							<TrainsList trains={trains} />
 						</LayerGroup>
 					</LayersControl.Overlay>
+
+					<LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-mainline-signals') === 'true'}
+                        name="Mainline signals">
+                        <LayerGroup>
+                            <MainlineSignals />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+
+                    <LayersControl.Overlay 
+                        checked={localStorage.getItem('layer-other-signals') === 'true'}
+                        name="Other signals">
+                        <LayerGroup>
+                            <OtherSignals />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
 
 					<LayersControl.Overlay
 						checked={
