@@ -34,7 +34,8 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 	const { colorScheme } = useMantineColorScheme();
 
 	let botIcon = "/markers/icon-bot-simrail.jpg";
-	if (colorScheme === "dark") botIcon = "/markers/icon-bot-simrail-dark.jpg";
+	if (colorScheme === "dark" || window.matchMedia('(prefers-color-scheme: dark)').matches) botIcon = "/markers/icon-bot-simrail-dark.jpg"; 
+	// window.matchMedia('(prefers-color-scheme: dark)').matches incase colorScheme === auto we need to see what the system uses
 
 	const icon = L.icon({
 		iconUrl: train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon,
