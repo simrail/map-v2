@@ -76,7 +76,7 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 			</Popup>
 
 			<Tooltip
-				offset={[2, -10]}
+				offset={[0, -10]}
 				direction={"top"}
 				opacity={0.8}
 				permanent={true}
