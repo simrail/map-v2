@@ -75,12 +75,10 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({ train, showMoreInfo }
 	if (!showMoreInfo) {
 		return (
 			<>
-			<div>
 				Distance to {signalName ? signalName : "next signal"}:{" "}
 				{SignalInFront
 				? formatSignalDistance(DistanceToSignalInFront)
 				: "Signal too far away"}
-			</div>
 			</>
 		)
 	}
