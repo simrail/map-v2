@@ -34,6 +34,7 @@ import { StationMarker } from "./Markers/StationMarker";
 import SelectedTrainPopup from "./SelectedTrainPopup";
 import SpotlightSearch from "./SpotlightSearch";
 import { MainlineSignals, OtherSignals } from "./Signals"
+import SneakpeekMarkers from "./Sneakpeeks"
 
 type MapProps = {
 	serverId: string | string[];
@@ -332,6 +333,16 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							/>
 						</LayerGroup>
 					</LayersControl.Overlay>
+
+					<LayersControl.Overlay
+						checked={localStorage.getItem("layer-Signalling") === "true"}
+						name="Sneakpeeks"
+					>
+						<LayerGroup>
+							<SneakpeekMarkers />
+						</LayerGroup>
+					</LayersControl.Overlay>
+
 				</LayersControl>
 				<SpotlightSearch stations={stations} trains={trains} />
 			</MapContainer>
