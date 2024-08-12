@@ -3,6 +3,7 @@ import type React from "react";
 
 type TrainSignalProps = {
 	train: Train;
+	showMoreInfo: boolean;
 };
 
 const signalStates = {
@@ -60,7 +61,7 @@ const getSignalState = (signalSpeed: number | string): string | null => {
 	return null;
 };
 
-const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({ train }) => {
+const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({ train, showMoreInfo }) => {
 	const {
 		TrainData: { SignalInFront, SignalInFrontSpeed, DistanceToSignalInFront },
 	} = train;
@@ -70,6 +71,19 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({ train }) => {
 	const signalImageSrc = signalState
 		? signalStates[signalState as keyof typeof signalStates]
 		: null;
+
+	if (!showMoreInfo) {
+		return (
+			<>
+			<div>
+				Distance to {signalName ? signalName : "next signal"}:{" "}
+				{SignalInFront
+				? formatSignalDistance(DistanceToSignalInFront)
+				: "Signal too far away"}
+			</div>
+			</>
+		)
+	}
 
 	return (
 		<>
