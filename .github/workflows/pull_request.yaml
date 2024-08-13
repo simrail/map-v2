@@ -1,18 +1,16 @@
 name: Code quality
-
-on:
-  push:
-  pull_request:
+on: [pull_request]
 
 jobs:
-  quality:
+  biome:
+    name: runner / Biome
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Biome
-        uses: biomejs/setup-biome@v2
+      - uses: actions/checkout@v4
+      - uses: mongolyy/reviewdog-action-biome@v1
         with:
-          version: latest
-      - name: Run Biome
-        run: biome ci --reporter=github
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
