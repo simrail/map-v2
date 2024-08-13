@@ -8,7 +8,7 @@ type SignalMarkerProps = {
 
 export const SignalMarker = ({ signal }: SignalMarkerProps) => {
 
-    let icon = L.icon({
+    const icon = L.icon({
         iconUrl: '/markers/icon-signal.png',
         iconSize: [16, 16],
         popupAnchor: [0, -16],
