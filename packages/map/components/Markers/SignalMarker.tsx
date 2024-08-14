@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { Marker, Popup } from "react-leaflet";
-import { Signal } from "@simrail/types";
+import type { Signal } from "@simrail/types";
 
 type SignalMarkerProps = {
     signal: Signal
@@ -8,7 +8,7 @@ type SignalMarkerProps = {
 
 export const SignalMarker = ({ signal }: SignalMarkerProps) => {
 
-    let icon = L.icon({
+    const icon = L.icon({
         iconUrl: '/markers/icon-signal.png',
         iconSize: [16, 16],
         popupAnchor: [0, -16],

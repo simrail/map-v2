@@ -21,7 +21,7 @@ export const SneakpeekMarker = ({ title, desc, url, ImageURL, Image2URL, date, L
 	});
 
 	let images = <>
-		<img src={ImageURL} width="512" height="288" alt="No image / Loading" ></img> <br/>
+		<img src={ImageURL} width="512" height="288" alt="Could not load" /> <br/>
 	</> 
 
 	if (ImageURL.endsWith(".mp4"))
@@ -31,10 +31,10 @@ export const SneakpeekMarker = ({ title, desc, url, ImageURL, Image2URL, date, L
      		</video>
 		</>
 
-	if (Image2URL != "") {
+	if (Image2URL !== "") {
 		images = <>
-			<img src={ImageURL} width="512" height="288" alt="No image / Loading" ></img> <br/>
-			<img src={Image2URL} width="512" height="288" alt="No image / Loading" ></img> <br/> 
+			<img src={ImageURL} width="512" height="288" alt="Could not load" /> <br/>
+			<img src={Image2URL} width="512" height="288" alt="Could not load" /> <br/> 
 		</> 
 	}
 

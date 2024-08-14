@@ -1,6 +1,6 @@
 import { SneakpeekMarker } from "@/components/Markers/SneakpeekMarker";
 import sneakpeeksjson from "@/components/sneakpeeks.json";
-import React, { type FC } from "react";
+import type { FC } from "react";
 
 type SneakpeekMarkerProps = {
 	title: string;
@@ -16,7 +16,7 @@ type SneakpeekMarkerProps = {
 const SneakpeekMarkers: FC = () => (
     <>
         {sneakpeeksjson.map((sneakpeek: SneakpeekMarkerProps) => (
-        <SneakpeekMarker title={sneakpeek.title} desc={sneakpeek.desc} url={sneakpeek.url} ImageURL={sneakpeek.ImageURL} Image2URL={sneakpeek.Image2URL} date={sneakpeek.date} Latititude={sneakpeek.Latititude} Longitude={sneakpeek.Longitude} />
+        <SneakpeekMarker key={0} title={sneakpeek.title} desc={sneakpeek.desc} url={sneakpeek.url} ImageURL={sneakpeek.ImageURL} Image2URL={sneakpeek.Image2URL} date={sneakpeek.date} Latititude={sneakpeek.Latititude} Longitude={sneakpeek.Longitude} />
     ))}
     </>
 );
