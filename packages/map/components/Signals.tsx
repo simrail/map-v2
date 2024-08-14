@@ -1,4 +1,4 @@
-import React, { type FC } from "react";
+import type { FC } from "react";
 import signalJson from "./signals.json";
 import {SignalMarker} from "./Markers/SignalMarker";
 import type { Signal } from "@simrail/types";
