@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { Marker, Popup } from "react-leaflet";
-import { Signal } from "@simrail/types";
+import type { Signal } from "@simrail/types";
 
 type SignalMarkerProps = {
     signal: Signal
