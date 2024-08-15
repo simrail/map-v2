@@ -6,10 +6,9 @@ import { readLocalStorageValue } from "@mantine/hooks";
 import type { Train } from "@simrail/types";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 import { MdClose } from "react-icons/md";
 import type { Railcar } from "../types/Railcar";
-import React from "react";
 
 type TrainTextProps = {
 	train: Train;

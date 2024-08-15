@@ -8,7 +8,7 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet/dist/leaflet.css";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import {
 	MdFullscreen,
@@ -33,7 +33,6 @@ import styles from "../styles/Home.module.css";
 import { StationMarker } from "./Markers/StationMarker";
 import SelectedTrainPopup from "./SelectedTrainPopup";
 import SpotlightSearch from "./SpotlightSearch";
-import React from "react";
 
 type MapProps = {
 	serverId: string | string[];

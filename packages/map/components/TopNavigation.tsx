@@ -4,7 +4,7 @@ import { useMantineColorScheme } from "@mantine/core";
 import { spotlight } from "@mantine/spotlight";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	MdArrowBack,
 	MdClose,
@@ -16,7 +16,6 @@ import {
 } from "react-icons/md";
 import style from "../styles/TopNavigation.module.css";
 import { NavigationDropdown } from "./NavigationDropdown";
-import React from "react";
 
 type TopNavigationProps = {
 	disableMapFeatures?: boolean;

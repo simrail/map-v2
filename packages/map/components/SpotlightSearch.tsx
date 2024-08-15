@@ -2,11 +2,10 @@ import { Spotlight, type SpotlightActionGroupData } from "@mantine/spotlight";
 import type { Station, Train } from "@simrail/types";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import { LatLng } from "leaflet";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import { useMap } from "react-leaflet";
 import { getSteamProfileOrBot } from "./steam";
-import React from 'react'
 
 type SpotlightSearchProps = {
 	trains: Train[];
