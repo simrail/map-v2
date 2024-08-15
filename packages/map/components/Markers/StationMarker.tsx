@@ -1,6 +1,5 @@
 import { Space, useMantineColorScheme } from "@mantine/core";
 import type { Station } from "@simrail/types";
-import { error } from "console";
 import L from "leaflet";
 import { useEffect, useState } from "react";
 import { Marker, Popup, Tooltip } from "react-leaflet";

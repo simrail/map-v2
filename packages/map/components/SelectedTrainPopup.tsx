@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
 import styles from "../styles/SelectedTrainPopup.module.css";
 import TrainText from "./TrainText";
-import { error } from "console";
 
 const SelectedTrainPopup = () => {
 	const { selectedTrain } = useSelectedTrain();
