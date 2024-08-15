@@ -73,7 +73,9 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 			.then((res) => res.json())
 			.then((fetchedTrains) => {
 				setTrains(fetchedTrains.data);
-			});
+			}).catch((
+				error => console.log("Failed to fetch trains, error: ", error)
+			));
 	}, [serverId]);
 
 	const getStations = useCallback(() => {
@@ -84,7 +86,9 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 
 				// @ts-ignore
 				setStations(stationsData);
-			});
+			}).catch((
+				error => console.log("Failed to fetch stations, error: ", error)
+			));;
 	}, [serverId]);
 
 	useEffect(() => {

@@ -62,7 +62,10 @@ export default function SpotlightSearch({
 				userIDs.push(stations[i].DispatchedBy[0].SteamId);
 		}
 
-		getUsernames(userIDs);
+		getUsernames(userIDs)
+		.catch(
+			(error => console.log("Failed to get usernames, error:", error)
+		));
 
 		if (trains) {
 			actionsGroups.push({

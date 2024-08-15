@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
 import styles from "../styles/SelectedTrainPopup.module.css";
 import TrainText from "./TrainText";
+import { error } from "console";
 
 const SelectedTrainPopup = () => {
 	const { selectedTrain } = useSelectedTrain();
@@ -31,7 +32,9 @@ const SelectedTrainPopup = () => {
 			getSteamProfileOrBot(selectedTrain.TrainData.ControlledBySteamID).then(
 				// @ts-ignore
 				setData,
-			);
+			).catch(
+				(error => console.log("Failed to getSteamProfileOrBot, error: ", error)
+			));
 	}, [selectedTrain]);
 
 	if (renderPopup === true) {

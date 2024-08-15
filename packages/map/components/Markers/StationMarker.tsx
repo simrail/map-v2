@@ -1,5 +1,6 @@
 import { Space, useMantineColorScheme } from "@mantine/core";
 import type { Station } from "@simrail/types";
+import { error } from "console";
 import L from "leaflet";
 import { useEffect, useState } from "react";
 import { Marker, Popup, Tooltip } from "react-leaflet";
@@ -27,7 +28,9 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 				setUsername("BOT");
 			}
 		}
-		getData();
+		getData().catch((
+			error => console.log("Failed to get user BOT or Player, error: ", error)
+		));
 	}, [station.DispatchedBy?.[0]]);
 
 	const { colorScheme } = useMantineColorScheme();
