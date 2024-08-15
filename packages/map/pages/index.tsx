@@ -9,37 +9,39 @@ import styles from "../styles/Home.module.css";
 export default function Home() {
 	const [servers, setServers] = useState<Server[] | null>(null);
 
-	function getServers() {
-		fetch("https://panel.simrail.eu:8084/servers-open")
-			.then((res) => res.json())
-			.then((stations) => {
-				let serversData: Server[] = stations.data;
+	async function getServers() {
+		try {
+			const res = await fetch("https://panel.simrail.eu:8084/servers-open")
+			const stations = await res.json();
+			let serversData: Server[] = stations.data;
 
-				serversData = serversData.sort((a, b) => {
-					const serverSettings1 = JSON.parse(
-						localStorage.getItem(`server-${a.id}`) ?? '{"favorite": false}',
-					) ?? { favorite: false };
-					const serverSettings2 = JSON.parse(
-						localStorage.getItem(`server-${b.id}`) ?? '{"favorite": false}',
-					) ?? { favorite: false };
+			serversData = serversData.sort((a, b) => {
+				const serverSettings1 = JSON.parse(
+					localStorage.getItem(`server-${a.id}`) ?? '{"favorite": false}',
+				) ?? { favorite: false };
+				const serverSettings2 = JSON.parse(
+					localStorage.getItem(`server-${b.id}`) ?? '{"favorite": false}',
+				) ?? { favorite: false };
 
-					if (serverSettings1.favorite && !serverSettings2.favorite) {
-						return -1;
-					}
-					if (!serverSettings1.favorite && serverSettings2.favorite) {
-						return 1;
-					}
-					if (b.ServerName.startsWith("FR")) {
-						return 1;
-					}
-					if (a.ServerName.startsWith("FR")) {
-						return -1;
-					}
-					return a.ServerCode.localeCompare(b.ServerCode);
-				});
-
-				setServers(serversData);
+				if (serverSettings1.favorite && !serverSettings2.favorite) {
+					return -1;
+				}
+				if (!serverSettings1.favorite && serverSettings2.favorite) {
+					return 1;
+				}
+				if (b.ServerName.startsWith("FR")) {
+					return 1;
+				}
+				if (a.ServerName.startsWith("FR")) {
+					return -1;
+				}
+				return a.ServerCode.localeCompare(b.ServerCode);
 			});
+
+			setServers(serversData);
+		} catch (error) {
+			console.log("Failed to fetch servers, error:", error)
+		}
 	}
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies:
