@@ -33,6 +33,7 @@ import styles from "../styles/Home.module.css";
 import { StationMarker } from "./Markers/StationMarker";
 import SelectedTrainPopup from "./SelectedTrainPopup";
 import SpotlightSearch from "./SpotlightSearch";
+import React from "react";
 
 type MapProps = {
 	serverId: string | string[];
@@ -52,10 +53,18 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		defaultValue: true,
 	});
 
+	const toggleRenderPopup = React.useCallback(() => {
+        setRenderPopup((prevState) => !prevState);
+    }, [setRenderPopup]);
+
 	const [showSignalInfo, setShowSignalInfo] = useLocalStorage({
 		key: "showSignalInfo",
 		defaultValue: true,
 	});
+
+	const toggleShowSignalInfo = React.useCallback(() => {
+        setShowSignalInfo((prevState) => !prevState);
+    }, [setShowSignalInfo]);
 
 	const { toggle: toggleFullscreen, fullscreen } = useFullscreen();
 	const FullscreenIcon = fullscreen ? MdFullscreenExit : MdFullscreen;
@@ -222,7 +231,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						>
 							<button type="button" className={style.icon}>
 								<RenderPopupIcon
-									onClick={() => setRenderPopup((prevState) => !prevState)}
+									onClick={toggleRenderPopup}
 									size={24}
 								/>
 							</button>
@@ -233,7 +242,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						>
 							<button type="button" className={style.icon}>
 								<ShowSignalStatusIcon
-									onClick={() => setShowSignalInfo((prevState) => !prevState)}
+									onClick={toggleShowSignalInfo}
 									size={24}
 								/>
 							</button>
@@ -244,7 +253,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							position="right"
 						>
 							<button type="button" className={style.icon}>
-								<FullscreenIcon onClick={() => toggleFullscreen()} size={24} />
+								<FullscreenIcon onClick={toggleFullscreen} size={24} />
 							</button>
 						</Tooltip>
 					</div>

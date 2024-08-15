@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import { useMap } from "react-leaflet";
 import { getSteamProfileOrBot } from "./steam";
+import React from 'react'
 
 type SpotlightSearchProps = {
 	trains: Train[];
@@ -120,6 +121,14 @@ export default function SpotlightSearch({
 		setSpotlightActions(actionsGroups);
 	}, [trains, stations, open, map?.panTo, setSelectedTrain, map?.setZoom]);
 
+	const handleSpotlightOpen = React.useCallback(() => {
+        setOpen(true);
+    }, []);
+
+    const handleSpotlightClose = React.useCallback(() => {
+        setOpen(false);
+    }, []);
+
 	return (
 		<Spotlight
 			actions={spotlightActions}
@@ -130,8 +139,8 @@ export default function SpotlightSearch({
 					color: "var(--mantine-color-text)",
 				},
 			}}
-			onSpotlightOpen={() => setOpen(true)}
-			onSpotlightClose={() => setOpen(false)}
+			onSpotlightOpen={handleSpotlightOpen}
+			onSpotlightClose={handleSpotlightClose}
 			limit={5}
 			searchProps={{
 				leftSection: <MdSearch />,
