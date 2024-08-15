@@ -21,7 +21,7 @@ export const getStaticPaths = (async () => {
 	};
 }) satisfies GetStaticPaths;
 
-export const getStaticProps = (async () => {
+export const getStaticProps = (() => {
 	return { props: {} };
 }) satisfies GetStaticProps;
 
