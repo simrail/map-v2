@@ -7,7 +7,7 @@ const getSteamProfileInfos = (steamId: string): Promise<ProfileResponse> =>
 
 export async function getSteamProfileOrBot(steamId: string | null | undefined) {
 	if (steamId)
-		return getSteamProfileInfos(steamId).then((profile) => [
+		return await getSteamProfileInfos(steamId).then((profile) => [
 			profile.avatar,
 			profile.personaname,
 		]);
