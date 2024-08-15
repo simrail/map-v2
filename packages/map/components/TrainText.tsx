@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { useMemo } from "react";
 import { MdClose } from "react-icons/md";
 import type { Railcar } from "../types/Railcar";
+import React from "react";
 
 type TrainTextProps = {
 	train: Train;
@@ -166,6 +167,13 @@ const TrainText = ({
 		defaultValue: true,
 	});
 
+	const handleMinifiedClick = React.useCallback(() => {
+        if (trainId) {
+            router.replace(`/server/${id}`);
+        }
+        setSelectedTrain(null);
+    }, [router, trainId, id]);
+
 	return (
 		<>
 			<Flex gap={12} align="center" justify={"space-between"}>
@@ -178,10 +186,7 @@ const TrainText = ({
 				</Flex>
 				{!minified && (
 					<ActionIcon
-						onClick={() => {
-							if (trainId) router.replace(`/server/${id}`);
-							setSelectedTrain(null);
-						}}
+						onClick={handleMinifiedClick}
 						size={29}
 						color="red"
 						variant="transparent"

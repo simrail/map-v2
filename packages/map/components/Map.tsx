@@ -42,6 +42,18 @@ type MapProps = {
 const LeaftletMap = ({ serverId }: MapProps) => {
 	const [map, setMap] = useState<LeafletMap | null>(null);
 
+	const zoomIn = React.useCallback(() => {
+        if (map) {
+            map.zoomIn();
+        }
+    }, [map]);
+
+    const zoomOut = React.useCallback(() => {
+        if (map) {
+            map.zoomOut();
+        }
+    }, [map]);
+
 	const router = useRouter();
 
 	const { trainId } = router.query;
@@ -215,12 +227,12 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							<>
 								<Tooltip label="Zoom in" position="right">
 									<button type="button" className={style.icon}>
-										<MdZoomIn onClick={() => map.zoomIn()} size={24} />
+										<MdZoomIn onClick={zoomIn} size={24} />
 									</button>
 								</Tooltip>
 								<Tooltip label="Zoom out" position="right">
 									<button type="button" className={style.icon}>
-										<MdZoomOut onClick={() => map.zoomOut()} size={24} />
+										<MdZoomOut onClick={zoomOut} size={24} />
 									</button>
 								</Tooltip>
 							</>

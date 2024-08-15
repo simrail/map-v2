@@ -16,6 +16,7 @@ import {
 } from "react-icons/md";
 import style from "../styles/TopNavigation.module.css";
 import { NavigationDropdown } from "./NavigationDropdown";
+import React from "react";
 
 type TopNavigationProps = {
 	disableMapFeatures?: boolean;
@@ -29,6 +30,13 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 
 	const router = useRouter();
 	const { id, trainId } = router.query;
+
+	const handleSetSelectedTrain = React.useCallback(() => {
+        setSelectedTrain(null);
+        if (trainId) {
+            router.replace(`/server/${id}`);
+        }
+    }, [router, trainId, id]);
 
 	useEffect(() => {
 		if (id) {
@@ -62,6 +70,11 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 	if (!serverDate) return null;
 
 	const { colorScheme, setColorScheme } = useMantineColorScheme();
+
+	const toggleColorScheme = React.useCallback(() => {
+        setColorScheme(colorScheme === "light" ? "dark" : "light");
+    }, []);
+
 	const [dropdown, setDropdown] = useState<boolean>(false);
 
 	const Icon = colorScheme === "dark" ? MdOutlineLightMode : MdOutlineDarkMode;
@@ -124,10 +137,7 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 									color="#F34747"
 									className={style.icons}
 									size={24}
-									onClick={() => {
-										setSelectedTrain(null);
-										if (trainId) router.replace(`/server/${id}`);
-									}}
+									onClick={handleSetSelectedTrain}
 								/>
 							)}
 
@@ -138,9 +148,7 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 							/>
 
 							<Icon
-								onClick={() =>
-									setColorScheme(colorScheme === "light" ? "dark" : "light")
-								}
+								onClick={toggleColorScheme}
 								className={style.icons}
 								size={24}
 							/>
