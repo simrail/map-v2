@@ -47,11 +47,18 @@ export default function Home() {
 	// biome-ignore lint/correctness/useExhaustiveDependencies:
 	useEffect(() => {
 		// setLoading(true)
+		const fetchServers = async () => {
+			try {
+				await getServers();
+			} catch (error) {
+				console.error("Failed to fetch servers, error:", error);
+			}
+		};
 
-		getServers();
+		fetchServers();
 
 		const interval = setInterval(() => {
-			getServers();
+			fetchServers();
 		}, 10000);
 
 		return () => clearInterval(interval);
