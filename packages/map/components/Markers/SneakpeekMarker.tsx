@@ -1,7 +1,6 @@
 import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
 import { Title } from "@mantine/core";
-import { MdClosedCaptionDisabled } from "react-icons/md";
 
 type SneakpeekMarkerProps = {
 	title: string;
