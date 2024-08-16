@@ -1,6 +1,7 @@
 import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
 import { Title } from "@mantine/core";
+import { MdClosedCaptionDisabled } from "react-icons/md";
 
 type SneakpeekMarkerProps = {
 	title: string;
@@ -28,6 +29,12 @@ export const SneakpeekMarker = ({ title, desc, url, ImageURL, Image2URL, date, L
 		images = <>
 			<video width="512" height="288" controls >
       				<source src={ImageURL} type="video/mp4"/>
+					<track
+						default
+						kind="captions"
+						srcLang="en"
+						label="English"
+					/>
      		</video>
 		</>
 
