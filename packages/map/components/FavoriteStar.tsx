@@ -19,7 +19,7 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 		serverSettings.favorite ?? false,
 	);
 
-  // @ts-expect-error todo
+	// @ts-expect-error todo
 	const toggleFavorite = (event) => {
 		event.preventDefault();
 		serverSettings.favorite = !favorite;
