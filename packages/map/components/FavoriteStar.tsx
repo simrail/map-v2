@@ -6,7 +6,7 @@ import styles from "../styles/Home.module.css";
 import type { ServerSettings } from "../types/ServerSettings";
 
 type FavoriteStarProps = {
-  server: Server;
+	server: Server;
 };
 
 export default function FavoriteStar({ server }: FavoriteStarProps) {
