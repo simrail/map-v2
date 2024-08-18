@@ -32,9 +32,9 @@ import style from "../styles/BottomLeftControls.module.css";
 import styles from "../styles/Home.module.css";
 import { StationMarker } from "./Markers/StationMarker";
 import SelectedTrainPopup from "./SelectedTrainPopup";
+import { MainlineSignals, OtherSignals } from "./Signals";
+import SneakpeekMarkers from "./Sneakpeeks";
 import SpotlightSearch from "./SpotlightSearch";
-import { MainlineSignals, OtherSignals } from "./Signals"
-import SneakpeekMarkers from "./Sneakpeeks"
 
 type MapProps = {
 	serverId: string | string[];
@@ -266,21 +266,23 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						</LayerGroup>
 					</LayersControl.Overlay>
 
-					<LayersControl.Overlay 
-                        checked={localStorage.getItem('layer-mainline-signals') === 'true'}
-                        name="Mainline signals">
-                        <LayerGroup>
-                            <MainlineSignals />
-                        </LayerGroup>
-                    </LayersControl.Overlay>
+					<LayersControl.Overlay
+						checked={localStorage.getItem("layer-mainline-signals") === "true"}
+						name="Mainline signals"
+					>
+						<LayerGroup>
+							<MainlineSignals />
+						</LayerGroup>
+					</LayersControl.Overlay>
 
-                    <LayersControl.Overlay 
-                        checked={localStorage.getItem('layer-other-signals') === 'true'}
-                        name="Other signals">
-                        <LayerGroup>
-                            <OtherSignals />
-                        </LayerGroup>
-                    </LayersControl.Overlay>
+					<LayersControl.Overlay
+						checked={localStorage.getItem("layer-other-signals") === "true"}
+						name="Other signals"
+					>
+						<LayerGroup>
+							<OtherSignals />
+						</LayerGroup>
+					</LayersControl.Overlay>
 
 					<LayersControl.Overlay
 						checked={
@@ -342,7 +344,6 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							<SneakpeekMarkers />
 						</LayerGroup>
 					</LayersControl.Overlay>
-
 				</LayersControl>
 				<SpotlightSearch stations={stations} trains={trains} />
 			</MapContainer>
