@@ -15,7 +15,7 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 	);
 	const router = useRouter();
 
-     const [favorite, SetFavorite] = useState<boolean>(
+	const [favorite, SetFavorite] = useState<boolean>(
 		serverSettings.favorite ?? false,
 	);
 
