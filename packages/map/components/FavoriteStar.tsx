@@ -1,12 +1,12 @@
 import type { Server } from "@simrail/types";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styles from "../styles/Home.module.css";
 import type { ServerSettings } from "../types/ServerSettings";
 
 type FavoriteStarProps = {
-	server: Server;
+  server: Server;
 };
 
 export default function FavoriteStar({ server }: FavoriteStarProps) {
@@ -15,11 +15,11 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 	);
 	const router = useRouter();
 
-	const [favorite, SetFavorite] = useState<boolean>(
+     const [favorite, SetFavorite] = useState<boolean>(
 		serverSettings.favorite ?? false,
 	);
 
-	// @ts-expect-error todo
+  // @ts-expect-error todo
 	const toggleFavorite = (event) => {
 		event.preventDefault();
 		serverSettings.favorite = !favorite;
