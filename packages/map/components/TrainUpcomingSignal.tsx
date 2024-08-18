@@ -61,7 +61,10 @@ const getSignalState = (signalSpeed: number | string): string | null => {
 	return null;
 };
 
-const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({ train, showMoreInfo }) => {
+const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
+	train,
+	showMoreInfo,
+}) => {
 	const {
 		TrainData: { SignalInFront, SignalInFrontSpeed, DistanceToSignalInFront },
 	} = train;
@@ -77,10 +80,10 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({ train, showMoreInfo }
 			<>
 				Distance to {signalName ? signalName : "next signal"}:{" "}
 				{SignalInFront
-				? formatSignalDistance(DistanceToSignalInFront)
-				: "Signal too far away"}
+					? formatSignalDistance(DistanceToSignalInFront)
+					: "Signal too far away"}
 			</>
-		)
+		);
 	}
 
 	return (

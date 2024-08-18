@@ -202,7 +202,11 @@ const TrainText = ({
 					{locomotiveImages}
 				</Carousel>
 			</div>
-			{!minified && <Title order={3}>{getTrainDisplayName(train.TrainName, train.TrainNoLocal)} </Title>}
+			{!minified && (
+				<Title order={3}>
+					{getTrainDisplayName(train.TrainName, train.TrainNoLocal)}{" "}
+				</Title>
+			)}
 			Locomotive: {tractionUnitInfo}
 			<br />
 			{additionalUnitCount > 0 && (
@@ -228,7 +232,8 @@ const TrainText = ({
 				<>
 					<Title order={3}>Next Signal</Title>
 					<>
-						<TrainUpcomingSignal train={train} showMoreInfo={showSignalInfo} /><br />
+						<TrainUpcomingSignal train={train} showMoreInfo={showSignalInfo} />
+						<br />
 					</>
 
 					<Flex
