@@ -202,9 +202,11 @@ const TrainText = ({
 					{locomotiveImages}
 				</Carousel>
 			</div>
-			{getTrainDisplayName(train.TrainName, train.TrainNoLocal)}
-			<br />
-			{!minified && <Title order={3}>Informations</Title>}
+			{!minified && (
+				<Title order={3}>
+					{getTrainDisplayName(train.TrainName, train.TrainNoLocal)}{" "}
+				</Title>
+			)}
 			Locomotive: {tractionUnitInfo}
 			<br />
 			{additionalUnitCount > 0 && (
@@ -219,10 +221,8 @@ const TrainText = ({
 				</>
 			)}
 			Length / Weight: {trainLength}m / {trainWeight}t<br />
-			{!minified && <Title order={3}>Route</Title>}
-			Departure: {train.StartStation}
-			<br />
-			Destination: {train.EndStation}
+			{!minified && <Title order={3}>Route </Title>}
+			{train.StartStation} - {train.EndStation}
 			<br />
 			Speed: {Math.round(train.TrainData.Velocity)} km/h
 			<br />
@@ -230,13 +230,12 @@ const TrainText = ({
 			<br />
 			{!minified && (
 				<>
-					{showSignalInfo && (
-						<>
-							<Title order={3}>Next Signal</Title>
-							<TrainUpcomingSignal train={train} />
-							<br />
-						</>
-					)}
+					<Title order={3}>Next Signal</Title>
+					<>
+						<TrainUpcomingSignal train={train} showMoreInfo={showSignalInfo} />
+						<br />
+					</>
+
 					<Flex
 						gap={8}
 						align="center"
