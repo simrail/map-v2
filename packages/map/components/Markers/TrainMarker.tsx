@@ -34,7 +34,12 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 	const { colorScheme } = useMantineColorScheme();
 
 	let botIcon = "/markers/icon-bot-simrail.jpg";
-	if (colorScheme === "dark") botIcon = "/markers/icon-bot-simrail-dark.jpg";
+	if (
+		colorScheme === "dark" ||
+		window.matchMedia("(prefers-color-scheme: dark)").matches
+	)
+		botIcon = "/markers/icon-bot-simrail-dark.jpg";
+	// window.matchMedia('(prefers-color-scheme: dark)').matches incase colorScheme === auto we need to see what the system uses
 
 	const icon = L.icon({
 		iconUrl: train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon,
@@ -75,7 +80,7 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 			</Popup>
 
 			<Tooltip
-				offset={[2, -10]}
+				offset={[0, -10]}
 				direction={"top"}
 				opacity={0.8}
 				permanent={true}

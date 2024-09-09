@@ -79,7 +79,7 @@ export default function SpotlightSearch({
 					return {
 						id: `train-${index}`,
 						label: `${train.TrainNoLocal} - ${train.TrainName}`,
-						description: `Drived by ${username} `,
+						description: `Driven by ${username} `,
 						onClick: () => {
 							setSelectedTrain(train);
 							map?.setZoom(13);

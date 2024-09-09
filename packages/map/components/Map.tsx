@@ -225,7 +225,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							</button>
 						</Tooltip>
 						<Tooltip
-							label={`${showSignalInfo ? "Hide" : "Show"} signal info`}
+							label={`${showSignalInfo ? "Hide" : "Show"} more signal info`}
 							position="right"
 						>
 							<button type="button" className={style.icon}>
@@ -313,7 +313,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 
 					<LayersControl.Overlay
 						checked={localStorage.getItem("layer-Signalling") === "true"}
-						name="Signalling"
+						name="Signalling (Not 100% accurate)"
 					>
 						<LayerGroup>
 							<TileLayer
