@@ -33,6 +33,7 @@ import styles from "../styles/Home.module.css";
 import { StationMarker } from "./Markers/StationMarker";
 import SelectedTrainPopup from "./SelectedTrainPopup";
 import { MainlineSignals, OtherSignals } from "./Signals";
+import SneakpeekMarkers from "./Sneakpeeks";
 import SpotlightSearch from "./SpotlightSearch";
 
 type MapProps = {
@@ -332,6 +333,15 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 								url="https://{s}.tiles.openrailwaymap.org/maxspeed/{z}/{x}/{y}.png"
 								// Looks a bit wired in dark mode due to .css putting everything in a greyscale but it is still possible to differ the signalling systems.
 							/>
+						</LayerGroup>
+					</LayersControl.Overlay>
+
+					<LayersControl.Overlay
+						checked={localStorage.getItem("layer-Signalling") === "true"}
+						name="Sneakpeeks"
+					>
+						<LayerGroup>
+							<SneakpeekMarkers />
 						</LayerGroup>
 					</LayersControl.Overlay>
 				</LayersControl>
