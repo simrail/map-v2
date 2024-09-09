@@ -33,7 +33,6 @@ import styles from "../styles/Home.module.css";
 import { StationMarker } from "./Markers/StationMarker";
 import SelectedTrainPopup from "./SelectedTrainPopup";
 import { MainlineSignals, OtherSignals } from "./Signals";
-import SneakpeekMarkers from "./Sneakpeeks";
 import SpotlightSearch from "./SpotlightSearch";
 
 type MapProps = {
