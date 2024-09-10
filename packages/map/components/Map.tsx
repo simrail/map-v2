@@ -254,7 +254,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 					attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
-				<LayersControl position="bottomright" collapsed={false}>
+				<LayersControl position="bottomright" collapsed={false}>					
 					<LayersControl.Overlay
 						checked={
 							localStorage.getItem("layer-trains") === null ||
@@ -266,24 +266,18 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							<TrainsList trains={trains} />
 						</LayerGroup>
 					</LayersControl.Overlay>
-
+					
 					<LayersControl.Overlay
-						checked={localStorage.getItem("layer-mainline-signals") === "true"}
-						name="Mainline signals"
+						checked={
+							localStorage.getItem("layer-passenger stations") === null ||
+							localStorage.getItem("layer-passenger stations") === "true"
+						}
+						name="Passenger stations"
 					>
 						<LayerGroup>
-							<MainlineSignals />
+							<PassengerStations />
 						</LayerGroup>
-					</LayersControl.Overlay>
-
-					<LayersControl.Overlay
-						checked={localStorage.getItem("layer-other-signals") === "true"}
-						name="Other signals"
-					>
-						<LayerGroup>
-							<OtherSignals />
-						</LayerGroup>
-					</LayersControl.Overlay>
+					</LayersControl.Overlay>					
 
 					<LayersControl.Overlay
 						checked={
@@ -306,39 +300,26 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							localStorage.getItem("layer-unplayable dispatch stations") ===
 								"true"
 						}
-						name="Unplayable dispatch posts">
-                        <LayerGroup>
-                            <NonPlayableDispatchPosts />
-                        </LayerGroup>
-                    </LayersControl.Overlay>
-
-                    <LayersControl.Overlay
-                        checked={localStorage.getItem('layer-passenger stations') === null || localStorage.getItem('layer-passenger stations') === 'true'}
-                        name="Passenger stations"
+						name="Unplayable dispatch posts"
 					>
 						<LayerGroup>
-							<PassengerStations />
+							<NonPlayableDispatchPosts />
+						</LayerGroup>
+					</LayersControl.Overlay><LayersControl.Overlay
+						checked={localStorage.getItem("layer-mainline-signals") === "true"}
+						name="Automatic Block Signals"
+					>
+						<LayerGroup>
+							<MainlineSignals />
 						</LayerGroup>
 					</LayersControl.Overlay>
 
-                    <LayersControl.Overlay
-                        checked={localStorage.getItem('layer-passenger stations') === null || localStorage.getItem('layer-passenger stations') === 'true'}
-                        name="Passenger stations">
-                        <LayerGroup>
-                            <PassengerStations />
-                        </LayerGroup>
-                    </LayersControl.Overlay>
 					<LayersControl.Overlay
-						checked={
-							localStorage.getItem("layer-unplayable dispatch stations") ===
-								null ||
-							localStorage.getItem("layer-unplayable dispatch stations") ===
-								"true"
-						}
-						name="Unplayable dispatch stations"
+						checked={localStorage.getItem("layer-other-signals") === "true"}
+						name="Manual Signals"
 					>
 						<LayerGroup>
-							<NonPlayableStations />
+							<OtherSignals />
 						</LayerGroup>
 					</LayersControl.Overlay>
 

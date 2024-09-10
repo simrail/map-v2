@@ -70,7 +70,7 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 				/>
 				<br />
 				<Space h="sm" />
-				Station: {station.Name} [${station.Prefix}]
+				Station: {station.Name} [{station.Prefix}]
 				<br />
 				User: {username}
 				<br />
