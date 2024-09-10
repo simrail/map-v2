@@ -12,7 +12,8 @@ import SelectedTrainPopup from './SelectedTrainPopup';
 import Control from 'react-leaflet-custom-control'
 import { useRouter } from 'next/router';
 import { TrainsList } from "@/components/TrainsList";
-import NonPlayableStations from "@/components/NonPlayableStations";
+import NonPlayableDispatchPosts from "@/components/NonPlayableDispatchPost";
+import PassengerStations from "@/components/PassengerStation";
 import { useTheme } from 'contexts/ThemeContext';
 import style from '../styles/BottomLeftControls.module.css';
 import { MdFullscreen, MdFullscreenExit, MdOutlineTraffic, MdSpeakerNotes, MdSpeakerNotesOff, MdTraffic, MdZoomIn, MdZoomOut } from 'react-icons/md';
@@ -238,7 +239,7 @@ const Map = ({ serverId }: MapProps) => {
                         </LayerGroup>
                     </LayersControl.Overlay>
 
-                    <LayersControl.Overlay checked={localStorage.getItem('layer-dispatch stations') === null || localStorage.getItem('layer-dispatch stations') === 'true'} name="Dispatch stations">
+                    <LayersControl.Overlay checked={localStorage.getItem('layer-dispatch stations') === null || localStorage.getItem('layer-dispatch stations') === 'true'} name="Dispatch posts">
                         <LayerGroup>
                             {stations.map(station => (<StationMarker key={station.Name} station={station} />))}
                         </LayerGroup>
@@ -246,9 +247,17 @@ const Map = ({ serverId }: MapProps) => {
 
                     <LayersControl.Overlay
                         checked={localStorage.getItem('layer-unplayable dispatch stations') === null || localStorage.getItem('layer-unplayable dispatch stations') === 'true'}
-                        name="Unplayable dispatch stations">
+                        name="Unplayable dispatch posts">
                         <LayerGroup>
-                            <NonPlayableStations />
+                            <NonPlayableDispatchPosts />
+                        </LayerGroup>
+                    </LayersControl.Overlay>
+
+                    <LayersControl.Overlay
+                        checked={localStorage.getItem('layer-passenger stations') === null || localStorage.getItem('layer-passenger stations') === 'true'}
+                        name="Passenger stations">
+                        <LayerGroup>
+                            <PassengerStations />
                         </LayerGroup>
                     </LayersControl.Overlay>
 

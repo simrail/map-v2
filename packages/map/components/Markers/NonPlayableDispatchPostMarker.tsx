@@ -1,28 +1,31 @@
 import L from 'leaflet';
 import { Marker, Popup } from "react-leaflet";
-import { Station } from "@simrail/types";
+import { NonPlayable } from "@simrail/types";
 
-type StationMarkerProps = {
-    station: Station
+type NonPlayableMarkerProps = {
+    nonPlayable: NonPlayable
 }
 
-export const NonPlayableStationMarker = ({ station }: StationMarkerProps) => {
+export const NonPlayableDispatchPostMarker = ({ nonPlayable }: NonPlayableMarkerProps) => {
 
     let icon = L.icon({
         iconUrl: '/markers/icon-train-station.png',
         iconSize: [16, 16],
         popupAnchor: [0, -16],
     });
+    
 
-    let displayText = station.Name
-    if (station.Prefix != "") {
-        displayText += " [" + station.Prefix + "]"
+    let displayText
+    if (nonPlayable.Prefix == "") {
+        displayText = `${nonPlayable.Name}`
+    } else {
+        displayText = `${nonPlayable.Name} [${nonPlayable.Prefix}]`
     }
 
+
     return <Marker
-        key={station.id}
         icon={icon}
-        position={[station.Latititude, station.Longitude]}
+        position={[nonPlayable.Latititude, nonPlayable.Longitude]}
         zIndexOffset={30}
         eventHandlers={{
             mouseover: (event) => event.target.openPopup(),

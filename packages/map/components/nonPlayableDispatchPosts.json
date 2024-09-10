@@ -1,0 +1,1040 @@
+[
+  {
+    "Name": "Warszawa Zachodnia",
+    "Prefix": "WZP;WZD",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 52.22064438847182,
+    "Longitude": 20.962997330908856,
+    "LineNumbers": [
+      1,
+      2,
+      3,
+      8,
+      445,
+      447,
+      448
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Warszawa Włochy",
+    "Prefix": "Wł",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 52.20677,
+    "Longitude": 20.91721,
+    "LineNumbers": [
+      1,
+      3,
+      447
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Józefinów",
+    "Prefix": "Jz",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 52.18587897581022,
+    "Longitude": 20.85313515843776,
+    "LineNumbers": [
+      1,
+      19
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Żyrardów",
+    "Prefix": "Żr",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 52.05283204,
+    "Longitude": 20.45168499,
+    "LineNumbers": [
+      1
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Rokiciny",
+    "Prefix": "Rk",
+    "Country": "PL",
+    "Scenerie": "pabianice_rogow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.66908657398795,
+    "Longitude": 19.78103884622499,
+    "LineNumbers": [
+      1
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Myszków",
+    "Prefix": "Ms",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.57391,
+    "Longitude": 19.33097,
+    "LineNumbers": [
+      1
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Dąbrowa Górnicza Ząbkowice",
+    "Prefix": "DZA",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.375735,
+    "Longitude": 19.2722,
+    "LineNumbers": [
+      1,
+      133,
+      160,
+      183,
+      186
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sosnowiec Gł. pzs R52",
+    "Prefix": "",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.272935,
+    "Longitude": 19.115690,
+    "LineNumbers": [
+      1,
+      660
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Warszawa Centralna",
+    "Prefix": "WDC",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 52.22872,
+    "Longitude": 21.00077,
+    "LineNumbers": [
+      2
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Warszawa Wschodnia",
+    "Prefix": "WsD;WsP",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 52.25305636317541,
+    "Longitude": 21.058287726145462,
+    "LineNumbers": [
+      2,
+      7,
+      9,
+      448,
+      90
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Warszawa Podskarbińska",
+    "Prefix": "Pd",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 52.2576885652804,
+    "Longitude": 21.075590192911875,
+    "LineNumbers": [
+      2,
+      448,
+      902,
+      903
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Warszawa Grochów",
+    "Prefix": "Gr",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 52.25382855010197,
+    "Longitude": 21.09513806297933,
+    "LineNumbers": [
+      7,
+      45,
+      452
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sędziszów",
+    "Prefix": "Sd1",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.574587,
+    "Longitude": 20.07763,
+    "LineNumbers": [
+      8
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sędziszów",
+    "Prefix": "Sd2",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.571031,
+    "Longitude": 20.0659,
+    "LineNumbers": [
+      8
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sędziszów",
+    "Prefix": "Sd",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.568773,
+    "Longitude": 20.061822,
+    "LineNumbers": [
+      8
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sędziszów",
+    "Prefix": "Sd3",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.563546,
+    "Longitude": 20.050017,
+    "LineNumbers": [
+      8
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Gniewięcin",
+    "Prefix": "Gn",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.540834,
+    "Longitude": 20.044425,
+    "LineNumbers": [
+      8
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Miechów",
+    "Prefix": "Mi",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.35469185330557,
+    "Longitude": 20.01168180533395,
+    "LineNumbers": [
+      8
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Bełchów",
+    "Prefix": "Bł",
+    "Country": "PL",
+    "Scenerie": "rogow_grodzisk",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 52.022925554387,
+    "Longitude": 20.035959876764768,
+    "LineNumbers": [
+      11
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Puszcza Mariańska",
+    "Prefix": "PM",
+    "Country": "PL",
+    "Scenerie": "rogow_grodzisk",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.97555129895896,
+    "Longitude": 20.329355161648778,
+    "LineNumbers": [
+      12
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Marków",
+    "Prefix": "Mr",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.96781803398308,
+    "Longitude": 20.49848973897488,
+    "LineNumbers": [
+      12,
+      575
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Łask",
+    "Prefix": "Łs",
+    "Country": "PL",
+    "Scenerie": "pabianice_rogow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.60413135241164,
+    "Longitude": 19.10870583857142,
+    "LineNumbers": [
+      14
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Łódź Żabieniec",
+    "Prefix": "ŁŻ",
+    "Country": "PL",
+    "Scenerie": "pabianice_rogow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.79595805963856,
+    "Longitude": 19.406198390602448,
+    "LineNumbers": [
+      15
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Łódź Marysin",
+    "Prefix": "ŁM",
+    "Country": "PL",
+    "Scenerie": "pabianice_rogow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.80289587298317,
+    "Longitude": 19.478769234235,
+    "LineNumbers": [
+      16
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Radzice",
+    "Prefix": "Rd1",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.48369,
+    "Longitude": 20.33819,
+    "LineNumbers": [
+      22,
+      574
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Radzice",
+    "Prefix": "Rd",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.47348405723441,
+    "Longitude": 20.37363669889725,
+    "LineNumbers": [
+      22,
+      573
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Łódź Chojny",
+    "Prefix": "ŁCh1",
+    "Country": "PL",
+    "Scenerie": "pabianice_rogow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.727095943548115,
+    "Longitude": 19.480058998347406,
+    "LineNumbers": [
+      25
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Łódź Chojny",
+    "Prefix": "ŁCh",
+    "Country": "PL",
+    "Scenerie": "pabianice_rogow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.72520323078958,
+    "Longitude": 19.4949615461829,
+    "LineNumbers": [
+      25,
+      540
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Mikołajów",
+    "Prefix": "Mk",
+    "Country": "PL",
+    "Scenerie": "pabianice_rogow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.707401033900815,
+    "Longitude": 19.861030577320108,
+    "LineNumbers": [
+      25,
+      44,
+      534
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Czarnca",
+    "Prefix": "Cz",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.824025,
+    "Longitude": 19.94213,
+    "LineNumbers": [
+      61,
+      571,
+      582
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Żelisławice",
+    "Prefix": "Żl",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.80315,
+    "Longitude": 19.85558,
+    "LineNumbers": [
+      61,
+      572
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Charsznica",
+    "Prefix": "Ch",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.395780,
+    "Longitude": 19.947467,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Charsznica",
+    "Prefix": "Ch1",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.39659,
+    "Longitude": 19.934853,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Gajówka APO",
+    "Prefix": "",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.399026,
+    "Longitude": 19.857738,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Wolbrom",
+    "Prefix": "W-1",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.373835,
+    "Longitude": 19.777445,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Wolbrom",
+    "Prefix": "W",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.377566,
+    "Longitude": 19.767985,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Zarzecze APO",
+    "Prefix": "",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.355115,
+    "Longitude": 19.691552,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Jaroszowiec Olkuski",
+    "Prefix": "JO1",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.34461,
+    "Longitude": 19.62657,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Jaroszowiec Olkuski",
+    "Prefix": "JO",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.339763,
+    "Longitude": 19.616380,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Olkusz",
+    "Prefix": "Oz",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.272879,
+    "Longitude": 19.57992,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Olkusz",
+    "Prefix": "Oz1",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.27514549908266,
+    "Longitude": 19.566628609427177,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Dąbrowa Górnicza Strzemieszyce",
+    "Prefix": "DS-1",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.308797,
+    "Longitude": 19.275301,
+    "LineNumbers": [
+      62
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Dąbrowa Górnicza Strzemieszyce",
+    "Prefix": "DS",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.312697,
+    "Longitude": 19.262828,
+    "LineNumbers": [
+      62,
+      162
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sosnowiec Dańdówka",
+    "Prefix": "SDn1",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.266059,
+    "Longitude": 19.184587,
+    "LineNumbers": [
+      62,
+      171
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sosnowiec Dańdówka",
+    "Prefix": "SDn",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.265464,
+    "Longitude": 19.168147,
+    "LineNumbers": [
+      62,
+      171
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sosnowiec Południowy",
+    "Prefix": "SPł1",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.266928575143105,
+    "Longitude": 19.129109141292485,
+    "LineNumbers": [
+      62,
+      660
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sprowa",
+    "Prefix": "Sp",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.59304492206253,
+    "Longitude": 19.88301571264459,
+    "LineNumbers": [
+      64
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Starzyny",
+    "Prefix": "St",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.71253,
+    "Longitude": 19.80175,
+    "LineNumbers": [
+      64,
+      570
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "LCS Kraków Płaszów",
+    "Prefix": "KP",
+    "Country": "PL",
+    "Scenerie": "tunel_krakow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.03744472362509,
+    "Longitude": 19.970971288824863,
+    "LineNumbers": [
+      91,
+      94,
+      100,
+      603,
+      604,
+      605,
+      624,
+      629
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "LCS Kraków Mydlniki",
+    "Prefix": "KMd",
+    "Country": "PL",
+    "Scenerie": "tunel_krakow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.083056116238794,
+    "Longitude": 19.860135188032675,
+    "LineNumbers": [
+      95,
+      100,
+      118,
+      133
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Dłubnia",
+    "Prefix": "Dł",
+    "Country": "PL",
+    "Scenerie": "tunel_krakow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.10240131124432,
+    "Longitude": 20.026792941240483,
+    "LineNumbers": [
+      95,
+      607
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Kraków Główny",
+    "Prefix": "KGA",
+    "Country": "PL",
+    "Scenerie": "tunel_krakow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.08139817760038,
+    "Longitude": 19.926679068455464,
+    "LineNumbers": [
+      118,
+      133,
+      601
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Kraków Balice",
+    "Prefix": "KBa",
+    "Country": "PL",
+    "Scenerie": "tunel_krakow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.072170616311624,
+    "Longitude": 19.81186368457375,
+    "LineNumbers": [
+      118
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Dąbrowa Górnicza Południowa",
+    "Prefix": "DP",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.312566909772805,
+    "Longitude": 19.287130878339372,
+    "LineNumbers": [
+      133
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Dąbrowa Górnicza Południowa",
+    "Prefix": "DP1",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.303755,
+    "Longitude": 19.286973,
+    "LineNumbers": [
+      133
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sosnowiec Maczki",
+    "Prefix": "SMa1",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.26587022594267,
+    "Longitude": 19.26830801128885,
+    "LineNumbers": [
+      133,
+      163,
+      665
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sosnowiec Maczki",
+    "Prefix": "SMa",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.258592821403184,
+    "Longitude": 19.272513244520184,
+    "LineNumbers": [
+      133,
+      163,
+      666
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Sosnowiec Jęzor",
+    "Prefix": "SJr",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.243520135290744,
+    "Longitude": 19.203652380369107,
+    "LineNumbers": [
+      134,
+      180,
+      719
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Mysłowice",
+    "Prefix": "Mw11",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.234083,
+    "Longitude": 19.144229,
+    "LineNumbers": [
+      134,
+      138
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Katowice Towarowa",
+    "Prefix": "KTC",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.26528905318747,
+    "Longitude": 18.98548711536283,
+    "LineNumbers": [
+      137,
+      713
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Mysłowice",
+    "Prefix": "MwA",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.241696,
+    "Longitude": 19.138145,
+    "LineNumbers": [
+      138
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Mysłowice",
+    "Prefix": "MwB",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.247071,
+    "Longitude": 19.130582,
+    "LineNumbers": [
+      138,
+      655
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Szabelnia",
+    "Prefix": "Szb",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.25921852453205,
+    "Longitude": 19.110331512666356,
+    "LineNumbers": [
+      138,
+      654
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Brynów",
+    "Prefix": "Bry",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.248255774194334,
+    "Longitude": 18.988992476762228,
+    "LineNumbers": [
+      139,
+      656
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Przemiarki",
+    "Prefix": "Pmi",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.385874,
+    "Longitude": 19.340057,
+    "LineNumbers": [
+      154
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Dąbrowa Górnicza Towarowa",
+    "Prefix": "DT R5",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.329322,
+    "Longitude": 19.377653,
+    "LineNumbers": [
+      154,
+      661
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Dąbrowa Górnicza Towarowa",
+    "Prefix": "DTA",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.31547,
+    "Longitude": 19.37304,
+    "LineNumbers": [
+      154,
+      171
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Kozioł",
+    "Prefix": "Kz",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.3082766,
+    "Longitude": 19.382856,
+    "LineNumbers": [
+      171,
+      661
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Stawiska",
+    "Prefix": "Sk",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.251940600103836,
+    "Longitude": 19.104384301176534,
+    "LineNumbers": [
+      171,
+      665,
+      657
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Katowice Janów",
+    "Prefix": "KJw",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.23756415590628,
+    "Longitude": 19.07915703523147,
+    "LineNumbers": [
+      171,
+      665,
+      657
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Katowice Muchowiec",
+    "Prefix": "KMB",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.22460355968701,
+    "Longitude": 19.01062479919758,
+    "LineNumbers": [
+      171,
+      652,
+      653,
+      706,
+      707
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Staszic",
+    "Prefix": "Ssc",
+    "Country": "PL",
+    "Scenerie": "katowice_lazy",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.218462541767884,
+    "Longitude": 19.001465526694027,
+    "LineNumbers": [
+      142,
+      652,
+      898
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Słotwiny",
+    "Prefix": "Sn",
+    "Country": "PL",
+    "Scenerie": "pabianice_rogow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.72629962198289,
+    "Longitude": 19.832446559377487,
+    "LineNumbers": [
+      534,
+      536,
+      537
+    ],
+    "LineNames": []
+  },
+  {
+    "Name": "Słotwiny",
+    "Prefix": "Sn1",
+    "Country": "PL",
+    "Scenerie": "pabianice_rogow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.72063351150299,
+    "Longitude": 19.842297332391134,
+    "LineNumbers": [
+      534
+    ],
+    "LineNames": []
+  }
+]

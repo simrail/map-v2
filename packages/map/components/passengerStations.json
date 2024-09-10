@@ -1,0 +1,1959 @@
+[
+	{
+		"Name": "Görlitz",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.1467944,
+		"Longitude": 14.9782967,
+		"LineNumbers": [
+			6142,
+			6211,
+			6212,
+			6590
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Arnsdorf (bei Dresden)",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.0930368,
+		"Longitude": 13.9817192,
+		"LineNumbers": [
+			6200,
+			6212,
+			6228
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Görlitz-Rauschwalde",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1491468,
+		"Longitude": 14.9365172,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Gersdorf (Görlitz)",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1252158,
+		"Longitude": 14.8542858,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Reichenbach (Oberlausitz)",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1356756,
+		"Longitude": 14.795494,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Zoblitz",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1236692,
+		"Longitude": 14.7509615,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Löbau (Sachsen)",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.0993856,
+		"Longitude": 14.671919,
+		"LineNumbers": [
+			6212,
+			6214
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Breitendorf",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1386293,
+		"Longitude": 14.6227927,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Pommritz / Pomorcy",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1590682,
+		"Longitude": 14.5745917,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kubschütz / Kubšicy",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1656425,
+		"Longitude": 14.5093948,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Bautzen - Budyšin",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.1731249,
+		"Longitude": 14.4287344,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Seitschen / Žičeń",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1536306,
+		"Longitude": 14.3250227,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Demitz-Thumitz",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1421983,
+		"Longitude": 14.2395696,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Bischofswerda",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.1254623,
+		"Longitude": 14.1858805,
+		"LineNumbers": [
+			6212,
+			6217
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Weickersdorf (Sachs)",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1109444,
+		"Longitude": 14.1511795,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Großharthau",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1021869,
+		"Longitude": 14.0876518,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Radeberg",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.1116162,
+		"Longitude": 13.9132829,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Langebrück (Sachs)",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1268751,
+		"Longitude": 13.8405986,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dresden-Klotzsche",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.1144381,
+		"Longitude": 13.788889,
+		"LineNumbers": [
+			6212,
+			6606,
+			6607
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dresden Industriegelände",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.0871982,
+		"Longitude": 13.7625651,
+		"LineNumbers": [
+			6212
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dresden-Neustadt",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.0658669,
+		"Longitude": 13.7405404,
+		"LineNumbers": [
+			6212,
+			6239,
+			6241,
+			6363
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dresden Mitte",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.0560748,
+		"Longitude": 13.7241859,
+		"LineNumbers": [
+			6239,
+			6240,
+			6241,
+			6243,
+			6246,
+			6247
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dresden Freiberger Straße",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.0480944,
+		"Longitude": 13.7198342,
+		"LineNumbers": [
+			6239
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dresden Hauptbahnhof",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.0402452,
+		"Longitude": 13.7320768,
+		"LineNumbers": [
+			6239,
+			6240,
+			6241,
+			6258,
+			7827
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dresden Grenzstraße",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1282809,
+		"Longitude": 13.7782287,
+		"LineNumbers": [
+			6607
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dresden Flughafen",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1246137,
+		"Longitude": 13.766016,
+		"LineNumbers": [
+			6607
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dresden Flughafen",
+		"Prefix": "",
+		"Country": "DE",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerHalt",
+		"Latititude": 51.1246137,
+		"Longitude": 13.766016,
+		"LineNumbers": [
+			6607
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Warszawa Zachodnia",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerStation",
+		"Latititude": 52.2201572,
+		"Longitude": 20.9651719,
+		"LineNumbers": [
+			1,
+			2,
+			3,
+			8,
+			20,
+			445,
+			447,
+			448
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Pruszków",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.1682824,
+		"Longitude": 20.7988971,
+		"LineNumbers": [
+			1,
+			447
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Grodzisk Mazowiecki",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerStation",
+		"Latititude": 52.1103954,
+		"Longitude": 20.6234643,
+		"LineNumbers": [
+			1,
+			4,
+			447
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Jaktorów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.0866651,
+		"Longitude": 20.5518786,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Międzyborów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.063606,
+		"Longitude": 20.4824691,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Żyrardów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 52.0524718,
+		"Longitude": 20.4489753,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Sucha Żyrardowska",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 52.0228796,
+		"Longitude": 20.3593707,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Jesionka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 52.0148195,
+		"Longitude": 20.3347217,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Radziwiłłów Mazowiecki",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 52.0003323,
+		"Longitude": 20.2904767,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Skierniewice Rawka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 51.9775852,
+		"Longitude": 20.2213044,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Skierniewice",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerStation",
+		"Latititude": 51.9672793,
+		"Longitude": 20.1502998,
+		"LineNumbers": [
+			1,
+			11,
+			12
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dąbrowice Skierniewickie",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 51.9333783,
+		"Longitude": 20.1023797,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Maków",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 51.9422269,
+		"Longitude": 20.0457185,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Płyćwia",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 51.9175621,
+		"Longitude": 20.0034335,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Lipce Reymontowskie",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 51.9052164,
+		"Longitude": 19.9430864,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Krosnowa",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "rogow_grodzisk",
+		"Type": "PassengerHalt",
+		"Latititude": 51.863412,
+		"Longitude": 19.9232028,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Przyłęk Duży",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.8408594,
+		"Longitude": 19.9172861,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Rogów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.8179312,
+		"Longitude": 19.8860058,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Wągry",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7910225,
+		"Longitude": 19.8492481,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Koluszki",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerStation",
+		"Latititude": 51.7438515,
+		"Longitude": 19.8186183,
+		"LineNumbers": [
+			1,
+			17
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Chrusty Nowe",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.6948657,
+		"Longitude": 19.7943261,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Myszków Światowit",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.5655826,
+		"Longitude": 19.3597259,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Myszków Mrzygłód",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.5434754,
+		"Longitude": 19.3773144,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Zawiercie Borowe Pole",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.5110745,
+		"Longitude": 19.3986396,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Zawiercie",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerStation",
+		"Latititude": 50.481009,
+		"Longitude": 19.4231231,
+		"LineNumbers": [
+			1,
+			4
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łazy",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.4300849,
+		"Longitude": 19.3918857,
+		"LineNumbers": [
+			1,
+			160,
+			186
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Wiesiółka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.4147795,
+		"Longitude": 19.3496882,
+		"LineNumbers": [
+			1,
+			186
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Chruszczobród",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.4003807,
+		"Longitude": 19.3290689,
+		"LineNumbers": [
+			1,
+			186
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dąbrowa Górnicza Sikorka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3886631,
+		"Longitude": 19.2974646,
+		"LineNumbers": [
+			1,
+			186
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dąbrowa Górnicza Ząbkowice",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerStation",
+		"Latititude": 50.3665939,
+		"Longitude": 19.2646845,
+		"LineNumbers": [
+			1,
+			186
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dąbrowa Górnicza Pogoria",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3504712,
+		"Longitude": 19.2407866,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dąbrowa Górnicza Gołonóg",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3439791,
+		"Longitude": 19.2262024,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dąbrowa Górnicza",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerStation",
+		"Latititude": 50.330374,
+		"Longitude": 19.1848234,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Będzin Ksawera",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3305194,
+		"Longitude": 19.1579342,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Będzin Miasto",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.319188,
+		"Longitude": 19.135537,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Będzin",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.30900131356149,
+		"Longitude": 19.141404313298533,
+		"LineNumbers": [
+			1
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Sosnowiec Główny",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerStation",
+		"Latititude": 50.2788915,
+		"Longitude": 19.1264252,
+		"LineNumbers": [
+			1,
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Katowice Szopienice Południowe",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.2589152,
+		"Longitude": 19.092466,
+		"LineNumbers": [
+			1,
+			138
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Katowice Zawodzie",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.2572998,
+		"Longitude": 19.0574498,
+		"LineNumbers": [
+			1,
+			138
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Katowice",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerStation",
+		"Latititude": 50.2576071,
+		"Longitude": 19.0171456,
+		"LineNumbers": [
+			1,
+			137,
+			138,
+			139
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Warszawa Centralna",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerStation",
+		"Latititude": 52.2288207,
+		"Longitude": 21.00316,
+		"LineNumbers": [
+			2
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Warszawa Wschodnia",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerStation",
+		"Latititude": 52.2515889,
+		"Longitude": 21.0523678,
+		"LineNumbers": [
+			2,
+			7,
+			9,
+			448,
+			902
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Warszawa Włochy",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.206084,
+		"Longitude": 20.9145689,
+		"LineNumbers": [
+			3,
+			447
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Opoczno Południe",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "psary_opoczno",
+		"Type": "PassengerStation",
+		"Latititude": 51.3591831,
+		"Longitude": 20.2324376,
+		"LineNumbers": [
+			4
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Włoszczowa Północ",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "psary_opoczno",
+		"Type": "PassengerStation",
+		"Latititude": 50.8563947,
+		"Longitude": 19.9460452,
+		"LineNumbers": [
+			4,
+			572
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Sędziszów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "psary_opoczno",
+		"Type": "PassengerStation",
+		"Latititude": 50.5658817,
+		"Longitude": 20.0548996,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Klimontów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "psary_opoczno",
+		"Type": "PassengerHalt",
+		"Latititude": 50.525391,
+		"Longitude": 20.0301626,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kozłów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "psary_opoczno",
+		"Type": "PassengerStation",
+		"Latititude": 50.4751827,
+		"Longitude": 20.0123505,
+		"LineNumbers": [
+			8,
+			64
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Tunel",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "psary_opoczno",
+		"Type": "PassengerHalt",
+		"Latititude": 50.4335931,
+		"Longitude": 19.9912442,
+		"LineNumbers": [
+			8,
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Pstroszyce",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.399151,
+		"Longitude": 20.008372,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Miechów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerStation",
+		"Latititude": 50.3535965,
+		"Longitude": 20.0107404,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kamieńczyce",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3273492,
+		"Longitude": 20.0057484,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Szczepanowice",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.301151,
+		"Longitude": 20.0246598,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Smroków",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.274704,
+		"Longitude": 20.0466789,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Słomniki",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.24943,
+		"Longitude": 20.063701,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Słomniki Miasto",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.235873,
+		"Longitude": 20.0763665,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Niedźwiedź",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.204323,
+		"Longitude": 20.0809326,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Goszcza",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.1846506,
+		"Longitude": 20.0612274,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łuczyce",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.1626093,
+		"Longitude": 20.0744995,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Baranówka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.1465778,
+		"Longitude": 20.0954104,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Zastów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.1237784,
+		"Longitude": 20.0690701,
+		"LineNumbers": [
+			8
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kraków Batowice",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.1075321,
+		"Longitude": 19.9954682,
+		"LineNumbers": [
+			8,
+			95
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kraków Główny",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerStation",
+		"Latititude": 50.0686663,
+		"Longitude": 19.947802,
+		"LineNumbers": [
+			8,
+			91,
+			118,
+			133,
+			629
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Kaliska",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerStation",
+		"Latititude": 51.757822,
+		"Longitude": 19.4305417,
+		"LineNumbers": [
+			14,
+			15,
+			25
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Retkinia",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7403478,
+		"Longitude": 19.40658,
+		"LineNumbers": [
+			14
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Lublinek",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7209139,
+		"Longitude": 19.3592771,
+		"LineNumbers": [
+			14
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Pabianice Północne",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.6698448,
+		"Longitude": 19.3418881,
+		"LineNumbers": [
+			14
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Pabianice",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerStation",
+		"Latititude": 51.6609304,
+		"Longitude": 19.3249765,
+		"LineNumbers": [
+			14
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Chechło",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.6449462,
+		"Longitude": 19.2865151,
+		"LineNumbers": [
+			14
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Widzew",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerStation",
+		"Latititude": 51.7631038,
+		"Longitude": 19.5438083,
+		"LineNumbers": [
+			16,
+			17,
+			458,
+			540,
+			541
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Fabryczna",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerStation",
+		"Latititude": 51.7695536,
+		"Longitude": 19.4696108,
+		"LineNumbers": [
+			17,
+			458
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Niciarniana",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7668148,
+		"Longitude": 19.5074366,
+		"LineNumbers": [
+			17,
+			458
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Andrzejów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7410347,
+		"Longitude": 19.6171505,
+		"LineNumbers": [
+			17
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Bedoń",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7319956,
+		"Longitude": 19.6423494,
+		"LineNumbers": [
+			17,
+			25
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Justynów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7309126,
+		"Longitude": 19.6835961,
+		"LineNumbers": [
+			17,
+			25
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Gałkówek",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7298223,
+		"Longitude": 19.7318181,
+		"LineNumbers": [
+			17,
+			25
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Żakowice",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7321929,
+		"Longitude": 19.7910611,
+		"LineNumbers": [
+			17
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Pabianicka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7262238,
+		"Longitude": 19.4453004,
+		"LineNumbers": [
+			25
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Chojny",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7264089,
+		"Longitude": 19.4841953,
+		"LineNumbers": [
+			25
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Olechów Wiadukt",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7236883,
+		"Longitude": 19.5436605,
+		"LineNumbers": [
+			25
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Olechów Zachód",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7249266,
+		"Longitude": 19.5591901,
+		"LineNumbers": [
+			25
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Olechów Wschód",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7297931,
+		"Longitude": 19.5947679,
+		"LineNumbers": [
+			25,
+			541
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Żakowice Południowe",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7301436,
+		"Longitude": 19.7861951,
+		"LineNumbers": [
+			25,
+			537
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Charsznica",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "psary_opoczno",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3961292,
+		"Longitude": 19.9413863,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Gajówka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "psary_opoczno",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3945933,
+		"Longitude": 19.8788033,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Jeżówka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3995506023,
+		"Longitude": 19.8211447283,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Wolbrom",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerStation",
+		"Latititude": 50.375873,
+		"Longitude": 19.7725255,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Zarzecze",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3633543,
+		"Longitude": 19.6990007,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Chrząstowice Olkuskie",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.344354,
+		"Longitude": 19.6857075,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Jaroszowiec Olkuski",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3422847,
+		"Longitude": 19.6218089,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Olkusz",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerStation",
+		"Latititude": 50.2741321,
+		"Longitude": 19.5724002,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Bukowno",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.2639841,
+		"Longitude": 19.4594836,
+		"LineNumbers": [
+			62,
+			156
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Bukowno Przymiarki",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.2753797,
+		"Longitude": 19.4097682,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Sławków",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "lazy_psary",
+		"Type": "PassengerHalt",
+		"Latititude": 50.2949248,
+		"Longitude": 19.3746476,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dąbrowa Górnicza Wschodnia",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3033648,
+		"Longitude": 19.3112813,
+		"LineNumbers": [
+			62,
+			171
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Dąbrowa Górnicza Strzemieszyce",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.3108201,
+		"Longitude": 19.2685547,
+		"LineNumbers": [
+			62,
+			162
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Sosnowiec Kazimierz",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerStation",
+		"Latititude": 50.2886411,
+		"Longitude": 19.2315955,
+		"LineNumbers": [
+			62,
+			163
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Sosnowiec Porąbka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.2721032,
+		"Longitude": 19.2162482,
+		"LineNumbers": [
+			62
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Sosnowiec Dańdówka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerHalt",
+		"Latititude": 50.2655094,
+		"Longitude": 19.1727723,
+		"LineNumbers": [
+			62,
+			171
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Sosnowiec Południowy",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "katowice_lazy",
+		"Type": "PassengerStation",
+		"Latititude": 50.2697299,
+		"Longitude": 19.1253609,
+		"LineNumbers": [
+			62,
+			660
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kraków Łobzów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.0819507,
+		"Longitude": 19.91772,
+		"LineNumbers": [
+			118,
+			133
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kraków Bronowice",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.0828345,
+		"Longitude": 19.8923031,
+		"LineNumbers": [
+			118,
+			133
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kraków Młynówka",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.0817947,
+		"Longitude": 19.8584723,
+		"LineNumbers": [
+			118
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kraków Zakliki",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.0797926,
+		"Longitude": 19.8494043,
+		"LineNumbers": [
+			118
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kraków Olszanica",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.0764912,
+		"Longitude": 19.8255173,
+		"LineNumbers": [
+			118
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kraków Lotnisko",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.0709399,
+		"Longitude": 19.8012796,
+		"LineNumbers": [
+			118
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Kraków Mydlniki",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerStation",
+		"Latititude": 50.0835874,
+		"Longitude": 19.8597855,
+		"LineNumbers": [
+			133
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Zgorzelec ",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "dresden_zgorzelec",
+		"Type": "PassengerStation",
+		"Latititude": 51.1401724,
+		"Longitude": 15.0030407,
+		"LineNumbers": [
+			274,
+			278
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Warszawa Ursus",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.1965,
+		"Longitude": 20.8853642,
+		"LineNumbers": [
+			447
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Warszawa Ursus Niedźwiadek",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.1914638,
+		"Longitude": 20.8700172,
+		"LineNumbers": [
+			447
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Piastów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.1825502,
+		"Longitude": 20.8425757,
+		"LineNumbers": [
+			447
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Parzniew ",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.1564393,
+		"Longitude": 20.7631244,
+		"LineNumbers": [
+			447
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Brwinów",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.1419107,
+		"Longitude": 20.7190083,
+		"LineNumbers": [
+			447
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Milanówek",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "opoczno_warszawa_grochow",
+		"Type": "PassengerHalt",
+		"Latititude": 52.1251481,
+		"Longitude": 20.6681761,
+		"LineNumbers": [
+			447
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Słotwiny",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7226079,
+		"Longitude": 19.8386994,
+		"LineNumbers": [
+			534,
+			536,
+			537
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Dąbrowa",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7358946,
+		"Longitude": 19.5106059,
+		"LineNumbers": [
+			540
+		],
+		"LineNames": []
+	},
+	{
+		"Name": "Łódź Andrzejów Szosa",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "pabianice_rogow",
+		"Type": "PassengerHalt",
+		"Latititude": 51.7415641,
+		"Longitude": 19.6129065,
+		"LineNumbers": [
+			541,
+			831
+		],
+		"LineNames": []
+	}
+]
