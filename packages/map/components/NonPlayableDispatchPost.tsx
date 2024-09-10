@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import nonPlayableDispatchPostsJson from "@/components/nonPlayableDispatchPosts.json";
 import { NonPlayableDispatchPostMarker } from "@/components/Markers/NonPlayableDispatchPostMarker";
 import { useRouter } from 'next/router';

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { type FC } from "react";
 import passengerStationsJson from "@/components/passengerStations.json";
 import { PassengerStationMarker } from "@/components/Markers/PassengerStationMarker";
 import { useRouter } from 'next/router';

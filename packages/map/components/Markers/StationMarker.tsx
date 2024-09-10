@@ -1,9 +1,9 @@
 import L from 'leaflet';
 import { Marker, Popup, Tooltip } from "react-leaflet";
 import { useEffect, useState } from "react";
-import { Station } from "@simrail/types";
+import type { Station } from "@simrail/types";
 import { Space } from '@mantine/core';
-import { ProfileResponse } from 'types/SteamProfile';
+import type { ProfileResponse } from 'types/SteamProfile';
 
 type StationMarkerProps = {
     station: Station
@@ -17,8 +17,8 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
     useEffect(() => {
         async function getData() {
             if (station.DispatchedBy[0]) {
-                let avatarRequest = await fetch('https://simrail-edr.emeraldnetwork.xyz/steam/' + station.DispatchedBy[0].SteamId);
-                let profile: ProfileResponse = await avatarRequest.json();
+                const avatarRequest = await fetch(`https://simrail-edr.emeraldnetwork.xyz/steam/${station.DispatchedBy[0].SteamId}`);
+                const profile: ProfileResponse = await avatarRequest.json();
                 setAvatar(profile.avatar)
                 setUsername(profile.personaname)
             } else {
@@ -34,7 +34,7 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
     if (localStorage.getItem('theme') === 'dark')
         botIcon = '/markers/icon-bot-simrail-dark.jpg'
 
-    let icon = L.icon({
+    const icon = L.icon({
         iconUrl: (station.DispatchedBy[0] && avatar ? avatar : botIcon),
         iconSize: [32, 32],
         popupAnchor: [0, -16],
@@ -57,7 +57,8 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
         <Popup>
             <img src={station.MainImageURL} alt={station.Name} width={200} height={86} style={{ borderRadius: '6px' }} /><br />
             <Space h="sm" />
-            Station: {station.Name} [{station.Prefix}]<br />
+            
+            Station: `${station.Name} [${station.Prefix}]` <br />
             User: {username}<br />
             Difficulty: {station.DifficultyLevel}<br />
         </Popup>

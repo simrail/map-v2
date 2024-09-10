@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { Marker, Popup } from "react-leaflet";
-import { NonPlayable } from "@simrail/types";
+import type { NonPlayable } from "@simrail/types";
 
 type NonPlayableMarkerProps = {
     nonPlayable: NonPlayable
@@ -8,15 +8,15 @@ type NonPlayableMarkerProps = {
 
 export const NonPlayableDispatchPostMarker = ({ nonPlayable }: NonPlayableMarkerProps) => {
 
-    let icon = L.icon({
+    const icon = L.icon({
         iconUrl: '/markers/icon-train-station.png',
         iconSize: [16, 16],
         popupAnchor: [0, -16],
     });
     
 
-    let displayText
-    if (nonPlayable.Prefix == "") {
+    let displayText: string
+    if (nonPlayable.Prefix === "") {
         displayText = `${nonPlayable.Name}`
     } else {
         displayText = `${nonPlayable.Name} [${nonPlayable.Prefix}]`

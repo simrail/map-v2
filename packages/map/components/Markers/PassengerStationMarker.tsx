@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { Marker, Popup } from "react-leaflet";
-import { NonPlayable } from "@simrail/types";
+import type { NonPlayable } from "@simrail/types";
 
 type NonPlayableMarkerProps = {
     nonPlayable: NonPlayable
@@ -8,7 +8,7 @@ type NonPlayableMarkerProps = {
 
 export const PassengerStationMarker = ({ nonPlayable }: NonPlayableMarkerProps) => {
 
-    let icon
+    let icon: L.Icon<L.IconOptions> | undefined
     switch (nonPlayable.Type) {
         case "PassengerStation": {
             icon = L.icon({
