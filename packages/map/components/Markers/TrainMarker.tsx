@@ -1,74 +1,94 @@
-import L from 'leaflet';
-import { Popup, useMapEvents, Tooltip } from "react-leaflet";
-import ReactLeafletDriftMarker from "react-leaflet-drift-marker"
+import { getSteamProfileOrBot } from "@/components/steam";
+import { useMantineColorScheme } from "@mantine/core";
+import type { Train } from "@simrail/types";
+import L from "leaflet";
 import React, { useEffect, useState } from "react";
-import { Train } from "@simrail/types";
-import { useSelectedTrain } from '../../contexts/SelectedTrainContext';
-import TrainText from '../TrainText';
-import {getSteamProfileOrBot} from "@/components/steam";
+import { Popup, Tooltip, useMapEvents } from "react-leaflet";
+import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
+import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
+import TrainText from "../TrainText";
 
 type TrainMarkerProps = {
-    train: Train,
-}
+	train: Train;
+};
 
 const TrainMarker = ({ train }: TrainMarkerProps) => {
+	const { setSelectedTrain } = useSelectedTrain();
 
-    const { setSelectedTrain } = useSelectedTrain()
+	const [avatar, setAvatar] = useState<string | null>(null);
+	const [username, setUsername] = useState<string | null>(null);
 
-    const [avatar, setAvatar] = useState<string | null>(null)
-    const [username, setUsername] = useState<string | null>(null)
+	const getData = React.useCallback((maybeSteamId: string | null) => {
+		return getSteamProfileOrBot(maybeSteamId).then(([avatarUrl, username]) => {
+			setAvatar(avatarUrl);
+			setUsername(username);
+		});
+	}, []);
 
-    const getData = React.useCallback((maybeSteamId: string | null) => {
-        return getSteamProfileOrBot(maybeSteamId).then(([avatarUrl, username]) => {
-            setAvatar(avatarUrl);
-            setUsername(username);
-        })
-    }, [])
+	useEffect(() => {
+		getData(train.TrainData.ControlledBySteamID).catch(() =>
+			setTimeout(() => getData(train.TrainData.ControlledBySteamID), 1000),
+		);
+	}, [train.TrainData.ControlledBySteamID, getData]);
 
-    useEffect(() => {
-        getData(train.TrainData.ControlledBySteamID)
-            .catch(() => setTimeout(() => getData(train.TrainData.ControlledBySteamID), 1000))
-    }, [train.TrainData.ControlledBySteamID])
+	const { colorScheme } = useMantineColorScheme();
 
-    let botIcon = '/markers/icon-bot-simrail.jpg';
-    if (localStorage.getItem('theme') === 'dark')
-        botIcon = '/markers/icon-bot-simrail-dark.jpg'
+	let botIcon = "/markers/icon-bot-simrail.jpg";
+	if (
+		colorScheme === "dark" ||
+		window.matchMedia("(prefers-color-scheme: dark)").matches
+	)
+		botIcon = "/markers/icon-bot-simrail-dark.jpg";
+	// window.matchMedia('(prefers-color-scheme: dark)').matches incase colorScheme === auto we need to see what the system uses
 
-    let icon = L.icon({
-        iconUrl: (train.TrainData.ControlledBySteamID && avatar) ? avatar : botIcon,
-        iconSize: [24, 24],
-        popupAnchor: [0, -12],
-        className: 'steam-avatar'
-    });
+	const icon = L.icon({
+		iconUrl: train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon,
+		iconSize: [24, 24],
+		popupAnchor: [0, -12],
+		className: "steam-avatar",
+	});
 
-    useMapEvents({
-        click() {
-            setSelectedTrain(null)
-        },
-    })
+	useMapEvents({
+		click() {
+			setSelectedTrain(null);
+		},
+	});
 
-    if (!username || !train.TrainData.Latititute || !train.TrainData.Longitute) return null;
+	if (!username || !train.TrainData.Latititute || !train.TrainData.Longitute)
+		return null;
 
-    return <ReactLeafletDriftMarker
-        key={train.TrainNoLocal}
-        icon={icon}
-        position={[train.TrainData.Latititute, train.TrainData.Longitute]}
-        zIndexOffset={40}
-        duration={500}
-        eventHandlers={{
-            mouseover: (event) => event.target.openPopup(),
-            mouseout: (event) => event.target.closePopup(),
-            mouseup: (event) => setSelectedTrain(train)
-        }}
+	return (
+		<ReactLeafletDriftMarker
+			key={train.TrainNoLocal}
+			icon={icon}
+			position={[train.TrainData.Latititute, train.TrainData.Longitute]}
+			zIndexOffset={40}
+			duration={500}
+			eventHandlers={{
+				mouseover: (event) => event.target.openPopup(),
+				mouseout: (event) => event.target.closePopup(),
+				mouseup: () => setSelectedTrain(train),
+			}}
+		>
+			<Popup>
+				<TrainText
+					train={train}
+					username={username}
+					avatar={avatar}
+					minified={true}
+				/>
+			</Popup>
 
-    >
+			<Tooltip
+				offset={[0, -10]}
+				direction={"top"}
+				opacity={0.8}
+				permanent={true}
+			>
+				{train.TrainNoLocal}
+			</Tooltip>
+		</ReactLeafletDriftMarker>
+	);
+};
 
-    <Popup>
-            <TrainText train={train} username={username} avatar={avatar} minified={true} />
-    </Popup>
-
-    <Tooltip offset={[2, -10]} direction={"top"} opacity={0.8} permanent={true}>{train.TrainNoLocal}</Tooltip>
-    </ReactLeafletDriftMarker>
-}
-
-export default React.memo(TrainMarker)
+export default React.memo(TrainMarker);

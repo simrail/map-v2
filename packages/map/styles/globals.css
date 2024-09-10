@@ -82,7 +82,7 @@ a {
   padding: 2px 5px !important;
 }
 
-body.dark .leaflet-tile {
+html[data-mantine-color-scheme="dark"] .leaflet-tile {
   filter: invert(100%) contrast(1) grayscale(100%) brightness(0.8) !important;
 }
 
@@ -90,8 +90,8 @@ body.light .leaflet-tile {
   filter: none;
 }
 
-body.dark .leaflet-control-zoom-in,
-body.dark .leaflet-control-zoom-out {
+html[data-mantine-color-scheme="dark"] .leaflet-control-zoom-in,
+html[data-mantine-color-scheme="dark"] .leaflet-control-zoom-out {
   filter: invert(100%) contrast(0.7) grayscale(100%) brightness(0.8) !important;
 }
 
@@ -109,16 +109,16 @@ body.light .leaflet-tooltip {
   color: black;
 }
 
-body.dark .leaflet-control-layers,
-body.dark .leaflet-control-attribution,
-body.dark .leaflet-popup-content,
-body.dark .leaflet-popup-content-wrapper,
-body.dark .leaflet-tooltip {
+html[data-mantine-color-scheme="dark"] .leaflet-control-layers,
+html[data-mantine-color-scheme="dark"] .leaflet-control-attribution,
+html[data-mantine-color-scheme="dark"] .leaflet-popup-content,
+html[data-mantine-color-scheme="dark"] .leaflet-popup-content-wrapper,
+html[data-mantine-color-scheme="dark"] .leaflet-tooltip {
   background: rgb(34 34 34);
   color: rgb(212, 212, 212);
 }
 
-body.dark .leaflet-tooltip {
+html[data-mantine-color-scheme="dark"] .leaflet-tooltip {
   background: rgb(34 34 34);
   color: rgb(235, 235, 235);
   border: solid black 1px;

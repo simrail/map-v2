@@ -1,35 +1,44 @@
-import styles from '../styles/Home.module.css'
-import { Server } from '@simrail/types';
-import { MouseEventHandler, useState } from 'react';
+import type { Server } from "@simrail/types";
+import { useRouter } from "next/router";
+import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { ServerSettings } from '../types/ServerSettings';
-import { useRouter } from 'next/router';
-
+import styles from "../styles/Home.module.css";
+import type { ServerSettings } from "../types/ServerSettings";
 
 type FavoriteStarProps = {
-    server: Server
-}
+	server: Server;
+};
 
 export default function FavoriteStar({ server }: FavoriteStarProps) {
+	const serverSettings: ServerSettings = JSON.parse(
+		localStorage.getItem(`server-${server.id}`) ?? "{}",
+	);
+	const router = useRouter();
 
-    let serverSettings: ServerSettings = JSON.parse(localStorage.getItem('server-' + server.id) ?? '{}');
-    const router = useRouter()
+	const [favorite, SetFavorite] = useState<boolean>(
+		serverSettings.favorite ?? false,
+	);
 
-    const [favorite, SetFavorite] = useState<boolean>(serverSettings.favorite ?? false)
+	// @ts-expect-error todo
+	const toggleFavorite = (event) => {
+		event.preventDefault();
+		serverSettings.favorite = !favorite;
+		SetFavorite(!favorite);
+		localStorage.setItem(`server-${server.id}`, JSON.stringify(serverSettings));
+		router.reload();
+	};
 
-    // @ts-expect-error todo
-    const toggleFavorite = (event) => {
-        event.preventDefault()
-        serverSettings.favorite = !favorite
-        SetFavorite(!favorite)
-        localStorage.setItem('server-' + server.id, JSON.stringify(serverSettings))
-        router.reload();
-    }
-
-
-    if (favorite) {
-        return <AiFillStar size={24} color='#FF9900' className={styles.star} onClick={toggleFavorite} />
-    }
-    return <AiOutlineStar size={24} className={styles.star} onClick={toggleFavorite} />
-
+	if (favorite) {
+		return (
+			<AiFillStar
+				size={24}
+				color="#FF9900"
+				className={styles.star}
+				onClick={toggleFavorite}
+			/>
+		);
+	}
+	return (
+		<AiOutlineStar size={24} className={styles.star} onClick={toggleFavorite} />
+	);
 }
