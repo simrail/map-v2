@@ -34,7 +34,9 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 
 	useEffect(() => {
 		if (id) {
-			const serverUtcOffHours = serverTimes.find((server) => server.Name === id)?.UTCOff;
+			const serverUtcOffHours = serverTimes.find(
+				(server) => server.Name === id,
+			)?.UTCOff;
 			if (serverUtcOffHours !== undefined) {
 				const timer = setInterval(() => {
 					// update blinking state of the colon
