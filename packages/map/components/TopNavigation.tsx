@@ -23,46 +23,35 @@ type TopNavigationProps = {
 
 export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 	const [blinking, setBlinking] = useState(false);
-	const [serverDate, setServerDate] = useState(new Date());
-	const [date, setDate] = useState(new Date());
+	const [serverDate, setServerDate] = useState<Date>();
 	const { selectedTrain, setSelectedTrain } = useSelectedTrain();
+
+	const { colorScheme, setColorScheme } = useMantineColorScheme();
+	const [dropdown, setDropdown] = useState<boolean>(false);
 
 	const router = useRouter();
 	const { id, trainId } = router.query;
 
 	useEffect(() => {
 		if (id) {
-			const server = serverTimes.find((server) => server.Name === id);
-			if (server) {
-				const currentHour = date.getUTCHours();
-				const newDate = new Date();
-				newDate.setHours(currentHour + server.UTCOff);
-				setServerDate(newDate);
+			const serverUtcOffHours = serverTimes.find((server) => server.Name === id)?.UTCOff;
+			if (serverUtcOffHours !== undefined) {
+				const timer = setInterval(() => {
+					// update blinking state of the colon
+					setBlinking((currentBlinking) => !currentBlinking);
+
+					// update the server date
+					const currentUnixTimestamp = Date.now();
+					const utcOffsetInMs = serverUtcOffHours * 60 * 60 * 1000;
+					const serverDate = new Date(currentUnixTimestamp + utcOffsetInMs);
+					setServerDate(serverDate);
+				}, 1000);
+				return () => clearInterval(timer);
 			}
 		}
-	}, [id, date.getUTCHours]);
-
-	useEffect(() => {
-		const timer = setInterval(() => {
-			setBlinking((currentBlinking) => !currentBlinking);
-			const newDate = new Date();
-			if (id) {
-				const server = serverTimes.find((server) => server.Name === id);
-				if (server) {
-					newDate.setHours(newDate.getUTCHours() + server.UTCOff);
-				}
-			}
-			setDate(newDate);
-		}, 1000);
-		return function cleanup() {
-			clearInterval(timer);
-		};
 	}, [id]);
 
 	if (!serverDate) return null;
-
-	const { colorScheme, setColorScheme } = useMantineColorScheme();
-	const [dropdown, setDropdown] = useState<boolean>(false);
 
 	const Icon = colorScheme === "dark" ? MdOutlineLightMode : MdOutlineDarkMode;
 
@@ -106,13 +95,17 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 				</div>
 				<div className="datetime">
 					<span className={style.time}>
-						{date.getHours().toString().padStart(2, "0")}
+						{serverDate.getUTCHours().toString().padStart(2, "0")}
 						<span style={{ color: blinking ? "black" : "#FF9900" }}>:</span>
-						{date.getMinutes().toString().padStart(2, "0")}
+						{serverDate.getUTCMinutes().toString().padStart(2, "0")}
 					</span>
 					<span className={style.date}>
 						{" "}
-						{date.toLocaleDateString("fr-FR")}
+						{serverDate.getUTCDate().toString().padStart(2, "0")}
+						{"/"}
+						{(serverDate.getUTCMonth() + 1).toString().padStart(2, "0")}
+						{"/"}
+						{serverDate.getUTCFullYear()}
 					</span>
 				</div>
 
