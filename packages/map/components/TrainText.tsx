@@ -143,15 +143,19 @@ const TrainText = ({
 	// for some reason this calculation differs (sometimes!) from the value displayed in game. Note
 	// entirely sure what is happening and which calculation is correct, but for indication purposes this
 	// should be good enough (mostly only a few tons/meters off the length that is displayed in game).
-	const trainLength = Math.round(usedRailcarInfo
-		.map((info) => info.railcar.length)
-		.reduce((partial, current) => partial + current, 0));
-	const trainWeight = Math.round(usedRailcarInfo
-		.map((info) => {
-			const loadWeight = info.loadWeight || 0;
-			return loadWeight + info.railcar.weight;
-		})
-		.reduce((partial, current) => partial + current, 0));
+	const trainLength = Math.round(
+		usedRailcarInfo
+			.map((info) => info.railcar.length)
+			.reduce((partial, current) => partial + current, 0),
+	);
+	const trainWeight = Math.round(
+		usedRailcarInfo
+			.map((info) => {
+				const loadWeight = info.loadWeight || 0;
+				return loadWeight + info.railcar.weight;
+			})
+			.reduce((partial, current) => partial + current, 0),
+	);
 
 	// get the lowest speed of the consist
 	const minMaxSpeed = usedRailcarInfo
