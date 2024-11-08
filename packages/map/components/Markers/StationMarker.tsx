@@ -1,6 +1,7 @@
 import { Space, useMantineColorScheme } from "@mantine/core";
-import type { Station } from "@simrail/types";
+import type { Station, Server } from "@simrail/types";
 import L from "leaflet";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Marker, Popup, Tooltip } from "react-leaflet";
 import type { ProfileResponse } from "types/SteamProfile";
@@ -12,6 +13,9 @@ type StationMarkerProps = {
 export const StationMarker = ({ station }: StationMarkerProps) => {
 	const [avatar, setAvatar] = useState<string | null>(null);
 	const [username, setUsername] = useState<string | null>(null);
+
+	const router = useRouter()
+	const pathname = usePathname()
 
 	useEffect(() => {
 		async function getData() {
@@ -58,6 +62,8 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 			eventHandlers={{
 				mouseover: (event) => event.target.openPopup(),
 				mouseout: (event) => event.target.closePopup(),
+				click: () => router.push(`https://edr.simrail.app/${pathname.split('/')[2]}/station/${station.Prefix.toUpperCase()}`),
+				// click: () => console.log(pathname.split('/')[2])
 			}}
 		>
 			<Popup>
