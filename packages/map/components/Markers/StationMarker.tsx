@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Marker, Popup, Tooltip } from "react-leaflet";
 import type { ProfileResponse } from "types/SteamProfile";
+import stationsList from "../EDR_station.json";
 
 type StationMarkerProps = {
 	station: Station;
@@ -62,9 +63,20 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 			eventHandlers={{
 				mouseover: (event) => event.target.openPopup(),
 				mouseout: (event) => event.target.closePopup(),
-				click: () => router.push(`https://edr.simrail.app/${pathname.split('/')[2]}/station/${station.Prefix.toUpperCase()}`),
-				// click: () => console.log(pathname.split('/')[2])
-			}}
+				click: () => {
+        // Chercher la station correspondante dans le fichier JSON
+        const stationEntry = Object.values(stationsList).find(
+            entry => entry.srName === station.Name
+        );
+        
+        if (stationEntry) {
+            router.push(`https://edr.simrail.app/${pathname.split('/')[2]}/station/${stationEntry.id}`);
+        } else {
+            // Fallback sur l'ancien comportement si la station n'est pas trouvée
+            router.push(`https://edr.simrail.app/${pathname.split('/')[2]}/station/${station.Prefix.toUpperCase()}`);
+        }
+    }
+}}
 		>
 			<Popup>
 				<img
