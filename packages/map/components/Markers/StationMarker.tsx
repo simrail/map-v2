@@ -1,5 +1,5 @@
 import { Space, useMantineColorScheme } from "@mantine/core";
-import type { Station, Server } from "@simrail/types";
+import type { Station } from "@simrail/types";
 import L from "leaflet";
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
