@@ -1,0 +1,334 @@
+{
+  "GW": {
+    "id": "GW",
+    "srName": "Góra Włodowska"
+  },
+  "PS": {
+    "id": "PS",
+    "srName": "Psary"
+  },
+  "KN": {
+    "id": "KN",
+    "srName": "Knapówka"
+  },
+  "WP": {
+    "id": "WP",
+    "srName": "Włoszczowa Północ"
+  },
+  "OZ": {
+    "id": "OZ",
+    "srName": "Olszamowice"
+  },
+  "PI": {
+    "id": "PI",
+    "srName": "Pilichowice"
+  },
+  "KZ": {
+    "id": "KZ",
+    "srName": "Katowice Zawodzie"
+  },
+  "SG": {
+    "id": "SG",
+    "srName": "Sosnowiec Główny"
+  },
+  "SG_R52": {
+    "id": "SG_R52",
+    "srName": "Sosnowiec Gł. pzs R52"
+  },
+  "SG_PO": {
+    "id": "SG_PO",
+    "srName": "Sosnowiec Południowy"
+  },
+  "SG_DK": {
+    "id": "SG_DK",
+    "srName": "Sosnowiec Dańdówka"
+  },
+  "SG_POR": {
+    "id": "SG_POR",
+    "srName": "Sosnowiec Porąbka"
+  },
+  "SG_KAZ": {
+    "id": "SG_KAZ",
+    "srName": "Sosnowiec Kazimierz"
+  },
+  "B": {
+    "id": "B",
+    "srName": "Będzin"
+  },
+  "LZ_LC": {
+    "id": "LZ_LC",
+    "srName": "Łazy Łc"
+  },
+  "LZ_LB": {
+    "id": "LZ_LB",
+    "srName": "Łazy"
+  },
+  "LZ_LA": {
+    "id": "LZ_LA",
+    "srName": "Łazy Ła"
+  },
+  "OP_PO": {
+    "id": "OP_PO",
+    "srName": "Opoczno Południe"
+  },
+  "MY": {
+    "id": "MY",
+    "srName": "Myszków"
+  },
+  "MY_MR": {
+    "id": "MY_MR",
+    "srName": "Myszków Mrzygłód"
+  },
+  "ZA_BO_PO": {
+    "id": "ZA_BO_PO",
+    "srName": "Zawiercie Borowe Pole"
+  },
+  "ZA": {
+    "id": "ZA",
+    "srName": "Zawiercie"
+  },
+  "WI": {
+    "id": "WI",
+    "srName": "Wiesiółka"
+  },
+  "CZ": {
+    "id": "CZ",
+    "srName": "Chruszczobród"
+  },
+  "DG": {
+    "id": "DG",
+    "srName": "Dąbrowa Górnicza"
+  },
+  "DG_SI": {
+    "id": "DG_SI",
+    "srName": "Dąbrowa Górnicza Sikorka"
+  },
+  "DG_ZA": {
+    "id": "DG_ZA",
+    "srName": "Dąbrowa Górnicza Ząbkowice"
+  },
+  "DG_DZA": {
+    "id": "DG_DZA",
+    "srName": "Dąbrowa Górnicza Ząbkowice DZA"
+  },
+  "DG_DZA_R47": {
+    "id": "DG_DZA_R47",
+    "srName": "Dąbrowa Górn. Ząbkowice DZA R.4/7"
+  },
+  "DG_PO": {
+    "id": "DG_PO",
+    "srName": "Dąbrowa Górnicza Pogoria"
+  },
+  "DG_GO": {
+    "id": "DG_GO",
+    "srName": "Dąbrowa Górnicza Gołonóg"
+  },
+  "DG_WZ": {
+    "id": "DG_WZ",
+    "srName": "Dąbrowa Górnicza Wschodnia"
+  },
+  "DOR": {
+    "id": "DOR",
+    "srName": "Dorota"
+  },
+  "DG_ST": {
+    "id": "DG_ST",
+    "srName": "Dąbrowa Górnicza Strzemieszyce"
+  },
+  "BZ_KS": {
+    "id": "BZ_KS",
+    "srName": "Będzin Ksawera"
+  },
+  "BZ_MI": {
+    "id": "BZ_MI",
+    "srName": "Będzin Miasto"
+  },
+  "KSP": {
+    "id": "KSP",
+    "srName": "Katowice Szopienice Południowe"
+  },
+  "KO": {
+    "id": "KO",
+    "srName": "Katowice"
+  },
+  "CZ_R19": {
+    "id": "CZ_R19",
+    "srName": "Czarnca R19"
+  },
+  "STZ": {
+    "id": "STZ",
+    "srName": "Starzyny"
+  },
+  "IDZ": {
+    "id": "IDZ",
+    "srName": "Idzikowice"
+  },
+  "ST": {
+    "id": "ST",
+    "srName": "Strzałki"
+  },
+  "BR": {
+    "id": "BR",
+    "srName": "Biała Rawska"
+  },
+  "SZE": {
+    "id": "SZE",
+    "srName": "Szeligi"
+  },
+  "JKT": {
+    "id": "JKT",
+    "srName": "Jaktorów"
+  },
+  "GRO_MAZ": {
+    "id": "GRO_MAZ",
+    "srName": "Grodzisk Mazowiecki"
+  },
+  "MIL": {
+    "id": "MIL",
+    "srName": "Milanówek"
+  },
+  "BRW": {
+    "id": "BRW",
+    "srName": "Brwinów"
+  },
+  "PARZ": {
+    "id": "PARZ",
+    "srName": "Parzniew"
+  },
+  "KOR": {
+    "id": "KOR",
+    "srName": "Korytów"
+  },
+  "PRSZ": {
+    "id": "PRSZ",
+    "srName": "Pruszków"
+  },
+  "PIA": {
+    "id": "PIA",
+    "srName": "Piastów"
+  },
+  "WUN": {
+    "id": "WUN",
+    "srName": "Warszawa Ursus-Niedźwiadek"
+  },
+  "WW": {
+    "id": "WW",
+    "srName": "Warszawa Włochy"
+  },
+  "WZ": {
+    "id": "WZ",
+    "srName": "Warszawa Zachodnia"
+  },
+  "WC": {
+    "id": "WC",
+    "srName": "Warszawa Centralna"
+  },
+  "SLK": {
+    "id": "SLK",
+    "srName": "Sławków"
+  },
+  "BP": {
+    "id": "BP",
+    "srName": "Bukowno Przymiarki"
+  },
+  "BK": {
+    "id": "BK",
+    "srName": "Bukowno"
+  },
+  "OK": {
+    "id": "OK",
+    "srName": "Olkusz"
+  },
+  "JO": {
+    "id": "JO",
+    "srName": "Jaroszowiec Olkuski"
+  },
+  "CO": {
+    "id": "CO",
+    "srName": "Chrząstowice Olkuskie"
+  },
+  "WB": {
+    "id": "WB",
+    "srName": "Wolbrom"
+  },
+  "JZ": {
+    "id": "JZ",
+    "srName": "Jeżówka"
+  },
+  "GJ": {
+    "id": "GJ",
+    "srName": "Gajówka"
+  },
+  "CH": {
+    "id": "CH",
+    "srName": "Charsznica"
+  },
+  "TN": {
+    "id": "TN",
+    "srName": "Tunel"
+  },
+  "KOZ": {
+    "id": "KOZ",
+    "srName": "Kozłów"
+  },
+  "KLI": {
+    "id": "KLI",
+    "srName": "Klimontów"
+  },
+  "SDZ": {
+    "id": "SDZ",
+    "srName": "Sędziszów"
+  },
+  "R19_WP14": {
+    "id": "R19_WP14",
+    "srName": "Line R19"
+  },
+  "RDZ_P31": {
+    "id": "RDZ_P31",
+    "srName": "Radzice PZS R31"
+  },
+  "RDZ_R12": {
+    "id": "RDZ_R12",
+    "srName": "Radzice R12"
+  },
+  "ZEL_R6": {
+    "id": "ZEL_R6",
+    "srName": "Żelisławice R.6"
+  },
+  "ZYR": {
+    "id": "ZYR",
+    "srName": "Żyrardów"
+  },
+  "PRZ": {
+    "id": "PRZ",
+    "srName": "Przemiarki"
+  },
+  "DG_T_R5": {
+    "id": "DG_T_R5",
+    "srName": "Dąbrowa Górnicza Towarowa DTA R5"
+  },
+  "KOZI": {
+    "id": "KOZI",
+    "srName": "Kozioł"
+  },
+  "KOZI_R12": {
+    "id": "KOZI_R12",
+    "srName": "Kozioł R12"
+  },
+  "JU": {
+    "id": "JU",
+    "srName": "Juliusz"
+  },
+  "SZA": {
+    "id": "SZA",
+    "srName": "Szabelnia"
+  },
+  "SM": {
+    "id": "SM",
+    "srName": "Sosnowiec Maczki"
+  },
+  "DGHK": {
+    "id": "DGHK",
+    "srName": "Dąbrowa Górnicza Huta Katowice"
+  }
+}
