@@ -64,18 +64,26 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 				mouseover: (event) => event.target.openPopup(),
 				mouseout: (event) => event.target.closePopup(),
 				click: () => {
-        // Chercher la station correspondante dans le fichier JSON
-        const stationEntry = Object.values(stationsList).find(
-            entry => entry.srName === station.Name
-        );
-        
-        if (stationEntry) {
-            router.push(`https://edr.simrail.app/${pathname.split('/')[2]}/station/${stationEntry.id}`);
-        } else {
-            // Fallback sur l'ancien comportement si la station n'est pas trouvée
-            router.push(`https://edr.simrail.app/${pathname.split('/')[2]}/station/${station.Prefix.toUpperCase()}`);
+          // Find the corresponding station in the JSON file
+          const stationEntry = Object.values(stationsList).find(
+            (entry) => entry.srName === station.Name
+          );
+
+          if (stationEntry) {
+            router.push(
+              `https://edr.simrail.app/${pathname.split("/")[2]}/station/${
+                stationEntry.id
+              }`
+            );
+          } else {
+            // Fallback to old behavior if station not found
+            router.push(
+              `https://edr.simrail.app/${
+                pathname.split("/")[2]
+              }/station/${station.Prefix.toUpperCase()}`
+            );
+          }
         }
-    }
 }}
 		>
 			<Popup>
