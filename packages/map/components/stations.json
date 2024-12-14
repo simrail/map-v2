@@ -468,18 +468,6 @@
 		"id": ""
 	},
 	{
-		"Name": "Warszawa Gł. Tow.",
-		"Prefix": "",
-		"DifficultyLevel": 0,
-		"MainImageURL": "",
-		"AdditionalImage1URL": "",
-		"AdditionalImage2URL": "",
-		"DispatchedBy": [],
-		"Latititude": 52.2133153,
-		"Longitude": 20.8969579,
-		"id": ""
-	},
-	{
 		"Name": "Warszawa Rembertów",
 		"Prefix": "",
 		"DifficultyLevel": 0,
