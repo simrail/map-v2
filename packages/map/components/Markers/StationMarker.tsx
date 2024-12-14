@@ -1,9 +1,11 @@
 import { Space, useMantineColorScheme } from "@mantine/core";
 import type { Station } from "@simrail/types";
 import L from "leaflet";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Marker, Popup, Tooltip } from "react-leaflet";
 import type { ProfileResponse } from "types/SteamProfile";
+import stationsList from "../EDR_station.json";
 
 type StationMarkerProps = {
 	station: Station;
@@ -12,6 +14,9 @@ type StationMarkerProps = {
 export const StationMarker = ({ station }: StationMarkerProps) => {
 	const [avatar, setAvatar] = useState<string | null>(null);
 	const [username, setUsername] = useState<string | null>(null);
+
+	const router = useRouter();
+	const pathname = usePathname();
 
 	useEffect(() => {
 		async function getData() {
@@ -58,6 +63,27 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 			eventHandlers={{
 				mouseover: (event) => event.target.openPopup(),
 				mouseout: (event) => event.target.closePopup(),
+				click: () => {
+					// Find the corresponding station in the JSON file
+					const stationEntry = Object.values(stationsList).find(
+						(entry) => entry.srName === station.Name,
+					);
+
+					if (stationEntry) {
+						router.push(
+							`https://edr.simrail.app/${pathname.split("/")[2]}/station/${
+								stationEntry.id
+							}`,
+						);
+					} else {
+						// Fallback to old behavior if station not found
+						router.push(
+							`https://edr.simrail.app/${
+								pathname.split("/")[2]
+							}/station/${station.Prefix.toUpperCase()}`,
+						);
+					}
+				},
 			}}
 		>
 			<Popup>
