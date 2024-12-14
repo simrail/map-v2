@@ -11,9 +11,7 @@
 		"weight": 84,
 		"length": 18.9,
 		"width": 3,
-		"maxSpeed": 140,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 140
 	},
 	{
 		"id": "E186-929",
@@ -27,9 +25,7 @@
 		"weight": 84,
 		"length": 18.9,
 		"width": 3,
-		"maxSpeed": 140,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 140
 	},
 	{
 		"id": "E6ACTa-014",
@@ -43,9 +39,7 @@
 		"weight": 120,
 		"length": 20.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 120
 	},
 	{
 		"id": "E6ACTa-016",
@@ -59,9 +53,7 @@
 		"weight": 120,
 		"length": 20.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 120
 	},
 	{
 		"id": "E6ACTadb-027",
@@ -75,9 +67,7 @@
 		"weight": 120,
 		"length": 20.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 120
 	},
 	{
 		"id": "ET25-002",
@@ -91,9 +81,49 @@
 		"weight": 120,
 		"length": 20.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 120
+	},
+	{
+		"id": "ED250-001",
+		"apiName": "Pendolino/ED250-001 Variant",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "EMU250",
+		"designation": "ED250",
+		"producer": "Alstom",
+		"yearsOfProduction": "2011-2014",
+		"weight": 414,
+		"length": 187,
+		"width": 3,
+		"maxSpeed": 250
+	},
+	{
+		"id": "ED250-009",
+		"apiName": "Pendolino/ED250-009 Variant",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "EMU250",
+		"designation": "ED250",
+		"producer": "Alstom",
+		"yearsOfProduction": "2011-2014",
+		"weight": 414,
+		"length": 187,
+		"width": 3,
+		"maxSpeed": 250
+	},
+	{
+		"id": "ED250-015",
+		"apiName": "Pendolino/ED250-015 Variant",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "EMU250",
+		"designation": "ED250",
+		"producer": "Alstom",
+		"yearsOfProduction": "2011-2014",
+		"weight": 414,
+		"length": 187,
+		"width": 3,
+		"maxSpeed": 250
 	},
 	{
 		"id": "ED250-018",
@@ -107,9 +137,7 @@
 		"weight": 414,
 		"length": 187,
 		"width": 3,
-		"maxSpeed": 250,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 250
 	},
 	{
 		"id": "EN57-009",
@@ -123,9 +151,21 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
+	},
+	{
+		"id": "EN57-038",
+		"apiName": "EN57/EN57-038",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+5B",
+		"designation": "EN57",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1961-1993",
+		"weight": 126.5,
+		"length": 64.475,
+		"width": 3,
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-047",
@@ -139,9 +179,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1000",
@@ -155,9 +193,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1003",
@@ -171,9 +207,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1051",
@@ -187,9 +221,21 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
+	},
+	{
+		"id": "EN57-1181",
+		"apiName": "EN57/EN57-1181",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+5B",
+		"designation": "EN57",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1961-1993",
+		"weight": 126.5,
+		"length": 64.475,
+		"width": 3,
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1219",
@@ -203,9 +249,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1316",
@@ -219,9 +263,21 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
+	},
+	{
+		"id": "EN57-1331",
+		"apiName": "EN57/EN57-1331",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+5B",
+		"designation": "EN57",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1961-1993",
+		"weight": 126.5,
+		"length": 64.475,
+		"width": 3,
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1458",
@@ -235,9 +291,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1567",
@@ -251,9 +305,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1571",
@@ -267,9 +319,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1752",
@@ -283,9 +333,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1755",
@@ -299,9 +347,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1796",
@@ -315,9 +361,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-1821",
@@ -331,9 +375,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN57-614",
@@ -347,9 +389,7 @@
 		"weight": 126.5,
 		"length": 64.475,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN71-005",
@@ -363,9 +403,7 @@
 		"weight": 182,
 		"length": 86.575,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN71-011",
@@ -379,9 +417,7 @@
 		"weight": 182,
 		"length": 86.575,
 		"width": 3,
-		"maxSpeed": 110,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN76-006",
@@ -395,9 +431,7 @@
 		"weight": 135,
 		"length": 74.475,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "EN76-022",
@@ -411,9 +445,7 @@
 		"weight": 135,
 		"length": 74.475,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "EN96-001",
@@ -427,9 +459,7 @@
 		"weight": 83,
 		"length": 42.275,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "EP07-135",
@@ -443,9 +473,7 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 125
 	},
 	{
 		"id": "EP07-174",
@@ -459,9 +487,7 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 125
 	},
 	{
 		"id": "EP08-001",
@@ -475,9 +501,7 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 140,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 140
 	},
 	{
 		"id": "EP08-013",
@@ -491,9 +515,7 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 140,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 140
 	},
 	{
 		"id": "EU07-005",
@@ -507,9 +529,7 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": true
+		"maxSpeed": 125
 	},
 	{
 		"id": "EU07-068",
@@ -523,9 +543,21 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": true
+		"maxSpeed": 125
+	},
+	{
+		"id": "EU07-070",
+		"apiName": "4E/EU07-070",
+		"requiredDlcId": null,
+		"railcarType": "LOCOMOTIVE",
+		"typeIdentifier": "4E",
+		"designation": "EU07",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1964-1974",
+		"weight": 80,
+		"length": 15.9,
+		"width": 3,
+		"maxSpeed": 125
 	},
 	{
 		"id": "EU07-085",
@@ -539,9 +571,7 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": true
+		"maxSpeed": 125
 	},
 	{
 		"id": "EU07-092",
@@ -555,9 +585,7 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": true
+		"maxSpeed": 125
 	},
 	{
 		"id": "EU07-096",
@@ -571,9 +599,35 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": true
+		"maxSpeed": 125
+	},
+	{
+		"id": "EU07-153",
+		"apiName": "4E/EU07-153",
+		"requiredDlcId": null,
+		"railcarType": "LOCOMOTIVE",
+		"typeIdentifier": "4E",
+		"designation": "EU07",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1964-1974",
+		"weight": 80,
+		"length": 15.9,
+		"width": 3,
+		"maxSpeed": 125
+	},
+	{
+		"id": "EU07-193",
+		"apiName": "4E/EU07-193",
+		"requiredDlcId": null,
+		"railcarType": "LOCOMOTIVE",
+		"typeIdentifier": "4E",
+		"designation": "EU07",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1964-1974",
+		"weight": 80,
+		"length": 15.9,
+		"width": 3,
+		"maxSpeed": 125
 	},
 	{
 		"id": "EU07-241",
@@ -587,9 +641,63 @@
 		"weight": 80,
 		"length": 15.9,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": true
+		"maxSpeed": 125
+	},
+	{
+		"id": "Ty2-70",
+		"apiName": "Ty2/Ty2-70",
+		"requiredDlcId": null,
+		"railcarType": "LOCOMOTIVE",
+		"typeIdentifier": "Ty2",
+		"designation": "Ty2",
+		"producer": "Berliner Maschinenbau-Actien-Gesellschaft",
+		"yearsOfProduction": "1942-1946",
+		"weight": 98.05,
+		"length": 22.975,
+		"width": 3,
+		"maxSpeed": 80
+	},
+	{
+		"id": "Ty2-347",
+		"apiName": "Ty2/Ty2-347",
+		"requiredDlcId": null,
+		"railcarType": "LOCOMOTIVE",
+		"typeIdentifier": "Ty2",
+		"designation": "Ty2",
+		"producer": "Berliner Maschinenbau-Actien-Gesellschaft",
+		"yearsOfProduction": "1942-1946",
+		"weight": 98.05,
+		"length": 22.975,
+		"width": 3,
+		"maxSpeed": 80
+	},
+	{
+		"id": "Ty2-477",
+		"apiName": "Ty2/Ty2-477",
+		"requiredDlcId": null,
+		"railcarType": "LOCOMOTIVE",
+		"typeIdentifier": "Ty2",
+		"designation": "Ty2",
+		"producer": "Oberschlesische Lokomotivwerke AG Krenau",
+		"yearsOfProduction": "1942-1946",
+		"weight": 98.05,
+		"length": 22.975,
+		"width": 3,
+		"maxSpeed": 80
+	},
+	{
+		"id": "Ty2-540",
+		"apiName": "Ty2/Ty2-540",
+		"requiredDlcId": null,
+		"railcarType": "LOCOMOTIVE",
+		"typeIdentifier": "Ty2",
+		"designation": "Ty2",
+		"producer": "Schichau-Werke",
+		"yearsOfProduction": "1942-1946",
+		"weight": 98.05,
+		"length": 22.975,
+		"width": 3,
+		"maxSpeed": 80
 	},
 	{
 		"id": "ET22-1163",
@@ -603,9 +711,7 @@
 		"weight": 120,
 		"length": 19.35,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 125
 	},
 	{
 		"id": "ET22-243",
@@ -619,9 +725,7 @@
 		"weight": 120,
 		"length": 19.35,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 125
 	},
 	{
 		"id": "ET22-256",
@@ -635,9 +739,7 @@
 		"weight": 120,
 		"length": 19.35,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 125
 	},
 	{
 		"id": "ET22-644",
@@ -651,9 +753,7 @@
 		"weight": 120,
 		"length": 19.35,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 125
 	},
 	{
 		"id": "ET22-836",
@@ -667,9 +767,7 @@
 		"weight": 120,
 		"length": 19.35,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 125
 	},
 	{
 		"id": "ET22-911",
@@ -683,9 +781,7 @@
 		"weight": 120,
 		"length": 19.35,
 		"width": 3,
-		"maxSpeed": 125,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 125
 	},
 	{
 		"id": "a9emnouz-61511970214-5",
@@ -699,9 +795,7 @@
 		"weight": 44,
 		"length": 26.4,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "a9mnouz-61511970234-3",
@@ -715,9 +809,7 @@
 		"weight": 44,
 		"length": 26.4,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "112A-50-51-19-08-136-0",
@@ -731,9 +823,7 @@
 		"weight": 40,
 		"length": 24.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 120
 	},
 	{
 		"id": "112A-51-51-19-70-003-4",
@@ -747,9 +837,7 @@
 		"weight": 40,
 		"length": 24.5,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "112A-50-51-19-00-189-7",
@@ -763,9 +851,7 @@
 		"weight": 40,
 		"length": 24.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 120
 	},
 	{
 		"id": "112A-50-51-19-08-095-8",
@@ -779,9 +865,7 @@
 		"weight": 40,
 		"length": 24.5,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "b10bmnouz-61512071105-1",
@@ -795,9 +879,7 @@
 		"weight": 46,
 		"length": 26.4,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "111A-50-51-20-08-607-7",
@@ -811,9 +893,7 @@
 		"weight": 40,
 		"length": 24.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 120
 	},
 	{
 		"id": "111A-51-51-20-71-102-0",
@@ -827,9 +907,7 @@
 		"weight": 40,
 		"length": 24.5,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "111A-50-51-20-00-608-3",
@@ -843,9 +921,7 @@
 		"weight": 40,
 		"length": 24.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 120
 	},
 	{
 		"id": "111A-51-51-20-70-829-9",
@@ -859,9 +935,7 @@
 		"weight": 40,
 		"length": 24.5,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "b11mnouz-61512170064-0",
@@ -875,9 +949,7 @@
 		"weight": 47,
 		"length": 26.4,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "b11mnouz-61512170098-8",
@@ -891,9 +963,7 @@
 		"weight": 46,
 		"length": 26.4,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "b11gmnouz-61512170107-7",
@@ -907,9 +977,7 @@
 		"weight": 46,
 		"length": 26.4,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
 	},
 	{
 		"id": "wrmnouz-61518870191-1",
@@ -923,9 +991,119 @@
 		"weight": 46,
 		"length": 26.4,
 		"width": 3,
-		"maxSpeed": 160,
-		"freightTransportation": false,
-		"passengerTransportation": true
+		"maxSpeed": 160
+	},
+	{
+		"id": "110Ac_50 51 59-78 003-8",
+		"apiName": "11xa/80s/110Ac_50 51 59-78 003-8 Variant",
+		"requiredDlcId": null,
+		"railcarType": "WAGON",
+		"typeIdentifier": "110Ac",
+		"designation": "Bc9ou",
+		"producer": "",
+		"yearsOfProduction": "",
+		"weight": 40,
+		"length": 24.4875,
+		"width": 3,
+		"maxSpeed": 160
+	},
+	{
+		"id": "80s/110Ac_50 51 59-78 003-8",
+		"apiName": "11xa/80s/110Ac_50 51 59-78 003-8 Variant 80s",
+		"requiredDlcId": null,
+		"railcarType": "WAGON",
+		"typeIdentifier": "110Ac",
+		"designation": "Bcdu",
+		"producer": "",
+		"yearsOfProduction": "",
+		"weight": 40,
+		"length": 24.4875,
+		"width": 3,
+		"maxSpeed": 160
+	},
+	{
+		"id": "80s/110Ac_51 51 59-70 048-0",
+		"apiName": "11xa/80s/110Ac_51 51 59-70 048-0 Variant 80s",
+		"requiredDlcId": null,
+		"railcarType": "WAGON",
+		"typeIdentifier": "110Ac",
+		"designation": "Bcdu",
+		"producer": "",
+		"yearsOfProduction": "",
+		"weight": 40,
+		"length": 24.4875,
+		"width": 3,
+		"maxSpeed": 160
+	},
+	{
+		"id": "80s/110Ac_51 51 59-80 271-6",
+		"apiName": "11xa/80s/110Ac_51 51 59-80 271-6 Variant 80s",
+		"requiredDlcId": null,
+		"railcarType": "WAGON",
+		"typeIdentifier": "110Ac",
+		"designation": "Bcwxz",
+		"producer": "",
+		"yearsOfProduction": "",
+		"weight": 40,
+		"length": 24.4875,
+		"width": 3,
+		"maxSpeed": 160
+	},
+	{
+		"id": "80s/111A_50 51 20-00 608-3",
+		"apiName": "11xa/80s/111A_50 51 20-00 608-3 Variant 80s",
+		"requiredDlcId": null,
+		"railcarType": "WAGON",
+		"typeIdentifier": "111A",
+		"designation": "Bdnu",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1979-1986",
+		"weight": 40,
+		"length": 24.4875,
+		"width": 3,
+		"maxSpeed": 120
+	},
+	{
+		"id": "80s/111A_50 51 20-08 607-7",
+		"apiName": "11xa/80s/111A_50 51 20-08 607-7 Variant 80s",
+		"requiredDlcId": null,
+		"railcarType": "WAGON",
+		"typeIdentifier": "111A",
+		"designation": "Bdnu",
+		"producer": "HCP",
+		"yearsOfProduction": "1986-1988",
+		"weight": 40,
+		"length": 24.4875,
+		"width": 3,
+		"maxSpeed": 120
+	},
+	{
+		"id": "80s/112A_50 51 19-00 189-7",
+		"apiName": "11xa/80s/112A_50 51 19-00 189-7 Variant 80s",
+		"requiredDlcId": null,
+		"railcarType": "WAGON",
+		"typeIdentifier": "112Ag",
+		"designation": "Adnu",
+		"producer": "HCP",
+		"yearsOfProduction": "1978-1984",
+		"weight": 40,
+		"length": 24.4875,
+		"width": 3,
+		"maxSpeed": 120
+	},
+	{
+		"id": "80s/112A_50 51 19-08 095-8",
+		"apiName": "11xa/80s/112A_50 51 19-08 095-8 Variant 80s",
+		"requiredDlcId": null,
+		"railcarType": "WAGON",
+		"typeIdentifier": "112Am",
+		"designation": "Adnu",
+		"producer": "HCP",
+		"yearsOfProduction": "1986-1987",
+		"weight": 40,
+		"length": 24.4875,
+		"width": 3,
+		"maxSpeed": 160
 	},
 	{
 		"id": "441V-31516635283-3",
@@ -939,9 +1117,7 @@
 		"weight": 24,
 		"length": 13.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 120
 	},
 	{
 		"id": "441V-31516635512-5",
@@ -955,9 +1131,7 @@
 		"weight": 24,
 		"length": 13.5,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 120
 	},
 	{
 		"id": "412W-v4-364-9",
@@ -971,9 +1145,7 @@
 		"weight": 20,
 		"length": 14.025,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "412W-v4-364-9-b",
@@ -987,9 +1159,7 @@
 		"weight": 20,
 		"length": 14.025,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "412W-33515356394-5",
@@ -1003,9 +1173,7 @@
 		"weight": 20,
 		"length": 14.025,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "412W-33565300118-0",
@@ -1019,9 +1187,7 @@
 		"weight": 20,
 		"length": 14.025,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "412W-33565300177-6",
@@ -1035,9 +1201,7 @@
 		"weight": 20,
 		"length": 14.025,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "424Z",
@@ -1051,9 +1215,7 @@
 		"weight": 23.5,
 		"length": 19.9,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 120
 	},
 	{
 		"id": "424Z-b",
@@ -1067,9 +1229,7 @@
 		"weight": 23.5,
 		"length": 19.9,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 120
 	},
 	{
 		"id": "408S",
@@ -1083,9 +1243,7 @@
 		"weight": 24,
 		"length": 14.075,
 		"width": 3,
-		"maxSpeed": 120,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 120
 	},
 	{
 		"id": "406Ra-33510079375-1",
@@ -1099,9 +1257,7 @@
 		"weight": 23,
 		"length": 12.325,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "406Ra-33517881520-5",
@@ -1115,9 +1271,7 @@
 		"weight": 23,
 		"length": 12.325,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "406Ra-33517980031-3",
@@ -1131,9 +1285,7 @@
 		"weight": 23,
 		"length": 12.325,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "406Ra-33517982861-1",
@@ -1147,9 +1299,7 @@
 		"weight": 23,
 		"length": 12.325,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "406Ra-34517981215-0",
@@ -1163,9 +1313,7 @@
 		"weight": 23,
 		"length": 12.325,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	},
 	{
 		"id": "406Rb-84517862699-8",
@@ -1179,8 +1327,6 @@
 		"weight": 23,
 		"length": 12.325,
 		"width": 3,
-		"maxSpeed": 100,
-		"freightTransportation": true,
-		"passengerTransportation": false
+		"maxSpeed": 100
 	}
 ]
