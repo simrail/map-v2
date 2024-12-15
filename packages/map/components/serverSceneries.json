@@ -14,6 +14,7 @@
     {
         "Name": "cn1",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -23,6 +24,7 @@
     {
         "Name": "cz1",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -32,6 +34,7 @@
     {
         "Name": "de1",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -41,6 +44,7 @@
     {
         "Name": "de3",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -50,6 +54,7 @@
     {
         "Name": "de4",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -59,6 +64,7 @@
     {
         "Name": "en1",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -68,6 +74,7 @@
     {
         "Name": "en2",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -77,6 +84,7 @@
     {
         "Name": "en3",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -86,6 +94,7 @@
     {
         "Name": "es1",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -95,6 +104,7 @@
     {
         "Name": "eu3",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -104,6 +114,7 @@
     {
         "Name": "fr1",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -113,6 +124,7 @@
     {
         "Name": "hu1",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -122,6 +134,7 @@
     {
         "Name": "pl2",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -131,6 +144,7 @@
     {
         "Name": "pl3",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -140,6 +154,7 @@
     {
         "Name": "pl4",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -149,6 +164,7 @@
     {
         "Name": "pl8",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",
@@ -158,6 +174,7 @@
     {
         "Name": "ua1",
         "Sceneries": [
+            "tunel_krakow",
             "katowice_lazy",
             "lazy_psary",
             "psary_opoczno",

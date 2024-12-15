@@ -15,8 +15,7 @@
       445,
       447,
       448
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Warszawa Włochy",
@@ -30,8 +29,7 @@
       1,
       3,
       447
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Józefinów",
@@ -44,8 +42,7 @@
     "LineNumbers": [
       1,
       19
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Żyrardów",
@@ -57,8 +54,7 @@
     "Longitude": 20.45168499,
     "LineNumbers": [
       1
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Rokiciny",
@@ -70,8 +66,7 @@
     "Longitude": 19.78103884622499,
     "LineNumbers": [
       1
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Myszków",
@@ -83,8 +78,7 @@
     "Longitude": 19.33097,
     "LineNumbers": [
       1
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Dąbrowa Górnicza Ząbkowice",
@@ -100,8 +94,7 @@
       160,
       183,
       186
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sosnowiec Gł. pzs R52",
@@ -114,8 +107,7 @@
     "LineNumbers": [
       1,
       660
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Warszawa Centralna",
@@ -127,8 +119,7 @@
     "Longitude": 21.00077,
     "LineNumbers": [
       2
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Warszawa Wschodnia",
@@ -144,8 +135,7 @@
       9,
       448,
       90
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Warszawa Podskarbińska",
@@ -160,8 +150,31 @@
       448,
       902,
       903
-    ],
-    "LineNames": []
+    ]
+  },
+  {
+    "Name": "Biała Rawska",
+    "Prefix": "BR",
+    "Country": "PL",
+    "Scenerie": "opoczno_warszawa_grochow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.79477757744873,
+    "Longitude":  20.439748415552643,
+    "LineNumbers": [
+      4
+    ]
+  },
+  {
+    "Name": "Pilichowice",
+    "Prefix": "Pi",
+    "Country": "PL",
+    "Scenerie": "psary_opoczno",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 51.25463461222194,
+    "Longitude":  20.121362304352623,
+    "LineNumbers": [
+      4
+    ]
   },
   {
     "Name": "Warszawa Grochów",
@@ -175,8 +188,7 @@
       7,
       45,
       452
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sędziszów",
@@ -188,8 +200,7 @@
     "Longitude": 20.07763,
     "LineNumbers": [
       8
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sędziszów",
@@ -201,8 +212,7 @@
     "Longitude": 20.0659,
     "LineNumbers": [
       8
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sędziszów",
@@ -214,8 +224,7 @@
     "Longitude": 20.061822,
     "LineNumbers": [
       8
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sędziszów",
@@ -227,8 +236,7 @@
     "Longitude": 20.050017,
     "LineNumbers": [
       8
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Gniewięcin",
@@ -240,21 +248,35 @@
     "Longitude": 20.044425,
     "LineNumbers": [
       8
-    ],
-    "LineNames": []
+    ]
   },
   {
-    "Name": "Miechów",
-    "Prefix": "Mi",
+    "Name": "Krakow Batowice",
+    "Prefix": "KBt1",
     "Country": "PL",
-    "Scenerie": "psary_opoczno",
+    "Scenerie": "tunel_krakow",
     "Type": "NonPlayableDispatchPost",
-    "Latititude": 50.35469185330557,
-    "Longitude": 20.01168180533395,
+    "Latititude": 50.10761146672295, 
+    "Longitude":  20.000710971462862,
     "LineNumbers": [
       8
-    ],
-    "LineNames": []
+    ]
+  },
+  {
+    "Name": "Kraków Główny",
+    "Prefix": "KGB",
+    "Country": "PL",
+    "Scenerie": "tunel_krakow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.072621274853695,
+    "Longitude": 19.947063807096374,
+    "LineNumbers": [
+      8,
+      91,
+      118,
+      133,
+      629
+    ]
   },
   {
     "Name": "Bełchów",
@@ -266,8 +288,7 @@
     "Longitude": 20.035959876764768,
     "LineNumbers": [
       11
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Puszcza Mariańska",
@@ -279,8 +300,7 @@
     "Longitude": 20.329355161648778,
     "LineNumbers": [
       12
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Marków",
@@ -293,8 +313,7 @@
     "LineNumbers": [
       12,
       575
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Łask",
@@ -306,8 +325,7 @@
     "Longitude": 19.10870583857142,
     "LineNumbers": [
       14
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Łódź Żabieniec",
@@ -319,8 +337,7 @@
     "Longitude": 19.406198390602448,
     "LineNumbers": [
       15
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Łódź Marysin",
@@ -332,8 +349,7 @@
     "Longitude": 19.478769234235,
     "LineNumbers": [
       16
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Radzice",
@@ -346,8 +362,7 @@
     "LineNumbers": [
       22,
       574
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Radzice",
@@ -360,8 +375,7 @@
     "LineNumbers": [
       22,
       573
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Łódź Chojny",
@@ -373,8 +387,7 @@
     "Longitude": 19.480058998347406,
     "LineNumbers": [
       25
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Łódź Chojny",
@@ -387,8 +400,7 @@
     "LineNumbers": [
       25,
       540
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Mikołajów",
@@ -402,8 +414,7 @@
       25,
       44,
       534
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Czarnca",
@@ -417,8 +428,7 @@
       61,
       571,
       582
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Żelisławice",
@@ -431,8 +441,20 @@
     "LineNumbers": [
       61,
       572
-    ],
-    "LineNames": []
+    ]
+  },
+  {
+    "Name": "Koniecpol",
+    "Prefix": "Kc",
+    "Country": "PL",
+    "Scenerie": "lazy_psary",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.777646929012036,
+    "Longitude":  19.709249136212406,
+    "LineNumbers": [
+      61,
+      64
+    ]
   },
   {
     "Name": "Charsznica",
@@ -444,8 +466,7 @@
     "Longitude": 19.947467,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Charsznica",
@@ -457,8 +478,7 @@
     "Longitude": 19.934853,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Gajówka APO",
@@ -470,8 +490,7 @@
     "Longitude": 19.857738,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Wolbrom",
@@ -483,8 +502,7 @@
     "Longitude": 19.777445,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Wolbrom",
@@ -496,8 +514,7 @@
     "Longitude": 19.767985,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Zarzecze APO",
@@ -509,8 +526,7 @@
     "Longitude": 19.691552,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Jaroszowiec Olkuski",
@@ -522,8 +538,7 @@
     "Longitude": 19.62657,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Jaroszowiec Olkuski",
@@ -535,8 +550,7 @@
     "Longitude": 19.616380,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Olkusz",
@@ -548,8 +562,7 @@
     "Longitude": 19.57992,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Olkusz",
@@ -561,8 +574,7 @@
     "Longitude": 19.566628609427177,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Dąbrowa Górnicza Strzemieszyce",
@@ -574,8 +586,7 @@
     "Longitude": 19.275301,
     "LineNumbers": [
       62
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Dąbrowa Górnicza Strzemieszyce",
@@ -588,8 +599,7 @@
     "LineNumbers": [
       62,
       162
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sosnowiec Dańdówka",
@@ -602,8 +612,7 @@
     "LineNumbers": [
       62,
       171
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sosnowiec Dańdówka",
@@ -616,8 +625,7 @@
     "LineNumbers": [
       62,
       171
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sosnowiec Południowy",
@@ -630,8 +638,7 @@
     "LineNumbers": [
       62,
       660
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sprowa",
@@ -643,22 +650,7 @@
     "Longitude": 19.88301571264459,
     "LineNumbers": [
       64
-    ],
-    "LineNames": []
-  },
-  {
-    "Name": "Starzyny",
-    "Prefix": "St",
-    "Country": "PL",
-    "Scenerie": "lazy_psary",
-    "Type": "NonPlayableDispatchPost",
-    "Latititude": 50.71253,
-    "Longitude": 19.80175,
-    "LineNumbers": [
-      64,
-      570
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "LCS Kraków Płaszów",
@@ -677,8 +669,7 @@
       605,
       624,
       629
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "LCS Kraków Mydlniki",
@@ -693,8 +684,7 @@
       100,
       118,
       133
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Dłubnia",
@@ -707,8 +697,21 @@
     "LineNumbers": [
       95,
       607
-    ],
-    "LineNames": []
+    ]
+  },
+  {
+    "Name": "Kraków Olsza",
+    "Prefix": "KO",
+    "Country": "PL",
+    "Scenerie": "tunel_krakow",
+    "Type": "NonPlayableDispatchPost",
+    "Latititude": 50.07578722733076,
+    "Longitude":  19.96912165914388,
+    "LineNumbers": [
+      100,
+      602,
+      947
+    ]
   },
   {
     "Name": "Kraków Główny",
@@ -722,21 +725,19 @@
       118,
       133,
       601
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Kraków Balice",
     "Prefix": "KBa",
     "Country": "PL",
-    "Scenerie": "tunel_krakow",
+    "Scenerie": "",
     "Type": "NonPlayableDispatchPost",
     "Latititude": 50.072170616311624,
     "Longitude": 19.81186368457375,
     "LineNumbers": [
       118
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Dąbrowa Górnicza Południowa",
@@ -748,8 +749,7 @@
     "Longitude": 19.287130878339372,
     "LineNumbers": [
       133
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Dąbrowa Górnicza Południowa",
@@ -761,8 +761,7 @@
     "Longitude": 19.286973,
     "LineNumbers": [
       133
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sosnowiec Maczki",
@@ -776,8 +775,7 @@
       133,
       163,
       665
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sosnowiec Maczki",
@@ -791,8 +789,7 @@
       133,
       163,
       666
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Sosnowiec Jęzor",
@@ -806,8 +803,7 @@
       134,
       180,
       719
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Mysłowice",
@@ -820,8 +816,7 @@
     "LineNumbers": [
       134,
       138
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Katowice Towarowa",
@@ -834,8 +829,7 @@
     "LineNumbers": [
       137,
       713
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Mysłowice",
@@ -847,8 +841,7 @@
     "Longitude": 19.138145,
     "LineNumbers": [
       138
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Mysłowice",
@@ -861,8 +854,7 @@
     "LineNumbers": [
       138,
       655
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Szabelnia",
@@ -875,8 +867,7 @@
     "LineNumbers": [
       138,
       654
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Brynów",
@@ -889,8 +880,7 @@
     "LineNumbers": [
       139,
       656
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Przemiarki",
@@ -902,8 +892,7 @@
     "Longitude": 19.340057,
     "LineNumbers": [
       154
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Dąbrowa Górnicza Towarowa",
@@ -916,8 +905,7 @@
     "LineNumbers": [
       154,
       661
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Dąbrowa Górnicza Towarowa",
@@ -930,8 +918,7 @@
     "LineNumbers": [
       154,
       171
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Kozioł",
@@ -944,8 +931,7 @@
     "LineNumbers": [
       171,
       661
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Stawiska",
@@ -959,8 +945,7 @@
       171,
       665,
       657
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Katowice Janów",
@@ -974,8 +959,7 @@
       171,
       665,
       657
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Katowice Muchowiec",
@@ -991,8 +975,7 @@
       653,
       706,
       707
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Staszic",
@@ -1006,8 +989,7 @@
       142,
       652,
       898
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Słotwiny",
@@ -1021,8 +1003,7 @@
       534,
       536,
       537
-    ],
-    "LineNames": []
+    ]
   },
   {
     "Name": "Słotwiny",
@@ -1034,7 +1015,6 @@
     "Longitude": 19.842297332391134,
     "LineNumbers": [
       534
-    ],
-    "LineNames": []
+    ]
   }
 ]

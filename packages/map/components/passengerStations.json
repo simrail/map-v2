@@ -1,376 +1,5 @@
 [
-	{
-		"Name": "Görlitz",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.1467944,
-		"Longitude": 14.9782967,
-		"LineNumbers": [
-			6142,
-			6211,
-			6212,
-			6590
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Arnsdorf (bei Dresden)",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.0930368,
-		"Longitude": 13.9817192,
-		"LineNumbers": [
-			6200,
-			6212,
-			6228
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Görlitz-Rauschwalde",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1491468,
-		"Longitude": 14.9365172,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Gersdorf (Görlitz)",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1252158,
-		"Longitude": 14.8542858,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Reichenbach (Oberlausitz)",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1356756,
-		"Longitude": 14.795494,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Zoblitz",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1236692,
-		"Longitude": 14.7509615,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Löbau (Sachsen)",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.0993856,
-		"Longitude": 14.671919,
-		"LineNumbers": [
-			6212,
-			6214
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Breitendorf",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1386293,
-		"Longitude": 14.6227927,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Pommritz / Pomorcy",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1590682,
-		"Longitude": 14.5745917,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Kubschütz / Kubšicy",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1656425,
-		"Longitude": 14.5093948,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Bautzen - Budyšin",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.1731249,
-		"Longitude": 14.4287344,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Seitschen / Žičeń",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1536306,
-		"Longitude": 14.3250227,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Demitz-Thumitz",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1421983,
-		"Longitude": 14.2395696,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Bischofswerda",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.1254623,
-		"Longitude": 14.1858805,
-		"LineNumbers": [
-			6212,
-			6217
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Weickersdorf (Sachs)",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1109444,
-		"Longitude": 14.1511795,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Großharthau",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1021869,
-		"Longitude": 14.0876518,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Radeberg",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.1116162,
-		"Longitude": 13.9132829,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Langebrück (Sachs)",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1268751,
-		"Longitude": 13.8405986,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Dresden-Klotzsche",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.1144381,
-		"Longitude": 13.788889,
-		"LineNumbers": [
-			6212,
-			6606,
-			6607
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Dresden Industriegelände",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.0871982,
-		"Longitude": 13.7625651,
-		"LineNumbers": [
-			6212
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Dresden-Neustadt",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.0658669,
-		"Longitude": 13.7405404,
-		"LineNumbers": [
-			6212,
-			6239,
-			6241,
-			6363
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Dresden Mitte",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.0560748,
-		"Longitude": 13.7241859,
-		"LineNumbers": [
-			6239,
-			6240,
-			6241,
-			6243,
-			6246,
-			6247
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Dresden Freiberger Straße",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.0480944,
-		"Longitude": 13.7198342,
-		"LineNumbers": [
-			6239
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Dresden Hauptbahnhof",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.0402452,
-		"Longitude": 13.7320768,
-		"LineNumbers": [
-			6239,
-			6240,
-			6241,
-			6258,
-			7827
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Dresden Grenzstraße",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1282809,
-		"Longitude": 13.7782287,
-		"LineNumbers": [
-			6607
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Dresden Flughafen",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1246137,
-		"Longitude": 13.766016,
-		"LineNumbers": [
-			6607
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Dresden Flughafen",
-		"Prefix": "",
-		"Country": "DE",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerHalt",
-		"Latititude": 51.1246137,
-		"Longitude": 13.766016,
-		"LineNumbers": [
-			6607
-		],
-		"LineNames": []
-	},
+	
 	{
 		"Name": "Warszawa Zachodnia",
 		"Prefix": "",
@@ -388,8 +17,7 @@
 			445,
 			447,
 			448
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Pruszków",
@@ -402,8 +30,7 @@
 		"LineNumbers": [
 			1,
 			447
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Grodzisk Mazowiecki",
@@ -417,8 +44,7 @@
 			1,
 			4,
 			447
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Jaktorów",
@@ -430,8 +56,7 @@
 		"Longitude": 20.5518786,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Międzyborów",
@@ -443,8 +68,7 @@
 		"Longitude": 20.4824691,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Żyrardów",
@@ -456,8 +80,7 @@
 		"Longitude": 20.4489753,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Sucha Żyrardowska",
@@ -469,8 +92,7 @@
 		"Longitude": 20.3593707,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Jesionka",
@@ -482,8 +104,7 @@
 		"Longitude": 20.3347217,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Radziwiłłów Mazowiecki",
@@ -495,8 +116,7 @@
 		"Longitude": 20.2904767,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Skierniewice Rawka",
@@ -508,8 +128,7 @@
 		"Longitude": 20.2213044,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Skierniewice",
@@ -523,8 +142,7 @@
 			1,
 			11,
 			12
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Dąbrowice Skierniewickie",
@@ -536,8 +154,7 @@
 		"Longitude": 20.1023797,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Maków",
@@ -549,8 +166,7 @@
 		"Longitude": 20.0457185,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Płyćwia",
@@ -562,8 +178,7 @@
 		"Longitude": 20.0034335,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Lipce Reymontowskie",
@@ -575,8 +190,7 @@
 		"Longitude": 19.9430864,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Krosnowa",
@@ -588,8 +202,7 @@
 		"Longitude": 19.9232028,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Przyłęk Duży",
@@ -601,8 +214,7 @@
 		"Longitude": 19.9172861,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Rogów",
@@ -614,8 +226,7 @@
 		"Longitude": 19.8860058,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Wągry",
@@ -627,8 +238,7 @@
 		"Longitude": 19.8492481,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Koluszki",
@@ -641,8 +251,7 @@
 		"LineNumbers": [
 			1,
 			17
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Chrusty Nowe",
@@ -654,8 +263,7 @@
 		"Longitude": 19.7943261,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Myszków Światowit",
@@ -667,8 +275,7 @@
 		"Longitude": 19.3597259,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Myszków Mrzygłód",
@@ -680,8 +287,7 @@
 		"Longitude": 19.3773144,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Zawiercie Borowe Pole",
@@ -693,8 +299,7 @@
 		"Longitude": 19.3986396,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Zawiercie",
@@ -707,8 +312,7 @@
 		"LineNumbers": [
 			1,
 			4
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łazy",
@@ -722,8 +326,7 @@
 			1,
 			160,
 			186
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Wiesiółka",
@@ -736,8 +339,7 @@
 		"LineNumbers": [
 			1,
 			186
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Chruszczobród",
@@ -750,8 +352,7 @@
 		"LineNumbers": [
 			1,
 			186
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Dąbrowa Górnicza Sikorka",
@@ -764,8 +365,7 @@
 		"LineNumbers": [
 			1,
 			186
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Dąbrowa Górnicza Ząbkowice",
@@ -778,8 +378,7 @@
 		"LineNumbers": [
 			1,
 			186
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Dąbrowa Górnicza Pogoria",
@@ -791,8 +390,7 @@
 		"Longitude": 19.2407866,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Dąbrowa Górnicza Gołonóg",
@@ -804,8 +402,7 @@
 		"Longitude": 19.2262024,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Dąbrowa Górnicza",
@@ -817,8 +414,7 @@
 		"Longitude": 19.1848234,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Będzin Ksawera",
@@ -830,8 +426,7 @@
 		"Longitude": 19.1579342,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Będzin Miasto",
@@ -843,8 +438,7 @@
 		"Longitude": 19.135537,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Będzin",
@@ -856,8 +450,7 @@
 		"Longitude": 19.141404313298533,
 		"LineNumbers": [
 			1
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Sosnowiec Główny",
@@ -870,8 +463,7 @@
 		"LineNumbers": [
 			1,
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Katowice Szopienice Południowe",
@@ -884,8 +476,7 @@
 		"LineNumbers": [
 			1,
 			138
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Katowice Zawodzie",
@@ -898,8 +489,7 @@
 		"LineNumbers": [
 			1,
 			138
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Katowice",
@@ -914,8 +504,7 @@
 			137,
 			138,
 			139
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Warszawa Centralna",
@@ -927,8 +516,7 @@
 		"Longitude": 21.00316,
 		"LineNumbers": [
 			2
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Warszawa Wschodnia",
@@ -944,8 +532,7 @@
 			9,
 			448,
 			902
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Warszawa Włochy",
@@ -958,8 +545,7 @@
 		"LineNumbers": [
 			3,
 			447
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Opoczno Południe",
@@ -971,8 +557,7 @@
 		"Longitude": 20.2324376,
 		"LineNumbers": [
 			4
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Włoszczowa Północ",
@@ -985,8 +570,7 @@
 		"LineNumbers": [
 			4,
 			572
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Sędziszów",
@@ -998,8 +582,7 @@
 		"Longitude": 20.0548996,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Klimontów",
@@ -1011,8 +594,7 @@
 		"Longitude": 20.0301626,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kozłów",
@@ -1025,8 +607,7 @@
 		"LineNumbers": [
 			8,
 			64
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Tunel",
@@ -1039,8 +620,7 @@
 		"LineNumbers": [
 			8,
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Pstroszyce",
@@ -1052,8 +632,7 @@
 		"Longitude": 20.008372,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Miechów",
@@ -1065,8 +644,7 @@
 		"Longitude": 20.0107404,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kamieńczyce",
@@ -1078,8 +656,7 @@
 		"Longitude": 20.0057484,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Szczepanowice",
@@ -1091,8 +668,7 @@
 		"Longitude": 20.0246598,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Smroków",
@@ -1104,8 +680,7 @@
 		"Longitude": 20.0466789,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Słomniki",
@@ -1117,8 +692,7 @@
 		"Longitude": 20.063701,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Słomniki Miasto",
@@ -1130,8 +704,7 @@
 		"Longitude": 20.0763665,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Niedźwiedź",
@@ -1143,8 +716,7 @@
 		"Longitude": 20.0809326,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Goszcza",
@@ -1156,8 +728,7 @@
 		"Longitude": 20.0612274,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łuczyce",
@@ -1169,8 +740,7 @@
 		"Longitude": 20.0744995,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Baranówka",
@@ -1182,8 +752,7 @@
 		"Longitude": 20.0954104,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Zastów",
@@ -1195,8 +764,7 @@
 		"Longitude": 20.0690701,
 		"LineNumbers": [
 			8
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kraków Batowice",
@@ -1209,8 +777,7 @@
 		"LineNumbers": [
 			8,
 			95
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kraków Główny",
@@ -1226,8 +793,7 @@
 			118,
 			133,
 			629
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Kaliska",
@@ -1241,8 +807,7 @@
 			14,
 			15,
 			25
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Retkinia",
@@ -1254,8 +819,7 @@
 		"Longitude": 19.40658,
 		"LineNumbers": [
 			14
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Lublinek",
@@ -1267,8 +831,7 @@
 		"Longitude": 19.3592771,
 		"LineNumbers": [
 			14
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Pabianice Północne",
@@ -1280,8 +843,7 @@
 		"Longitude": 19.3418881,
 		"LineNumbers": [
 			14
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Pabianice",
@@ -1293,8 +855,7 @@
 		"Longitude": 19.3249765,
 		"LineNumbers": [
 			14
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Chechło",
@@ -1306,8 +867,7 @@
 		"Longitude": 19.2865151,
 		"LineNumbers": [
 			14
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Widzew",
@@ -1323,8 +883,7 @@
 			458,
 			540,
 			541
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Fabryczna",
@@ -1337,8 +896,7 @@
 		"LineNumbers": [
 			17,
 			458
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Niciarniana",
@@ -1351,8 +909,7 @@
 		"LineNumbers": [
 			17,
 			458
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Andrzejów",
@@ -1364,8 +921,7 @@
 		"Longitude": 19.6171505,
 		"LineNumbers": [
 			17
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Bedoń",
@@ -1378,8 +934,7 @@
 		"LineNumbers": [
 			17,
 			25
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Justynów",
@@ -1392,8 +947,7 @@
 		"LineNumbers": [
 			17,
 			25
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Gałkówek",
@@ -1406,8 +960,7 @@
 		"LineNumbers": [
 			17,
 			25
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Żakowice",
@@ -1419,8 +972,7 @@
 		"Longitude": 19.7910611,
 		"LineNumbers": [
 			17
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Pabianicka",
@@ -1432,8 +984,7 @@
 		"Longitude": 19.4453004,
 		"LineNumbers": [
 			25
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Chojny",
@@ -1445,8 +996,7 @@
 		"Longitude": 19.4841953,
 		"LineNumbers": [
 			25
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Olechów Wiadukt",
@@ -1458,8 +1008,7 @@
 		"Longitude": 19.5436605,
 		"LineNumbers": [
 			25
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Olechów Zachód",
@@ -1471,8 +1020,7 @@
 		"Longitude": 19.5591901,
 		"LineNumbers": [
 			25
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Olechów Wschód",
@@ -1485,8 +1033,7 @@
 		"LineNumbers": [
 			25,
 			541
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Żakowice Południowe",
@@ -1499,8 +1046,7 @@
 		"LineNumbers": [
 			25,
 			537
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Charsznica",
@@ -1512,8 +1058,7 @@
 		"Longitude": 19.9413863,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Gajówka",
@@ -1525,8 +1070,7 @@
 		"Longitude": 19.8788033,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Jeżówka",
@@ -1538,8 +1082,7 @@
 		"Longitude": 19.8211447283,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Wolbrom",
@@ -1551,8 +1094,7 @@
 		"Longitude": 19.7725255,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Zarzecze",
@@ -1564,8 +1106,7 @@
 		"Longitude": 19.6990007,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Chrząstowice Olkuskie",
@@ -1577,8 +1118,7 @@
 		"Longitude": 19.6857075,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Jaroszowiec Olkuski",
@@ -1590,8 +1130,7 @@
 		"Longitude": 19.6218089,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Olkusz",
@@ -1603,8 +1142,7 @@
 		"Longitude": 19.5724002,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Bukowno",
@@ -1617,8 +1155,7 @@
 		"LineNumbers": [
 			62,
 			156
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Bukowno Przymiarki",
@@ -1630,8 +1167,7 @@
 		"Longitude": 19.4097682,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Sławków",
@@ -1643,8 +1179,7 @@
 		"Longitude": 19.3746476,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Dąbrowa Górnicza Wschodnia",
@@ -1657,8 +1192,7 @@
 		"LineNumbers": [
 			62,
 			171
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Dąbrowa Górnicza Strzemieszyce",
@@ -1671,8 +1205,7 @@
 		"LineNumbers": [
 			62,
 			162
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Sosnowiec Kazimierz",
@@ -1685,8 +1218,7 @@
 		"LineNumbers": [
 			62,
 			163
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Sosnowiec Porąbka",
@@ -1698,8 +1230,7 @@
 		"Longitude": 19.2162482,
 		"LineNumbers": [
 			62
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Sosnowiec Dańdówka",
@@ -1712,8 +1243,7 @@
 		"LineNumbers": [
 			62,
 			171
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Sosnowiec Południowy",
@@ -1726,115 +1256,93 @@
 		"LineNumbers": [
 			62,
 			660
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kraków Łobzów",
 		"Prefix": "",
 		"Country": "PL",
-		"Scenerie": "tunel_krakow",
+		"Scenerie": "",
 		"Type": "PassengerHalt",
 		"Latititude": 50.0819507,
 		"Longitude": 19.91772,
 		"LineNumbers": [
 			118,
 			133
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kraków Bronowice",
 		"Prefix": "",
 		"Country": "PL",
-		"Scenerie": "tunel_krakow",
+		"Scenerie": "",
 		"Type": "PassengerHalt",
 		"Latititude": 50.0828345,
 		"Longitude": 19.8923031,
 		"LineNumbers": [
 			118,
 			133
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kraków Młynówka",
 		"Prefix": "",
 		"Country": "PL",
-		"Scenerie": "tunel_krakow",
+		"Scenerie": "",
 		"Type": "PassengerHalt",
 		"Latititude": 50.0817947,
 		"Longitude": 19.8584723,
 		"LineNumbers": [
 			118
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kraków Zakliki",
 		"Prefix": "",
 		"Country": "PL",
-		"Scenerie": "tunel_krakow",
+		"Scenerie": "",
 		"Type": "PassengerHalt",
 		"Latititude": 50.0797926,
 		"Longitude": 19.8494043,
 		"LineNumbers": [
 			118
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kraków Olszanica",
 		"Prefix": "",
 		"Country": "PL",
-		"Scenerie": "tunel_krakow",
+		"Scenerie": "",
 		"Type": "PassengerHalt",
 		"Latititude": 50.0764912,
 		"Longitude": 19.8255173,
 		"LineNumbers": [
 			118
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kraków Lotnisko",
 		"Prefix": "",
 		"Country": "PL",
-		"Scenerie": "tunel_krakow",
+		"Scenerie": "",
 		"Type": "PassengerHalt",
 		"Latititude": 50.0709399,
 		"Longitude": 19.8012796,
 		"LineNumbers": [
 			118
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Kraków Mydlniki",
 		"Prefix": "",
 		"Country": "PL",
-		"Scenerie": "tunel_krakow",
+		"Scenerie": "",
 		"Type": "PassengerStation",
 		"Latititude": 50.0835874,
 		"Longitude": 19.8597855,
 		"LineNumbers": [
 			133
-		],
-		"LineNames": []
-	},
-	{
-		"Name": "Zgorzelec ",
-		"Prefix": "",
-		"Country": "PL",
-		"Scenerie": "dresden_zgorzelec",
-		"Type": "PassengerStation",
-		"Latititude": 51.1401724,
-		"Longitude": 15.0030407,
-		"LineNumbers": [
-			274,
-			278
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Warszawa Ursus",
@@ -1846,8 +1354,7 @@
 		"Longitude": 20.8853642,
 		"LineNumbers": [
 			447
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Warszawa Ursus Niedźwiadek",
@@ -1859,8 +1366,7 @@
 		"Longitude": 20.8700172,
 		"LineNumbers": [
 			447
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Piastów",
@@ -1872,8 +1378,7 @@
 		"Longitude": 20.8425757,
 		"LineNumbers": [
 			447
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Parzniew ",
@@ -1885,8 +1390,7 @@
 		"Longitude": 20.7631244,
 		"LineNumbers": [
 			447
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Brwinów",
@@ -1898,8 +1402,7 @@
 		"Longitude": 20.7190083,
 		"LineNumbers": [
 			447
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Milanówek",
@@ -1911,8 +1414,7 @@
 		"Longitude": 20.6681761,
 		"LineNumbers": [
 			447
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Słotwiny",
@@ -1926,8 +1428,7 @@
 			534,
 			536,
 			537
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Dąbrowa",
@@ -1939,8 +1440,7 @@
 		"Longitude": 19.5106059,
 		"LineNumbers": [
 			540
-		],
-		"LineNames": []
+		]
 	},
 	{
 		"Name": "Łódź Andrzejów Szosa",
@@ -1953,7 +1453,6 @@
 		"LineNumbers": [
 			541,
 			831
-		],
-		"LineNames": []
+		]
 	}
 ]

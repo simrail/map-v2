@@ -12,9 +12,9 @@ const NonPlayableDispatchPosts: FC = () => {
 
     let Sceneries: string[]
     if (id) {
-        const server = serverSceneries.find(server => server.Name === id);
-        if (server) {
-            Sceneries = server.Sceneries
+        const serverId = serverSceneries.find(server => server.Name === id);
+        if (serverId) {
+            Sceneries = serverId.Sceneries
         }
     }
     

@@ -31,7 +31,7 @@ import Control from "react-leaflet-custom-control";
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
 import style from "../styles/BottomLeftControls.module.css";
 import styles from "../styles/Home.module.css";
-import { StationMarker } from "./Markers/StationMarker";
+import { StationMarker } from "./Markers/DispatchPostMarker";
 import SelectedTrainPopup from "./SelectedTrainPopup";
 import { MainlineSignals, OtherSignals } from "./Signals";
 import SneakpeekMarkers from "./Sneakpeeks";
@@ -272,7 +272,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							localStorage.getItem("layer-passenger stations") === null ||
 							localStorage.getItem("layer-passenger stations") === "true"
 						}
-						name="Passenger stations"
+						name="Passenger Stations"
 					>
 						<LayerGroup>
 							<PassengerStations />
@@ -284,7 +284,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							localStorage.getItem("layer-dispatch stations") === null ||
 							localStorage.getItem("layer-dispatch stations") === "true"
 						}
-						name="Dispatch posts"
+						name="Dispatch Posts"
 					>
 						<LayerGroup>
 							{stations.map((station) => (
@@ -300,7 +300,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							localStorage.getItem("layer-unplayable dispatch stations") ===
 								"true"
 						}
-						name="Unplayable dispatch posts"
+						name="Unplayable Dispatch Posts"
 					>
 						<LayerGroup>
 							<NonPlayableDispatchPosts />
@@ -316,7 +316,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 
 					<LayersControl.Overlay
 						checked={localStorage.getItem("layer-other-signals") === "true"}
-						name="Manual Signals"
+						name="Dispatcher Controlled Signals"
 					>
 						<LayerGroup>
 							<OtherSignals />
