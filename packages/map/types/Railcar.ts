@@ -26,9 +26,4 @@ export type Railcar = {
 	width: number;
 	/** The maximum speed that can be driven with the railcar. */
 	maxSpeed: number;
-
-	/** Indicates if this railcar can be used to transport freight (main purpose). */
-	freightTransportation: boolean;
-	/** Indicates if this railcar can be used to transport passengers (main purpose). */
-	passengerTransportation: boolean;
 };

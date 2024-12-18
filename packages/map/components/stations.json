@@ -84,30 +84,6 @@
 		"id": ""
 	},
 	{
-		"Name": "Dąbrowa Górnicza Ząbkowice",
-		"Prefix": "",
-		"DifficultyLevel": 0,
-		"MainImageURL": "",
-		"AdditionalImage1URL": "",
-		"AdditionalImage2URL": "",
-		"DispatchedBy": [],
-		"Latititude": 50.37572935862174,
-		"Longitude": 19.27236512303352,
-		"id": ""
-	},
-	{
-		"Name": "Starzyny",
-		"Prefix": "",
-		"DifficultyLevel": 0,
-		"MainImageURL": "",
-		"AdditionalImage1URL": "",
-		"AdditionalImage2URL": "",
-		"DispatchedBy": [],
-		"Latititude": 50.71272005979818,
-		"Longitude": 19.8013961821638,
-		"id": ""
-	},
-	{
 		"Name": "Żelisławice",
 		"Prefix": "",
 		"DifficultyLevel": 0,
@@ -129,18 +105,6 @@
 		"DispatchedBy": [],
 		"Latititude": 50.823959976470775,
 		"Longitude": 19.94521227641923,
-		"id": ""
-	},
-	{
-		"Name": "Sosnowiec Gł. pzs R52",
-		"Prefix": "",
-		"DifficultyLevel": 0,
-		"MainImageURL": "",
-		"AdditionalImage1URL": "",
-		"AdditionalImage2URL": "",
-		"DispatchedBy": [],
-		"Latititude": 50.272224,
-		"Longitude": 19.114761,
 		"id": ""
 	},
 	{
@@ -456,18 +420,6 @@
 		"id": ""
 	},
 	{
-		"Name": "Miechów",
-		"Prefix": "",
-		"DifficultyLevel": 0,
-		"MainImageURL": "",
-		"AdditionalImage1URL": "",
-		"AdditionalImage2URL": "",
-		"DispatchedBy": [],
-		"Latititude": 50.35469185330557,
-		"Longitude": 20.01172180533395,
-		"id": ""
-	},
-	{
 		"Name": "Gajówka APO",
 		"Prefix": "",
 		"DifficultyLevel": 0,
@@ -477,6 +429,138 @@
 		"DispatchedBy": [],
 		"Latititude": 50.399026,
 		"Longitude": 19.857738,
+		"id": ""
+	},
+	{
+		"Name": "Biała Rawska",
+		"Prefix": "BR",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.7944183,
+		"Longitude": 20.4394425,
+		"id": ""
+	},
+	{
+		"Name": "Pilichowice",
+		"Prefix": "Pi",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.2556656,
+		"Longitude": 20.1223774,
+		"id": ""
+	},
+	{
+		"Name": "Warszawa Gł. Tow.",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 52.2133153,
+		"Longitude": 20.8969579,
+		"id": ""
+	},
+	{
+		"Name": "Warszawa Rembertów",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 52.2574687,
+		"Longitude": 21.1548932,
+		"id": ""
+	},
+	{
+		"Name": "Warszawa Praga",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 52.2786919,
+		"Longitude": 21.0211558,
+		"id": ""
+	},
+	{
+		"Name": "Koniecpol",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 50.777658,
+		"Longitude": 19.7093066,
+		"id": ""
+	},
+	{
+		"Name": "Dłubnia",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 50.1024073,
+		"Longitude": 20.0267566,
+		"id": ""
+	},
+	{
+		"Name": "Kraków Główny",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 50.0718154,
+		"Longitude": 19.9476078,
+		"id": ""
+	},
+	{
+		"Name": "Kraków Olsza",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 50.0758212,
+		"Longitude": 19.9689934,
+		"id": ""
+	},
+	{
+		"Name": "Kraków Płaszów",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 50.0374077,
+		"Longitude": 19.9711116,
+		"id": ""
+	},
+	{
+		"Name": "Kraków Bonarka",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 50.0291998,
+		"Longitude": 19.9464366,
 		"id": ""
 	}
 ]
