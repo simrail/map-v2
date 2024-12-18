@@ -1454,5 +1454,17 @@
 			541,
 			831
 		]
+	},
+	{
+		"Name": "Kraków Grzegórzki",
+		"Prefix": "",
+		"Country": "PL",
+		"Scenerie": "tunel_krakow",
+		"Type": "PassengerHalt",
+		"Latititude": 50.0570638,
+		"Longitude": 19.9480267,
+		"LineNumbers": [
+			629
+		]
 	}
 ]
