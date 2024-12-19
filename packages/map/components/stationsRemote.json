@@ -1,0 +1,50 @@
+[
+    {
+        "Name": "Sprowa",
+        "Prefix": "",
+        "DifficultyLevel": 0,
+        "MainImageURL": "",
+        "AdditionalImage1URL": "",
+        "AdditionalImage2URL": "",
+        "DispatchedBy": [],
+        "Latititude": 50.59304492206253,
+        "Longitude": 19.88301571264459,
+        "id": "Starzyny"
+    },
+    {
+        "Name": "Biała Rawska",
+        "Prefix": "BR",
+        "DifficultyLevel": 0,
+        "MainImageURL": "",
+        "AdditionalImage1URL": "",
+        "AdditionalImage2URL": "",
+        "DispatchedBy": [],
+        "Latititude": 51.7944183,
+        "Longitude": 20.4394425,
+        "id": "Strzałki"
+    },
+    {
+		"Name": "Pilichowice",
+		"Prefix": "Pi",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.2556656,
+		"Longitude": 20.1223774,
+		"id": "Olszamowice"
+	},
+    {
+		"Name": "Józefinów",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 52.18587897581022,
+		"Longitude": 20.85313515843776,
+		"id": "Pruszków"
+	}
+]
