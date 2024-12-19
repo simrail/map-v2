@@ -1,4 +1,5 @@
 import NonPlayableStations from "@/components/NonPlayableStations";
+import RemoteStations from "@/components/RemoteStations"
 import { TrainsList } from "@/components/TrainsList";
 import { Tooltip as MantineTooltip, type TooltipProps } from "@mantine/core";
 import { useFullscreen, useLocalStorage } from "@mantine/hooks";
@@ -295,6 +296,20 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							{stations.map((station) => (
 								<StationMarker key={station.Name} station={station} />
 							))}
+						</LayerGroup>
+					</LayersControl.Overlay>
+
+					<LayersControl.Overlay
+						checked={
+							localStorage.getItem("layer-remote dispatch stations") ===
+								null ||
+							localStorage.getItem("layer-remote dispatch stations") ===
+								"true"
+						}
+						name="Remote dispatch stations"
+					>
+						<LayerGroup>
+							<RemoteStations />
 						</LayerGroup>
 					</LayersControl.Overlay>
 
