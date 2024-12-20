@@ -18,7 +18,8 @@ export const RemoteStationMarker = ({ station }: StationMarkerProps) => {
 		popupAnchor: [0, -16],
 	});
 
-	return ( // make "User: {username}" work in a good way with the data from the station list used in Map.tsx and sync with this station.id
+	return (
+		// make "User: {username}" work in a good way with the data from the station list used in Map.tsx and sync with this station.id
 		<Marker
 			key={station.id}
 			icon={icon}
@@ -30,8 +31,10 @@ export const RemoteStationMarker = ({ station }: StationMarkerProps) => {
 			}}
 		>
 			<Popup>
-				{station.Name}<br/>
-                Controlled from: {station.id}<br/>
+				{station.Name}
+				<br />
+				Controlled from: {station.id}
+				<br />
 			</Popup>
 		</Marker>
 	);
