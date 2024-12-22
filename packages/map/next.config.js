@@ -8,6 +8,9 @@ const nextConfig = {
 		ignoreBuildErrors: true,
 	},
 	transpilePackages: ["common", 'mantine-flagpack'],
+	experimental: {
+		optimizePackageImports: ['mantine-flagpack'],
+	},
 	output: "export",
 	distDir: "dist",
 	images: {
