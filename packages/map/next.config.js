@@ -7,9 +7,9 @@ const nextConfig = {
 	typescript: {
 		ignoreBuildErrors: true,
 	},
-	transpilePackages: ["common", 'mantine-flagpack'],
+	transpilePackages: ["common", "mantine-flagpack"],
 	experimental: {
-		optimizePackageImports: ['mantine-flagpack'],
+		optimizePackageImports: ["mantine-flagpack"],
 	},
 	output: "export",
 	distDir: "dist",

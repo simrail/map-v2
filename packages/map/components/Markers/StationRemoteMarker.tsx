@@ -1,11 +1,6 @@
 import type { Station } from "@simrail/types";
 import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
-import { Space, useMantineColorScheme } from "@mantine/core";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import type { ProfileResponse } from "types/SteamProfile";
-import stationsList from "../EDR_station.json";
 
 type StationMarkerProps = {
 	station: Station;
