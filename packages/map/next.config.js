@@ -7,7 +7,7 @@ const nextConfig = {
 	typescript: {
 		ignoreBuildErrors: true,
 	},
-	transpilePackages: ["common"],
+	transpilePackages: ["common", 'mantine-flagpack'],
 	output: "export",
 	distDir: "dist",
 	images: {
