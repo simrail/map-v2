@@ -162,8 +162,8 @@ importers:
         specifier: ^0.1.2
         version: 0.1.2
       mantine-flagpack:
-        specifier: ^4.0.0
-        version: 4.0.0(@mantine/core@7.15.1(@mantine/hooks@7.15.1(react@18.3.1))(@types/react@18.0.26)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@7.15.1(react@18.3.1))(clsx@2.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^4.1.0
+        version: 4.1.0(@mantine/core@7.15.1(@mantine/hooks@7.15.1(react@18.3.1))(@types/react@18.0.26)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@7.15.1(react@18.3.1))(clsx@2.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next:
         specifier: ^14.2.21
         version: 14.2.21(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1956,14 +1956,14 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  mantine-flagpack@4.0.0:
-    resolution: {integrity: sha512-qPV4XJt2YB11i0Ps+C+yV1ULEBEPvnkq6i4bw9cKxjJsVVGGSjWlefTU8MYslkS5+g44bptvDRpsj6bBSWOVtQ==}
+  mantine-flagpack@4.1.0:
+    resolution: {integrity: sha512-O2hptAoNB7VN1yeGT0OxPPp40bv+CW0igDLfAt9Q8Mzd7rhdZj/XG1I+O8B/w5DCpCmmlArs7Tz9Avm+YV3JtA==}
     peerDependencies:
       '@mantine/core': '>=7.0.0'
       '@mantine/hooks': '>=7.0.0'
-      clsx: 2.0.0
-      react: ^18.2.0
-      react-dom: ^18.2.0
+      clsx: '>=2.1.0'
+      react: '>=18.2.0'
+      react-dom: '>=18.2.0'
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -4725,7 +4725,7 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  mantine-flagpack@4.0.0(@mantine/core@7.15.1(@mantine/hooks@7.15.1(react@18.3.1))(@types/react@18.0.26)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@7.15.1(react@18.3.1))(clsx@2.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  mantine-flagpack@4.1.0(@mantine/core@7.15.1(@mantine/hooks@7.15.1(react@18.3.1))(@types/react@18.0.26)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@mantine/hooks@7.15.1(react@18.3.1))(clsx@2.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@mantine/core': 7.15.1(@mantine/hooks@7.15.1(react@18.3.1))(@types/react@18.0.26)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@mantine/hooks': 7.15.1(react@18.3.1)
