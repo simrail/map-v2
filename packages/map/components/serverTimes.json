@@ -1,7 +1,7 @@
 [
 	{
-		"Name": "de4",
-		"UTCOff": -9
+		"Name": "de2",
+		"UTCOff": -5
 	},
 	{
 		"Name": "en3",
@@ -21,15 +21,15 @@
 	},
 	{
 		"Name": "de3",
-		"UTCOff": 1
+		"UTCOff": -2
 	},
 	{
 		"Name": "pl3",
-		"UTCOff": -9
+		"UTCOff": 1
 	},
 	{
-		"Name": "pl8",
-		"UTCOff": -5
+		"Name": "pl2",
+		"UTCOff": 1
 	},
 	{
 		"Name": "de1",
@@ -37,7 +37,7 @@
 	},
 	{
 		"Name": "pl4",
-		"UTCOff": 1
+		"UTCOff": -2
 	},
 	{
 		"Name": "cz1",
@@ -53,10 +53,6 @@
 	},
 	{
 		"Name": "eu3",
-		"UTCOff": 0
-	},
-	{
-		"Name": "hu1",
 		"UTCOff": 0
 	},
 	{
