@@ -154,35 +154,35 @@ const FlagIcon = ({ code }: FlagIconProperties) => {
 		w: number;
 	}> | null>(null);
 
-	useEffect(() => {
-		if (code) {
-			import("mantine-flagpack")
-				.then((mod) => {
-					type FlagPackType = {
-						[key: string]: ComponentType<{ w: number }>;
-					};
+	// useEffect(() => {
+	// 	if (code) {
+	// 		import("mantine-flagpack")
+	// 			.then((mod) => {
+	// 				type FlagPackType = {
+	// 					[key: string]: ComponentType<{ w: number }>;
+	// 				};
 
-					const flagPack = mod as unknown as FlagPackType;
+	// 				const flagPack = mod as unknown as FlagPackType;
 
-					let lang = code.toUpperCase();
-					if (lang === "EN") lang = "GB";
-					if (lang === "EU") {
-						setComponent(() => EUFlag);
-						return;
-					}
+	// 				let lang = code.toUpperCase();
+	// 				if (lang === "EN") lang = "GB";
+	// 				if (lang === "EU") {
+	// 					setComponent(() => EUFlag);
+	// 					return;
+	// 				}
 
-					const FlagComponent = flagPack[`${lang}Flag`];
-					if (FlagComponent) {
-						setComponent(() => FlagComponent);
-					} else {
-						console.error("Flag component not found for code:", lang);
-					}
-				})
-				.catch((err) => {
-					console.error("Failed to load flag icon", err);
-				});
-		}
-	}, [code]);
+	// 				const FlagComponent = flagPack[`${lang}Flag`];
+	// 				if (FlagComponent) {
+	// 					setComponent(() => FlagComponent);
+	// 				} else {
+	// 					console.error("Flag component not found for code:", lang);
+	// 				}
+	// 			})
+	// 			.catch((err) => {
+	// 				console.error("Failed to load flag icon", err);
+	// 			});
+	// 	}
+	// }, [code]);
 
 	if (!Component) {
 		return null; // Or some fallback UI
