@@ -125,7 +125,9 @@ const TrainText = ({
 	// get some general information about the wagon count
 	const wagonCount = wagons.length;
 
-	// only the first unit is responsible for train traction at the moment, so this is just safe to assume
+	// only the first unit is responsible for train traction at the moment, so this is just safe to assume // Not true anymore,-
+	// don't think it was true before update either as EMUs prob had multiple traction
+
 	// however, this might be wrong in case the first unit is not yet registered in railcars.json, so we just
 	// fall back to displaying the raw api name in that case
 	const tractionUnit = locomotives.at(0);
@@ -135,9 +137,13 @@ const TrainText = ({
 			: train.Vehicles[0];
 
 	// extract information about other units that are travelling in the pack
-	const additionalUnitCount = locomotives.filter(
+	const additionalUnits = locomotives.filter(
 		(info) => info.index !== 0,
-	).length;
+	).map((info) => info.railcar.id);
+
+	const additionalUnitsInfo = `${
+		additionalUnits.length > 0 ? `${additionalUnits.join(', ')}` : ''
+	}`;
 
 	// calculate train length and weight
 	// for some reason this calculation differs (sometimes!) from the value displayed in game. Note
@@ -157,7 +163,7 @@ const TrainText = ({
 			.reduce((partial, current) => partial + current, 0),
 	);
 
-	// get the lowest speed of the consist
+	// get the lowest speed of the consist, note that this is the consist vmax and not the timetable one
 	const minMaxSpeed = usedRailcarInfo
 		.map((info) => info.railcar.maxSpeed)
 		.reduce(
@@ -211,14 +217,14 @@ const TrainText = ({
 					{getTrainDisplayName(train.TrainName, train.TrainNoLocal)}{" "}
 				</Title>
 			)}
-			Locomotive: {tractionUnitInfo}
-			<br />
-			{additionalUnitCount > 0 && (
+			Locomotive: {tractionUnitInfo} <br />
+
+			{additionalUnits.length > 0 && (
 				<>
-					Other Units: x{additionalUnitCount}
-					<br />
+					Additional Units: {additionalUnitsInfo} <br />
 				</>
 			)}
+
 			{wagonCount > 0 && (
 				<>
 					Wagons: x{wagonCount} <br />
