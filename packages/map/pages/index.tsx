@@ -1,6 +1,7 @@
 import EUFlag from "@/components/EUFlag";
 import FavoriteStar from "@/components/FavoriteStar";
 import { TopNavigation } from "@/components/TopNavigation";
+import { WorldFlag } from "@/components/WorldFlag";
 import type { Server } from "@simrail/types";
 import Head from "next/head";
 import { type ComponentType, useEffect, useState } from "react";
@@ -90,7 +91,10 @@ export default function Home() {
 								/>
 								<span className="serverName">
 									<FlagIcon
-										code={server.ServerCode.slice(0, 2).toUpperCase()}
+										code={
+											server.ServerCode.match(/[A-Za-z]+/)?.at(0) ??
+											server.ServerCode.slice(0, 2)
+										}
 									/>
 									<span>{server.ServerName}</span>
 								</span>
@@ -118,6 +122,7 @@ export default function Home() {
 
         .serverName {
             margin-left: 32px;
+			margin-right: 16px;
             transition: all 200ms ease-in-out;
             display: flex;
             gap: 16px;
@@ -168,6 +173,10 @@ const FlagIcon = ({ code }: FlagIconProperties) => {
 					if (lang === "EN") lang = "GB";
 					if (lang === "EU") {
 						setComponent(() => EUFlag);
+						return;
+					}
+					if (lang === "INT") {
+						setComponent(() => WorldFlag);
 						return;
 					}
 
