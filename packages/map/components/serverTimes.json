@@ -1,15 +1,7 @@
 [
 	{
 		"code": "fr1",
-		"offsetSeconds": 176398
-	},
-	{
-		"code": "en2",
-		"offsetSeconds": 165598
-	},
-	{
-		"code": "en1",
-		"offsetSeconds": 172796
+		"offsetSeconds": 3600
 	},
 	{
 		"code": "de2",
@@ -17,39 +9,47 @@
 	},
 	{
 		"code": "de1",
-		"offsetSeconds": 176397
+		"offsetSeconds": 3600
+	},
+	{
+		"code": "int2",
+		"offsetSeconds": -15548401
 	},
 	{
 		"code": "de3",
-		"offsetSeconds": -7783200
+		"offsetSeconds": -7783204
+	},
+	{
+		"code": "int1",
+		"offsetSeconds": 3600
 	},
 	{
 		"code": "int4",
-		"offsetSeconds": 0
+		"offsetSeconds": -7772400
 	},
 	{
 		"code": "pl1",
-		"offsetSeconds": -15570001
+		"offsetSeconds": -15570000
 	},
 	{
 		"code": "int3",
-		"offsetSeconds": 0
+		"offsetSeconds": -28801
 	},
 	{
 		"code": "int6",
-		"offsetSeconds": 0
+		"offsetSeconds": 28798
 	},
 	{
 		"code": "pl3",
-		"offsetSeconds": 176396
+		"offsetSeconds": 3600
 	},
 	{
 		"code": "int5",
-		"offsetSeconds": 0
+		"offsetSeconds": 3600
 	},
 	{
 		"code": "pl2",
-		"offsetSeconds": 176399
+		"offsetSeconds": 3600
 	},
 	{
 		"code": "pl4",
@@ -57,7 +57,7 @@
 	},
 	{
 		"code": "cz1",
-		"offsetSeconds": 176399
+		"offsetSeconds": 3600
 	},
 	{
 		"code": "int9",
