@@ -34,17 +34,17 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 
 	useEffect(() => {
 		if (id) {
-			const serverUtcOffHours = serverTimes.find(
-				(server) => server.Name === id,
-			)?.UTCOff;
-			if (serverUtcOffHours !== undefined) {
+			const serverUtcOffSeconds = serverTimes.find(
+				(server) => server.code === id,
+			)?.offsetSeconds;
+			if (serverUtcOffSeconds !== undefined) {
 				const timer = setInterval(() => {
 					// update blinking state of the colon
 					setBlinking((currentBlinking) => !currentBlinking);
 
 					// update the server date
 					const currentUnixTimestamp = Date.now();
-					const utcOffsetInMs = serverUtcOffHours * 60 * 60 * 1000;
+					const utcOffsetInMs = serverUtcOffSeconds * 1000;
 					const serverDate = new Date(currentUnixTimestamp + utcOffsetInMs);
 					setServerDate(serverDate);
 				}, 1000);
