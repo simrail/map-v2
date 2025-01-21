@@ -182,6 +182,48 @@
 		"maxSpeed": 110
 	},
 	{
+		"id": "EN57-206",
+		"apiName": "EN57/EN57-206",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+5B",
+		"designation": "EN57",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1961-1993",
+		"weight": 126.5,
+		"length": 64.475,
+		"width": 3,
+		"maxSpeed": 110
+	},
+	{
+		"id": "EN57-612",
+		"apiName": "EN57/EN57-612",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+5B",
+		"designation": "EN57",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1961-1993",
+		"weight": 126.5,
+		"length": 64.475,
+		"width": 3,
+		"maxSpeed": 110
+	},
+	{
+		"id": "EN57-650",
+		"apiName": "EN57/EN57-650",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+5B",
+		"designation": "EN57",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1961-1993",
+		"weight": 126.5,
+		"length": 64.475,
+		"width": 3,
+		"maxSpeed": 110
+	},
+	{
 		"id": "EN57-1000",
 		"apiName": "EN57/EN57-1000",
 		"requiredDlcId": null,
@@ -392,6 +434,34 @@
 		"maxSpeed": 110
 	},
 	{
+		"id": "EN71-002",
+		"apiName": "EN57/EN71-002",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+6B+5B",
+		"designation": "EN71",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1976",
+		"weight": 182,
+		"length": 86.575,
+		"width": 3,
+		"maxSpeed": 110
+	},
+	{
+		"id": "EN71-004",
+		"apiName": "EN57/EN71-004",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+6B+5B",
+		"designation": "EN71",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1976",
+		"weight": 182,
+		"length": 86.575,
+		"width": 3,
+		"maxSpeed": 110
+	},
+	{
 		"id": "EN71-005",
 		"apiName": "EN57/EN71-005",
 		"requiredDlcId": null,
@@ -432,6 +502,20 @@
 		"length": 74.475,
 		"width": 3,
 		"maxSpeed": 160
+	},
+	{
+		"id": "EN71-015",
+		"apiName": "EN57/EN71-015",
+		"requiredDlcId": null,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+6B+5B",
+		"designation": "EN71",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1976",
+		"weight": 182,
+		"length": 86.575,
+		"width": 3,
+		"maxSpeed": 110
 	},
 	{
 		"id": "EN76-022",
