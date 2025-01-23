@@ -46,5 +46,29 @@
 		"Latititude": 52.18587897581022,
 		"Longitude": 20.85313515843776,
 		"id": "Pruszków"
+	},
+	{
+		"Name": "Gniewięcin APO",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 50.540835,
+		"Longitude": 20.044427,
+		"id": "Kozłów"
+	},
+	{
+		"Name": "Klimontów APO",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 50.509156,
+		"Longitude": 20.024466,
+		"id": "Kozłów"
 	}
 ]
