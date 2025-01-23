@@ -514,5 +514,17 @@
 		"Latititude": 50.0291998,
 		"Longitude": 19.9464366,
 		"id": ""
+	},
+	{
+		"Name": "Borowa Górka",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 50.245239,
+		"Longitude": 19.327073,
+		"id": ""
 	}
 ]
