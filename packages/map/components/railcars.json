@@ -588,6 +588,20 @@
 		"maxSpeed": 140
 	},
 	{
+		"id": "EP08-008",
+		"apiName": "4E/EP08-008",
+		"requiredDlcId": null,
+		"railcarType": "LOCOMOTIVE",
+		"typeIdentifier": "102E",
+		"designation": "EP08",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1972-1976",
+		"weight": 80,
+		"length": 15.9,
+		"width": 3,
+		"maxSpeed": 140
+	},
+	{
 		"id": "EP08-013",
 		"apiName": "4E/EP08-013",
 		"requiredDlcId": null,
