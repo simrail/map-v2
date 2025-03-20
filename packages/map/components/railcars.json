@@ -1204,6 +1204,34 @@
 		"maxSpeed": 160
 	},
 	{
+		"id": "230-01-31514508558-7",
+		"apiName": "629Z/230-01_31514508558-7",
+		"requiredDlcId": null,
+		"railcarType": "WAGON",
+		"typeIdentifier": "230-01",
+		"designation": "Sgmmns-x",
+		"producer": "Tatravagónka Poprad",
+		"yearsOfProduction": "2022",
+		"weight": 16.5,
+		"length": 13.4875,
+		"width": 3,
+		"maxSpeed": 120
+	},
+	{
+		"id": "434Z-31514553133-5",
+		"apiName": "629Z/434Z_31514553133-5",
+		"requiredDlcId": "2868050",
+		"railcarType": "WAGON",
+		"typeIdentifier": "434Z",
+		"designation": "Sgns",
+		"producer": "EKK Wagon",
+		"yearsOfProduction": "2013",
+		"weight": 18.875,
+		"length": 19.7375,
+		"width": 3,
+		"maxSpeed": 120
+	},
+	{
 		"id": "441V-31516635283-3",
 		"apiName": "441V/441V_31516635283-3",
 		"requiredDlcId": "2868050",
@@ -1228,6 +1256,20 @@
 		"yearsOfProduction": "2005-2007",
 		"weight": 24,
 		"length": 13.5,
+		"width": 3,
+		"maxSpeed": 120
+	},
+	{
+		"id": "629Z-31514960133-0",
+		"apiName": "629Z/629Z_31514960133-0",
+		"requiredDlcId": "2868050",
+		"railcarType": "WAGON",
+		"typeIdentifier": "629Z",
+		"designation": "Sggrss",
+		"producer": "EKK Wagon",
+		"yearsOfProduction": "2013",
+		"weight": 28.5,
+		"length": 26.6375,
 		"width": 3,
 		"maxSpeed": 120
 	},
