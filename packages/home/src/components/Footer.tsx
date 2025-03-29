@@ -60,6 +60,10 @@ export const Footer = () => {
 			<Text component="span" mt="18px" size="13px">
 				Website created by the french community of SimRail
 			</Text>
+			<Text component="span" mt="18px" size="13px">
+				Monitor your Discord bots using <a href="https://upbot.apphttps://upbot.app/?utm_source=simrail&utm_medium=referral&utm_campaign=simrail_footer">upbot</a>.
+			</Text>
+
 			<Space h="lg" />
 		</Text>
 	);
