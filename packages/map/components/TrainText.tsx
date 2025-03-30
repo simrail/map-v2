@@ -57,7 +57,8 @@ function extractVehicleInformation(
 			// there is information about the load mass and brake regime included
 			// that we want to extract here. example: '424Z/424Z_brazowy:P:40@RandomContainerAll'
 			const loadWeight = vehicleNameParts[2].split("@")[0];
-			return [vehicleNameParts[0], +loadWeight];
+			const cleanedWeight = loadWeight.replaceAll(/[^0-9]/g, "");
+			return [vehicleNameParts[0], Number(cleanedWeight)];
 		}
 
 		if (vehicleNameParts.length === 2) {
