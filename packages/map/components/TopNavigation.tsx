@@ -21,6 +21,20 @@ type TopNavigationProps = {
 	disableMapFeatures?: boolean;
 };
 
+const getServerTime = async (id: string): Promise<number> => {
+	try {
+		const res = await fetch("http://simrailtimeserver.xyz/");
+		const fetchedTime = await res.text();
+		for (const line of fetchedTime.split("\n")) {
+			const lineSplit = line.split(":");
+			if (lineSplit[0] === id) return Number(lineSplit[1]);
+		}
+	} catch (err) {
+		console.error("Fetch error:", err);
+	}
+	return 0;
+};
+
 export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 	const [blinking, setBlinking] = useState(false);
 	const [serverDate, setServerDate] = useState<Date>();
@@ -30,28 +44,32 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 	const [dropdown, setDropdown] = useState<boolean>(false);
 
 	const router = useRouter();
+	const [serverUtcOffset, setServerUtcOffset] = useState<number | null>(null);
 	const { id, trainId } = router.query;
 
 	useEffect(() => {
-		if (id) {
-			const serverUtcOffSeconds = serverTimes.find(
-				(server) => server.code === id,
-			)?.offsetSeconds;
-			if (serverUtcOffSeconds !== undefined) {
-				const timer = setInterval(() => {
-					// update blinking state of the colon
-					setBlinking((currentBlinking) => !currentBlinking);
-
-					// update the server date
-					const currentUnixTimestamp = Date.now();
-					const utcOffsetInMs = serverUtcOffSeconds * 1000;
-					const serverDate = new Date(currentUnixTimestamp + utcOffsetInMs);
-					setServerDate(serverDate);
-				}, 1000);
-				return () => clearInterval(timer);
-			}
+		if (id && serverUtcOffset === null) {
+			getServerTime(id as string).then(setServerUtcOffset);
 		}
-	}, [id]);
+	}, [id, serverUtcOffset]);
+
+	useEffect(() => {
+		if (id) {
+			const timer = setInterval(() => {
+				// update blinking state of the colon
+				setBlinking((currentBlinking) => !currentBlinking);
+
+				// update the server date
+				const currentUnixTimestamp = Date.now();
+				let utcOffsetInMs = 0;
+				if (serverUtcOffset !== null)
+					utcOffsetInMs = serverUtcOffset * 60 * 60 * 1000;
+				const serverDate = new Date(currentUnixTimestamp + utcOffsetInMs);
+				setServerDate(serverDate);
+			}, 1000);
+			return () => clearInterval(timer);
+		}
+	}, [id, serverUtcOffset]);
 
 	if (!serverDate) return null;
 
