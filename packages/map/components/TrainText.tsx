@@ -52,12 +52,22 @@ function extractVehicleInformation(
 	rawVehicleName: string,
 ): [string, number | null] {
 	if (rawVehicleName.includes(":")) {
-		// in case the name includes a ':' there is information about the load mass and brake regime included
-		// that we want to extract here. example: '424Z/424Z_brazowy:P:40@RandomContainerAll'
 		const vehicleNameParts = rawVehicleName.split(":");
-		const loadWeight = vehicleNameParts[2].split("@")[0];
-		return [vehicleNameParts[0], +loadWeight];
+		if (vehicleNameParts.length >= 3) {
+			// there is information about the load mass and brake regime included
+			// that we want to extract here. example: '424Z/424Z_brazowy:P:40@RandomContainerAll'
+			const loadWeight = vehicleNameParts[2].split("@")[0];
+			const cleanedWeight = loadWeight.replaceAll(/[^0-9]/g, "");
+			return [vehicleNameParts[0], Number(cleanedWeight)];
+		}
+
+		if (vehicleNameParts.length === 2) {
+			// there is information about the vehicle type and brake regime included,
+			// but we only need the vehicle name in that case. example: '201E/ET22-256:G'
+			return [vehicleNameParts[0], null];
+		}
 	}
+
 	// raw vehicle name is just the name of the vehicle
 	return [rawVehicleName, null];
 }
