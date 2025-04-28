@@ -226,7 +226,7 @@
 	{
 		"id": "EN57-919",
 		"apiName": "EN57/EN57-919",
-		"requiredDlcId": 3583200,
+		"requiredDlcId": "3583200",
 		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
 		"typeIdentifier": "5B+6B+5B",
 		"designation": "EN57",
