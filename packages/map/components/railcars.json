@@ -224,6 +224,20 @@
 		"maxSpeed": 110
 	},
 	{
+		"id": "EN57-919",
+		"apiName": "EN57/EN57-919",
+		"requiredDlcId": 3583200,
+		"railcarType": "ELECTRIC_MULTIPLE_UNIT",
+		"typeIdentifier": "5B+6B+5B",
+		"designation": "EN57",
+		"producer": "Pafawag Wroclaw",
+		"yearsOfProduction": "1961-1993",
+		"weight": 126.5,
+		"length": 64.475,
+		"width": 3,
+		"maxSpeed": 110
+	},
+	{
 		"id": "EN57-1000",
 		"apiName": "EN57/EN57-1000",
 		"requiredDlcId": null,
