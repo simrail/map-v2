@@ -70,5 +70,29 @@
 		"Latititude": 50.509156,
 		"Longitude": 20.024466,
 		"id": "Kozłów"
+	},
+	{
+		"Name": "Radziwiłłów Mazowiecki",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 52.000331,
+		"Longitude": 20.290474,
+		"id": "Żyrardów"
+	},
+	{
+		"Name": "Łódź Andrzejów",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.741028,
+		"Longitude": 19.617146,
+		"id": "Gałkówek"
 	}
 ]
