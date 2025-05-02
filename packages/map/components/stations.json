@@ -168,30 +168,6 @@
 		"id": ""
 	},
 	{
-		"Name": "Żyrardów",
-		"Prefix": "",
-		"DifficultyLevel": 0,
-		"MainImageURL": "",
-		"AdditionalImage1URL": "",
-		"AdditionalImage2URL": "",
-		"DispatchedBy": [],
-		"Latititude": 52.05283204,
-		"Longitude": 20.45168499,
-		"id": ""
-	},
-	{
-		"Name": "Warszawa Włochy",
-		"Prefix": "",
-		"DifficultyLevel": 0,
-		"MainImageURL": "",
-		"AdditionalImage1URL": "",
-		"AdditionalImage2URL": "",
-		"DispatchedBy": [],
-		"Latititude": 52.20677,
-		"Longitude": 20.91721,
-		"id": ""
-	},
-	{
 		"Name": "Warszawa Zachodnia",
 		"Prefix": "",
 		"DifficultyLevel": 0,
