@@ -38,9 +38,8 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 	const { colorScheme } = useMantineColorScheme();
 
 	let botIcon = "/markers/icon-bot-simrail.jpg";
-	if (colorScheme === "dark")
+	if (colorScheme === "dark" || colorScheme === "auto" && window.matchMedia('(prefers-color-scheme: dark)').matches)
 		botIcon = "/markers/icon-bot-simrail-dark.jpg";
-	// window.matchMedia('(prefers-color-scheme: dark)').matches incase colorScheme === auto we need to see what the system uses
 
 	const icon = L.icon({
 		iconUrl: station.DispatchedBy[0] && avatar ? avatar : botIcon,
