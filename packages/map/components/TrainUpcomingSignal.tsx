@@ -1,5 +1,6 @@
 import type { Train } from "@simrail/types";
 import type React from "react";
+import { useState } from "react";
 
 type TrainSignalProps = {
 	train: Train;
@@ -9,6 +10,7 @@ type TrainSignalProps = {
 const signalStates = {
 	open: "/signals/signal-open.png",
 	limited40: "/signals/signal-limited-40.png",
+	limited50: "/signals/signal-limited-50.png",
 	limited60: "/signals/signal-limited-60.png",
 	limited100: "/signals/signal-limited-100.png",
 	limited130: "/signals/signal-limited-130.png",
@@ -46,6 +48,11 @@ const getSignalState = (signalSpeed: number | string): string | null => {
 		return "limited40";
 	}
 
+	// Dedicated icon for exact 50
+	if (typeof signalSpeed === "number" && signalSpeed === 50) {
+		return "limited50";
+	}
+
 	if (typeof signalSpeed === "number" && signalSpeed <= 60) {
 		return "limited60";
 	}
@@ -75,6 +82,10 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
 		? signalStates[signalState as keyof typeof signalStates]
 		: null;
 
+	// Track last failed src to hide image only when that src fails
+	const [failedSrc, setFailedSrc] = useState<string | null>(null);
+	const visibleSignalImageSrc = signalImageSrc && failedSrc !== signalImageSrc ? signalImageSrc : null;
+
 	if (!showMoreInfo) {
 		return (
 			<>
@@ -97,18 +108,19 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
 			{SignalInFront && (
 				<>
 					<div>Signal speed: {formatSignalSpeed(SignalInFrontSpeed)}</div>
-					{signalImageSrc && (
+					{visibleSignalImageSrc ? (
 						<div style={{ display: "flex", alignItems: "center" }}>
 							<span>Signal Status : </span>
 							<img
-								src={signalImageSrc}
+								src={visibleSignalImageSrc}
 								alt={signalState || ""}
 								width={35}
 								height={35}
 								style={{ marginLeft: "0.5rem" }}
+								onError={(e) => setFailedSrc((e.currentTarget as HTMLImageElement).src)}
 							/>
 						</div>
-					)}
+					) : null}
 				</>
 			)}
 		</>
