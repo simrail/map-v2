@@ -147,12 +147,12 @@ const TrainText = ({
 			: train.Vehicles[0];
 
 	// extract information about other units that are travelling in the pack
-	const additionalUnits = locomotives.filter(
-		(info) => info.index !== 0,
-	).map((info) => info.railcar.id);
+	const additionalUnits = locomotives
+		.filter((info) => info.index !== 0)
+		.map((info) => info.railcar.id);
 
 	const additionalUnitsInfo = `${
-		additionalUnits.length > 0 ? `${additionalUnits.join(', ')}` : ''
+		additionalUnits.length > 0 ? `${additionalUnits.join(", ")}` : ""
 	}`;
 
 	// calculate train length and weight
@@ -228,13 +228,11 @@ const TrainText = ({
 				</Title>
 			)}
 			Locomotive: {tractionUnitInfo} <br />
-
 			{additionalUnits.length > 0 && (
 				<>
 					Additional Units: {additionalUnitsInfo} <br />
 				</>
 			)}
-
 			{wagonCount > 0 && (
 				<>
 					Wagons: x{wagonCount} <br />

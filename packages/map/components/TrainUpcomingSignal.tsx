@@ -84,7 +84,8 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
 
 	// Track last failed src to hide image only when that src fails
 	const [failedSrc, setFailedSrc] = useState<string | null>(null);
-	const visibleSignalImageSrc = signalImageSrc && failedSrc !== signalImageSrc ? signalImageSrc : null;
+	const visibleSignalImageSrc =
+		signalImageSrc && failedSrc !== signalImageSrc ? signalImageSrc : null;
 
 	if (!showMoreInfo) {
 		return (
@@ -117,7 +118,9 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
 								width={35}
 								height={35}
 								style={{ marginLeft: "0.5rem" }}
-								onError={(e) => setFailedSrc((e.currentTarget as HTMLImageElement).src)}
+								onError={(e) =>
+									setFailedSrc((e.currentTarget as HTMLImageElement).src)
+								}
 							/>
 						</div>
 					) : null}
