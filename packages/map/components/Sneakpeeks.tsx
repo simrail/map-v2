@@ -17,7 +17,7 @@ const SneakpeekMarkers: FC = () => (
 	<>
 		{sneakpeeksjson.map((sneakpeek: SneakpeekMarkerProps) => (
 			<SneakpeekMarker
-				key={0}
+				key={sneakpeek.title}
 				title={sneakpeek.title}
 				desc={sneakpeek.desc}
 				url={sneakpeek.url}
