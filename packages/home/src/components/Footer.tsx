@@ -62,7 +62,11 @@ export const Footer = () => {
 			</Text>
 			<Space h="sm" />
 			<Text component="span" mt="18px" size="13px">
-				Monitor your Discord bots using <a href="https://upbot.app/?utm_source=simrail&utm_medium=referral&utm_campaign=simrail_footer">upbot</a>.
+				Monitor your Discord bots using{" "}
+				<a href="https://upbot.app/?utm_source=simrail&utm_medium=referral&utm_campaign=simrail_footer">
+					upbot
+				</a>
+				.
 			</Text>
 
 			<Space h="lg" />
