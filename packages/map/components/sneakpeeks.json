@@ -108,5 +108,125 @@
 		"date": "2024-02-25",
 		"Latititude": 51.7429651015326,
 		"Longitude": 19.41499927691946
+	},
+	{
+		"title": "Łódź Chojny",
+		"desc": "Ladies and Gentlemen! I would like to take you on a tour through some stations that will appear in the next Simrail DLC. Let's start with Łódź Chojny - a junction point for Łódź Widzew, Łódź Olechów and Łódź Kaliska routes that celebrates 122nd birthday this year. It has 4 platforms, 6 main tracks and in the old days - it was the most important station in Łódź.",
+		"url": "https://discord.com/channels/1067073812560093264/1077966562310488085/1400873716098793575",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/01_08.2025_2.thumb.png.0a32415160239d8e887ab02bb8737251.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/01_08.2025_1.thumb.png.ae575f27057e6a220fee7de8a0b702c3.png",
+		"date": "2025-08-01",
+		"Latititude": 51.72640078040166,
+		"Longitude": 19.484545429534208
+	},
+	{
+		"title": "Łódź Retkinia",
+		"desc": "Today, let's move a bit to the west — to Łódź Retkinia. It's a small junction point that splits traffic between Łódź Kaliska (line 14) and Łódź Chojny (line 539, and then line 25). There is also a small passenger stop here, just outside the entry signals. As a bonus, you can check out the new, improved clouds! They are available for testing in today's build on the Next branch (along with the new distant platform lighting).",
+		"url": "https://discord.com/channels/1067073812560093264/1077966562310488085/1403413894638342215",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/08_08.2025_2.thumb.png.63a2e927e3c8e58fae5ccbcef9831fd7.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/08_08.2025_4.png.282ea5dabefa9ffb47ece56fdc019ca2.png",
+		"date": "2025-08-08",
+		"Latititude": 51.740355339327294,
+		"Longitude": 19.40646441752436
+	},
+	{
+		"title": "Łódź Lublinek",
+		"desc": "It's time for Łódź Lublinek – a railway station located in the south-western part of Łódź, on line no. 14 (Łódź Kaliska – Zduńska Wola). It mainly serves regional and suburban trains, providing fast connections to the city center and Łódź's Airport by utilizing 2 platforms and 5 tracks.",
+		"url": "https://discord.com/channels/1067073812560093264/1077966562310488085/1405955113759281172",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/15_08.2025_1.thumb.png.0cc7faf2e62f1d1195777f2e1dee4e69.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/15_08.2025_3.thumb.png.0f35492149b69b6c54cc5014e8857ff3.png",
+		"date": "2025-08-15",
+		"Latititude": 51.72097525279835,
+		"Longitude": 19.35924671524212
+	},
+	{
+		"title": "Pabianice",
+		"desc": "Out of the Łódź's city borders we have Pabianice - small city established around X/XI century. It has two railway points: Passenger stop: Pabianice Północne - on the north side of the city Station: Pabianice - with two platforms and four main tracks",
+		"url": "https://discord.com/channels/1067073812560093264/1077966562310488085/1408496742126845982",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/22_08.2025_1.thumb.png.a2b3838c2829eb174d9eb91b1217ba5f.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/22_08.2025_6.thumb.png.5dde4b2c140fb562532c87e32fdfc194.png",
+		"date": "2025-08-22",
+		"Latititude": 51.664096011819325,
+		"Longitude": 19.331524712728854
+	},
+	{
+		"title": "Łask",
+		"desc": "Moving further to the west - we can enter Łask station. There you can find 5 tracks, double-sided platform and another single-sided platform. What's worth mentioning - there is no SBL (ABS) on a railway lines in that region. Still, since the distance to neighbor stations is relatively big - we have couple of APOs there: Dobroń to the east, and Borszewice to the west.",
+		"url": "https://discord.com/channels/1067073812560093264/1077966562310488085/1410938076053901322",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/Lask_3.thumb.png.153774c49815bf2f3dfd301cb30211f6.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_08/Lask_2.thumb.png.10406ac91f21b49b67363ab2afa0da3c.png",
+		"date": "2025-08-29",
+		"Latititude": 51.60369026985311,
+		"Longitude": 19.111972771196967
+	},
+	{
+		"title": "Zduńska Wola",
+		"desc": "The time has come to intersect with the famous Polish coal main line - between Zduńska Wola station and Gajewniki signal post. This junction allows trains to run in all four directions: north to the sea, south to the mountains, and east–west across Poland.  Zduńska Wola station has two platforms (similar to those at Łask) and six tracks.",
+		"url": "https://discord.com/channels/1067073812560093264/1077966562310488085/1413550775635808286",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/06_09.2025_4.thumb.png.05cc5bc69aa9b418b615b6384bebcf60.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/06_09.2025_6.thumb.png.424fa65fc356ae664170ddaf42421641.png",
+		"date": "2025-09-05",
+		"Latititude": 51.61135218876441,
+		"Longitude": 18.94854478072667
+	},
+	{
+		"title": "Gajewniki signal post",
+		"desc": "The time has come to intersect with the famous Polish coal main line - between Zduńska Wola station and Gajewniki signal post. This junction allows trains to run in all four directions: north to the sea, south to the mountains, and east–west across Poland.  Zduńska Wola station has two platforms (similar to those at Łask) and six tracks.",
+		"url": "https://discord.com/channels/1067073812560093264/1077966562310488085/1413550775635808286",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/06_09.2025_1.thumb.png.2284b52830c703254ae1ef05a71eb76c.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/06_09.2025_2.thumb.png.addb4780488cd2d4a819d4bbc954c052.png",
+		"date": "2025-09-05",
+		"Latititude": 51.612720901498946,
+		"Longitude": 18.9830345289678
+	},
+	{
+		"title": "Sieradz",
+		"desc": "It's time to conclude our journey to the west by visiting Sieradz! Five tracks, two platforms... but what's most interesting: western half of the station is equipped with old fashioned mechanical semaphores, the great relic of the past.  The eastern side was modernized in 2017, along with the addition of the 'Męka' APO between Zduńska Wola and Sieradz stations.",
+		"url": "https://discord.com/channels/1067073812560093264/1077966562310488085/1416078611336659108",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/Sieradz_1.thumb.png.dd84c1582138f6d8acdfe78ce2ad41ea.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/Sieradz_3.thumb.png.ec8fe503e54857043159e51973d8a288.png",
+		"date": "2025-09-12",
+		"Latititude": 51.59782061819974,
+		"Longitude": 18.714302842862114
+	},
+	{
+		"title": "Łódź Marysin & Łódź Warszawska",
+		"desc": "Let’s go back to Łódź and visit Łódź Marysin, a station located northwest of Widzew. It is a stop on the single-track section of line 16 between Łódź Widzew and Zgierz, also serving as a passing loop. The station stands next to the historic Radegast, from which thousands of people imprisoned in the Litzmannstadt Ghetto were deported during World War II to Chełmno and later to Auschwitz-Birkenau. Its current name, restored in 2014, refers to the former suburban settlement of Marysin. Right next to it, you will also find the Łódź Warszawska stop, from which you can enter Arturówek and Łagiewnicki Forest from the south.",
+		"url": "",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/LodzMarysin_3.thumb.png.93d76945ac7ad061697e1154b970b664.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/LodzWarszawska_1.thumb.png.f123d7bf0431650c97cbf5ae969b62df.png",
+		"date": "2025-09-19",
+		"Latititude": 51.80265441179272,
+		"Longitude": 19.4787398089922
+	},
+	{
+		"title": "Zgierz",
+		"desc": "Welcome to the northern railway junction of the Łódź metropolitan area – Zgierz. This station serves both regional and long-distance traffic, acting as an interchange between two lines: Line 15 from Łowicz (single-track) to Łódź Kaliska (double-track) Line 16 from Kutno to Łódź Widzew (both single-track) The station has three platforms and six tracks, used by trains running towards Łódź, Kutno, Łowicz, Łęczyca, and Toruń. In recent years, Zgierz has grown in importance thanks to infrastructure modernization and the increasing number of metropolitan connections linking the city with Łódź and other towns in the Łódź Voivodeship.",
+		"url": "",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/Zgierz_1.thumb.png.7779bcca0b373c4072b5092b67b9399e.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_09/Zgierz_5.thumb.png.a96ed4f975872ecb14d4c56ef723d83e.png",
+		"date": "2025-09-26",
+		"Latititude": 51.849634832714095,
+		"Longitude": 19.425481335286232
+	},
+	{
+		"title": "Łódź Żabieniec",
+		"desc": "It’s time to visit an intermediate stop on the western ring line of Łódź – Łódź Żabieniec. The southern part of the station looks like a simple passenger stop, while the northern section features six main tracks and several additional ones serving the nearby industrial district and the combined heat and power plant. The future of this station may be even more exciting: once the new underground cross-city line is completed, Łódź Żabieniec will become the exit point for trains heading north from the tunnel.",
+		"url": "",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_10/LodzZabieniec_6.thumb.png.70468a9502933500ebf028f08c246bc0.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_10/LodzZabieniec_2.thumb.png.2a1a26134302b339e00de8a574194306.png",
+		"date": "2025-10-05",
+		"Latititude": 51.79359240042876,
+		"Longitude": 19.407117864979778
+	},
+	{
+		"title": "Łódź Kaliska",
+		"desc": "It’s time for the second-largest station in the Łódź area – Łódź Kaliska. Opened in the beginning of XX century, this station serves as a major junction, connecting routes from the north (Zgierz), west (Retkinia), and southeast (Chojny). The station can be divided into three parts: Northern section: a stabling area for rolling stock and train carriages, with multiple sidings used for parking and maintenance., Central section: the passenger area, featuring five platforms divided into two directional groups., Southern section: a freight area with a junction triangle leading toward Retkinia., Over the past 30 years, the entire station has undergone several modernization projects, resulting in higher speed limits on turnouts and a few quite scenic railway bridges.",
+		"url": "",
+		"ImageURL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_10/LodzKaliska_8.thumb.png.4fc30a25fe27ac32abb6f36546c17514.png",
+		"Image2URL": "https://s3.eu-central-1.amazonaws.com/forum.simrail.eu/monthly_2025_10/LodzKaliska_6.thumb.png.6f2d01b721bd6c58d129f900e1d07968.png",
+		"date": "2025-10-10",
+		"Latititude": 51.75771437797517,
+		"Longitude": 19.430088069670983
 	}
 ]
