@@ -51,6 +51,11 @@ a {
   z-index: 40;
 }
 
+.steam-avatar.in-border-area {
+  border-color: #929292;
+  filter: contrast(0.75);
+}
+
 .station-avatar {
   border: 2px solid #FF8A00;
   z-index: 50;

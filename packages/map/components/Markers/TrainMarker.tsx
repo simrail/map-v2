@@ -41,11 +41,12 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 	)
 		botIcon = "/markers/icon-bot-simrail-dark.jpg";
 
+	const borderAreaClass = train.TrainData.InBorderStationArea ? ["in-border-area"] : [];
 	const icon = L.icon({
 		iconUrl: train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon,
 		iconSize: [24, 24],
 		popupAnchor: [0, -12],
-		className: "steam-avatar",
+		className: ["steam-avatar", ...borderAreaClass].join(" "),
 	});
 
 	useMapEvents({
