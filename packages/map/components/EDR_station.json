@@ -127,6 +127,10 @@
 		"id": "DG_WZ",
 		"srName": "Dąbrowa Górnicza Wschodnia"
 	},
+	"KOL": {
+		"id": "KOL",
+		"srName": "Koluszki"
+	},
 	"DOR": {
 		"id": "DOR",
 		"srName": "Dorota"
