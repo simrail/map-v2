@@ -15,6 +15,8 @@ import {
 	MdFullscreen,
 	MdFullscreenExit,
 	MdOutlineTraffic,
+	MdSatellite,
+	MdSatelliteAlt,
 	MdSpeakerNotes,
 	MdSpeakerNotesOff,
 	MdTraffic,
@@ -60,6 +62,11 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		defaultValue: true,
 	});
 
+	const [isSatellite, setIsSatellite] = useLocalStorage({
+		key: "isSatellite",
+		defaultValue: false,
+	});
+
 	const { toggle: toggleFullscreen, fullscreen } = useFullscreen();
 	const FullscreenIcon = fullscreen ? MdFullscreenExit : MdFullscreen;
 
@@ -67,6 +74,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		showSignalInfo === true ? MdTraffic : MdOutlineTraffic;
 	const RenderPopupIcon =
 		renderPopup === true ? MdSpeakerNotes : MdSpeakerNotesOff;
+	const SatelliteIcon = isSatellite === true ? MdSatellite : MdSatelliteAlt;
 
 	const { selectedTrain, setSelectedTrain } = useSelectedTrain();
 	const [stations, setStations] = useState<Station[] | null>(null);
@@ -239,6 +247,20 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						</Tooltip>
 
 						<Tooltip
+							label={
+								isSatellite ? "Switch to OSM view" : "Switch to satellite view"
+							}
+							position="right"
+						>
+							<button type="button" className={style.icon}>
+								<SatelliteIcon
+									onClick={() => setIsSatellite((prev) => !prev)}
+									size={24}
+								/>
+							</button>
+						</Tooltip>
+
+						<Tooltip
 							label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
 							position="right"
 						>
@@ -249,11 +271,26 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 					</div>
 				</Control>
 
-				<TileLayer
-					className={styles.test}
-					attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href = "https://discord.gg/d65Q8gWM5W" > Created by SimRail France 🇫🇷 Community </a>'
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-				/>
+				{isSatellite ? (
+					<>
+						<TileLayer
+							attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGS, and the GIS User Community | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href="https://discord.gg/d65Q8gWM5W">Created by SimRail France 🇫🇷 Community</a>'
+							url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+						/>
+						<TileLayer
+							url="https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png"
+							opacity={0.6}
+							attribution='&copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a>'
+						/>
+					</>
+				) : (
+					<TileLayer
+						className={styles.test}
+						attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href="https://discord.gg/d65Q8gWM5W">Created by SimRail France 🇫🇷 Community</a>'
+						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					/>
+				)}
+
 				<LayersControl position="bottomright" collapsed={false}>
 					<LayersControl.Overlay
 						checked={
