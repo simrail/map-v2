@@ -6,7 +6,7 @@ import { readLocalStorageValue } from "@mantine/hooks";
 import type { Train } from "@simrail/types";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MdClose } from "react-icons/md";
 import type { Railcar } from "../types/Railcar";
 
@@ -15,6 +15,7 @@ type TrainTextProps = {
 	username: string;
 	avatar: string | null;
 	minified?: boolean | null;
+	stoppedSince?: number;
 };
 
 interface TrainRailcarInfo {
@@ -72,11 +73,26 @@ function extractVehicleInformation(
 	return [rawVehicleName, null];
 }
 
+function formatStoppedDuration(totalSeconds: number): string {
+	if (totalSeconds < 60) {
+		return `${totalSeconds}s`;
+	}
+
+	const totalMinutes = Math.floor(totalSeconds / 60);
+	if (totalMinutes < 60) {
+		return `${totalMinutes}min`;
+	}
+
+	const totalHours = Math.floor(totalMinutes / 60);
+	return `${totalHours}h`;
+}
+
 const TrainText = ({
 	train,
 	username,
 	avatar,
 	minified = false,
+	stoppedSince,
 }: TrainTextProps) => {
 	const router = useRouter();
 	const { id, trainId } = router.query;
@@ -139,6 +155,22 @@ const TrainText = ({
 	// don't think it was true before update either as EMUs prob had multiple traction
 
 	const roundedSpeed = Math.round(train.TrainData.Velocity);
+	const [currentTime, setCurrentTime] = useState(Date.now());
+
+	useEffect(() => {
+		if (roundedSpeed !== 0 || !stoppedSince) {
+			return;
+		}
+
+		setCurrentTime(Date.now());
+		const interval = window.setInterval(() => setCurrentTime(Date.now()), 1000);
+
+		return () => window.clearInterval(interval);
+	}, [roundedSpeed, stoppedSince]);
+
+	const stoppedSeconds = stoppedSince
+		? Math.max(0, Math.floor((currentTime - stoppedSince) / 1000))
+		: 0;
 
 	// however, this might be wrong in case the first unit is not yet registered in railcars.json, so we just
 	// fall back to displaying the raw api name in that case
@@ -246,7 +278,7 @@ const TrainText = ({
 			<br />
 			{roundedSpeed === 0 ? (
 				<>
-					Train currently stopped
+					Train currently stopped for: {formatStoppedDuration(stoppedSeconds)}
 					<br />
 				</>
 			) : (

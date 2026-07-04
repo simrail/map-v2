@@ -6,7 +6,11 @@ import { useSelectedTrain } from "../contexts/SelectedTrainContext";
 import styles from "../styles/SelectedTrainPopup.module.css";
 import TrainText from "./TrainText";
 
-const SelectedTrainPopup = () => {
+type SelectedTrainPopupProps = {
+	stoppedSince?: number;
+};
+
+const SelectedTrainPopup = ({ stoppedSince }: SelectedTrainPopupProps) => {
 	const { selectedTrain } = useSelectedTrain();
 	const renderPopup = readLocalStorageValue({
 		key: "renderPopup",
@@ -41,6 +45,7 @@ const SelectedTrainPopup = () => {
 					train={selectedTrain}
 					username={username ?? ""}
 					avatar={avatar}
+					stoppedSince={stoppedSince}
 				/>
 			</div>
 		) : null;
