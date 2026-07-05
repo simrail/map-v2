@@ -43,6 +43,8 @@ type MapProps = {
 	serverId: string | string[];
 };
 
+const getTrainStopKey = (train: Train) => train.id ?? train.TrainNoLocal;
+
 const LeaftletMap = ({ serverId }: MapProps) => {
 	const [map, setMap] = useState<LeafletMap | null>(null);
 
@@ -78,12 +80,33 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 
 	const { selectedTrain, setSelectedTrain } = useSelectedTrain();
 	const [stations, setStations] = useState<Station[] | null>(null);
+	const [stoppedTrainsSince, setStoppedTrainsSince] = useState<
+		Record<string, number>
+	>({});
 
 	const getTrains = useCallback(() => {
 		fetch(`https://panel.simrail.eu:8084/trains-open?serverCode=${serverId}`)
 			.then((res) => res.json())
 			.then((fetchedTrains) => {
-				setTrains(fetchedTrains.data);
+				const trainsData: Train[] = fetchedTrains.data;
+
+				setStoppedTrainsSince((previousStoppedTrainsSince) => {
+					const nextStoppedTrainsSince: Record<string, number> = {};
+
+					for (const train of trainsData) {
+						const trainKey = getTrainStopKey(train);
+						const isStopped = Math.round(train.TrainData.Velocity) === 0;
+
+						if (isStopped) {
+							nextStoppedTrainsSince[trainKey] =
+								previousStoppedTrainsSince[trainKey] ?? Date.now();
+						}
+					}
+
+					return nextStoppedTrainsSince;
+				});
+
+				setTrains(trainsData);
 			});
 	}, [serverId]);
 
@@ -176,7 +199,13 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 
 	return (
 		<>
-			<SelectedTrainPopup />
+			<SelectedTrainPopup
+				stoppedSince={
+					selectedTrain
+						? stoppedTrainsSince[getTrainStopKey(selectedTrain)]
+						: undefined
+				}
+			/>
 			<MapContainer
 				center={[50.270908, 19.039993]}
 				zoom={10}
@@ -300,7 +329,10 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						name="Trains"
 					>
 						<LayerGroup>
-							<TrainsList trains={trains} />
+							<TrainsList
+								trains={trains}
+								stoppedTrainsSince={stoppedTrainsSince}
+							/>
 						</LayerGroup>
 					</LayersControl.Overlay>
 

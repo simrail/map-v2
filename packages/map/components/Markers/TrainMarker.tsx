@@ -10,9 +10,10 @@ import TrainText from "../TrainText";
 
 type TrainMarkerProps = {
 	train: Train;
+	stoppedSince?: number;
 };
 
-const TrainMarker = ({ train }: TrainMarkerProps) => {
+const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 	const { setSelectedTrain } = useSelectedTrain();
 
 	const [avatar, setAvatar] = useState<string | null>(null);
@@ -41,7 +42,9 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 	)
 		botIcon = "/markers/icon-bot-simrail-dark.jpg";
 
-	const borderAreaClass = train.TrainData.InBorderStationArea ? ["in-border-area"] : [];
+	const borderAreaClass = train.TrainData.InBorderStationArea
+		? ["in-border-area"]
+		: [];
 	const icon = L.icon({
 		iconUrl: train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon,
 		iconSize: [24, 24],
@@ -77,6 +80,7 @@ const TrainMarker = ({ train }: TrainMarkerProps) => {
 					username={username}
 					avatar={avatar}
 					minified={true}
+					stoppedSince={stoppedSince}
 				/>
 			</Popup>
 
