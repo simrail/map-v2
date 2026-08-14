@@ -84,6 +84,18 @@
 		"id": "Żyrardów"
 	},
 	{
+		"Name": "Słotwiny",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.726321,
+		"Longitude": 19.832398,
+		"id": "Żakowice Południowe"
+	},
+	{
 		"Name": "Łódź Andrzejów",
 		"Prefix": "",
 		"DifficultyLevel": 0,
@@ -94,5 +106,149 @@
 		"Latititude": 51.741028,
 		"Longitude": 19.617146,
 		"id": "Gałkówek"
+	},
+	{
+		"Name": "Łódź Dąbrowa PBSZ",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.749532,
+		"Longitude": 19.513492,
+		"id": "Łódź Widzew"
+	},
+	{
+		"Name": "Łódź Marysin",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.800167,
+		"Longitude": 19.486152,
+		"id": "Łódź Widzew"
+	},
+	{
+		"Name": "Dobroń APO",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.629363,
+		"Longitude": 19.240834,
+		"id": "Pabianice&Łask"
+	},
+	{
+		"Name": "Kolumna APO",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.614231,
+		"Longitude": 19.193488,
+		"id": "Pabianice&Łask"
+	},
+	{
+		"Name": "Borszewice APO",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.609461,
+		"Longitude": 19.039500,
+		"id": "Gajewniki&Łask"
+	},
+	{
+		"Name": "Męka APO",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.609401,
+		"Longitude": 18.787825,
+		"id": "Zduńska Wola"
+	},
+	{
+		"Name": "Zgierz Kontrewers",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.864796,
+		"Longitude": 19.340320,
+		"id": "Zigerz Północ"
+	},
+	{
+		"Name": "Chociszew",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.924110,
+		"Longitude": 19.266932,
+		"id": "Zigerz Północ"
+	},
+	{
+		"Name": "Ozorków",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.972469,
+		"Longitude": 19.266291,
+		"id": "Witonia"
+	},
+	{
+		"Name": "Łęczyca",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 52.049236,
+		"Longitude": 19.193252,
+		"id": "Witonia"
+	},
+	{
+		"Name": "Stryków",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 51.910582,
+		"Longitude": 19.593419,
+		"id": "Glinnik"
+	},
+	{
+		"Name": "Domaniewice",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 52.020445,
+		"Longitude": 19.821213,
+		"id": "Głowno"
 	}
 ]
