@@ -15,4 +15,9 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm check
+      - uses: oxc-project/oxlint-action@v3.0.0
+        with:
+          version: 1.79.0
+          config: .oxlintrc.json
+          all-files: true
+      - run: pnpm format:check
