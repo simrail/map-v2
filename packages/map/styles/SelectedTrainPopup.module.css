@@ -3,7 +3,9 @@
   z-index: 9999;
   top: 62px;
   right: 0;
-  max-width: min(360px, calc(100vw - 24px));
+  box-sizing: border-box;
+  width: min(360px, calc(100vw - 24px));
+  max-width: none;
   max-height: calc(100dvh - 78px);
   padding: 10px 24px;
   margin: 8px;

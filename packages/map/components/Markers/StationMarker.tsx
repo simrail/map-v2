@@ -1,4 +1,4 @@
-import { Space, useMantineColorScheme } from "@mantine/core";
+import { useMantineColorScheme } from "@mantine/core";
 import type { Station } from "@simrail/types";
 import L from "leaflet";
 import { usePathname, useRouter } from "next/navigation";
@@ -7,6 +7,8 @@ import { Marker, Popup, Tooltip } from "react-leaflet";
 
 import stationsList from "../EDR_station.json";
 import { getSteamProfileOrBot } from "../steam";
+
+import styles from "../../styles/MarkerPopup.module.css";
 
 type StationMarkerProps = {
 	station: Station;
@@ -92,24 +94,32 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 				},
 			}}
 		>
-			<Popup>
-				<img
-					src={station.MainImageURL}
-					alt={station.Name}
-					width={200}
-					height={86}
-					style={{ borderRadius: "6px" }}
-				/>
-				<br />
-				<Space h="sm" />
-				Station: {station.Name}
-				<br />
-				User: {username}
-				<br />
-				Difficulty: {station.DifficultyLevel}
-				<br />
+			<Popup className="station-map-popup" minWidth={250}>
+				<div className={styles.stationCard}>
+					<div className={styles.stationImage}>
+						<img src={station.MainImageURL} alt="" width={250} height={104} />
+						<span>Difficulty {station.DifficultyLevel}</span>
+					</div>
+					<div className={styles.stationBody}>
+						<small>Dispatch station · {station.Prefix}</small>
+						<strong>{station.Name}</strong>
+						<div className={styles.operator}>
+							<img src={avatar ?? botIcon} alt="" width={30} height={30} />
+							<div>
+								<small>Controlled by</small>
+								<span>{username}</span>
+							</div>
+						</div>
+						<span className={styles.openHint}>Open station in EDR ↗</span>
+					</div>
+				</div>
 			</Popup>
-			<Tooltip offset={[0, 20]} direction={"bottom"} permanent={true}>
+			<Tooltip
+				className="station-name-tooltip"
+				offset={[0, 20]}
+				direction="bottom"
+				permanent
+			>
 				{station.Name}
 			</Tooltip>
 		</Marker>

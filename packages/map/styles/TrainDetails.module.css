@@ -1,0 +1,39 @@
+.card { width: 100%; color: #e9edf3; font-size: 12px; }
+.header, .identity, .route, .consist { display: flex; }
+.header { align-items: center; justify-content: space-between; gap: 12px; }
+.identity { align-items: center; min-width: 0; gap: 11px; }
+.identity > div { display: flex; flex-direction: column; min-width: 0; gap: 3px; }
+.avatar { flex: none; border: 2px solid #4ba8fc; border-radius: 10px; object-fit: cover; }
+.kicker { color: #ffb13b; font-size: 8px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.identity strong { overflow: hidden; color: #fff; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.close { display: grid; flex: none; width: 32px; height: 32px; padding: 0; color: #9ca4b0; border: 1px solid rgb(255 255 255 / 9%); border-radius: 8px; background: rgb(255 255 255 / 3%); place-items: center; cursor: pointer; }
+.close:hover { color: #ff7777; border-color: rgb(255 100 100 / 28%); }
+.serviceHeading { margin: 17px 0 11px; }
+.serviceHeading > span { color: #7f8896; font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.serviceHeading h3 { margin: 4px 0 0; color: #fff; font-family: "Saira", sans-serif; font-size: 20px; line-height: 1.1; }
+.route { align-items: center; gap: 9px; padding: 10px 11px; color: #c2c8d1; border: 1px solid rgb(255 255 255 / 7%); border-radius: 9px; background: rgb(255 255 255 / 3%); }
+.route span { flex: 1; line-height: 1.35; }
+.route span:last-child { text-align: right; }
+.route i { color: #ffad32; font-style: normal; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 12px 0; overflow: hidden; border: 1px solid rgb(255 255 255 / 7%); border-radius: 9px; background: rgb(255 255 255 / 6%); }
+.stats > div { display: flex; flex-direction: column; gap: 5px; padding: 10px 8px; background: rgb(17 20 27 / 86%); }
+.stats span, .consist > span { color: #747d8a; font-size: 8px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.stats strong { color: #f2f4f7; font-size: 11px; white-space: nowrap; }
+.consist { align-items: baseline; flex-wrap: wrap; gap: 5px 9px; padding: 3px 1px 11px; }
+.consist strong { color: #d9dde4; font-size: 11px; }
+.consist small { width: 100%; color: #858e9b; font-size: 9px; }
+.trainMedia { margin: 2px 0 14px; overflow: hidden; border: 1px solid rgb(255 255 255 / 7%); border-radius: 10px; background: rgb(7 9 13 / 28%); }
+.signalSection { padding-top: 14px; border-top: 1px solid rgb(255 255 255 / 7%); }
+.signalDetails { margin: 9px 0 13px; color: #b6bdc7; line-height: 1.65; }
+.edrButton { display: flex; align-items: center; justify-content: space-between; min-height: 41px; padding: 0 13px; color: #17191e; font-size: 11px; font-weight: 800; border-radius: 9px; background: #ffad32; }
+.edrButton:hover { background: #ffba51; }
+.compact { width: 280px; }
+.compact .avatar { width: 34px; height: 34px; border-radius: 8px; }
+.compact .serviceHeading { margin-top: 13px; }
+.compact .serviceHeading h3 { font-size: 17px; }
+.compact .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+@media (max-width: 560px) {
+  .card { width: 100%; }
+  .serviceHeading h3 { font-size: 18px; }
+}

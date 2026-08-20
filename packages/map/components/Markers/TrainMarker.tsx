@@ -80,7 +80,7 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 				mouseup: () => setSelectedTrain(train),
 			}}
 		>
-			<Popup>
+			<Popup className="train-map-popup" minWidth={280}>
 				<TrainText
 					train={train}
 					username={username}
@@ -91,10 +91,11 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 			</Popup>
 
 			<Tooltip
+				className="train-number-tooltip"
 				offset={[0, -10]}
-				direction={"top"}
+				direction="top"
 				opacity={0.8}
-				permanent={true}
+				permanent
 			>
 				{train.TrainNoLocal}
 			</Tooltip>

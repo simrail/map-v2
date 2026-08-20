@@ -1,3 +1,10 @@
+.mapCanvas {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  background: #0d1017;
+}
+
 .loading {
   display: grid;
   place-content: center;
