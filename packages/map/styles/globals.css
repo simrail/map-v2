@@ -121,7 +121,7 @@ html[data-mantine-color-scheme="dark"] .leaflet-tile {
   filter: invert(100%) contrast(1) grayscale(100%) brightness(0.8) !important;
 }
 
-body.light .leaflet-tile {
+html[data-mantine-color-scheme="light"] .leaflet-tile {
   filter: none;
 }
 
@@ -130,18 +130,18 @@ html[data-mantine-color-scheme="dark"] .leaflet-control-zoom-out {
   filter: invert(100%) contrast(0.7) grayscale(100%) brightness(0.8) !important;
 }
 
-body.light .leaflet-control-zoom-in,
-body.light .leaflet-control-zoom-out {
+html[data-mantine-color-scheme="light"] .leaflet-control-zoom-in,
+html[data-mantine-color-scheme="light"] .leaflet-control-zoom-out {
   filter: none;
 }
 
-body.light .leaflet-control-attribution,
-body.light .leaflet-control-layers,
-body.light .leaflet-popup-content,
-body.light .leaflet-popup-content-wrapper,
-body.light .leaflet-tooltip {
-  background: white;
-  color: black;
+html[data-mantine-color-scheme="light"] .leaflet-control-attribution,
+html[data-mantine-color-scheme="light"] .leaflet-control-layers,
+html[data-mantine-color-scheme="light"] .leaflet-popup-content,
+html[data-mantine-color-scheme="light"] .leaflet-popup-content-wrapper,
+html[data-mantine-color-scheme="light"] .leaflet-tooltip {
+  color: #20242b !important;
+  background: white !important;
 }
 
 .leaflet-popup-content-wrapper {
@@ -159,7 +159,7 @@ body.light .leaflet-tooltip {
   box-shadow: none !important;
 }
 
-body.light .leaflet-popup-tip {
+html[data-mantine-color-scheme="light"] .leaflet-popup-tip {
   background: white !important;
 }
 
@@ -208,13 +208,27 @@ body.light .leaflet-popup-tip {
 
 .leaflet-control-layers-expanded {
   padding: 10px 12px !important;
-  color: #d8dde4;
+  color: #d8dde4 !important;
   line-height: 1.7;
   background: rgb(17 20 27 / 94%) !important;
 }
 
-.leaflet-control-layers label { cursor: pointer; }
+.leaflet-control-layers label {
+  color: inherit !important;
+  cursor: pointer;
+}
 .leaflet-control-layers input { margin-right: 5px; accent-color: #ffad32; }
+
+html[data-mantine-color-scheme="light"] .leaflet-control-layers {
+  border-color: rgb(24 31 42 / 16%) !important;
+  background: rgb(255 255 255 / 96%) !important;
+  box-shadow: 0 8px 28px rgb(30 39 52 / 18%) !important;
+}
+
+html[data-mantine-color-scheme="light"] .leaflet-control-layers-expanded {
+  color: #242a33 !important;
+  background: rgb(255 255 255 / 96%) !important;
+}
 
 .leaflet-control-attribution {
   opacity: 0.78;

@@ -65,7 +65,11 @@ function App() {
 						</div>
 					</div>
 
-					<div className={styles.heroVisual} aria-hidden="true">
+					<a
+						className={styles.heroVisual}
+						href={MAP_URL}
+						aria-label="Open the SimRail live map"
+					>
 						<img src={map} alt="" width={903} height={408} />
 						<div className={styles.visualShade} />
 						<div className={styles.liveBadge}>
@@ -76,7 +80,7 @@ function App() {
 							<strong>See what is moving</strong>
 							<span>Trains · Signal boxes · Signals</span>
 						</div>
-					</div>
+					</a>
 				</section>
 				<AdSlot placement="leaderboard" slotId={HOME_AD_SLOTS.leaderboard} />
 
