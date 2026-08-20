@@ -278,12 +278,12 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				}
 			/>
 			<MapContainer
+				className={mapStyles.mapCanvas}
 				center={[50.270908, 19.039993]}
 				zoom={10}
 				ref={setMap}
 				scrollWheelZoom={true}
 				zoomControl={false}
-				style={{ height: "100vh", width: "100vw" }}
 			>
 				<Control position="bottomleft">
 					<div className={style.container}>

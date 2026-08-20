@@ -2,6 +2,8 @@ import type { Signal } from "@simrail/types";
 import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
 
+import styles from "../../styles/MarkerPopup.module.css";
+
 type SignalMarkerProps = {
 	signal: Signal;
 };
@@ -24,9 +26,11 @@ export const SignalMarker = ({ signal }: SignalMarkerProps) => {
 				mouseout: (event) => event.target.closePopup(),
 			}}
 		>
-			<Popup>
-				{signal.Name}
-				<br />
+			<Popup className="simple-map-popup">
+				<div className={styles.simpleCard}>
+					<small>Signal</small>
+					<strong>{signal.Name}</strong>
+				</div>
 			</Popup>
 		</Marker>
 	);

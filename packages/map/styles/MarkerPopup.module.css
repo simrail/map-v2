@@ -1,0 +1,113 @@
+.stationCard {
+  width: 250px;
+  overflow: hidden;
+}
+
+.stationImage {
+  position: relative;
+  height: 104px;
+  overflow: hidden;
+  background: #11151c;
+}
+
+.stationImage::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(180deg, transparent 45%, rgb(12 15 21 / 76%));
+}
+
+.stationImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stationImage > span {
+  position: absolute;
+  z-index: 1;
+  right: 9px;
+  bottom: 8px;
+  padding: 4px 6px;
+  color: #f4f6f8;
+  font-size: 8px;
+  font-weight: 750;
+  border: 1px solid rgb(255 255 255 / 13%);
+  border-radius: 5px;
+  background: rgb(10 13 18 / 72%);
+}
+
+.stationBody {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 14px;
+}
+
+.stationBody > small,
+.simpleCard small,
+.operator small {
+  color: #ffb13b;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.stationBody > strong {
+  margin: 5px 0 12px;
+  color: #fff;
+  font-family: "Saira", sans-serif;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.operator {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 9px;
+  padding-top: 10px;
+  border-top: 1px solid rgb(255 255 255 / 7%);
+}
+
+.operator > img {
+  border: 2px solid #ff9f23;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.operator > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+}
+
+.operator small { color: #737c89; }
+.operator span { overflow: hidden; color: #dfe3e9; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+
+.openHint {
+  margin-top: 12px;
+  color: #aeb5c0;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.simpleCard {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  gap: 5px;
+}
+
+.simpleCard strong {
+  color: #fff;
+  font-family: "Saira", sans-serif;
+  font-size: 15px;
+}
+
+.simpleCard span {
+  color: #8e97a3;
+  font-size: 9px;
+}
