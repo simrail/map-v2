@@ -7,6 +7,10 @@ import type { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import { SelectedTrainProvider } from "../../contexts/SelectedTrainContext";
 
+const MapWithNoSSR = dynamic(() => import("../../components/Map"), {
+	ssr: false,
+});
+
 export const getStaticPaths = (async () => {
 	const res = await fetch("https://panel.simrail.eu:8084/servers-open");
 	const servers = await res.json();
@@ -26,16 +30,12 @@ export const getStaticProps = (async () => {
 }) satisfies GetStaticProps;
 
 const Post = () => {
-	const MapWithNoSSR = dynamic(() => import("../../components/Map"), {
-		ssr: false,
-	});
-
 	const router = useRouter();
 	const { id, trainId } = router.query;
 
 	const pageTitle = `${id?.toString().toUpperCase()} - SimRail Map`;
 
-	if (!id) return;
+	if (!id) return null;
 
 	return (
 		<>

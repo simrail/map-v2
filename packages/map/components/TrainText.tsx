@@ -155,14 +155,13 @@ const TrainText = ({
 	// don't think it was true before update either as EMUs prob had multiple traction
 
 	const roundedSpeed = Math.round(train.TrainData.Velocity);
-	const [currentTime, setCurrentTime] = useState(Date.now());
+	const [currentTime, setCurrentTime] = useState(0);
 
 	useEffect(() => {
 		if (roundedSpeed !== 0 || !stoppedSince) {
 			return;
 		}
 
-		setCurrentTime(Date.now());
 		const interval = window.setInterval(() => setCurrentTime(Date.now()), 1000);
 
 		return () => window.clearInterval(interval);

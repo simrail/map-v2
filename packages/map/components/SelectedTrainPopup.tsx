@@ -22,20 +22,22 @@ const SelectedTrainPopup = ({ stoppedSince }: SelectedTrainPopupProps) => {
 	const router = useRouter();
 	const { trainId } = router.query;
 
-	type Profile = [string | null, string | null];
-
-	const setData = ([avatarUrl, username]: Profile) => {
-		setAvatar(avatarUrl);
-		setUsername(username);
-	};
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies:
 	useEffect(() => {
-		if (selectedTrain)
-			getSteamProfileOrBot(selectedTrain.TrainData.ControlledBySteamID).then(
-				// @ts-ignore
-				setData,
-			);
+		let active = true;
+		if (!selectedTrain) return;
+
+		getSteamProfileOrBot(selectedTrain.TrainData.ControlledBySteamID).then(
+			([avatarUrl, profileName]) => {
+				if (active) {
+					setAvatar(avatarUrl);
+					setUsername(profileName);
+				}
+			},
+		);
+
+		return () => {
+			active = false;
+		};
 	}, [selectedTrain]);
 
 	if (renderPopup === true) {

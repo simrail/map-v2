@@ -45,6 +45,12 @@ type MapProps = {
 
 const getTrainStopKey = (train: Train) => train.id ?? train.TrainNoLocal;
 
+const Tooltip = ({ label, children }: TooltipProps) => (
+	<MantineTooltip label={label} position="right" zIndex={99999}>
+		{children}
+	</MantineTooltip>
+);
+
 const LeaftletMap = ({ serverId }: MapProps) => {
 	const [map, setMap] = useState<LeafletMap | null>(null);
 
@@ -123,16 +129,19 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 
 	useEffect(() => {
 		if (selectedTrain && map && trains) {
-			// @ts-ignore
-			setSelectedTrain(
-				trains.find((train) => train.id === selectedTrain.id) ?? null,
+			const updatedTrain = trains.find(
+				(train) => getTrainStopKey(train) === getTrainStopKey(selectedTrain),
 			);
-			// @ts-ignore
+			if (!updatedTrain) {
+				setSelectedTrain(null);
+				return;
+			}
+
+			if (updatedTrain !== selectedTrain) {
+				setSelectedTrain(updatedTrain);
+			}
 			map.setView(
-				[
-					selectedTrain?.TrainData.Latititute,
-					selectedTrain?.TrainData.Longitute,
-				],
+				[updatedTrain.TrainData.Latititute, updatedTrain.TrainData.Longitute],
 				undefined,
 				{ animate: true, duration: 5, easeLinearity: 0.5 },
 			);
@@ -141,11 +150,11 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 
 	useEffect(() => {
 		if (trainId) {
-			const trainsParam = trains?.filter(
+			const requestedTrain = trains?.find(
 				(train) => train.TrainNoLocal === trainId,
 			);
-			if (trainsParam?.[0]) {
-				setSelectedTrain(trainsParam[0]);
+			if (requestedTrain) {
+				setSelectedTrain(requestedTrain);
 				map?.setZoom(13);
 			}
 		}
@@ -172,14 +181,26 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 	useEffect(() => {
 		if (!map) return;
 
-		map.on("overlayadd", (event: LayersControlEvent) => {
+		const handleOverlayAdd = (event: LayersControlEvent) => {
 			localStorage.setItem(`layer-${event.name.toLowerCase()}`, "true");
-		});
+		};
 
-		map.on("overlayremove", (event: LayersControlEvent) => {
+		const handleOverlayRemove = (event: LayersControlEvent) => {
 			localStorage.setItem(`layer-${event.name.toLowerCase()}`, "false");
-		});
-	}, [map]);
+		};
+
+		const clearSelectedTrain = () => setSelectedTrain(null);
+
+		map.on("overlayadd", handleOverlayAdd);
+		map.on("overlayremove", handleOverlayRemove);
+		map.on("click", clearSelectedTrain);
+
+		return () => {
+			map.off("overlayadd", handleOverlayAdd);
+			map.off("overlayremove", handleOverlayRemove);
+			map.off("click", clearSelectedTrain);
+		};
+	}, [map, setSelectedTrain]);
 
 	if (!trains || !stations)
 		return (
@@ -190,12 +211,6 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				{!stations && <span>Loading stations...</span>}
 			</main>
 		);
-
-	const Tooltip = ({ label, children }: TooltipProps) => (
-		<MantineTooltip label={label} position="right" zIndex={99999}>
-			{children}
-		</MantineTooltip>
-	);
 
 	return (
 		<>

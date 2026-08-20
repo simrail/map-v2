@@ -3,7 +3,7 @@ import { useMantineColorScheme } from "@mantine/core";
 import type { Train } from "@simrail/types";
 import L from "leaflet";
 import React, { useEffect, useState } from "react";
-import { Popup, Tooltip, useMapEvents } from "react-leaflet";
+import { Popup, Tooltip } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
 import TrainText from "../TrainText";
@@ -50,12 +50,6 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 		iconSize: [24, 24],
 		popupAnchor: [0, -12],
 		className: ["steam-avatar", ...borderAreaClass].join(" "),
-	});
-
-	useMapEvents({
-		click() {
-			setSelectedTrain(null);
-		},
 	});
 
 	if (!username || !train.TrainData.Latititute || !train.TrainData.Longitute)
