@@ -1,5 +1,5 @@
 import type { Server } from "@simrail/types";
-import { type MouseEvent, useState } from "react";
+import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 import { readServerSettings } from "../types/ServerSettings";
@@ -15,9 +15,7 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 		() => readServerSettings(server.id).favorite,
 	);
 
-	const toggleFavorite = (event: MouseEvent<SVGElement>) => {
-		event.preventDefault();
-		event.stopPropagation();
+	const toggleFavorite = () => {
 		const nextFavorite = !favorite;
 		setFavorite(nextFavorite);
 		localStorage.setItem(
@@ -27,17 +25,17 @@ export default function FavoriteStar({ server }: FavoriteStarProps) {
 		window.dispatchEvent(new Event("server-favorite-change"));
 	};
 
-	if (favorite) {
-		return (
-			<AiFillStar
-				size={24}
-				color="#FF9900"
-				className={styles.star}
-				onClick={toggleFavorite}
-			/>
-		);
-	}
+	const Icon = favorite ? AiFillStar : AiOutlineStar;
+
 	return (
-		<AiOutlineStar size={24} className={styles.star} onClick={toggleFavorite} />
+		<button
+			type="button"
+			className={styles.star}
+			onClick={toggleFavorite}
+			aria-label={`${favorite ? "Remove" : "Add"} ${server.ServerName} ${favorite ? "from" : "to"} favorites`}
+			aria-pressed={favorite}
+		>
+			<Icon size={21} color={favorite ? "#ffb442" : undefined} />
+		</button>
 	);
 }

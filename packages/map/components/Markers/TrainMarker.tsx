@@ -1,7 +1,7 @@
 import { useMantineColorScheme } from "@mantine/core";
 import type { Train } from "@simrail/types";
 import L from "leaflet";
-import React, { useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { Popup, Tooltip } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 
@@ -21,18 +21,23 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 	const [avatar, setAvatar] = useState<string | null>(null);
 	const [username, setUsername] = useState<string | null>(null);
 
-	const getData = React.useCallback((maybeSteamId: string | null) => {
-		return getSteamProfileOrBot(maybeSteamId).then(([avatarUrl, username]) => {
-			setAvatar(avatarUrl);
-			setUsername(username);
-		});
-	}, []);
-
 	useEffect(() => {
-		getData(train.TrainData.ControlledBySteamID).catch(() =>
-			setTimeout(() => getData(train.TrainData.ControlledBySteamID), 1000),
-		);
-	}, [train.TrainData.ControlledBySteamID, getData]);
+		let active = true;
+		getSteamProfileOrBot(train.TrainData.ControlledBySteamID)
+			.then(([avatarUrl, profileName]) => {
+				if (active) {
+					setAvatar(avatarUrl);
+					setUsername(profileName);
+				}
+			})
+			.catch(() => {
+				if (active) setUsername("Unknown");
+			});
+
+		return () => {
+			active = false;
+		};
+	}, [train.TrainData.ControlledBySteamID]);
 
 	const { colorScheme } = useMantineColorScheme();
 
@@ -45,14 +50,19 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 		botIcon = "/markers/icon-bot-simrail-dark.jpg";
 
 	const borderAreaClass = train.TrainData.InBorderStationArea
-		? ["in-border-area"]
-		: [];
-	const icon = L.icon({
-		iconUrl: train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon,
-		iconSize: [24, 24],
-		popupAnchor: [0, -12],
-		className: ["steam-avatar", ...borderAreaClass].join(" "),
-	});
+		? " in-border-area"
+		: "";
+	const icon = useMemo(
+		() =>
+			L.icon({
+				iconUrl:
+					train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon,
+				iconSize: [24, 24],
+				popupAnchor: [0, -12],
+				className: `steam-avatar${borderAreaClass}`,
+			}),
+		[avatar, borderAreaClass, botIcon, train.TrainData.ControlledBySteamID],
+	);
 
 	if (!username || !train.TrainData.Latititute || !train.TrainData.Longitute)
 		return null;
@@ -92,4 +102,4 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 	);
 };
 
-export default React.memo(TrainMarker);
+export default memo(TrainMarker);

@@ -1,9 +1,10 @@
 import { Tooltip as MantineTooltip, type TooltipProps } from "@mantine/core";
 import { useFullscreen, useLocalStorage } from "@mantine/hooks";
 import type { Station, Train } from "@simrail/types";
+import { DISCORD_INVITE_URL } from "common/links";
 import type { LayersControlEvent, Map as LeafletMap } from "leaflet";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import "leaflet-defaulticon-compatibility";
 
@@ -41,7 +42,7 @@ import SneakpeekMarkers from "./Sneakpeeks";
 import SpotlightSearch from "./SpotlightSearch";
 
 import style from "../styles/BottomLeftControls.module.css";
-import styles from "../styles/Home.module.css";
+import mapStyles from "../styles/Map.module.css";
 
 type MapProps = {
 	serverId: string | string[];
@@ -63,6 +64,10 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 	const { trainId } = router.query;
 
 	const [trains, setTrains] = useState<Train[] | null>(null);
+	const [trainError, setTrainError] = useState(false);
+	const [stationError, setStationError] = useState(false);
+	const trainsRequestPending = useRef(false);
+	const stationsRequestPending = useRef(false);
 
 	const [renderPopup, setRenderPopup] = useLocalStorage({
 		key: "renderPopup",
@@ -94,13 +99,19 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		Record<string, number>
 	>({});
 
-	const getTrains = useCallback(() => {
-		void fetch(
-			`https://panel.simrail.eu:8084/trains-open?serverCode=${String(serverId)}`,
-		)
-			.then((res) => res.json())
-			.then((fetchedTrains) => {
-				const trainsData: Train[] = fetchedTrains.data;
+	const getTrains = useCallback(
+		async (signal?: AbortSignal) => {
+			if (trainsRequestPending.current) return;
+			trainsRequestPending.current = true;
+			try {
+				const response = await fetch(
+					`https://panel.simrail.eu:8084/trains-open?serverCode=${String(serverId)}`,
+					{ signal },
+				);
+				if (!response.ok)
+					throw new Error(`Train request failed: ${response.status}`);
+				const fetchedTrains = (await response.json()) as { data: Train[] };
+				const trainsData = fetchedTrains.data;
 
 				setStoppedTrainsSince((previousStoppedTrainsSince) => {
 					const nextStoppedTrainsSince: Record<string, number> = {};
@@ -119,21 +130,38 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				});
 
 				setTrains(trainsData);
-			});
-	}, [serverId]);
+				setTrainError(false);
+			} catch (error) {
+				if ((error as Error).name !== "AbortError") setTrainError(true);
+			} finally {
+				trainsRequestPending.current = false;
+			}
+		},
+		[serverId],
+	);
 
-	const getStations = useCallback(() => {
-		void fetch(
-			`https://panel.simrail.eu:8084/stations-open?serverCode=${String(serverId)}`,
-		)
-			.then((res) => res.json())
-			.then((stations) => {
-				const stationsData: Station[] = stations.data;
-
-				// @ts-ignore
-				setStations(stationsData);
-			});
-	}, [serverId]);
+	const getStations = useCallback(
+		async (signal?: AbortSignal) => {
+			if (stationsRequestPending.current) return;
+			stationsRequestPending.current = true;
+			try {
+				const response = await fetch(
+					`https://panel.simrail.eu:8084/stations-open?serverCode=${String(serverId)}`,
+					{ signal },
+				);
+				if (!response.ok)
+					throw new Error(`Station request failed: ${response.status}`);
+				const fetchedStations = (await response.json()) as { data: Station[] };
+				setStations(fetchedStations.data);
+				setStationError(false);
+			} catch (error) {
+				if ((error as Error).name !== "AbortError") setStationError(true);
+			} finally {
+				stationsRequestPending.current = false;
+			}
+		},
+		[serverId],
+	);
 
 	useEffect(() => {
 		if (selectedTrain && map && trains) {
@@ -148,10 +176,9 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 			if (updatedTrain !== selectedTrain) {
 				setSelectedTrain(updatedTrain);
 			}
-			map.setView(
+			map.panTo(
 				[updatedTrain.TrainData.Latititute, updatedTrain.TrainData.Longitute],
-				undefined,
-				{ animate: true, duration: 5, easeLinearity: 0.5 },
+				{ animate: true, duration: 0.8, easeLinearity: 0.4 },
 			);
 		}
 	}, [trains, selectedTrain, map, setSelectedTrain]);
@@ -169,20 +196,31 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 	}, [trains, map, trainId, setSelectedTrain]);
 
 	useEffect(() => {
-		getTrains();
-		getStations();
+		const controller = new AbortController();
+		const refreshTrains = () => {
+			if (document.visibilityState === "visible") {
+				void getTrains(controller.signal);
+			}
+		};
+		const refreshStations = () => {
+			if (document.visibilityState === "visible") {
+				void getStations(controller.signal);
+			}
+		};
 
-		const interval1 = setInterval(() => {
-			getTrains();
-		}, 2000);
+		const initialTrainRefresh = window.setTimeout(refreshTrains, 0);
+		const initialStationRefresh = window.setTimeout(refreshStations, 0);
 
-		const interval2 = setInterval(() => {
-			getStations();
-		}, 10000);
+		const interval1 = window.setInterval(refreshTrains, 2000);
+
+		const interval2 = window.setInterval(refreshStations, 10000);
 
 		return () => {
-			clearInterval(interval1);
-			clearInterval(interval2);
+			controller.abort();
+			window.clearTimeout(initialTrainRefresh);
+			window.clearTimeout(initialStationRefresh);
+			window.clearInterval(interval1);
+			window.clearInterval(interval2);
 		};
 	}, [getTrains, getStations]);
 
@@ -210,18 +248,28 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		};
 	}, [map, setSelectedTrain]);
 
+	const dataError = trainError || stationError;
+
 	if (!trains || !stations)
 		return (
-			<main className={styles.main}>
-				<h1>Loading</h1>
-				{!trains && <span>Loading trains...</span>}
-				<br /> <br />
-				{!stations && <span>Loading stations...</span>}
+			<main className={mapStyles.loading}>
+				<div className={mapStyles.loadingPulse} aria-hidden="true" />
+				<h1>Connecting to {String(serverId).toUpperCase()}</h1>
+				<p>
+					{dataError
+						? "Live data is taking longer than expected. Retrying automatically…"
+						: "Loading trains and dispatch stations…"}
+				</p>
 			</main>
 		);
 
 	return (
 		<>
+			{dataError && (
+				<div className={mapStyles.connectionWarning} role="status">
+					Live updates interrupted — reconnecting…
+				</div>
+			)}
 			<SelectedTrainPopup
 				stoppedSince={
 					selectedTrain
@@ -252,7 +300,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 
 						<Tooltip label="Our Discord (French)" position="right">
 							<a
-								href="https://discord.gg/d65Q8gWM5W"
+								href={DISCORD_INVITE_URL}
 								rel="noreferrer"
 								target="_blank"
 								className={[style.icon, style.discord].join(" ")}
@@ -264,13 +312,23 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						{map && (
 							<>
 								<Tooltip label="Zoom in" position="right">
-									<button type="button" className={style.icon}>
-										<MdZoomIn onClick={() => map.zoomIn()} size={24} />
+									<button
+										type="button"
+										className={style.icon}
+										onClick={() => map.zoomIn()}
+										aria-label="Zoom in"
+									>
+										<MdZoomIn size={24} />
 									</button>
 								</Tooltip>
 								<Tooltip label="Zoom out" position="right">
-									<button type="button" className={style.icon}>
-										<MdZoomOut onClick={() => map.zoomOut()} size={24} />
+									<button
+										type="button"
+										className={style.icon}
+										onClick={() => map.zoomOut()}
+										aria-label="Zoom out"
+									>
+										<MdZoomOut size={24} />
 									</button>
 								</Tooltip>
 							</>
@@ -279,22 +337,28 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							label={`${renderPopup ? "Hide" : "Show"} train pop-up`}
 							position="right"
 						>
-							<button type="button" className={style.icon}>
-								<RenderPopupIcon
-									onClick={() => setRenderPopup((prevState) => !prevState)}
-									size={24}
-								/>
+							<button
+								type="button"
+								className={style.icon}
+								onClick={() => setRenderPopup((prevState) => !prevState)}
+								aria-label={`${renderPopup ? "Hide" : "Show"} train pop-up`}
+								aria-pressed={renderPopup}
+							>
+								<RenderPopupIcon size={24} />
 							</button>
 						</Tooltip>
 						<Tooltip
 							label={`${showSignalInfo ? "Hide" : "Show"} more signal info`}
 							position="right"
 						>
-							<button type="button" className={style.icon}>
-								<ShowSignalStatusIcon
-									onClick={() => setShowSignalInfo((prevState) => !prevState)}
-									size={24}
-								/>
+							<button
+								type="button"
+								className={style.icon}
+								onClick={() => setShowSignalInfo((prevState) => !prevState)}
+								aria-label={`${showSignalInfo ? "Hide" : "Show"} signal details`}
+								aria-pressed={showSignalInfo}
+							>
+								<ShowSignalStatusIcon size={24} />
 							</button>
 						</Tooltip>
 
@@ -304,11 +368,18 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							}
 							position="right"
 						>
-							<button type="button" className={style.icon}>
-								<SatelliteIcon
-									onClick={() => setIsSatellite((prev) => !prev)}
-									size={24}
-								/>
+							<button
+								type="button"
+								className={style.icon}
+								onClick={() => setIsSatellite((prev) => !prev)}
+								aria-label={
+									isSatellite
+										? "Switch to map view"
+										: "Switch to satellite view"
+								}
+								aria-pressed={isSatellite}
+							>
+								<SatelliteIcon size={24} />
 							</button>
 						</Tooltip>
 
@@ -316,8 +387,13 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 							label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
 							position="right"
 						>
-							<button type="button" className={style.icon}>
-								<FullscreenIcon onClick={() => toggleFullscreen()} size={24} />
+							<button
+								type="button"
+								className={style.icon}
+								onClick={() => toggleFullscreen()}
+								aria-label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+							>
+								<FullscreenIcon size={24} />
 							</button>
 						</Tooltip>
 					</div>
@@ -326,7 +402,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				{isSatellite ? (
 					<>
 						<TileLayer
-							attribution='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGS, and the GIS User Community | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href="https://discord.gg/d65Q8gWM5W">Created by SimRail France 🇫🇷 Community</a>'
+							attribution={`Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGS, and the GIS User Community | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href="${DISCORD_INVITE_URL}">Created by SimRail France 🇫🇷 Community</a>`}
 							url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
 						/>
 						<TileLayer
@@ -337,8 +413,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 					</>
 				) : (
 					<TileLayer
-						className={styles.test}
-						attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href="https://discord.gg/d65Q8gWM5W">Created by SimRail France 🇫🇷 Community</a>'
+						attribution={`&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href="${DISCORD_INVITE_URL}">Created by SimRail France 🇫🇷 Community</a>`}
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 					/>
 				)}
@@ -418,7 +493,10 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 					</LayersControl.Overlay>
 
 					<LayersControl.Overlay
-						checked={localStorage.getItem("layer-Signalling") === "true"}
+						checked={
+							localStorage.getItem("layer-signalling (not 100% accurate)") ===
+							"true"
+						}
 						name="Signalling (Not 100% accurate)"
 					>
 						<LayerGroup>
@@ -430,7 +508,10 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 					</LayersControl.Overlay>
 
 					<LayersControl.Overlay
-						checked={localStorage.getItem("layer-Speed") === "true"}
+						checked={
+							localStorage.getItem("layer-track speed (not 100% accurate)") ===
+							"true"
+						}
 						name="Track Speed (Not 100% accurate)"
 					>
 						<LayerGroup>
@@ -442,7 +523,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 					</LayersControl.Overlay>
 
 					<LayersControl.Overlay
-						checked={localStorage.getItem("layer-Signalling") === "true"}
+						checked={localStorage.getItem("layer-sneakpeeks") === "true"}
 						name="Sneakpeeks"
 					>
 						<LayerGroup>

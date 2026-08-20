@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
+import { DelayedAdBanner } from "@/components/DelayedAdBanner";
 import { TopNavigation } from "@/components/TopNavigation";
 
 import { SelectedTrainProvider } from "../../contexts/SelectedTrainContext";
@@ -50,7 +51,7 @@ const Post = () => {
 			</Head>
 			<div
 				style={{
-					height: "100vh",
+					height: "100dvh",
 					width: "100vw",
 					display: "flex",
 					flexDirection: "column",
@@ -59,6 +60,7 @@ const Post = () => {
 				<SelectedTrainProvider>
 					{!trainId && <TopNavigation />}
 					<MapWithNoSSR serverId={id} />
+					<DelayedAdBanner />
 				</SelectedTrainProvider>
 			</div>
 		</>

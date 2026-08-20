@@ -1,45 +1,62 @@
 .popup {
-    position: absolute;
-    right: 0;
-    background: rgb(54,54,58, 80%);
-    z-index: 9999;
-    color: white;
-    padding: 8px 32px;
-    margin: 8px;
-    border-radius: 7px;
-    backdrop-filter: blur(10px);
-    top: 64px;
+  position: absolute;
+  z-index: 9999;
+  top: 62px;
+  right: 0;
+  max-width: min(360px, calc(100vw - 24px));
+  max-height: calc(100dvh - 78px);
+  padding: 10px 24px;
+  margin: 8px;
+  overflow: auto;
+  color: white;
+  border: 1px solid rgb(255 255 255 / 11%);
+  border-radius: 14px;
+  background: rgb(20 23 30 / 91%);
+  box-shadow: 0 20px 55px rgb(0 0 0 / 34%);
+  backdrop-filter: blur(18px);
 }
 
-.closeButton {
-    color: #F34747;
-    position: absolute;
-    right: 16px;
-    cursor: pointer;
+.closeButton,
+.closeButtonNoPopup {
+  position: absolute;
+  right: 16px;
+  color: #f36b6b;
+  cursor: pointer;
 }
 
 .noPopup {
-    position: absolute;
-    right: 0;
-    background: rgb(0 0 0 / 40%);
-    z-index: 9999;
-    padding: 32px 32px;
-    margin: 8px;
-    border-radius: 7px;
-    backdrop-filter: blur(10px);
+  position: absolute;
+  z-index: 9999;
+  right: 0;
+  padding: 32px;
+  margin: 8px;
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 12px;
+  background: rgb(20 23 30 / 80%);
+  backdrop-filter: blur(14px);
 }
 
 .closeButtonNoPopup {
-    color: #F34747;
-    position: absolute;
-    right: 16px;
-    top: 16px;
-    cursor: pointer;
+  top: 16px;
 }
 
 .outline {
-    border: 2px solid #F34747;
-    border-radius: 50%;
-    padding: 2px;
-    box-sizing: border-box;
+  padding: 2px;
+  border: 2px solid #f34747;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 560px) {
+  .popup {
+    top: auto !important;
+    right: 6px;
+    bottom: 8px;
+    left: 50px;
+    width: auto;
+    max-width: none;
+    max-height: min(52dvh, 480px);
+    margin: 0;
+    padding: 8px 18px;
+  }
 }
