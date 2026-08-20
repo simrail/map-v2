@@ -1,5 +1,3 @@
-import TrainUpcomingSignal from "@/components/TrainUpcomingSignal";
-import railcarJson from "@/components/railcars.json";
 import { Carousel } from "@mantine/carousel";
 import { ActionIcon, Avatar, Button, Flex, Image, Title } from "@mantine/core";
 import { readLocalStorageValue } from "@mantine/hooks";
@@ -8,6 +6,10 @@ import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import { useRouter } from "next/router";
 import { useEffect, useMemo, useState } from "react";
 import { MdClose } from "react-icons/md";
+
+import railcarJson from "@/components/railcars.json";
+import TrainUpcomingSignal from "@/components/TrainUpcomingSignal";
+
 import type { Railcar } from "../types/Railcar";
 
 type TrainTextProps = {
@@ -232,7 +234,7 @@ const TrainText = ({
 				{!minified && (
 					<ActionIcon
 						onClick={() => {
-							if (trainId) router.replace(`/server/${id}`);
+							if (trainId) void router.replace(`/server/${String(id)}`);
 							setSelectedTrain(null);
 						}}
 						size={29}
@@ -307,7 +309,7 @@ const TrainText = ({
 						<Button
 							component="a"
 							target="_blank"
-							href={`https://edr.simrail.app/${id}/train/${train.TrainNoLocal}`}
+							href={`https://edr.simrail.app/${String(id)}/train/${String(train.TrainNoLocal)}`}
 							color="orange"
 							w={"100%"}
 						>

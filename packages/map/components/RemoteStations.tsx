@@ -1,6 +1,7 @@
+import React, { type FC } from "react";
+
 import { RemoteStationMarker } from "@/components/Markers/StationRemoteMarker";
 import stationsJson from "@/components/stationsRemote.json";
-import React, { type FC } from "react";
 
 const RemoteStations: FC = () => (
 	<>

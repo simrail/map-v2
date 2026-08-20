@@ -1,0 +1,39 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"categories": {
+		"correctness": "error"
+	},
+	"plugins": ["eslint", "typescript", "react", "import", "oxc"],
+	"rules": {
+		"eslint/no-unused-vars": "warn",
+		"typescript/no-unused-vars": "warn",
+		"react/only-export-components": "off"
+	},
+	"settings": {
+		"next": {
+			"rootDir": "packages/map/"
+		}
+	},
+	"overrides": [
+		{
+			"files": ["packages/home/**/*.{js,jsx,ts,tsx}"],
+			"rules": {
+				"react/only-export-components": [
+					"warn",
+					{ "allowConstantExport": true }
+				]
+			}
+		},
+		{
+			"files": ["packages/map/**/*.{js,jsx,ts,tsx}"],
+			"plugins": ["eslint", "typescript", "react", "nextjs", "import", "oxc"],
+			"rules": {
+				"nextjs/no-img-element": "off"
+			}
+		}
+	],
+	"options": {
+		"typeAware": true,
+		"typeCheck": true
+	}
+}

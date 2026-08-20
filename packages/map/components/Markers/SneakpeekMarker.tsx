@@ -49,7 +49,12 @@ export const SneakpeekMarker = ({
 			<>
 				<img src={ImageURL} width="512" height="288" alt="Could not load" />{" "}
 				<br />
-				<img src={Image2URL} width="512" height="288" alt="Could not load" />{" "}
+				<img
+					src={Image2URL}
+					width="512"
+					height="288"
+					alt="Could not load"
+				/>{" "}
 				<br />
 			</>
 		);

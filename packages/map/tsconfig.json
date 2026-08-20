@@ -14,9 +14,10 @@
 		"isolatedModules": true,
 		"jsx": "react-jsx",
 		"incremental": true,
-		"baseUrl": ".",
 		"paths": {
-			"@/components/*": ["components/*"]
+			"@/components/*": ["./components/*"],
+			"contexts/*": ["./contexts/*"],
+			"types/*": ["./types/*"]
 		}
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

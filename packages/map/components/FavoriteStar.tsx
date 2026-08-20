@@ -1,8 +1,10 @@
 import type { Server } from "@simrail/types";
 import { type MouseEvent, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import styles from "../styles/Home.module.css";
+
 import { readServerSettings } from "../types/ServerSettings";
+
+import styles from "../styles/Home.module.css";
 
 type FavoriteStarProps = {
 	server: Server;

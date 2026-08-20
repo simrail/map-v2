@@ -1,5 +1,6 @@
 import type { Signal } from "@simrail/types";
 import type { FC } from "react";
+
 import { SignalMarker } from "./Markers/SignalMarker";
 import signalJson from "./signals.json";
 

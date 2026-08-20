@@ -1,10 +1,12 @@
-import { getSteamProfileOrBot } from "@/components/steam";
 import { useMantineColorScheme } from "@mantine/core";
 import type { Train } from "@simrail/types";
 import L from "leaflet";
 import React, { useEffect, useState } from "react";
 import { Popup, Tooltip } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
+
+import { getSteamProfileOrBot } from "@/components/steam";
+
 import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
 import TrainText from "../TrainText";
 

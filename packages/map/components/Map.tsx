@@ -1,16 +1,14 @@
-import NonPlayableStations from "@/components/NonPlayableStations";
-import RemoteStations from "@/components/RemoteStations";
-import { TrainsList } from "@/components/TrainsList";
 import { Tooltip as MantineTooltip, type TooltipProps } from "@mantine/core";
 import { useFullscreen, useLocalStorage } from "@mantine/hooks";
 import type { Station, Train } from "@simrail/types";
 import type { LayersControlEvent, Map as LeafletMap } from "leaflet";
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import "leaflet/dist/leaflet.css";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useState } from "react";
 import { FaDiscord, FaGithub } from "react-icons/fa";
+import "leaflet-defaulticon-compatibility";
+
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import "leaflet/dist/leaflet.css";
 import {
 	MdFullscreen,
 	MdFullscreenExit,
@@ -30,14 +28,20 @@ import {
 	TileLayer,
 } from "react-leaflet";
 import Control from "react-leaflet-custom-control";
+
+import NonPlayableStations from "@/components/NonPlayableStations";
+import RemoteStations from "@/components/RemoteStations";
+import { TrainsList } from "@/components/TrainsList";
+
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
-import style from "../styles/BottomLeftControls.module.css";
-import styles from "../styles/Home.module.css";
 import { StationMarker } from "./Markers/StationMarker";
 import SelectedTrainPopup from "./SelectedTrainPopup";
 import { MainlineSignals, OtherSignals } from "./Signals";
 import SneakpeekMarkers from "./Sneakpeeks";
 import SpotlightSearch from "./SpotlightSearch";
+
+import style from "../styles/BottomLeftControls.module.css";
+import styles from "../styles/Home.module.css";
 
 type MapProps = {
 	serverId: string | string[];
@@ -91,7 +95,9 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 	>({});
 
 	const getTrains = useCallback(() => {
-		fetch(`https://panel.simrail.eu:8084/trains-open?serverCode=${serverId}`)
+		void fetch(
+			`https://panel.simrail.eu:8084/trains-open?serverCode=${String(serverId)}`,
+		)
 			.then((res) => res.json())
 			.then((fetchedTrains) => {
 				const trainsData: Train[] = fetchedTrains.data;
@@ -117,7 +123,9 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 	}, [serverId]);
 
 	const getStations = useCallback(() => {
-		fetch(`https://panel.simrail.eu:8084/stations-open?serverCode=${serverId}`)
+		void fetch(
+			`https://panel.simrail.eu:8084/stations-open?serverCode=${String(serverId)}`,
+		)
 			.then((res) => res.json())
 			.then((stations) => {
 				const stationsData: Station[] = stations.data;

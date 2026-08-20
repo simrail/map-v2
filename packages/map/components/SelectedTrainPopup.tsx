@@ -1,10 +1,13 @@
-import { getSteamProfileOrBot } from "@/components/steam";
 import { readLocalStorageValue } from "@mantine/hooks";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+
+import { getSteamProfileOrBot } from "@/components/steam";
+
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
-import styles from "../styles/SelectedTrainPopup.module.css";
 import TrainText from "./TrainText";
+
+import styles from "../styles/SelectedTrainPopup.module.css";
 
 type SelectedTrainPopupProps = {
 	stoppedSince?: number;
@@ -26,7 +29,7 @@ const SelectedTrainPopup = ({ stoppedSince }: SelectedTrainPopupProps) => {
 		let active = true;
 		if (!selectedTrain) return;
 
-		getSteamProfileOrBot(selectedTrain.TrainData.ControlledBySteamID).then(
+		void getSteamProfileOrBot(selectedTrain.TrainData.ControlledBySteamID).then(
 			([avatarUrl, profileName]) => {
 				if (active) {
 					setAvatar(avatarUrl);

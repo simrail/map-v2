@@ -2,17 +2,23 @@
 	"name": "simrail-map-v2",
 	"version": "0.1.0",
 	"private": true,
-	"packageManager": "pnpm@10.25.0",
 	"scripts": {
 		"preinstall": "npx only-allow pnpm",
 		"dev": "pnpm run --filter \"./packages/**\" --parallel dev",
 		"build": "pnpm run --filter \"./packages/**\" --parallel build",
-		"check": "biome check",
-		"fix": "biome check --fix"
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt --write .",
+		"format:check": "oxfmt --check .",
+		"check": "pnpm lint && pnpm format:check",
+		"fix": "pnpm lint:fix && pnpm format"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4"
+		"oxfmt": "0.64.0",
+		"oxlint": "1.79.0",
+		"oxlint-tsgolint": "7.0.2001"
 	},
+	"packageManager": "pnpm@10.25.0",
 	"pnpm": {
 		"overrides": {
 			"@babel/runtime": "7.29.7"
