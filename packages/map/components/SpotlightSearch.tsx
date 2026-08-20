@@ -12,16 +12,6 @@ type SpotlightSearchProps = {
 	stations: Station[];
 };
 
-class user {
-	username = "";
-	steamID = "";
-	constructor(username: string, steamID: string) {
-		this.username = username;
-		this.steamID = steamID;
-	}
-}
-export const usernames: user[] = [];
-
 export default function SpotlightSearch({
 	trains,
 	stations,
@@ -34,37 +24,36 @@ export default function SpotlightSearch({
 	const usernamesCache = useRef<Map<string, string>>(new Map());
 	const [open, setOpen] = useState(false);
 
-	async function getUsernames(userIDs: (string | null | undefined)[]) {
-		for (let i = 0; i < userIDs.length; i++) {
-			const steamID = userIDs[i];
-			if (steamID && !usernamesCache.current.has(steamID)) {
-				const profile = await getSteamProfileOrBot(steamID);
-				if (profile[1]) {
-					usernamesCache.current.set(steamID, profile[1]);
+	useEffect(() => {
+		if (!open) return;
+		let active = true;
+
+		const loadActions = async () => {
+			const userIds = new Set<string>();
+			for (const train of trains) {
+				if (train.Type === "user" && train.TrainData.ControlledBySteamID) {
+					userIds.add(train.TrainData.ControlledBySteamID);
 				}
 			}
-		}
-	}
+			for (const station of stations) {
+				const steamId = station.DispatchedBy[0]?.SteamId;
+				if (steamId) userIds.add(steamId);
+			}
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies:
-	useEffect(() => {
-		const actionsGroups: SpotlightActionGroupData[] = [];
+			await Promise.all(
+				[...userIds].map(async (steamId) => {
+					if (usernamesCache.current.has(steamId)) return;
+					try {
+						const [, profileName] = await getSteamProfileOrBot(steamId);
+						usernamesCache.current.set(steamId, profileName);
+					} catch {
+						usernamesCache.current.set(steamId, "Unknown");
+					}
+				}),
+			);
 
-		if (!open) return;
-
-		const userIDs = [];
-		for (let i = 0; i < trains.length; i++) {
-			if (trains[i].Type === "user" && trains[i] != null)
-				userIDs.push(trains[i].TrainData.ControlledBySteamID);
-		}
-		for (let i = 0; i < stations.length; i++) {
-			if (stations[i].DispatchedBy[0])
-				userIDs.push(stations[i].DispatchedBy[0].SteamId);
-		}
-
-		getUsernames(userIDs);
-
-		if (trains) {
+			if (!active) return;
+			const actionsGroups: SpotlightActionGroupData[] = [];
 			actionsGroups.push({
 				group: "Trains",
 				actions: trains.map((train, index) => {
@@ -87,9 +76,6 @@ export default function SpotlightSearch({
 					};
 				}),
 			});
-		}
-
-		if (stations) {
 			actionsGroups.push({
 				group: "Stations",
 				actions: stations.map((station, index) => {
@@ -112,10 +98,14 @@ export default function SpotlightSearch({
 					};
 				}),
 			});
-		}
+			setSpotlightActions(actionsGroups);
+		};
 
-		setSpotlightActions(actionsGroups);
-	}, [trains, stations, open, map?.panTo, setSelectedTrain, map?.setZoom]);
+		loadActions();
+		return () => {
+			active = false;
+		};
+	}, [map, open, setSelectedTrain, stations, trains]);
 
 	return (
 		<Spotlight

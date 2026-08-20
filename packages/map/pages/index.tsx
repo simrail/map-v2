@@ -4,57 +4,66 @@ import { TopNavigation } from "@/components/TopNavigation";
 import { WorldFlag } from "@/components/WorldFlag";
 import type { Server } from "@simrail/types";
 import Head from "next/head";
-import { type ComponentType, useEffect, useState } from "react";
+import { type ComponentType, useCallback, useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
+import { readServerSettings } from "../types/ServerSettings";
+
+const sortServers = (servers: Server[]) =>
+	[...servers].sort((first, second) => {
+		const favoriteDifference =
+			Number(readServerSettings(second.id).favorite) -
+			Number(readServerSettings(first.id).favorite);
+		if (favoriteDifference !== 0) return favoriteDifference;
+
+		const frenchServerDifference =
+			Number(second.ServerName.startsWith("FR")) -
+			Number(first.ServerName.startsWith("FR"));
+		if (frenchServerDifference !== 0) return frenchServerDifference;
+
+		return first.ServerCode.localeCompare(second.ServerCode);
+	});
 
 export default function Home() {
 	const [servers, setServers] = useState<Server[] | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
-	function getServers() {
-		fetch("https://panel.simrail.eu:8084/servers-open")
-			.then((res) => res.json())
+	const getServers = useCallback((signal?: AbortSignal) => {
+		fetch("https://panel.simrail.eu:8084/servers-open", { signal })
+			.then((response) => {
+				if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+				return response.json();
+			})
 			.then((stations) => {
-				let serversData: Server[] = stations.data;
-
-				serversData = serversData.sort((a, b) => {
-					const serverSettings1 = JSON.parse(
-						localStorage.getItem(`server-${a.id}`) ?? '{"favorite": false}',
-					) ?? { favorite: false };
-					const serverSettings2 = JSON.parse(
-						localStorage.getItem(`server-${b.id}`) ?? '{"favorite": false}',
-					) ?? { favorite: false };
-
-					if (serverSettings1.favorite && !serverSettings2.favorite) {
-						return -1;
-					}
-					if (!serverSettings1.favorite && serverSettings2.favorite) {
-						return 1;
-					}
-					if (b.ServerName.startsWith("FR")) {
-						return 1;
-					}
-					if (a.ServerName.startsWith("FR")) {
-						return -1;
-					}
-					return a.ServerCode.localeCompare(b.ServerCode);
-				});
-
-				setServers(serversData);
+				setServers(sortServers(stations.data as Server[]));
+				setError(null);
+			})
+			.catch((requestError: Error) => {
+				if (requestError.name !== "AbortError") {
+					setError("Could not load servers. Retrying automatically…");
+				}
 			});
-	}
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies:
-	useEffect(() => {
-		// setLoading(true)
-
-		getServers();
-
-		const interval = setInterval(() => {
-			getServers();
-		}, 10000);
-
-		return () => clearInterval(interval);
 	}, []);
+
+	useEffect(() => {
+		const controller = new AbortController();
+		getServers(controller.signal);
+
+		const interval = window.setInterval(
+			() => getServers(controller.signal),
+			10000,
+		);
+		const resortServers = () =>
+			setServers((currentServers) =>
+				currentServers ? sortServers(currentServers) : currentServers,
+			);
+		window.addEventListener("server-favorite-change", resortServers);
+
+		return () => {
+			controller.abort();
+			window.clearInterval(interval);
+			window.removeEventListener("server-favorite-change", resortServers);
+		};
+	}, [getServers]);
 
 	const getStatusIndicatorStyle = (server: Server) => {
 		if (server.IsActive) return styles.online;
@@ -76,6 +85,7 @@ export default function Home() {
 			<main className={styles.main}>
 				<h1 className={styles.title}>Select your server</h1>
 				{!servers && "Loading servers..."}
+				{error && <p role="alert">{error}</p>}
 				<div className={styles.serverList}>
 					{servers?.map((server: Server) => {
 						return (

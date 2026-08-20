@@ -1,31 +1,28 @@
 import type { Server } from "@simrail/types";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { type MouseEvent, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styles from "../styles/Home.module.css";
-import type { ServerSettings } from "../types/ServerSettings";
+import { readServerSettings } from "../types/ServerSettings";
 
 type FavoriteStarProps = {
 	server: Server;
 };
 
 export default function FavoriteStar({ server }: FavoriteStarProps) {
-	const serverSettings: ServerSettings = JSON.parse(
-		localStorage.getItem(`server-${server.id}`) ?? "{}",
-	);
-	const router = useRouter();
-
-	const [favorite, SetFavorite] = useState<boolean>(
-		serverSettings.favorite ?? false,
+	const [favorite, setFavorite] = useState(
+		() => readServerSettings(server.id).favorite,
 	);
 
-	// @ts-expect-error todo
-	const toggleFavorite = (event) => {
+	const toggleFavorite = (event: MouseEvent<SVGElement>) => {
 		event.preventDefault();
-		serverSettings.favorite = !favorite;
-		SetFavorite(!favorite);
-		localStorage.setItem(`server-${server.id}`, JSON.stringify(serverSettings));
-		router.reload();
+		event.stopPropagation();
+		const nextFavorite = !favorite;
+		setFavorite(nextFavorite);
+		localStorage.setItem(
+			`server-${server.id}`,
+			JSON.stringify({ favorite: nextFavorite }),
+		);
+		window.dispatchEvent(new Event("server-favorite-change"));
 	};
 
 	if (favorite) {

@@ -31,29 +31,24 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 
 	const router = useRouter();
 	const { id, trainId } = router.query;
+	const serverCode = Array.isArray(id) ? id[0] : id;
 
 	useEffect(() => {
-		if (id) {
-			const serverUtcOffSeconds = serverTimes.find(
-				(server) => server.code === id,
-			)?.offsetSeconds;
-			if (serverUtcOffSeconds !== undefined) {
-				const timer = setInterval(() => {
-					// update blinking state of the colon
-					setBlinking((currentBlinking) => !currentBlinking);
+		const serverUtcOffsetSeconds = serverTimes.find(
+			(server) => server.code === serverCode,
+		)?.offsetSeconds;
 
-					// update the server date
-					const currentUnixTimestamp = Date.now();
-					const utcOffsetInMs = serverUtcOffSeconds * 1000;
-					const serverDate = new Date(currentUnixTimestamp + utcOffsetInMs);
-					setServerDate(serverDate);
-				}, 1000);
-				return () => clearInterval(timer);
-			}
-		}
-	}, [id]);
+		if (serverUtcOffsetSeconds === undefined) return;
 
-	if (!serverDate) return null;
+		const updateServerDate = () => {
+			setBlinking((currentBlinking) => !currentBlinking);
+			setServerDate(new Date(Date.now() + serverUtcOffsetSeconds * 1000));
+		};
+
+		updateServerDate();
+		const timer = window.setInterval(updateServerDate, 1000);
+		return () => window.clearInterval(timer);
+	}, [serverCode]);
 
 	const Icon = colorScheme === "dark" ? MdOutlineLightMode : MdOutlineDarkMode;
 
@@ -95,21 +90,20 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 					<span className={style.saira}>{id?.toString().toUpperCase()}</span>
 					{!disableMapFeatures && <span className="online" />}
 				</div>
-				<div className="datetime">
-					<span className={style.time}>
-						{serverDate.getUTCHours().toString().padStart(2, "0")}
-						<span style={{ color: blinking ? "black" : "#FF9900" }}>:</span>
-						{serverDate.getUTCMinutes().toString().padStart(2, "0")}
-					</span>
-					<span className={style.date}>
-						{" "}
-						{serverDate.getUTCDate().toString().padStart(2, "0")}
-						{"/"}
-						{(serverDate.getUTCMonth() + 1).toString().padStart(2, "0")}
-						{"/"}
-						{serverDate.getUTCFullYear()}
-					</span>
-				</div>
+				{serverDate && (
+					<div className="datetime">
+						<span className={style.time}>
+							{serverDate.getUTCHours().toString().padStart(2, "0")}
+							<span style={{ color: blinking ? "black" : "#FF9900" }}>:</span>
+							{serverDate.getUTCMinutes().toString().padStart(2, "0")}
+						</span>
+						<span className={style.date}>
+							{serverDate.getUTCDate().toString().padStart(2, "0")}/
+							{(serverDate.getUTCMonth() + 1).toString().padStart(2, "0")}/
+							{serverDate.getUTCFullYear()}
+						</span>
+					</div>
+				)}
 
 				<div className={style.right}>
 					{!disableMapFeatures && (

@@ -4,8 +4,8 @@ import L from "leaflet";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Marker, Popup, Tooltip } from "react-leaflet";
-import type { ProfileResponse } from "types/SteamProfile";
 import stationsList from "../EDR_station.json";
+import { getSteamProfileOrBot } from "../steam";
 
 type StationMarkerProps = {
 	station: Station;
@@ -17,23 +17,28 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 
 	const router = useRouter();
 	const pathname = usePathname();
+	const steamId = station.DispatchedBy[0]?.SteamId;
 
 	useEffect(() => {
-		async function getData() {
-			if (station.DispatchedBy[0]) {
-				const avatarRequest = await fetch(
-					`https://simrail-edr.emeraldnetwork.xyz/steam/${station.DispatchedBy[0].SteamId}`,
-				);
-				const profile: ProfileResponse = await avatarRequest.json();
-				setAvatar(profile.avatar);
-				setUsername(profile.personaname);
-			} else {
-				setAvatar(null);
-				setUsername("BOT");
-			}
-		}
-		getData();
-	}, [station.DispatchedBy?.[0]]);
+		let active = true;
+		getSteamProfileOrBot(steamId)
+			.then(([avatarUrl, profileName]) => {
+				if (active) {
+					setAvatar(avatarUrl);
+					setUsername(profileName);
+				}
+			})
+			.catch(() => {
+				if (active) {
+					setAvatar(null);
+					setUsername("Unknown");
+				}
+			});
+
+		return () => {
+			active = false;
+		};
+	}, [steamId]);
 
 	const { colorScheme } = useMantineColorScheme();
 

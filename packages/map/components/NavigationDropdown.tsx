@@ -12,9 +12,9 @@ export const NavigationDropdown = () => {
 				<Link className={style.dropdownLink} href="https://www.simrail.app/">
 					<AiFillHome /> Return Home
 				</Link>
-				<a className={style.dropdownLink} href="/">
+				<Link className={style.dropdownLink} href="/">
 					<AiOutlineSwap /> Change server
-				</a>
+				</Link>
 			</div>
 			{/* <h2 className={[style.dropdownTitle].join(" ")}>Layer</h2>
         <fieldset>
