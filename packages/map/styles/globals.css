@@ -1,6 +1,7 @@
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
+  color-scheme: dark;
 }
 
 input {
@@ -9,7 +10,7 @@ input {
 }
 
 input:focus {
-  outline: none !important;
+  outline: none;
 }
 
 li,
@@ -23,6 +24,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  min-height: 100%;
 }
 
 
@@ -30,12 +32,27 @@ body {
   color: white !important;
   background: #171821;
   font-family: "Source Code Pro", monospace !important;
-
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid #ffad32 !important;
+  outline-offset: 3px;
+}
+
+::selection {
+  color: #101217;
+  background: #ffb442;
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -121,6 +138,37 @@ html[data-mantine-color-scheme="dark"] .leaflet-popup-content-wrapper,
 html[data-mantine-color-scheme="dark"] .leaflet-tooltip {
   background: rgb(34 34 34);
   color: rgb(212, 212, 212);
+}
+
+.leaflet-control-layers {
+  border: 1px solid rgb(255 255 255 / 12%) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 24%) !important;
+  backdrop-filter: blur(12px);
+}
+
+.leaflet-control-layers-expanded {
+  padding: 10px 12px !important;
+}
+
+.leaflet-control-attribution {
+  opacity: 0.78;
+}
+
+@media (max-width: 560px) {
+  .leaflet-control-layers-expanded {
+    max-width: 220px;
+    max-height: 38dvh;
+    overflow-y: auto;
+    font-size: 11px;
+  }
+
+  .leaflet-control-attribution {
+    max-width: 68vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 html[data-mantine-color-scheme="dark"] .leaflet-tooltip {

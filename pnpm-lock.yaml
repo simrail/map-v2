@@ -29,12 +29,6 @@ importers:
 
   packages/home:
     dependencies:
-      '@mantine/core':
-        specifier: ^7.17.8
-        version: 7.17.8(@mantine/hooks@7.17.8(react@19.2.8))(@types/react@19.2.18)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@mantine/hooks':
-        specifier: ^7.17.8
-        version: 7.17.8(react@19.2.8)
       common:
         specifier: workspace:*
         version: link:../common

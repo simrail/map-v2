@@ -1,0 +1,81 @@
+.slot {
+  color: #727a87;
+  text-align: center;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.slot ins,
+.preview {
+  display: block;
+  width: 100%;
+  border: 1px solid rgb(255 255 255 / 7%);
+  border-radius: 10px;
+  background: rgb(13 16 22 / 52%);
+}
+
+.preview {
+  display: grid;
+  place-items: center;
+  color: #656e7b;
+  font-size: 10px;
+}
+
+.leaderboard {
+  width: min(970px, 100%);
+  min-height: 116px;
+  margin: 6px auto 20px;
+}
+
+.leaderboard ins,
+.leaderboard .preview,
+.inFeed ins,
+.inFeed .preview {
+  min-height: 90px;
+}
+
+.inFeed {
+  grid-column: 1 / -1;
+  width: min(970px, 100%);
+  min-height: 116px;
+  margin: 8px auto;
+}
+
+.rail {
+  position: absolute;
+  top: 370px;
+  left: calc(100% + 22px);
+  display: none;
+  width: 300px;
+  min-height: 275px;
+}
+
+.rail ins,
+.rail .preview {
+  min-height: 250px;
+}
+
+@media (min-width: 1500px) {
+  .rail { display: block; }
+}
+
+@media (max-width: 760px) {
+  .leaderboard,
+  .inFeed {
+    min-height: 76px;
+  }
+
+  .leaderboard ins,
+  .leaderboard .preview,
+  .inFeed ins,
+  .inFeed .preview {
+    min-height: 50px;
+  }
+}

@@ -1,3 +1,48 @@
+:root {
+  color-scheme: dark;
+  font-family: "Source Code Pro", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #0d1017;
+}
+
 body {
-    background: #171821;
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  color: #eef1f5;
+  background: #0d1017;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid #ffad32;
+  outline-offset: 3px;
+}
+
+::selection {
+  color: #101217;
+  background: #ffb13b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }

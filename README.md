@@ -42,6 +42,21 @@ pnpm install
 pnpm run dev
 ```
 
+AdSense placements are configured independently so their performance can be
+measured and tuned in the AdSense dashboard:
+
+- Portal: `VITE_GOOGLE_ADSENSE_HOME_LEADERBOARD_SLOT`,
+  `VITE_GOOGLE_ADSENSE_HOME_INFEED_SLOT`, and
+  `VITE_GOOGLE_ADSENSE_HOME_RAIL_SLOT`.
+- Server picker: `NEXT_PUBLIC_GOOGLE_ADSENSE_SERVERS_LEADERBOARD_SLOT`,
+  `NEXT_PUBLIC_GOOGLE_ADSENSE_SERVERS_INFEED_SLOT`, and
+  `NEXT_PUBLIC_GOOGLE_ADSENSE_SERVERS_RAIL_SLOT`.
+- Live map: `NEXT_PUBLIC_GOOGLE_ADSENSE_MAP_SLOT` enables the dismissible banner
+  after a randomized 5–10 minute delay.
+
+Unconfigured placements collapse in production and appear as labeled previews
+during local development. Rail placements only appear on wide desktop screens.
+
 4. Check linting, TypeScript diagnostics, and formatting:
 
 ```bash

@@ -3,7 +3,11 @@
 	"version": "1.0.0",
 	"private": true,
 	"type": "module",
-	"exports": "./index.ts",
+	"exports": {
+		".": "./index.ts",
+		"./ads": "./ads.ts",
+		"./links": "./links.ts"
+	},
 	"dependencies": {
 		"@mantine/core": "^7.17.8"
 	}

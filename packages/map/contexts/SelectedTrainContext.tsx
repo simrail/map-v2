@@ -1,5 +1,11 @@
 import type { Train } from "@simrail/types";
-import { type ReactNode, createContext, useContext, useState } from "react";
+import {
+	type ReactNode,
+	createContext,
+	useContext,
+	useMemo,
+	useState,
+} from "react";
 
 interface SelectedTrainContextType {
 	selectedTrain: Train | null;
@@ -19,9 +25,13 @@ export const SelectedTrainProvider = ({
 	children: ReactNode;
 }) => {
 	const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
+	const value = useMemo(
+		() => ({ selectedTrain, setSelectedTrain }),
+		[selectedTrain],
+	);
 
 	return (
-		<SelectedTrainContext.Provider value={{ selectedTrain, setSelectedTrain }}>
+		<SelectedTrainContext.Provider value={value}>
 			{children}
 		</SelectedTrainContext.Provider>
 	);
