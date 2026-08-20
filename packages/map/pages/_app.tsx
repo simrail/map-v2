@@ -3,6 +3,7 @@ import { MantineProvider } from "@mantine/core";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { mantineTheme } from "common";
 import type { AppProps } from "next/app";
+
 import "@mantine/core/styles.css";
 import "@mantine/spotlight/styles.css";
 import "mantine-flagpack/styles.css";

@@ -1,12 +1,15 @@
+import type { Server } from "@simrail/types";
+import Head from "next/head";
+import { type ComponentType, useCallback, useEffect, useState } from "react";
+
 import EUFlag from "@/components/EUFlag";
 import FavoriteStar from "@/components/FavoriteStar";
 import { TopNavigation } from "@/components/TopNavigation";
 import { WorldFlag } from "@/components/WorldFlag";
-import type { Server } from "@simrail/types";
-import Head from "next/head";
-import { type ComponentType, useCallback, useEffect, useState } from "react";
-import styles from "../styles/Home.module.css";
+
 import { readServerSettings } from "../types/ServerSettings";
+
+import styles from "../styles/Home.module.css";
 
 const sortServers = (servers: Server[]) =>
 	[...servers].sort((first, second) => {
@@ -115,46 +118,44 @@ export default function Home() {
 			</main>
 			<style jsx>
 				{`
-        .server {
-            background: rgba(54, 54, 58, 0.8);
-            padding: 8px 32px;
-            margin: 8px;
-            border-radius: 12px;
-            width: 60%;
-            flex-direction: row;
-            transition: all 200ms ease-in-out;
-            align-self: center;
-            justify-self: center;
-            position: relative;
-            text-align: start;
-            font-size: 23px;
-        }
+					.server {
+						background: rgba(54, 54, 58, 0.8);
+						padding: 8px 32px;
+						margin: 8px;
+						border-radius: 12px;
+						width: 60%;
+						flex-direction: row;
+						transition: all 200ms ease-in-out;
+						align-self: center;
+						justify-self: center;
+						position: relative;
+						text-align: start;
+						font-size: 23px;
+					}
 
-        .serverName {
-            margin-left: 32px;
-			margin-right: 16px;
-            transition: all 200ms ease-in-out;
-            display: flex;
-            gap: 16px;
-            font-weight: 600;
-            align-items: center;
-        }
+					.serverName {
+						margin-left: 32px;
+						margin-right: 16px;
+						transition: all 200ms ease-in-out;
+						display: flex;
+						gap: 16px;
+						font-weight: 600;
+						align-items: center;
+					}
 
-        .server:hover .serverName {
-            margin-left: 48px; 
-        }
-        .server:hover {
-            background: #111114;
-        }
-                    
-        @media (max-width: 1280px) {
-            .server {
-                width: 80%;
-            }
+					.server:hover .serverName {
+						margin-left: 48px;
+					}
+					.server:hover {
+						background: #111114;
+					}
 
-        }
-
-        `}
+					@media (max-width: 1280px) {
+						.server {
+							width: 80%;
+						}
+					}
+				`}
 			</style>
 		</>
 	);

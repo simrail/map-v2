@@ -1,6 +1,7 @@
+import React, { type FC } from "react";
+
 import { NonPlayableStationMarker } from "@/components/Markers/NonPlayableStationMarker";
 import stationsJson from "@/components/stations.json";
-import React, { type FC } from "react";
 
 const NonPlayableStations: FC = () => (
 	<>

@@ -1,10 +1,11 @@
+import type { Server } from "@simrail/types";
+import type { GetStaticPaths, GetStaticProps } from "next";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useRouter } from "next/router";
 
 import { TopNavigation } from "@/components/TopNavigation";
-import type { Server } from "@simrail/types";
-import type { GetStaticPaths, GetStaticProps } from "next";
-import Head from "next/head";
+
 import { SelectedTrainProvider } from "../../contexts/SelectedTrainContext";
 
 const MapWithNoSSR = dynamic(() => import("../../components/Map"), {
@@ -43,7 +44,7 @@ const Post = () => {
 				<title>{pageTitle}</title>
 				<link
 					rel="canonical"
-					href={`https://map.simrail.app/server/${id}`}
+					href={`https://map.simrail.app/server/${id.toString()}`}
 					key="canonical"
 				/>
 			</Head>

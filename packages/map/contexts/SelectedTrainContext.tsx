@@ -15,7 +15,9 @@ export const useSelectedTrain = () => useContext(SelectedTrainContext);
 
 export const SelectedTrainProvider = ({
 	children,
-}: { children: ReactNode }) => {
+}: {
+	children: ReactNode;
+}) => {
 	const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
 
 	return (

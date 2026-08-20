@@ -1,6 +1,7 @@
+import type { FC } from "react";
+
 import { SneakpeekMarker } from "@/components/Markers/SneakpeekMarker";
 import sneakpeeksjson from "@/components/sneakpeeks.json";
-import type { FC } from "react";
 
 type SneakpeekMarkerProps = {
 	title: string;

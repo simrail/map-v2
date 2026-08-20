@@ -1,4 +1,5 @@
 import { Center } from "@mantine/core";
+
 import style from "../styles/FeatureCard.module.css";
 
 type FeatureCardProps = {

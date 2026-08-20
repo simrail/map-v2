@@ -1,5 +1,3 @@
-// import { NavigationDropdown } from './NavigationDropdown';
-import serverTimes from "@/components/serverTimes.json";
 import { useMantineColorScheme } from "@mantine/core";
 import { spotlight } from "@mantine/spotlight";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
@@ -14,8 +12,13 @@ import {
 	MdOutlineLightMode,
 	MdSearch,
 } from "react-icons/md";
-import style from "../styles/TopNavigation.module.css";
+
+// import { NavigationDropdown } from './NavigationDropdown';
+import serverTimes from "@/components/serverTimes.json";
+
 import { NavigationDropdown } from "./NavigationDropdown";
+
+import style from "../styles/TopNavigation.module.css";
 
 type TopNavigationProps = {
 	disableMapFeatures?: boolean;
@@ -115,7 +118,7 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 									size={24}
 									onClick={() => {
 										setSelectedTrain(null);
-										if (trainId) router.replace(`/server/${id}`);
+										if (trainId) void router.replace(`/server/${String(id)}`);
 									}}
 								/>
 							)}
@@ -141,69 +144,68 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 			{dropdown && <NavigationDropdown />}
 			<style jsx>
 				{`
+					.search-input-container {
+						border: 2px white solid;
+						border-radius: 8px;
+						padding: 6px 6px;
+					}
 
-        .search-input-container {
-            border: 2px white solid;
-            border-radius: 8px;
-            padding: 6px 6px;
-        }
+					.search-icon {
+						display: none;
+					}
 
-        .search-icon {
-            display: none;
-        }
+					.title {
+						font-size: 24px;
+						font-weight: 800;
+						line-height: 1;
+						font-family: "Saira";
+					}
 
-        .title {
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 1;
-            font-family: 'Saira';
-        }
+					.datetime {
+						font-weight: bold;
+						font-size: 16px;
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						gap: 16px;
+					}
 
-        .datetime {
-            font-weight: bold;
-            font-size: 16px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-        }
-            
-        .navigation {
-            overflow: hidden;
-            background-color: #111114;
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            vertical-align: middle;
-            height: 54px;
-        }
+					.navigation {
+						overflow: hidden;
+						background-color: #111114;
+						display: grid;
+						grid-template-columns: repeat(3, minmax(0, 1fr));
+						vertical-align: middle;
+						height: 54px;
+					}
 
-        .online {
-            height: 12px;
-            width: 12px;
-            background-color: #43E366;
-            border-radius: 9999px;
-        }
+					.online {
+						height: 12px;
+						width: 12px;
+						background-color: #43e366;
+						border-radius: 9999px;
+					}
 
-        @media (max-width: 1280px) {
-            .title {
-                display: none;
-            }
-            .search-input-container {
-                display: none;
-            }
-        }
-        @media (max-width: 640px) {
-            .datetime {
-                display: none;
-            }
-            .navigation {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-            .online {
-                display: none;
-            }
-        }
-        `}
+					@media (max-width: 1280px) {
+						.title {
+							display: none;
+						}
+						.search-input-container {
+							display: none;
+						}
+					}
+					@media (max-width: 640px) {
+						.datetime {
+							display: none;
+						}
+						.navigation {
+							grid-template-columns: repeat(2, minmax(0, 1fr));
+						}
+						.online {
+							display: none;
+						}
+					}
+				`}
 			</style>
 		</div>
 	);

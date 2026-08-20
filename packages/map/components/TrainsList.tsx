@@ -1,6 +1,7 @@
-import TrainMarker from "@/components/Markers/TrainMarker";
 import type { Train } from "@simrail/types";
 import type { FC } from "react";
+
+import TrainMarker from "@/components/Markers/TrainMarker";
 
 type Props = {
 	trains: Train[];

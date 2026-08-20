@@ -1,11 +1,13 @@
 import { Container, Flex, Space } from "@mantine/core";
-import { FeatureCard } from "./components/FeatureCard";
-import { Footer } from "./components/Footer";
-import ".././../map/styles/globals.css";
+
 import blog from "./assets/features/blog.webp";
 import edr from "./assets/features/edr.webp";
+
+import ".././../map/styles/globals.css";
 import map from "./assets/features/map.webp";
 import logo from "./assets/logos/logo_simrailapp.png";
+import { FeatureCard } from "./components/FeatureCard";
+import { Footer } from "./components/Footer";
 
 function App() {
 	return (

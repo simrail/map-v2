@@ -5,6 +5,7 @@ import { LatLng } from "leaflet";
 import { useEffect, useRef, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import { useMap } from "react-leaflet";
+
 import { getSteamProfileOrBot } from "./steam";
 
 type SpotlightSearchProps = {
@@ -101,7 +102,7 @@ export default function SpotlightSearch({
 			setSpotlightActions(actionsGroups);
 		};
 
-		loadActions();
+		void loadActions();
 		return () => {
 			active = false;
 		};
