@@ -163,6 +163,11 @@ html[data-mantine-color-scheme="light"] .leaflet-popup-tip {
   background: white !important;
 }
 
+html[data-mantine-color-scheme="light"] .leaflet-popup-content-wrapper {
+  border-color: rgb(31 41 55 / 15%);
+  box-shadow: 0 20px 55px rgb(30 39 52 / 22%) !important;
+}
+
 .leaflet-popup-close-button {
   top: 6px !important;
   right: 6px !important;
@@ -181,6 +186,16 @@ html[data-mantine-color-scheme="light"] .leaflet-popup-tip {
 .leaflet-popup-close-button:hover {
   color: #fff !important;
   background: rgb(255 255 255 / 10%) !important;
+}
+
+html[data-mantine-color-scheme="light"] .leaflet-popup-close-button {
+  color: #596472 !important;
+  background: rgb(31 41 55 / 7%) !important;
+}
+
+html[data-mantine-color-scheme="light"] .leaflet-popup-close-button:hover {
+  color: #151a22 !important;
+  background: rgb(31 41 55 / 12%) !important;
 }
 
 .train-map-popup .leaflet-popup-content {

@@ -18,6 +18,14 @@
   backdrop-filter: blur(18px);
 }
 
+:global(html[data-mantine-color-scheme="light"]) .popup,
+:global(html[data-mantine-color-scheme="light"]) .noPopup {
+  color: #202731;
+  border-color: rgb(31 41 55 / 15%);
+  background: rgb(255 255 255 / 94%);
+  box-shadow: 0 20px 55px rgb(30 39 52 / 22%);
+}
+
 .closeButton,
 .closeButtonNoPopup {
   position: absolute;
