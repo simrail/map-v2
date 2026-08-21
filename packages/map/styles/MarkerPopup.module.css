@@ -1,6 +1,29 @@
 .stationCard {
+  --popup-accent: #ffb13b;
+  --popup-title: #fff;
+  --popup-text: #dfe3e9;
+  --popup-muted: #aeb5c0;
+  --popup-label: #737c89;
+  --popup-border: rgb(255 255 255 / 7%);
+
   width: 250px;
   overflow: hidden;
+}
+
+.simpleCard {
+  --popup-accent: #ffb13b;
+  --popup-title: #fff;
+  --popup-muted: #8e97a3;
+}
+
+:global(html[data-mantine-color-scheme="light"]) .stationCard,
+:global(html[data-mantine-color-scheme="light"]) .simpleCard {
+  --popup-accent: #955200;
+  --popup-title: #151a22;
+  --popup-text: #313a46;
+  --popup-muted: #5f6a78;
+  --popup-label: #626d7b;
+  --popup-border: rgb(31 41 55 / 14%);
 }
 
 .stationImage {
@@ -47,7 +70,7 @@
 .stationBody > small,
 .simpleCard small,
 .operator small {
-  color: #ffb13b;
+  color: var(--popup-accent);
   font-size: 8px;
   font-weight: 800;
   letter-spacing: .1em;
@@ -56,7 +79,7 @@
 
 .stationBody > strong {
   margin: 5px 0 12px;
-  color: #fff;
+  color: var(--popup-title);
   font-family: "Saira", sans-serif;
   font-size: 18px;
   line-height: 1.1;
@@ -68,7 +91,7 @@
   width: 100%;
   gap: 9px;
   padding-top: 10px;
-  border-top: 1px solid rgb(255 255 255 / 7%);
+  border-top: 1px solid var(--popup-border);
 }
 
 .operator > img {
@@ -84,12 +107,12 @@
   gap: 2px;
 }
 
-.operator small { color: #737c89; }
-.operator span { overflow: hidden; color: #dfe3e9; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.operator small { color: var(--popup-label); }
+.operator span { overflow: hidden; color: var(--popup-text); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
 
 .openHint {
   margin-top: 12px;
-  color: #aeb5c0;
+  color: var(--popup-muted);
   font-size: 9px;
   font-weight: 700;
 }
@@ -102,12 +125,12 @@
 }
 
 .simpleCard strong {
-  color: #fff;
+  color: var(--popup-title);
   font-family: "Saira", sans-serif;
   font-size: 15px;
 }
 
 .simpleCard span {
-  color: #8e97a3;
+  color: var(--popup-muted);
   font-size: 9px;
 }

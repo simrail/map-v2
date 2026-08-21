@@ -1,4 +1,4 @@
-import { useMantineColorScheme } from "@mantine/core";
+import { useComputedColorScheme, useMantineColorScheme } from "@mantine/core";
 import { spotlight } from "@mantine/spotlight";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import Link from "next/link";
@@ -27,13 +27,15 @@ type TopNavigationProps = {
 export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 	const [serverDate, setServerDate] = useState<Date>();
 	const { selectedTrain, setSelectedTrain } = useSelectedTrain();
-	const { colorScheme, setColorScheme } = useMantineColorScheme();
+	const { setColorScheme } = useMantineColorScheme();
+	const computedColorScheme = useComputedColorScheme("dark", {
+		getInitialValueInEffect: true,
+	});
 	const [dropdown, setDropdown] = useState(false);
 	const menuButtonRef = useRef<HTMLButtonElement>(null);
 	const router = useRouter();
 	const { id, trainId } = router.query;
 	const serverCode = Array.isArray(id) ? id[0] : id;
-
 	useEffect(() => {
 		const serverUtcOffsetSeconds = serverTimes.find(
 			(server) => server.code === serverCode,
@@ -58,9 +60,6 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 		window.addEventListener("keydown", closeMenu);
 		return () => window.removeEventListener("keydown", closeMenu);
 	}, [dropdown]);
-
-	const ThemeIcon =
-		colorScheme === "dark" ? MdOutlineLightMode : MdOutlineDarkMode;
 
 	return (
 		<header className={style.header}>
@@ -156,11 +155,14 @@ export const TopNavigation = ({ disableMapFeatures }: TopNavigationProps) => {
 								type="button"
 								className={style.iconButton}
 								onClick={() =>
-									setColorScheme(colorScheme === "light" ? "dark" : "light")
+									setColorScheme(
+										computedColorScheme === "light" ? "dark" : "light",
+									)
 								}
-								aria-label={`Switch to ${colorScheme === "light" ? "dark" : "light"} mode`}
+								aria-label="Toggle color scheme"
 							>
-								<ThemeIcon size={22} />
+								<MdOutlineLightMode className={style.lightModeIcon} size={22} />
+								<MdOutlineDarkMode className={style.darkModeIcon} size={22} />
 							</button>
 						</>
 					)}
