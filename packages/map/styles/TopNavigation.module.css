@@ -175,6 +175,18 @@
   background: rgb(255 255 255 / 6%);
 }
 
+.darkModeIcon {
+  display: none;
+}
+
+:global(html[data-mantine-color-scheme="light"]) .lightModeIcon {
+  display: none;
+}
+
+:global(html[data-mantine-color-scheme="light"]) .darkModeIcon {
+  display: block;
+}
+
 @media (max-width: 900px) {
   .title {
     display: none;
