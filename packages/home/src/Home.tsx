@@ -1,4 +1,4 @@
-import { DISCORD_INVITE_URL } from "common/links";
+import { DISCORD_INVITE_URL, G2A_AFFILIATE_URL } from "common/links";
 
 import blog from "./assets/features/blog.webp";
 import edr from "./assets/features/edr.webp";
@@ -126,6 +126,27 @@ function App() {
 							disabled
 						/>
 						<AdSlot placement="inFeed" slotId={HOME_AD_SLOTS.inFeed} />
+					</div>
+				</section>
+
+				<section className={styles.purchase} aria-labelledby="purchase-title">
+					<div className={styles.purchaseIcon} aria-hidden="true">
+						<span>SR</span>
+					</div>
+					<div className={styles.purchaseCopy}>
+						<span className={styles.sectionLabel}>Get the game</span>
+						<h2 id="purchase-title">Ready to drive?</h2>
+						<p>Find SimRail on G2A and compare the current offer.</p>
+					</div>
+					<div className={styles.purchaseAction}>
+						<a
+							href={G2A_AFFILIATE_URL}
+							target="_blank"
+							rel="sponsored noreferrer"
+						>
+							View on G2A <span aria-hidden="true">↗</span>
+						</a>
+						<small>Affiliate link · We may earn a commission.</small>
 					</div>
 				</section>
 
