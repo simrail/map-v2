@@ -118,12 +118,20 @@ input {
   background: rgb(27 23 17 / 96%) !important;
 }
 
-html[data-mantine-color-scheme="dark"] .leaflet-tile {
+html[data-mantine-color-scheme="dark"] .leaflet-tile-pane {
   filter: invert(100%) contrast(1) grayscale(100%) brightness(0.8) !important;
 }
 
-html[data-mantine-color-scheme="light"] .leaflet-tile {
+html[data-mantine-color-scheme="light"] .leaflet-tile-pane {
   filter: none;
+}
+
+html[data-mantine-color-scheme="dark"] .leaflet-container {
+  background: #11151d;
+}
+
+html[data-mantine-color-scheme="light"] .leaflet-container {
+  background: #dfe4e8;
 }
 
 html[data-mantine-color-scheme="dark"] .leaflet-control-zoom-in,

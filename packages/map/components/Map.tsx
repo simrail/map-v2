@@ -284,6 +284,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				ref={setMap}
 				scrollWheelZoom={true}
 				zoomControl={false}
+				fadeAnimation={false}
 			>
 				<Control position="bottomleft">
 					<div className={style.container}>
@@ -414,7 +415,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				) : (
 					<TileLayer
 						attribution={`&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href="${DISCORD_INVITE_URL}">Created by SimRail France 🇫🇷 Community</a>`}
-						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+						url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
 					/>
 				)}
 
