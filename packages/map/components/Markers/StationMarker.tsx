@@ -2,7 +2,7 @@ import { useMantineColorScheme } from "@mantine/core";
 import type { Station } from "@simrail/types";
 import L from "leaflet";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Marker, Popup, Tooltip } from "react-leaflet";
 
 import stationsList from "../EDR_station.json";
@@ -14,7 +14,7 @@ type StationMarkerProps = {
 	station: Station;
 };
 
-export const StationMarker = ({ station }: StationMarkerProps) => {
+export const StationMarker = memo(({ station }: StationMarkerProps) => {
 	const [avatar, setAvatar] = useState<string | null>(null);
 	const [username, setUsername] = useState<string | null>(null);
 
@@ -124,4 +124,6 @@ export const StationMarker = ({ station }: StationMarkerProps) => {
 			</Tooltip>
 		</Marker>
 	);
-};
+});
+
+StationMarker.displayName = "StationMarker";

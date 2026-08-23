@@ -103,25 +103,27 @@ const TrainText = ({
 		(info, index, all) =>
 			all.findIndex((item) => item.railcar.id === info.railcar.id) === index,
 	);
-	const locomotiveImages = uniqueLocomotives.map((info) => (
-		<Carousel.Slide key={`${info.railcar.id}@${info.index}`}>
-			<Image
-				src={`/trains/${info.railcar.id}.png`}
-				alt={info.railcar.id}
-				w="auto"
-				fit="contain"
-				height="100%"
-			/>
-		</Carousel.Slide>
-	));
+	const locomotiveImages = minified
+		? []
+		: uniqueLocomotives.map((info) => (
+				<Carousel.Slide key={`${info.railcar.id}@${info.index}`}>
+					<Image
+						src={`/trains/${info.railcar.id}.png`}
+						alt={info.railcar.id}
+						w="auto"
+						fit="contain"
+						height="100%"
+					/>
+				</Carousel.Slide>
+			));
 
 	const roundedSpeed = Math.round(train.TrainData.Velocity);
 	const [currentTime, setCurrentTime] = useState(0);
 	useEffect(() => {
-		if (roundedSpeed !== 0 || !stoppedSince) return;
+		if (minified || roundedSpeed !== 0 || !stoppedSince) return;
 		const interval = window.setInterval(() => setCurrentTime(Date.now()), 1000);
 		return () => window.clearInterval(interval);
-	}, [roundedSpeed, stoppedSince]);
+	}, [minified, roundedSpeed, stoppedSince]);
 
 	const stoppedSeconds = stoppedSince
 		? Math.max(0, Math.floor((currentTime - stoppedSince) / 1000))
@@ -131,18 +133,22 @@ const TrainText = ({
 		tractionUnit && tractionUnit.index === 0
 			? `${tractionUnit.railcar.id} (${tractionUnit.railcar.designation})`
 			: train.Vehicles[0];
-	const additionalUnits = locomotives
-		.filter((info) => info.index !== 0)
-		.map((info) => info.railcar.id);
+	const additionalUnits = minified
+		? []
+		: locomotives
+				.filter((info) => info.index !== 0)
+				.map((info) => info.railcar.id);
 	const trainLength = Math.round(
 		usedRailcarInfo.reduce((total, info) => total + info.railcar.length, 0),
 	);
-	const trainWeight = Math.round(
-		usedRailcarInfo.reduce(
-			(total, info) => total + info.railcar.weight + (info.loadWeight ?? 0),
-			0,
-		),
-	);
+	const trainWeight = minified
+		? 0
+		: Math.round(
+				usedRailcarInfo.reduce(
+					(total, info) => total + info.railcar.weight + (info.loadWeight ?? 0),
+					0,
+				),
+			);
 	const minMaxSpeed = usedRailcarInfo.reduce(
 		(minimum, info) => Math.min(minimum, info.railcar.maxSpeed),
 		Number.POSITIVE_INFINITY,
@@ -207,7 +213,9 @@ const TrainText = ({
 					<span>{roundedSpeed === 0 ? "Stopped" : "Speed"}</span>
 					<strong>
 						{roundedSpeed === 0
-							? formatStoppedDuration(stoppedSeconds)
+							? minified
+								? "Stopped"
+								: formatStoppedDuration(stoppedSeconds)
 							: `${roundedSpeed} km/h`}
 					</strong>
 				</div>

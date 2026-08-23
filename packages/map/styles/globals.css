@@ -58,7 +58,6 @@ input {
 .steam-avatar {
   border-radius: 9999px;
   border: 2px solid #4ba8fc;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 45%);
   z-index: 40;
 }
 
@@ -70,7 +69,6 @@ input {
 .station-avatar {
   border: 2px solid #ff9f23;
   border-radius: 9px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 48%);
   z-index: 50;
 }
 
@@ -104,17 +102,20 @@ input {
   line-height: 1;
   border: 1px solid rgb(255 255 255 / 10%) !important;
   border-radius: 6px !important;
-  background: rgb(15 18 24 / 84%) !important;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 22%);
-  backdrop-filter: blur(8px);
+  background: rgb(15 18 24 / 96%) !important;
+  box-shadow: none !important;
 }
 
 .leaflet-tooltip::before { display: none; }
 
+.leaflet-zoom-anim .leaflet-tooltip {
+  visibility: hidden;
+}
+
 .train-number-tooltip {
   color: #ffc160 !important;
   border-color: rgb(255 173 50 / 30%) !important;
-  background: rgb(27 23 17 / 88%) !important;
+  background: rgb(27 23 17 / 96%) !important;
 }
 
 html[data-mantine-color-scheme="dark"] .leaflet-tile {
