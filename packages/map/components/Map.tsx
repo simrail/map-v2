@@ -285,6 +285,10 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				scrollWheelZoom={true}
 				zoomControl={false}
 				fadeAnimation={false}
+				zoomAnimation={false}
+				markerZoomAnimation={false}
+				wheelDebounceTime={80}
+				wheelPxPerZoomLevel={90}
 			>
 				<Control position="bottomleft">
 					<div className={style.container}>
@@ -405,17 +409,20 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						<TileLayer
 							attribution={`Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGS, and the GIS User Community | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href="${DISCORD_INVITE_URL}">Created by SimRail France 🇫🇷 Community</a>`}
 							url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+							updateWhenZooming={false}
 						/>
 						<TileLayer
 							url="https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png"
 							opacity={0.6}
 							attribution='&copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a>'
+							updateWhenZooming={false}
 						/>
 					</>
 				) : (
 					<TileLayer
 						attribution={`&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | &copy; <a href="http://www.openrailwaymap.org/">OpenRailwayMap</a> | <a href="${DISCORD_INVITE_URL}">Created by SimRail France 🇫🇷 Community</a>`}
 						url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+						updateWhenZooming={false}
 					/>
 				)}
 
@@ -503,6 +510,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						<LayerGroup>
 							<TileLayer
 								url="https://{s}.tiles.openrailwaymap.org/signals/{z}/{x}/{y}.png"
+								updateWhenZooming={false}
 								// Looks a bit wired in dark mode due to .css putting everything in a greyscale but it is still possible to differ the signalling systems.
 							/>
 						</LayerGroup>
@@ -518,6 +526,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						<LayerGroup>
 							<TileLayer
 								url="https://{s}.tiles.openrailwaymap.org/maxspeed/{z}/{x}/{y}.png"
+								updateWhenZooming={false}
 								// Looks a bit wired in dark mode due to .css putting everything in a greyscale but it is still possible to differ the signalling systems.
 							/>
 						</LayerGroup>
