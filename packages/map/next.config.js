@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	reactStrictMode: false,
+	reactCompiler: true,
 	transpilePackages: ["common", "mantine-flagpack"],
 	experimental: {
 		optimizePackageImports: ["mantine-flagpack"],
