@@ -16,20 +16,17 @@ const convertToSignal = (data: SignalJsonType[]): Signal[] => {
 
 const signalsData: Signal[] = convertToSignal(signalJson as SignalJsonType[]);
 
-const filterSignals = (
-	signals: Signal[],
-	predicate: (signal: Signal) => boolean,
-): Signal[] => {
-	return signals.filter(predicate);
-};
+const mainlineSignals = signalsData.filter((signal) =>
+	signal.Name.startsWith("L"),
+);
+const otherSignals = signalsData.filter(
+	(signal) => !signal.Name.startsWith("L"),
+);
 
 const MainlineSignals: FC = () => {
-	const signals = filterSignals(signalsData, (signal) =>
-		signal.Name.startsWith("L"),
-	);
 	return (
 		<>
-			{signals.map((signal) => (
+			{mainlineSignals.map((signal) => (
 				<SignalMarker key={signal.Name} signal={signal} />
 			))}
 		</>
@@ -37,13 +34,9 @@ const MainlineSignals: FC = () => {
 };
 
 const OtherSignals: FC = () => {
-	const signals = filterSignals(
-		signalsData,
-		(signal) => !signal.Name.startsWith("L"),
-	);
 	return (
 		<>
-			{signals.map((signal) => (
+			{otherSignals.map((signal) => (
 				<SignalMarker key={signal.Name} signal={signal} />
 			))}
 		</>
