@@ -42,6 +42,19 @@
  */
 import railDataJson from "../components/railData.json";
 
+/** Haversine distance between two [lat, lon] points, in kilometers. */
+function haversineKm(a: RoutePoint, b: RoutePoint): number {
+	const R = 6371;
+	const dLat = ((b[0] - a[0]) * Math.PI) / 180;
+	const dLon = ((b[1] - a[1]) * Math.PI) / 180;
+	const h =
+		Math.sin(dLat / 2) ** 2 +
+		Math.cos((a[0] * Math.PI) / 180) *
+			Math.cos((b[0] * Math.PI) / 180) *
+			Math.sin(dLon / 2) ** 2;
+	return 2 * R * Math.asin(Math.sqrt(h));
+}
+
 /** A [lat, lon] coordinate pair in decimal degrees. */
 export type RoutePoint = [number, number];
 
@@ -296,6 +309,15 @@ async function computeRoute(train: {
 							segments[segments.length - 1].points.length - 1
 						]
 					: a.coord;
+			// Skip excessively long grey lines (> 50km) — they are caused by
+			// wrong station coordinates in the wiki data (e.g. Maków
+			// Podhalański is misplaced near Skierniewice instead of the Tatra
+			// mountains, creating a 211km grey line).
+			const greyKm = haversineKm(startCoord, b.coord);
+			if (greyKm > 50) {
+				prevConnected = false;
+				continue;
+			}
 			segments.push({ color: "grey", points: [startCoord, b.coord] });
 			prevConnected = false;
 			continue;
