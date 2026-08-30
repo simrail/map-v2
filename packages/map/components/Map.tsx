@@ -40,6 +40,7 @@ import SelectedTrainPopup from "./SelectedTrainPopup";
 import { MainlineSignals, OtherSignals } from "./Signals";
 import SneakpeekMarkers from "./Sneakpeeks";
 import SpotlightSearch from "./SpotlightSearch";
+import TrainRoute from "./TrainRoute";
 
 import style from "../styles/BottomLeftControls.module.css";
 import mapStyles from "../styles/Map.module.css";
@@ -93,7 +94,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		renderPopup === true ? MdSpeakerNotes : MdSpeakerNotesOff;
 	const SatelliteIcon = isSatellite === true ? MdSatellite : MdSatelliteAlt;
 
-	const { selectedTrain, setSelectedTrain } = useSelectedTrain();
+	const { selectedTrain, setSelectedTrain, followTrain } = useSelectedTrain();
 	const [stations, setStations] = useState<Station[] | null>(null);
 	const [stoppedTrainsSince, setStoppedTrainsSince] = useState<
 		Record<string, number>
@@ -176,12 +177,14 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 			if (updatedTrain !== selectedTrain) {
 				setSelectedTrain(updatedTrain);
 			}
-			map.panTo(
-				[updatedTrain.TrainData.Latititute, updatedTrain.TrainData.Longitute],
-				{ animate: true, duration: 0.8, easeLinearity: 0.4 },
-			);
+			if (followTrain) {
+				map.panTo(
+					[updatedTrain.TrainData.Latititute, updatedTrain.TrainData.Longitute],
+					{ animate: true, duration: 0.8, easeLinearity: 0.4 },
+				);
+			}
 		}
-	}, [trains, selectedTrain, map, setSelectedTrain]);
+	}, [trains, selectedTrain, map, setSelectedTrain, followTrain]);
 
 	useEffect(() => {
 		if (trainId) {
@@ -534,6 +537,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						</LayerGroup>
 					</LayersControl.Overlay>
 				</LayersControl>
+				<TrainRoute />
 				<SpotlightSearch stations={stations} trains={trains} />
 			</MapContainer>
 		</>

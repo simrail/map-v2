@@ -1,5 +1,5 @@
 import { Carousel } from "@mantine/carousel";
-import { Image } from "@mantine/core";
+import { Checkbox, Image } from "@mantine/core";
 import { readLocalStorageValue } from "@mantine/hooks";
 import type { Train } from "@simrail/types";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
@@ -80,7 +80,13 @@ const TrainText = ({
 }: TrainTextProps) => {
 	const router = useRouter();
 	const { id, trainId } = router.query;
-	const { setSelectedTrain } = useSelectedTrain();
+	const {
+		setSelectedTrain,
+		showTrainRoute,
+		setShowTrainRoute,
+		followTrain,
+		setFollowTrain,
+	} = useSelectedTrain();
 
 	const usedRailcarInfo = useMemo(
 		() =>
@@ -207,6 +213,42 @@ const TrainText = ({
 				<i aria-hidden="true">→</i>
 				<span>{train.EndStation}</span>
 			</div>
+
+			{!minified && (
+				<div className={styles.trainToggles}>
+					<Checkbox
+						checked={followTrain}
+						onChange={(event) => setFollowTrain(event.currentTarget.checked)}
+						label="Follow train"
+						size="xs"
+						color="blue"
+					/>
+					<Checkbox
+						checked={showTrainRoute}
+						onChange={(event) => setShowTrainRoute(event.currentTarget.checked)}
+						label="Show route on map"
+						size="xs"
+						color="green"
+					/>
+					{showTrainRoute && (
+						<div className={styles.routeLegend}>
+							<span style={{ color: "#2ecc71" }}>&gt; Driveable</span>
+							<span style={{ color: "#e74c3c" }}>&gt; Undriveable</span>
+							<span style={{ color: "#888888" }}>
+								&gt; No data in{" "}
+								<a
+									href="https://wiki.simrail.eu/en/Interactive-map"
+									target="_blank"
+									rel="noreferrer"
+									style={{ color: "#888888", textDecoration: "underline" }}
+								>
+									wiki
+								</a>
+							</span>
+						</div>
+					)}
+				</div>
+			)}
 
 			<div className={styles.stats}>
 				<div>
