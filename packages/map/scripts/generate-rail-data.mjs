@@ -634,12 +634,15 @@ async function main() {
 
 		// Helper: verify the path only uses lines listed in the timetable.
 		// Edges with no line ref (snap/connector edges) are always allowed.
-		// If the A* uses lines not in the timetable (e.g. LK1 when the
-		// timetable says LK3), the wiki doesn't have the correct tracks for
-		// this segment and the route should be shown as grey instead.
+		// Non-timetable lines are allowed for short distances (junction
+		// connectors, e.g. LK537 bridges LK535 and LK1 at Koluszki).
+		// If the path uses a non-timetable line for more than 5km total,
+		// the wiki doesn't have the correct tracks for this segment and the
+		// route should be shown as grey instead.
 		const timetableLines = new Set(lines);
 		function usesOnlyTimetableLines(indices, allowedLines) {
 			if (!indices) return false;
+			const nonTtKm = new Map(); // lineNo → km on non-timetable lines
 			for (let i = 0; i < indices.length - 1; i++) {
 				for (
 					let p = graph.start[indices[i]];
@@ -650,10 +653,17 @@ async function main() {
 					const refs = graph.erefs[graph.adjEdge[p]];
 					if (!refs || refs.length === 0) continue; // connector edge
 					for (const r of refs) {
-						if (!allowedLines.has(r)) return false;
+						if (!allowedLines.has(r)) {
+							const edgeKm = graph.adjDist[p];
+							nonTtKm.set(r, (nonTtKm.get(r) || 0) + edgeKm);
+						}
 					}
 					break;
 				}
+			}
+			// Reject if any non-timetable line is used for more than 5km.
+			for (const km of nonTtKm.values()) {
+				if (km > 5) return false;
 			}
 			return true;
 		}
