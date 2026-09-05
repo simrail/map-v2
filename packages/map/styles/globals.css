@@ -68,7 +68,7 @@ input {
 
 .station-avatar {
   border: 2px solid #ff9f23;
-  border-radius: 9px;
+  border-radius: 2px;
   z-index: 50;
 }
 
@@ -116,6 +116,19 @@ input {
   color: #ffc160 !important;
   border-color: rgb(255 173 50 / 30%) !important;
   background: rgb(27 23 17 / 96%) !important;
+}
+
+.leaflet-container[data-map-detail="overview"] .train-number-tooltip,
+.leaflet-container[data-map-detail="far"] .train-number-tooltip {
+  display: none;
+}
+
+.leaflet-container[data-map-detail="far"] .steam-avatar {
+  width: 16px !important;
+  height: 16px !important;
+  margin-top: -8px !important;
+  margin-left: -8px !important;
+  border-width: 1px;
 }
 
 html[data-mantine-color-scheme="dark"] .leaflet-tile-pane {
