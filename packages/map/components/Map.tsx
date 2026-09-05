@@ -33,6 +33,7 @@ import Control from "react-leaflet-custom-control";
 
 import NonPlayableStations from "@/components/NonPlayableStations";
 import RemoteStations from "@/components/RemoteStations";
+import SelectedTrainRoute from "@/components/SelectedTrainRoute";
 import { TrainsList } from "@/components/TrainsList";
 
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
@@ -312,6 +313,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				preferCanvas={true}
 			>
 				<MapZoomAppearance />
+				<SelectedTrainRoute serverId={String(serverId)} stations={stations} />
 				<Control position="bottomleft">
 					<div className={style.container}>
 						<Tooltip label="Our GitHub" position="right">

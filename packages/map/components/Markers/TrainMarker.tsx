@@ -1,7 +1,7 @@
 import { useMantineColorScheme } from "@mantine/core";
 import type { Train } from "@simrail/types";
 import L from "leaflet";
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { Popup, Tooltip } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 
@@ -16,10 +16,12 @@ type TrainMarkerProps = {
 };
 
 const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
-	const { setSelectedTrain } = useSelectedTrain();
+	const { selectedTrain, setSelectedTrain } = useSelectedTrain();
 
 	const [avatar, setAvatar] = useState<string | null>(null);
 	const [username, setUsername] = useState<string | null>(null);
+	const [bearing, setBearing] = useState<number | null>(null);
+	const previousPosition = useRef<[number, number] | null>(null);
 
 	useEffect(() => {
 		let active = true;
@@ -39,6 +41,36 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 		};
 	}, [train.TrainData.ControlledBySteamID]);
 
+	useEffect(() => {
+		const current: [number, number] = [
+			train.TrainData.Latititute,
+			train.TrainData.Longitute,
+		];
+		const previous = previousPosition.current;
+		previousPosition.current = current;
+
+		if (!previous || Math.round(train.TrainData.Velocity) === 0) return;
+
+		const latitude1 = (previous[0] * Math.PI) / 180;
+		const latitude2 = (current[0] * Math.PI) / 180;
+		const longitudeDelta = ((current[1] - previous[1]) * Math.PI) / 180;
+		const latitudeDelta = current[0] - previous[0];
+		const longitudeChange = current[1] - previous[1];
+
+		// Ignore coordinate jitter while a train is effectively stationary.
+		if (Math.hypot(latitudeDelta, longitudeChange) < 0.00001) return;
+
+		const y = Math.sin(longitudeDelta) * Math.cos(latitude2);
+		const x =
+			Math.cos(latitude1) * Math.sin(latitude2) -
+			Math.sin(latitude1) * Math.cos(latitude2) * Math.cos(longitudeDelta);
+		setBearing(((Math.atan2(y, x) * 180) / Math.PI + 360) % 360);
+	}, [
+		train.TrainData.Latititute,
+		train.TrainData.Longitute,
+		train.TrainData.Velocity,
+	]);
+
 	const { colorScheme } = useMantineColorScheme();
 
 	let botIcon = "/markers/icon-bot-simrail.jpg";
@@ -52,16 +84,32 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 	const borderAreaClass = train.TrainData.InBorderStationArea
 		? " in-border-area"
 		: "";
+	const isSelected =
+		(selectedTrain?.id ?? selectedTrain?.TrainNoLocal) ===
+		(train.id ?? train.TrainNoLocal);
+	const avatarUrl =
+		train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon;
+	const escapedAvatarUrl = avatarUrl.replace(
+		/[&"'<>]/g,
+		(character) =>
+			({
+				"&": "&amp;",
+				'"': "&quot;",
+				"'": "&#39;",
+				"<": "&lt;",
+				">": "&gt;",
+			})[character] ?? character,
+	);
 	const icon = useMemo(
 		() =>
-			L.icon({
-				iconUrl:
-					train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon,
-				iconSize: [24, 24],
-				popupAnchor: [0, -12],
-				className: `steam-avatar${borderAreaClass}`,
+			L.divIcon({
+				html: `<span class="train-direction-arrow" style="transform: rotate(${bearing ?? 0}deg)" aria-hidden="true"></span><img class="steam-avatar${borderAreaClass}" src="${escapedAvatarUrl}" alt="">`,
+				iconSize: [34, 34],
+				iconAnchor: [17, 17],
+				popupAnchor: [0, -17],
+				className: `train-direction-marker${isSelected ? " is-selected" : ""}${bearing === null ? " direction-unknown" : ""}`,
 			}),
-		[avatar, borderAreaClass, botIcon, train.TrainData.ControlledBySteamID],
+		[bearing, borderAreaClass, escapedAvatarUrl, isSelected],
 	);
 
 	if (!username || !train.TrainData.Latititute || !train.TrainData.Longitute)
