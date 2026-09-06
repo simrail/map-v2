@@ -15,7 +15,7 @@
 
   width: 100%;
   color: var(--train-text);
-  font-size: 12px;
+  font-size: 0.75rem;
 }
 
 :global(html[data-mantine-color-scheme="light"]) .card {
@@ -38,36 +38,36 @@
 .identity { align-items: center; min-width: 0; gap: 11px; }
 .identity > div { display: flex; flex-direction: column; min-width: 0; gap: 3px; }
 .avatar { flex: none; border: 2px solid #4ba8fc; border-radius: 10px; object-fit: cover; }
-.kicker { color: var(--train-accent); font-size: 8px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
-.identity strong { overflow: hidden; color: var(--train-title); font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
+.kicker { color: var(--train-accent); font-size: 0.625rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+.identity strong { overflow: hidden; color: var(--train-title); font-size: 0.875rem; text-overflow: ellipsis; white-space: nowrap; }
 .close { display: grid; flex: none; width: 32px; height: 32px; padding: 0; color: var(--train-close); border: 1px solid var(--train-border); border-radius: 8px; background: var(--train-surface); place-items: center; cursor: pointer; }
 .close:hover { color: #ff7777; border-color: rgb(255 100 100 / 28%); }
 .serviceHeading { margin: 17px 0 11px; }
-.serviceHeading > span { color: var(--train-muted); font-size: 9px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.serviceHeading h3 { margin: 4px 0 0; color: var(--train-title); font-family: "Saira", sans-serif; font-size: 20px; line-height: 1.1; }
+.serviceHeading > span { color: var(--train-muted); font-size: 0.625rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.serviceHeading h3 { margin: 4px 0 0; color: var(--train-title); font-family: "Saira", sans-serif; font-size: 1.25rem; line-height: 1.1; }
 .route { align-items: center; gap: 9px; padding: 10px 11px; color: var(--train-secondary); border: 1px solid var(--train-border); border-radius: 9px; background: var(--train-surface); }
 .route span { flex: 1; line-height: 1.35; }
 .route span:last-child { text-align: right; }
 .route i { color: var(--train-accent); font-style: normal; }
 .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 12px 0; overflow: hidden; border: 1px solid var(--train-border); border-radius: 9px; background: var(--train-divider); }
 .stats > div { display: flex; flex-direction: column; gap: 5px; padding: 10px 8px; background: var(--train-stat-background); }
-.stats span, .consist > span { color: var(--train-muted); font-size: 8px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
-.stats strong { color: var(--train-strong); font-size: 11px; white-space: nowrap; }
+.stats span, .consist > span { color: var(--train-muted); font-size: 0.625rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+.stats strong { color: var(--train-strong); font-size: 0.6875rem; white-space: nowrap; }
 .consist { align-items: baseline; flex-wrap: wrap; gap: 5px 9px; padding: 3px 1px 11px; }
-.consist strong { color: var(--train-strong); font-size: 11px; }
-.consist small { width: 100%; color: var(--train-subtle); font-size: 9px; }
+.consist strong { color: var(--train-strong); font-size: 0.6875rem; }
+.consist small { width: 100%; color: var(--train-subtle); font-size: 0.625rem; }
 .trainMedia { margin: 2px 0 14px; overflow: hidden; border: 1px solid var(--train-border); border-radius: 10px; background: var(--train-media-background); }
 .signalSection { padding-top: 14px; border-top: 1px solid var(--train-border); }
 .signalDetails { margin: 9px 0 13px; color: var(--train-secondary); line-height: 1.65; }
-.edrButton { display: flex; align-items: center; justify-content: space-between; min-height: 41px; padding: 0 13px; color: #17191e; font-size: 11px; font-weight: 800; border-radius: 9px; background: #ffad32; }
+.edrButton { display: flex; align-items: center; justify-content: space-between; min-height: 41px; padding: 0 13px; color: #17191e; font-size: 0.6875rem; font-weight: 800; border-radius: 9px; background: #ffad32; }
 .edrButton:hover { background: #ffba51; }
 .compact { width: 280px; }
 .compact .avatar { width: 34px; height: 34px; border-radius: 8px; }
 .compact .serviceHeading { margin-top: 13px; }
-.compact .serviceHeading h3 { font-size: 17px; }
+.compact .serviceHeading h3 { font-size: 1.0625rem; }
 .compact .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 @media (max-width: 560px) {
   .card { width: 100%; }
-  .serviceHeading h3 { font-size: 18px; }
+  .serviceHeading h3 { font-size: 1.125rem; }
 }

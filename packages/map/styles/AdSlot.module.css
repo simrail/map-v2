@@ -6,7 +6,7 @@
 .label {
   display: block;
   margin-bottom: 6px;
-  font-size: 8px;
+  font-size: 0.625rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -25,7 +25,7 @@
   display: grid;
   place-items: center;
   color: #656e7b;
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 
 .leaderboard {

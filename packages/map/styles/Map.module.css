@@ -21,14 +21,14 @@
 .loading h1 {
   margin: 22px 0 8px;
   font-family: "Saira", sans-serif;
-  font-size: clamp(26px, 5vw, 40px);
+  font-size: clamp(1.625rem, 5vw, 2.5rem);
 }
 
 .loading p {
   max-width: 480px;
   margin: 0;
   color: #969eab;
-  font-size: 14px;
+  font-size: 0.875rem;
   line-height: 1.6;
 }
 
@@ -48,7 +48,7 @@
   left: 50%;
   padding: 8px 13px;
   color: #ffe1ad;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
   border: 1px solid rgb(255 173 50 / 30%);
   border-radius: 8px;

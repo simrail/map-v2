@@ -152,7 +152,7 @@ input {
   padding: 4px 7px !important;
   color: #d8dde5 !important;
   font-family: "Source Code Pro", monospace;
-  font-size: 8px;
+  font-size: 0.625rem;
   font-weight: 650;
   line-height: 1;
   border: 1px solid rgb(255 255 255 / 10%) !important;
@@ -258,7 +258,7 @@ html[data-mantine-color-scheme="light"] .leaflet-popup-content-wrapper {
   height: 26px !important;
   padding: 0 !important;
   color: #a9b0bb !important;
-  font: 18px/1 sans-serif !important;
+  font: 1.125rem/1 sans-serif !important;
   border-radius: 7px;
   background: rgb(10 13 18 / 62%) !important;
   place-items: center;
@@ -335,7 +335,7 @@ html[data-mantine-color-scheme="light"] .leaflet-control-layers-expanded {
     max-width: 220px;
     max-height: 38dvh;
     overflow-y: auto;
-    font-size: 11px;
+    font-size: 0.6875rem;
   }
 
   .leaflet-control-attribution {
