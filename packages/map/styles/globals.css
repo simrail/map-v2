@@ -169,6 +169,7 @@ input {
 
 .train-number-tooltip {
   color: #ffc160 !important;
+  font-variant-numeric: slashed-zero tabular-nums;
   border-color: rgb(255 173 50 / 30%) !important;
   background: rgb(27 23 17 / 96%) !important;
 }
