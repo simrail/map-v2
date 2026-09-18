@@ -42,9 +42,12 @@
 .identity strong { overflow: hidden; color: var(--train-title); font-size: 0.9375rem; text-overflow: ellipsis; white-space: nowrap; }
 .close { display: grid; flex: none; width: 32px; height: 32px; padding: 0; color: var(--train-close); border: 1px solid var(--train-border); border-radius: 8px; background: var(--train-surface); place-items: center; cursor: pointer; }
 .close:hover { color: #ff7777; border-color: rgb(255 100 100 / 28%); }
-.serviceHeading { margin: 17px 0 11px; }
-.serviceHeading > span { color: var(--train-muted); font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.serviceHeading h3 { margin: 4px 0 0; color: var(--train-title); font-family: "Saira", sans-serif; font-size: 1.3125rem; line-height: 1.1; }
+.serviceHeading { display: flex; align-items: stretch; justify-content: space-between; gap: 8px; margin: 17px 0 11px; }
+.serviceMeta { min-width: 0; }
+.serviceMeta > span { display: block; color: var(--train-muted); font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 1; }
+.edrButton { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 0 16px; color: #17191e; font-size: 0.6875rem; font-weight: 800; border-radius: 8px; background: #ffad32; white-space: nowrap; }
+.edrButton:hover { background: #ffba51; }
+.serviceHeading h3 { margin: 0; color: var(--train-title); font-family: "Saira", sans-serif; font-size: 1.3125rem; line-height: 1.1; }
 .route { align-items: center; gap: 9px; padding: 10px 11px; color: var(--train-secondary); border: 1px solid var(--train-border); border-radius: 9px; background: var(--train-surface); }
 .route span { flex: 1; line-height: 1.35; }
 .route span:last-child { text-align: right; }
@@ -61,8 +64,6 @@
 .trainMedia { margin: 2px 0 14px; overflow: hidden; border: 1px solid var(--train-border); border-radius: 10px; background: var(--train-media-background); }
 .signalSection { padding-top: 14px; border-top: 1px solid var(--train-border); }
 .signalDetails { margin: 9px 0 13px; color: var(--train-secondary); line-height: 1.65; }
-.edrButton { display: flex; align-items: center; justify-content: space-between; min-height: 41px; padding: 0 13px; color: #17191e; font-size: 0.75rem; font-weight: 800; border-radius: 9px; background: #ffad32; }
-.edrButton:hover { background: #ffba51; }
 .compact { width: 280px; }
 .compact .avatar { width: 34px; height: 34px; border-radius: 8px; }
 .compact .serviceHeading { margin-top: 13px; }

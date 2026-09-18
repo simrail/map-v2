@@ -201,8 +201,18 @@ const TrainText = ({
 			</header>
 
 			<div className={styles.serviceHeading}>
-				<span>Train {train.TrainNoLocal}</span>
-				<h3>{displayName}</h3>
+				<div className={styles.serviceMeta}>
+					<span>Train {train.TrainNoLocal}</span>
+					<h3>{displayName}</h3>
+				</div>
+				<a
+					target="_blank"
+					rel="noreferrer"
+					href={`https://edr.simrail.app/${String(id)}/train/${String(train.TrainNoLocal)}`}
+					className={styles.edrButton}
+				>
+					Open in EDR <span aria-hidden="true">↗</span>
+				</a>
 			</div>
 
 			<div className={styles.route}>
@@ -311,14 +321,6 @@ const TrainText = ({
 					<div className={styles.signalDetails}>
 						<TrainUpcomingSignal train={train} />
 					</div>
-					<a
-						target="_blank"
-						rel="noreferrer"
-						href={`https://edr.simrail.app/${String(id)}/train/${String(train.TrainNoLocal)}`}
-						className={styles.edrButton}
-					>
-						Open in EDR <span aria-hidden="true">↗</span>
-					</a>
 				</div>
 			)}
 		</section>
