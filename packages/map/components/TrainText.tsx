@@ -319,14 +319,12 @@ const TrainText = ({
 				</div>
 			)}
 
-			{!minified && (
-				<div className={styles.signalSection}>
-					<span className={styles.kicker}>Next signal</span>
-					<div className={styles.signalDetails}>
-						<TrainUpcomingSignal train={train} />
-					</div>
+			<div className={styles.signalSection}>
+				<span className={styles.kicker}>Next signal</span>
+				<div className={styles.signalDetails}>
+					<TrainUpcomingSignal train={train} />
 				</div>
-			)}
+			</div>
 		</section>
 	);
 };
