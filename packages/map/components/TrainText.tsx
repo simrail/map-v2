@@ -1,6 +1,5 @@
 import { Carousel } from "@mantine/carousel";
 import { Checkbox, Image } from "@mantine/core";
-import { readLocalStorageValue } from "@mantine/hooks";
 import type { Train } from "@simrail/types";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import { useRouter } from "next/router";
@@ -161,10 +160,6 @@ const TrainText = ({
 		(minimum, info) => Math.min(minimum, info.railcar.maxSpeed),
 		Number.POSITIVE_INFINITY,
 	);
-	const showSignalInfo = readLocalStorageValue({
-		key: "showSignalInfo",
-		defaultValue: true,
-	});
 	const displayName = getTrainDisplayName(train.TrainName, train.TrainNoLocal);
 	const displayedMaxSpeed = Number.isFinite(minMaxSpeed)
 		? `${minMaxSpeed} km/h`
@@ -314,7 +309,7 @@ const TrainText = ({
 				<div className={styles.signalSection}>
 					<span className={styles.kicker}>Next signal</span>
 					<div className={styles.signalDetails}>
-						<TrainUpcomingSignal train={train} showMoreInfo={showSignalInfo} />
+						<TrainUpcomingSignal train={train} />
 					</div>
 					<a
 						target="_blank"

@@ -1,31 +1,18 @@
 import type { Train } from "@simrail/types";
 import type React from "react";
-import { useState } from "react";
 
 type TrainSignalProps = {
 	train: Train;
-	showMoreInfo: boolean;
-};
-
-const signalStates = {
-	open: "/signals/signal-open.png",
-	limited40: "/signals/signal-limited-40.png",
-	limited50: "/signals/signal-limited-50.png",
-	limited60: "/signals/signal-limited-60.png",
-	limited100: "/signals/signal-limited-100.png",
-	limited130: "/signals/signal-limited-130.png",
-	closed: "/signals/signal-closed.png",
 };
 
 function formatSignalDistance(distanceMeters: number): string {
 	if (distanceMeters > 5000) {
-		return "> 5km";
+		return ">5km";
 	}
 	if (distanceMeters > 1000) {
-		const distanceKilometers = (distanceMeters / 1000).toFixed(1);
-		return `${distanceKilometers} km`;
+		return `${(distanceMeters / 1000).toFixed(1)}km`;
 	}
-	return `${distanceMeters.toFixed(1)} m`;
+	return `${Math.round(distanceMeters)}m`;
 }
 
 function formatSignalSpeed(rawSpeedLimit: number): string {
@@ -35,98 +22,55 @@ function formatSignalSpeed(rawSpeedLimit: number): string {
 	return `${rawSpeedLimit} km/h`;
 }
 
-const getSignalState = (signalSpeed: number | string): string | null => {
+/** Status dot color for the upcoming signal aspect: clear, stop, or limited. */
+const getSignalColor = (signalSpeed: number | string): string => {
 	if (signalSpeed === "vmax" || signalSpeed === 32767) {
-		return "open";
+		return "#2ecc71"; // clear
 	}
-
 	if (signalSpeed === 0) {
-		return "closed";
+		return "#e74c3c"; // stop
 	}
-
-	if (typeof signalSpeed === "number" && signalSpeed <= 40) {
-		return "limited40";
-	}
-
-	// Dedicated icon for exact 50
-	if (typeof signalSpeed === "number" && signalSpeed === 50) {
-		return "limited50";
-	}
-
-	if (typeof signalSpeed === "number" && signalSpeed <= 60) {
-		return "limited60";
-	}
-
-	if (typeof signalSpeed === "number" && signalSpeed <= 100) {
-		return "limited100";
-	}
-
-	if (typeof signalSpeed === "number" && signalSpeed <= 130) {
-		return "limited130";
-	}
-
-	return null;
+	return "#f5a623"; // limited aspect
 };
 
-const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
-	train,
-	showMoreInfo,
-}) => {
+const getSignalStatusText = (signalSpeed: number | string): string => {
+	if (signalSpeed === "vmax" || signalSpeed === 32767) {
+		return "Clear";
+	}
+	if (signalSpeed === 0) {
+		return "Stop";
+	}
+	return "Limited";
+};
+
+const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({ train }) => {
 	const {
 		TrainData: { SignalInFront, SignalInFrontSpeed, DistanceToSignalInFront },
 	} = train;
 
-	const signalName = SignalInFront?.split("@")[0];
-	const signalState = getSignalState(SignalInFrontSpeed);
-	const signalImageSrc = signalState
-		? signalStates[signalState as keyof typeof signalStates]
-		: null;
-
-	// Track last failed src to hide image only when that src fails
-	const [failedSrc, setFailedSrc] = useState<string | null>(null);
-	const visibleSignalImageSrc =
-		signalImageSrc && failedSrc !== signalImageSrc ? signalImageSrc : null;
-
-	if (!showMoreInfo) {
-		return (
-			<>
-				Distance to {signalName ? signalName : "next signal"}:{" "}
-				{SignalInFront
-					? formatSignalDistance(DistanceToSignalInFront)
-					: "Signal too far away"}
-			</>
-		);
+	if (!SignalInFront) {
+		return <div>Signal too far away</div>;
 	}
 
+	const signalName = SignalInFront.split("@")[0];
+	const signalColor = getSignalColor(SignalInFrontSpeed);
+
 	return (
-		<>
-			<div>
-				Distance to {signalName ? signalName : "next signal"}:{" "}
-				{SignalInFront
-					? formatSignalDistance(DistanceToSignalInFront)
-					: "Signal too far away"}
-			</div>
-			{SignalInFront && (
-				<>
-					<div>Signal speed: {formatSignalSpeed(SignalInFrontSpeed)}</div>
-					{visibleSignalImageSrc ? (
-						<div style={{ display: "flex", alignItems: "center" }}>
-							<span>Signal Status : </span>
-							<img
-								src={visibleSignalImageSrc}
-								alt={signalState || ""}
-								width={35}
-								height={35}
-								style={{ marginLeft: "0.5rem" }}
-								onError={(e) =>
-									setFailedSrc((e.currentTarget as HTMLImageElement).src)
-								}
-							/>
-						</div>
-					) : null}
-				</>
-			)}
-		</>
+		<div>
+			{signalName} in {formatSignalDistance(DistanceToSignalInFront)} - speed{" "}
+			{formatSignalSpeed(SignalInFrontSpeed)} -{" "}
+			<span
+				aria-label={getSignalStatusText(SignalInFrontSpeed)}
+				title={getSignalStatusText(SignalInFrontSpeed)}
+				style={{
+					display: "inline-block",
+					width: "0.55em",
+					height: "0.55em",
+					borderRadius: "50%",
+					backgroundColor: signalColor,
+				}}
+			/>
+		</div>
 	);
 };
 
