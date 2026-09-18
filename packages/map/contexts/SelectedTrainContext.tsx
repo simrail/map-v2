@@ -17,6 +17,8 @@ interface SelectedTrainContextType {
 	setShowTrainRoute: Dispatch<SetStateAction<boolean>>;
 	followTrain: boolean;
 	setFollowTrain: Dispatch<SetStateAction<boolean>>;
+	onlySelectedTrain: boolean;
+	setOnlySelectedTrain: Dispatch<SetStateAction<boolean>>;
 }
 
 export const SelectedTrainContext = createContext<SelectedTrainContextType>({
@@ -26,6 +28,8 @@ export const SelectedTrainContext = createContext<SelectedTrainContextType>({
 	setShowTrainRoute: () => {},
 	followTrain: true,
 	setFollowTrain: () => {},
+	onlySelectedTrain: false,
+	setOnlySelectedTrain: () => {},
 });
 
 export const useSelectedTrain = () => useContext(SelectedTrainContext);
@@ -44,6 +48,10 @@ export const SelectedTrainProvider = ({
 		key: "followTrain",
 		defaultValue: true,
 	});
+	const [onlySelectedTrain, setOnlySelectedTrain] = useLocalStorage({
+		key: "onlySelectedTrain",
+		defaultValue: false,
+	});
 	const value = useMemo(
 		() => ({
 			selectedTrain,
@@ -52,13 +60,17 @@ export const SelectedTrainProvider = ({
 			setShowTrainRoute,
 			followTrain,
 			setFollowTrain,
+			onlySelectedTrain,
+			setOnlySelectedTrain,
 		}),
 		[
 			selectedTrain,
 			showTrainRoute,
 			followTrain,
+			onlySelectedTrain,
 			setShowTrainRoute,
 			setFollowTrain,
+			setOnlySelectedTrain,
 		],
 	);
 

@@ -86,6 +86,8 @@ const TrainText = ({
 		setShowTrainRoute,
 		followTrain,
 		setFollowTrain,
+		onlySelectedTrain,
+		setOnlySelectedTrain,
 	} = useSelectedTrain();
 
 	const usedRailcarInfo = useMemo(
@@ -222,6 +224,15 @@ const TrainText = ({
 						label="Follow train"
 						size="xs"
 						color="blue"
+					/>
+					<Checkbox
+						checked={onlySelectedTrain}
+						onChange={(event) =>
+							setOnlySelectedTrain(event.currentTarget.checked)
+						}
+						label="Only selected train"
+						size="xs"
+						color="orange"
 					/>
 					<Checkbox
 						checked={showTrainRoute}
