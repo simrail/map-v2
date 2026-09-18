@@ -49,8 +49,8 @@
 .route span { flex: 1; line-height: 1.35; }
 .route span:last-child { text-align: right; }
 .route i { color: var(--train-accent); font-style: normal; }
-.trainToggles { display: flex; flex-direction: column; gap: 4px; margin: 8px 0 0; }
-.routeLegend { display: flex; gap: 12px; margin: 0 0 2px 28px; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--train-subtle); }
+.trainToggles { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 8px 0 0; }
+.routeLegend { display: flex; flex-basis: 100%; gap: 12px; margin: 2px 0 0; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--train-subtle); }
 .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 12px 0; overflow: hidden; border: 1px solid var(--train-border); border-radius: 9px; background: var(--train-divider); }
 .stats > div { display: flex; flex-direction: column; gap: 5px; padding: 10px 8px; background: var(--train-stat-background); }
 .stats span, .consist > span { color: var(--train-muted); font-size: 0.6875rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }

@@ -7,9 +7,12 @@ geometry, colored by drivability, with direction arrows along the line.
 - **Red** — real track, but not drivable in the game (e.g. the LK1 gap Myszków→Rozprza)
 - **Grey** — no track data available; rendered as a straight line between stops
 
-Controls (persisted in `localStorage` via `SelectedTrainContext`):
-- *Show train route* — toggles the route layer (`showTrainRoute`, rendered by `TrainRoute.tsx`)
-- *Follow train* — pans the map to keep the selected train centered (`followTrain`, handled in `Map.tsx`)
+Controls — one row of three checkboxes in the selected-train panel, persisted in
+`localStorage` via `SelectedTrainContext`:
+- *Follow* — pans the map to keep the selected train centered (`followTrain`, `Map.tsx`)
+- *Single* — hides every other train from the map while a train is selected
+  (`onlySelectedTrain`, filter in `TrainsList.tsx`)
+- *Route* — toggles the route layer (`showTrainRoute`, rendered by `TrainRoute.tsx`)
 
 ## Big picture
 

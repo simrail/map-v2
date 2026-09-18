@@ -221,7 +221,7 @@ const TrainText = ({
 					<Checkbox
 						checked={followTrain}
 						onChange={(event) => setFollowTrain(event.currentTarget.checked)}
-						label="Follow train"
+						label="Follow"
 						size="xs"
 						color="blue"
 					/>
@@ -230,14 +230,14 @@ const TrainText = ({
 						onChange={(event) =>
 							setOnlySelectedTrain(event.currentTarget.checked)
 						}
-						label="Only selected train"
+						label="Single"
 						size="xs"
 						color="orange"
 					/>
 					<Checkbox
 						checked={showTrainRoute}
 						onChange={(event) => setShowTrainRoute(event.currentTarget.checked)}
-						label="Show route on map"
+						label="Route"
 						size="xs"
 						color="green"
 					/>
