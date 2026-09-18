@@ -296,10 +296,12 @@ const TrainText = ({
 			<div className={styles.consist}>
 				<span>Locomotive</span>
 				<strong>{tractionUnitInfo || "Unknown"}</strong>
+				{wagons.length > 0 && (
+					<small className={styles.wagonsInline}>+ {wagons.length} wagons</small>
+				)}
 				{additionalUnits.length > 0 && (
 					<small>Additional units: {additionalUnits.join(", ")}</small>
 				)}
-				{wagons.length > 0 && <small>{wagons.length} wagons</small>}
 			</div>
 
 			{!minified && locomotiveImages.length > 0 && (

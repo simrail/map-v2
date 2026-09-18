@@ -61,6 +61,7 @@
 .consist { align-items: baseline; flex-wrap: wrap; gap: 5px 9px; padding: 3px 1px 11px; }
 .consist strong { color: var(--train-strong); font-size: 0.75rem; }
 .consist small { width: 100%; color: var(--train-subtle); font-size: 0.6875rem; }
+.consist small.wagonsInline { width: auto; }
 .trainMedia { margin: 2px 0 14px; overflow: hidden; border: 1px solid var(--train-border); border-radius: 10px; background: var(--train-media-background); }
 .signalSection { padding-top: 14px; border-top: 1px solid var(--train-border); }
 .signalDetails { margin: 9px 0 13px; color: var(--train-secondary); line-height: 1.65; }
