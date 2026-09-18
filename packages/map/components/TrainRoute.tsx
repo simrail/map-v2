@@ -3,7 +3,7 @@ import { memo, useEffect, useMemo, useState } from "react";
 import { Polyline, Marker, useMap } from "react-leaflet";
 
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
-import { getTrainRoute, type ColoredSegment } from "../lib/trainRoute";
+import { getTrainRoute, type ColoredSegment, type RoutePoint } from "../lib/trainRoute";
 
 const ROUTE_COLORS = {
 	green: "#2ecc71",
@@ -11,7 +11,7 @@ const ROUTE_COLORS = {
 	grey: "#888888",
 } as const;
 
-const ARROW_SPACING_KM = 1;
+const ARROW_SPACING_KM = 3;
 
 function haversineKm(a: [number, number], b: [number, number]): number {
 	const R = 6371;
@@ -36,10 +36,6 @@ function bearing(a: [number, number], b: [number, number]): number {
 		Math.cos(lat1) * Math.sin(lat2) -
 		Math.sin(lat1) * Math.cos(lat2) * Math.cos(dLon);
 	return (toDeg(Math.atan2(y, x)) + 360) % 360;
-}
-
-function midpoint(a: [number, number], b: [number, number]): [number, number] {
-	return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
 }
 
 interface ArrowData {
@@ -100,27 +96,40 @@ const TrainRoute = () => {
 	const arrows = useMemo<ArrowData[]>(() => {
 		if (!segments) return [];
 		const result: ArrowData[] = [];
+		let distSinceLast = ARROW_SPACING_KM;
+		let prev: RoutePoint | null = null;
 		for (let si = 0; si < segments.length; si++) {
-			const seg = segments[si];
-			const pts = seg.points;
-			if (pts.length < 2) continue;
-			let distSinceLast = 0;
+			const pts = segments[si].points;
+			if (pts.length < 1) continue;
+			// If this segment doesn't chain onto the previous point, reset.
+			if (!prev || prev[0] !== pts[0][0] || prev[1] !== pts[0][1]) {
+				prev = pts[0];
+				distSinceLast = ARROW_SPACING_KM;
+			}
 			for (let i = 1; i < pts.length; i++) {
 				const a = pts[i - 1];
 				const b = pts[i];
 				const segLen = haversineKm(a, b);
-				distSinceLast += segLen;
-				if (distSinceLast >= ARROW_SPACING_KM) {
-					const pos = midpoint(a, b);
-					const brng = bearing(a, b);
-					const cssRotation = brng - 90;
+				if (segLen <= 0) continue;
+				const brng = bearing(a, b);
+				let consumed = 0;
+				while (distSinceLast + (segLen - consumed) >= ARROW_SPACING_KM) {
+					const need = ARROW_SPACING_KM - distSinceLast;
+					const t = (consumed + need) / segLen;
+					const pos: RoutePoint = [
+						a[0] + (b[0] - a[0]) * t,
+						a[1] + (b[1] - a[1]) * t,
+					];
 					result.push({
 						position: pos,
-						rotation: cssRotation,
-						key: `arrow-${si}-${i}`,
+						rotation: brng - 90,
+						key: `arrow-${result.length}`,
 					});
+					consumed += need;
 					distSinceLast = 0;
 				}
+				distSinceLast += segLen - consumed;
+				prev = b;
 			}
 		}
 		return result;
