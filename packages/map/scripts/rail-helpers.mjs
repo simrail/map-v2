@@ -4,9 +4,7 @@
  * This module provides the core algorithms used by the generator:
  *   - Name normalization (for matching station names across data sources)
  *   - Haversine distance (great-circle distance between two lat/lon points)
- *   - Douglas-Peucker line simplification (reduces polyline point count)
  *   - Google Encoded Polyline format (compact string encoding of coordinates)
- *   - Convex hull (Andrew's monotone chain algorithm)
  *   - Rail graph construction from GeoJSON route features
  *   - Spatial grid index for fast nearest-node queries
  *   - A* pathfinding with line-preference weighting
@@ -162,12 +160,17 @@ export function decodePolyline(str) {
  *
  * Two types of edges are created:
  *   1. Track edges: consecutive points within a LineString, tagged with the
- *      line number(s) from the route name (e.g. "LK4" → refs=["4"]).
- *   2. Proximity snap edges: edges between nodes that are within 15 meters of
- *      each other but not connected by any LineString. These bridge gaps where
- *      OSM ways share a physical location but have slightly different
- *      coordinates (e.g. a track that was remapped). Snap edges have refs=[]
- *      (no line association).
+ *      line number(s) from the route name (e.g. "LK4" → refs=["4"]). Ways that
+ *      meet share the same OSM node, so coordinate deduplication connects
+ *      them (including parallel tracks of doubled lines, which never share
+ *      coordinates and stay separate — the router can only switch tracks via
+ *      real junction/crossover geometry).
+ *   2. Endpoint-snap edges: each LineString endpoint is connected to its
+ *      single nearest non-adjacent node within 500m. This bridges gaps in the
+ *      wiki GeoJSON data where a LineString is split into fragments with
+ *      ~100-300m gaps between them (e.g. LK139 near Brynów has a 257m gap).
+ *      Only endpoints are considered, so this does NOT connect parallel
+ *      tracks (which have close mid-track nodes but distant endpoints).
  *
  * CSR format explanation:
  *   - coords: Array of [lat, lon] — one per node
@@ -177,6 +180,8 @@ export function decodePolyline(str) {
  *   - adjOther: Int32Array — the other endpoint of each adjacency entry
  *   - adjDist: Float64Array — edge distance (km) for each adjacency entry
  *   - erefs: Array<string[]> — line number(s) associated with each edge
+ *   - coordIndex: Map<string, number> — 6-decimal coordinate key → node index
+ *   - nodeLines: Array<Set<string>> — line number(s) touching each node
  *
  * @param {Array<{geometry: object, refs: string[]}>} routeFeatures - GeoJSON features
  * @returns {object} Graph in CSR format
@@ -201,12 +206,30 @@ export function buildGraphFromRoutes(routeFeatures) {
 	// Build edge lists from LineString features.
 	// Each consecutive pair of coordinates in a LineString becomes an edge.
 	// We also track which nodes are LineString endpoints (first and last
-	// points) for the secondary endpoint-snap pass below.
+	// points) for the secondary endpoint-snap pass below, and the local way
+	// direction at each endpoint (used to tell junctions from passthroughs).
 	const ea = []; // Edge endpoint A (node index)
 	const eb = []; // Edge endpoint B (node index)
 	const ed = []; // Edge distance (km, via haversine)
 	const erefs = []; // Edge line refs (e.g. ["4"] for LK4)
 	const endpointNodes = new Set(); // Node indices that are LineString endpoints
+	const endpointBearings = new Map(); // node index → [bearingDeg, ...]
+
+	// Initial bearing a→b ([lat, lon] pairs), degrees (0=N, 90=E), via an
+	// equirectangular approximation (accurate enough at these distances).
+	const bearingDeg = (a, b) => {
+		const cosLat = Math.cos((((a[0] + b[0]) / 2) * Math.PI) / 180);
+		return ((Math.atan2((b[1] - a[1]) * cosLat, b[0] - a[0]) * 180) / Math.PI + 360) % 360;
+	};
+	const angleDiffDeg = (a, b) => {
+		const d = Math.abs(a - b) % 360;
+		return d > 180 ? 360 - d : d;
+	};
+	const addEndpointBearing = (idx, deg) => {
+		let list = endpointBearings.get(idx);
+		if (!list) endpointBearings.set(idx, (list = []));
+		list.push(deg);
+	};
 
 	for (const feat of routeFeatures) {
 		const refs = feat.refs || [];
@@ -226,6 +249,20 @@ export function buildGraphFromRoutes(routeFeatures) {
 				const lastC = line[line.length - 1];
 				const lastIdx = resolveCoord(lastC[1], lastC[0]);
 				endpointNodes.add(lastIdx);
+				// Local way direction at both endpoints: at the first point
+				// the direction leaving it, at the last point the direction
+				// arriving at it. A connection continuing past the endpoint
+				// keeps roughly this bearing.
+				const second = line[1];
+				addEndpointBearing(
+					firstIdx,
+					bearingDeg([line[0][1], line[0][0]], [second[1], second[0]]),
+				);
+				const prevLast = line[line.length - 2];
+				addEndpointBearing(
+					lastIdx,
+					bearingDeg([prevLast[1], prevLast[0]], [lastC[1], lastC[0]]),
+				);
 			}
 
 			let prevIdx = -1;
@@ -243,67 +280,22 @@ export function buildGraphFromRoutes(routeFeatures) {
 		}
 	}
 
-	// Proximity snapping: connect nodes that are within 15 meters of each other
-	// but not connected by any LineString. This bridges gaps in the OSM data
-	// where ways share a physical point but have slightly different coordinates
-	// (e.g. after a remap or when ways from different line routes meet).
-	//
-	// Uses a spatial grid (cell size ~0.005° ≈ 555m) to avoid O(n²) comparison.
-	// For each node, checks the 3×3 neighborhood of grid cells.
-	const snapToleranceKm = 0.015; // 15 meters
-	const snapGridSize = 0.005; // ~555m grid cells
-	const snapGrid = new Map();
-	for (let i = 0; i < coords.length; i++) {
-		const [lat, lon] = coords[i];
-		const key = `${Math.floor(lat / snapGridSize)},${Math.floor(lon / snapGridSize)}`;
-		let cell = snapGrid.get(key);
-		if (!cell) {
-			cell = [];
-			snapGrid.set(key, cell);
-		}
-		cell.push(i);
-	}
-
-	// For each node, check neighboring cells for close nodes.
-	// Use a Set to avoid duplicate edges (pair i,j is only added once).
-	const snapEdges = new Set();
-	for (let i = 0; i < coords.length; i++) {
-		const [lat, lon] = coords[i];
-		const cx = Math.floor(lat / snapGridSize);
-		const cy = Math.floor(lon / snapGridSize);
-		for (let dx = -1; dx <= 1; dx++) {
-			for (let dy = -1; dy <= 1; dy++) {
-				const cell = snapGrid.get(`${cx + dx},${cy + dy}`);
-				if (!cell) continue;
-				for (const j of cell) {
-					if (j <= i) continue; // Only check j > i to avoid duplicates
-					const d = haversineKm(coords[i], coords[j]);
-					if (d <= snapToleranceKm && d > 0) {
-						const ek = `${Math.min(i, j)}|${Math.max(i, j)}`;
-						if (!snapEdges.has(ek)) {
-							snapEdges.add(ek);
-							ea.push(i);
-							eb.push(j);
-							ed.push(d);
-							erefs.push([]); // Snap edges have no line association
-						}
-					}
-				}
-			}
-		}
-	}
-
-	// Secondary endpoint-snap pass: connect LineString endpoints to nearby
-	// nodes within a larger tolerance (500m). This bridges gaps in the wiki
+	// Endpoint-snap pass: connect LineString endpoints to nearby
+	// nodes within a tolerance (500m). This bridges gaps in the wiki
 	// GeoJSON data where a LineString is split into fragments with ~100-300m
 	// gaps between them (e.g. LK139 near Brynów has a 257m gap).
 	//
 	// Only endpoints are considered (not mid-track nodes), so this does NOT
 	// connect parallel tracks (which have close mid-track nodes but distant
-	// endpoints). Each endpoint is connected to its single nearest non-adjacent
-	// node within tolerance, avoiding a flood of spurious edges.
+	// endpoints). Each endpoint is connected to the nearest non-adjacent
+	// node that is a plausible track continuation: the snap edge must keep
+	// roughly the way's heading at BOTH ends (within 60°). Real junctions
+	// and fragment-gap bridges satisfy this; tracks crossing on a bridge or
+	// tunnel arrive perpendicular to the line below and are rejected —
+	// without the heading check, this pass creates phantom junctions at
+	// every crossing (e.g. LK25 over LK1 south of Koluszki).
 	const endpointToleranceKm = 0.5; // 500 meters
-	const epGridSize = 0.005; // ~555m grid cells (reuse same size)
+	const epGridSize = 0.005; // ~555m grid cells
 	const epGrid = new Map();
 	for (let i = 0; i < coords.length; i++) {
 		if (!endpointNodes.has(i)) continue;
@@ -328,17 +320,60 @@ export function buildGraphFromRoutes(routeFeatures) {
 		}
 		cell.push(i);
 	}
-	// Track existing adjacency to avoid duplicate edges.
+	// Track existing adjacency to avoid duplicate edges, and per-node
+	// neighbor lists for the heading-alignment check below.
 	const adjSet = new Set();
+	const neighbors = new Map(); // node index → [neighbor index, ...]
 	for (let e = 0; e < ea.length; e++) {
 		adjSet.add(`${Math.min(ea[e], eb[e])}|${Math.max(ea[e], eb[e])}`);
+		let n1 = neighbors.get(ea[e]);
+		if (!n1) neighbors.set(ea[e], (n1 = []));
+		n1.push(eb[e]);
+		let n2 = neighbors.get(eb[e]);
+		if (!n2) neighbors.set(eb[e], (n2 = []));
+		n2.push(ea[e]);
 	}
+
+	// Heading-alignment tolerance: a snap edge must continue roughly in the
+	// way's direction at both ends (within 60°). Real junctions and fragment
+	// gaps satisfy this; a track passing over/under another (bridge, tunnel)
+	// arrives perpendicular to the line below and is rejected — without this
+	// check, the pass creates phantom junctions at every crossing.
+	const MAX_ALIGN_DEG = 60;
+
+	// Is connecting endpoint i to node j a plausible continuation of the
+	// track at i (and of the track(s) through j)?
+	const isPlausibleContinuation = (i, j) => {
+		const bearingIJ = bearingDeg(coords[i], coords[j]);
+		// At i: the connection must roughly continue the way's direction.
+		const bearingsI = endpointBearings.get(i);
+		if (!bearingsI || bearingsI.length === 0) return false;
+		let okI = false;
+		for (const b of bearingsI) {
+			if (angleDiffDeg(bearingIJ, b) <= MAX_ALIGN_DEG) {
+				okI = true;
+				break;
+			}
+		}
+		if (!okI) return false;
+		// At j: some existing edge at j must continue in the same direction
+		// (a junction lets traffic flow onward, a passthrough does not).
+		const jsNeighbors = neighbors.get(j);
+		if (!jsNeighbors || jsNeighbors.length === 0) return false;
+		for (const k of jsNeighbors) {
+			if (angleDiffDeg(bearingIJ, bearingDeg(coords[j], coords[k])) <= MAX_ALIGN_DEG) {
+				return true;
+			}
+		}
+		return false;
+	};
+
 	for (const i of endpointNodes) {
 		const [lat, lon] = coords[i];
 		const cx = Math.floor(lat / epGridSize);
 		const cy = Math.floor(lon / epGridSize);
-		let bestJ = -1;
-		let bestDist = Infinity;
+		// Gather non-adjacent candidates within tolerance, nearest first.
+		const candidates = [];
 		for (let dx = -1; dx <= 1; dx++) {
 			for (let dy = -1; dy <= 1; dy++) {
 				const cell = allGrid.get(`${cx + dx},${cy + dy}`);
@@ -348,20 +383,37 @@ export function buildGraphFromRoutes(routeFeatures) {
 					const ek = `${Math.min(i, j)}|${Math.max(i, j)}`;
 					if (adjSet.has(ek)) continue;
 					const d = haversineKm(coords[i], coords[j]);
-					if (d < bestDist) {
-						bestDist = d;
-						bestJ = j;
-					}
+					if (d <= endpointToleranceKm) candidates.push({ j, d });
 				}
 			}
 		}
-		if (bestJ >= 0 && bestDist <= endpointToleranceKm) {
-			const ek = `${Math.min(i, bestJ)}|${Math.max(i, bestJ)}`;
+		candidates.sort((a, b) => a.d - b.d);
+		// Connect to the nearest candidate that is a plausible continuation.
+		let connected = -1;
+		for (let c = 0; c < candidates.length && c < 8; c++) {
+			if (isPlausibleContinuation(i, candidates[c].j)) {
+				connected = candidates[c].j;
+				break;
+			}
+		}
+		if (connected >= 0) {
+			const ek = `${Math.min(i, connected)}|${Math.max(i, connected)}`;
 			adjSet.add(ek);
 			ea.push(i);
-			eb.push(bestJ);
-			ed.push(bestDist);
+			eb.push(connected);
+			ed.push(haversineKm(coords[i], coords[connected]));
 			erefs.push([]); // Endpoint-snap edges have no line association
+		}
+	}
+
+	// Build per-node line sets: all line numbers of edges incident to each
+	// node. Used by the generator for canonical station snapping (nearest
+	// node on any of a station's served lines).
+	const nodeLines = new Array(coords.length);
+	for (let e = 0; e < ea.length; e++) {
+		for (const u of [ea[e], eb[e]]) {
+			if (!nodeLines[u]) nodeLines[u] = new Set();
+			for (const r of erefs[e]) nodeLines[u].add(r);
 		}
 	}
 
@@ -404,7 +456,7 @@ export function buildGraphFromRoutes(routeFeatures) {
 		adjDist[p] = ed[e];
 	}
 
-	return { coords, start, adjEdge, adjOther, adjDist, erefs };
+	return { coords, start, adjEdge, adjOther, adjDist, erefs, coordIndex, nodeLines };
 }
 
 /**
@@ -415,24 +467,22 @@ export function buildGraphFromRoutes(routeFeatures) {
  * scanning all nodes — only checks cells in expanding rings around the query
  * point until a node within maxKm is found.
  *
- * Preferred-line snapping: if preferredRefs is provided, the finder also tracks
- * the nearest node that has at least one edge on a preferred line. If such a
- * node is found within maxKm, it is returned instead of the global nearest.
- * This ensures stations snap to the correct line's tracks at junctions where
- * multiple lines meet (e.g. Warszawa Główna Towarowa is at the junction of
- * LK1, LK3, and LK19 — we want to snap to LK19, not LK3).
+ * Line-restricted search: if allowedLines (a Set of line numbers) is passed to
+ * the returned finder, only nodes with at least one incident edge on one of
+ * those lines are considered. This is used by the generator to snap each
+ * station once to a canonical node on one of the lines that actually serve it
+ * (per the timetables), avoiding anchoring on unrelated nearby tracks.
  *
  * @param {object} graph - Graph from buildGraphFromRoutes()
  * @param {number} gridSize - Grid cell size in degrees (default 0.02 ≈ 2.2km)
  * @param {number} maxKm - Maximum snap distance in km (default 3.0)
- * @param {string[]|null} preferredRefs - Line numbers to prefer (e.g. ["19", "1"])
- * @returns {function} (point: [lat, lon]) => { index: number, distKm: number }
+ * @returns {function} (point: [lat, lon], allowedLines?: Set<string>) =>
+ *   { index: number, distKm: number } — index is -1 if nothing was found
  */
 export function makeNearestNode(
 	graph,
 	gridSize = 0.02,
 	maxKm = 3.0,
-	preferredRefs = null,
 ) {
 	// Build spatial grid: each cell contains indices of nodes within that cell.
 	const grid = new Map();
@@ -447,33 +497,14 @@ export function makeNearestNode(
 		cell.push(i);
 	}
 
-	// Precompute which nodes have at least one edge on a preferred line.
-	// This avoids checking edge refs on every query — we just check a bitmask.
-	const preferredSet = preferredRefs ? new Set(preferredRefs) : null;
-	const nodeHasPreferred = new Uint8Array(graph.coords.length);
-	if (preferredSet) {
-		for (let u = 0; u < graph.coords.length; u++) {
-			// Check all edges of node u for any preferred line ref.
-			for (let p = graph.start[u]; p < graph.start[u + 1]; p++) {
-				const e = graph.adjEdge[p];
-				const refs = graph.erefs[e];
-				if (refs && refs.some((r) => preferredSet.has(r))) {
-					nodeHasPreferred[u] = 1;
-					break;
-				}
-			}
-		}
-	}
-
-	// The returned finder function.
-	return (point) => {
+	// The returned finder function. If allowedLines is provided, only nodes
+	// with at least one incident edge on one of those lines are considered.
+	return (point, allowedLines = null) => {
 		const [lat, lon] = point;
 		const cx = Math.floor(lat / gridSize);
 		const cy = Math.floor(lon / gridSize);
 		let bestIdx = -1;
 		let bestDist = Infinity;
-		let bestPreferredIdx = -1;
-		let bestPreferredDist = Infinity;
 
 		// Expand search ring by ring until we find a node within maxKm.
 		// Ring r checks all cells at Chebyshev distance r from (cx, cy).
@@ -485,20 +516,23 @@ export function makeNearestNode(
 					const cell = grid.get(`${cx + dx},${cy + dy}`);
 					if (!cell) continue;
 					for (const idx of cell) {
+						if (allowedLines) {
+							const lines = graph.nodeLines[idx];
+							let ok = false;
+							if (lines) {
+								for (const l of lines) {
+									if (allowedLines.has(l)) {
+										ok = true;
+										break;
+									}
+								}
+							}
+							if (!ok) continue;
+						}
 						const d = haversineKm(graph.coords[idx], point);
-						// Track global nearest
 						if (d < bestDist) {
 							bestDist = d;
 							bestIdx = idx;
-						}
-						// Track nearest preferred-line node
-						if (
-							preferredSet &&
-							nodeHasPreferred[idx] &&
-							d < bestPreferredDist
-						) {
-							bestPreferredDist = d;
-							bestPreferredIdx = idx;
 						}
 					}
 				}
@@ -507,10 +541,6 @@ export function makeNearestNode(
 			if (bestIdx >= 0 && bestDist < maxKm) break;
 		}
 
-		// Return preferred node if available, otherwise global nearest.
-		if (preferredSet && bestPreferredIdx >= 0 && bestPreferredDist < maxKm) {
-			return { index: bestPreferredIdx, distKm: bestPreferredDist };
-		}
 		return { index: bestIdx, distKm: bestDist };
 	};
 }

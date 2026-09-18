@@ -51,9 +51,13 @@ interface ArrowData {
 function createArrowIcon(rotation: number, zoom: number): L.DivIcon {
 	const scale = Math.max(0.5, Math.min(2.5, (zoom - 6) / 5));
 	const size = Math.round(18 * scale);
+	// SVG triangle (not a text glyph — font metrics render ">" off-center
+	// in Firefox). The shape is centered in the viewBox, so the anchor at
+	// the box center is exact in every browser.
+	const html = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="display: block; transform: rotate(${rotation}deg); filter: drop-shadow(0 1px 3px rgba(0,0,0,0.7));"><path d="M8 4 L20 12 L8 20 Z" fill="#ffffff"/></svg>`;
 	return L.divIcon({
 		className: "route-arrow",
-		html: `<div style="transform: rotate(${rotation}deg); color: #ffffff; font-size: ${size}px; font-weight: bold; line-height: 1; text-align: center; width: ${size}px; height: ${size}px; filter: drop-shadow(0 1px 3px rgba(0,0,0,0.7));">&gt;</div>`,
+		html,
 		iconSize: [size, size],
 		iconAnchor: [Math.round(size / 2), Math.round(size / 2)],
 	});
