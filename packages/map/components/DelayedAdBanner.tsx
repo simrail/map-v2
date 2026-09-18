@@ -7,8 +7,8 @@ import styles from "../styles/DelayedAdBanner.module.css";
 
 const ADSENSE_SLOT_ID = process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_MAP_SLOT;
 const DISMISSED_KEY = "simrail-map-ad-dismissed";
-const MIN_DELAY_MS = 5 * 60 * 1000;
-const MAX_DELAY_MS = 10 * 60 * 1000;
+const MIN_DELAY_MS = 15 * 60 * 1000;
+const MAX_DELAY_MS = 30 * 60 * 1000;
 
 declare global {
 	interface Window {

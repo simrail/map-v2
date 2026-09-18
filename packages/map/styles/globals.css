@@ -56,9 +56,64 @@ input {
 }
 
 .steam-avatar {
-  border-radius: 9999px;
-  border: 2px solid #4ba8fc;
-  z-index: 40;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	box-sizing: border-box;
+	width: 24px;
+	height: 24px;
+	border-radius: 9999px;
+	border: 2px solid #4ba8fc;
+	z-index: 40;
+}
+
+.train-direction-marker {
+	border: 0 !important;
+	background: transparent !important;
+}
+
+.train-direction-arrow {
+	position: absolute;
+	inset: 0;
+	transition: transform 350ms ease-out;
+}
+
+.train-direction-arrow::before {
+	position: absolute;
+	top: -3px;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-right: 5px solid transparent;
+	border-bottom: 8px solid #101217;
+	border-left: 5px solid transparent;
+	filter: drop-shadow(0 1px 1px rgb(0 0 0 / 65%));
+	content: "";
+	transform: translateX(-50%);
+}
+
+.train-direction-arrow::after {
+	position: absolute;
+	top: -1px;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border-right: 3px solid transparent;
+	border-bottom: 5px solid #ffad32;
+	border-left: 3px solid transparent;
+	content: "";
+	transform: translateX(-50%);
+}
+
+.train-direction-marker.direction-unknown .train-direction-arrow {
+	display: none;
+}
+
+.train-direction-marker.is-selected .steam-avatar {
+	border-color: #ffad32;
+	box-shadow:
+		0 0 0 2px #101217,
+		0 0 0 4px rgb(255 173 50 / 75%);
 }
 
 .steam-avatar.in-border-area {
@@ -68,7 +123,7 @@ input {
 
 .station-avatar {
   border: 2px solid #ff9f23;
-  border-radius: 9px;
+  border-radius: 2px;
   z-index: 50;
 }
 
@@ -97,7 +152,7 @@ input {
   padding: 4px 7px !important;
   color: #d8dde5 !important;
   font-family: "Source Code Pro", monospace;
-  font-size: 8px;
+  font-size: 0.625rem;
   font-weight: 650;
   line-height: 1;
   border: 1px solid rgb(255 255 255 / 10%) !important;
@@ -114,8 +169,26 @@ input {
 
 .train-number-tooltip {
   color: #ffc160 !important;
+  font-variant-numeric: slashed-zero tabular-nums;
   border-color: rgb(255 173 50 / 30%) !important;
   background: rgb(27 23 17 / 96%) !important;
+}
+
+.leaflet-container[data-map-detail="overview"] .train-number-tooltip,
+.leaflet-container[data-map-detail="far"] .train-number-tooltip {
+  display: none;
+}
+
+.leaflet-container[data-map-detail="far"] .steam-avatar {
+	width: 16px !important;
+	height: 16px !important;
+	top: 9px;
+	left: 9px;
+	border-width: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.train-direction-arrow { transition: none; }
 }
 
 html[data-mantine-color-scheme="dark"] .leaflet-tile-pane {
@@ -186,7 +259,7 @@ html[data-mantine-color-scheme="light"] .leaflet-popup-content-wrapper {
   height: 26px !important;
   padding: 0 !important;
   color: #a9b0bb !important;
-  font: 18px/1 sans-serif !important;
+  font: 1.125rem/1 sans-serif !important;
   border-radius: 7px;
   background: rgb(10 13 18 / 62%) !important;
   place-items: center;
@@ -263,7 +336,7 @@ html[data-mantine-color-scheme="light"] .leaflet-control-layers-expanded {
     max-width: 220px;
     max-height: 38dvh;
     overflow-y: auto;
-    font-size: 11px;
+    font-size: 0.6875rem;
   }
 
   .leaflet-control-attribution {

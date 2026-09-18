@@ -27,11 +27,13 @@ import {
 	LayersControl,
 	MapContainer,
 	TileLayer,
+	useMap,
 } from "react-leaflet";
 import Control from "react-leaflet-custom-control";
 
 import NonPlayableStations from "@/components/NonPlayableStations";
 import RemoteStations from "@/components/RemoteStations";
+import SelectedTrainRoute from "@/components/SelectedTrainRoute";
 import { TrainsList } from "@/components/TrainsList";
 
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
@@ -56,6 +58,29 @@ const Tooltip = ({ label, children }: TooltipProps) => (
 		{children}
 	</MantineTooltip>
 );
+
+const MapZoomAppearance = () => {
+	const map = useMap();
+
+	useEffect(() => {
+		const container = map.getContainer();
+		const updateDetailLevel = () => {
+			const zoom = map.getZoom();
+			container.dataset.mapDetail =
+				zoom <= 8 ? "far" : zoom <= 9 ? "overview" : "detail";
+		};
+
+		updateDetailLevel();
+		map.on("zoomend", updateDetailLevel);
+
+		return () => {
+			map.off("zoomend", updateDetailLevel);
+			delete container.dataset.mapDetail;
+		};
+	}, [map]);
+
+	return null;
+};
 
 const LeaftletMap = ({ serverId }: MapProps) => {
 	const [map, setMap] = useState<LeafletMap | null>(null);
@@ -288,9 +313,10 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				scrollWheelZoom={true}
 				zoomControl={false}
 				fadeAnimation={false}
-				markerZoomAnimation={false}
 				preferCanvas={true}
 			>
+				<MapZoomAppearance />
+				<SelectedTrainRoute serverId={String(serverId)} stations={stations} />
 				<Control position="bottomleft">
 					<div className={style.container}>
 						<Tooltip label="Our GitHub" position="right">

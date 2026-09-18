@@ -33,7 +33,7 @@ export const getStaticProps = (async () => {
 
 const Post = () => {
 	const router = useRouter();
-	const { id, trainId } = router.query;
+	const { embed, id, trainId } = router.query;
 
 	const pageTitle = `${id?.toString().toUpperCase()} - SimRail Map`;
 
@@ -58,9 +58,9 @@ const Post = () => {
 				}}
 			>
 				<SelectedTrainProvider>
-					{!trainId && <TopNavigation />}
+					{!trainId && !embed && <TopNavigation />}
 					<MapWithNoSSR serverId={id} />
-					<DelayedAdBanner />
+					{!embed && <DelayedAdBanner />}
 				</SelectedTrainProvider>
 			</div>
 		</>

@@ -53,7 +53,7 @@
   bottom: 8px;
   padding: 4px 6px;
   color: #f4f6f8;
-  font-size: 8px;
+  font-size: 0.625rem;
   font-weight: 750;
   border: 1px solid rgb(255 255 255 / 13%);
   border-radius: 5px;
@@ -71,7 +71,7 @@
 .simpleCard small,
 .operator small {
   color: var(--popup-accent);
-  font-size: 8px;
+  font-size: 0.625rem;
   font-weight: 800;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -81,7 +81,7 @@
   margin: 5px 0 12px;
   color: var(--popup-title);
   font-family: "Saira", sans-serif;
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.1;
 }
 
@@ -108,12 +108,12 @@
 }
 
 .operator small { color: var(--popup-label); }
-.operator span { overflow: hidden; color: var(--popup-text); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.operator span { overflow: hidden; color: var(--popup-text); font-size: 0.6875rem; text-overflow: ellipsis; white-space: nowrap; }
 
 .openHint {
   margin-top: 12px;
   color: var(--popup-muted);
-  font-size: 9px;
+  font-size: 0.625rem;
   font-weight: 700;
 }
 
@@ -127,10 +127,10 @@
 .simpleCard strong {
   color: var(--popup-title);
   font-family: "Saira", sans-serif;
-  font-size: 15px;
+  font-size: 0.9375rem;
 }
 
 .simpleCard span {
   color: var(--popup-muted);
-  font-size: 9px;
+  font-size: 0.625rem;
 }
