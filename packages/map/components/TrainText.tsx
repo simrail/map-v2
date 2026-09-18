@@ -205,14 +205,16 @@ const TrainText = ({
 					<span>Train {train.TrainNoLocal}</span>
 					<h3>{displayName}</h3>
 				</div>
-				<a
-					target="_blank"
-					rel="noreferrer"
-					href={`https://edr.simrail.app/${String(id)}/train/${String(train.TrainNoLocal)}`}
-					className={styles.edrButton}
-				>
-					Open in EDR <span aria-hidden="true">↗</span>
-				</a>
+				{!minified && (
+					<a
+						target="_blank"
+						rel="noreferrer"
+						href={`https://edr.simrail.app/${String(id)}/train/${String(train.TrainNoLocal)}`}
+						className={styles.edrButton}
+					>
+						Open in EDR <span aria-hidden="true">↗</span>
+					</a>
+				)}
 			</div>
 
 			<div className={styles.route}>
@@ -248,17 +250,17 @@ const TrainText = ({
 					/>
 					{showTrainRoute && (
 						<div className={styles.routeLegend}>
-							<span style={{ color: "#2ecc71" }}>&gt; Driveable</span>
-							<span style={{ color: "#e74c3c" }}>&gt; Undriveable</span>
+							<span style={{ color: "#2ecc71" }}>&gt; Playable</span>
+							<span style={{ color: "#e74c3c" }}>&gt; Unplayable</span>
 							<span style={{ color: "#888888" }}>
-								&gt; No data in{" "}
+								&gt; No{" "}
 								<a
 									href="https://wiki.simrail.eu/en/Interactive-map"
 									target="_blank"
 									rel="noreferrer"
 									style={{ color: "#888888", textDecoration: "underline" }}
 								>
-									wiki
+									wiki data
 								</a>
 							</span>
 						</div>
@@ -294,7 +296,7 @@ const TrainText = ({
 			</div>
 
 			<div className={styles.consist}>
-				<span>Locomotive</span>
+				<span>Loco</span>
 				<strong>{tractionUnitInfo || "Unknown"}</strong>
 				{wagons.length > 0 && (
 					<small className={styles.wagonsInline}>+ {wagons.length} wagons</small>

@@ -52,18 +52,21 @@
 .route span { flex: 1; line-height: 1.35; }
 .route span:last-child { text-align: right; }
 .route i { color: var(--train-accent); font-style: normal; }
-.trainToggles { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 8px 0 0; }
-.routeLegend { display: flex; flex-basis: 100%; gap: 12px; margin: 2px 0 0; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--train-subtle); }
+.trainToggles { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px; margin: 12px 0 0; }
+.trainToggles label { padding-inline-start: 6px; }
+.routeLegend { display: flex; flex-basis: 100%; justify-content: center; gap: 0; margin: 2px 0 0; font-size: 9px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--train-subtle); }
+.routeLegend span { padding-left: 6px; }
 .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 12px 0; overflow: hidden; border: 1px solid var(--train-border); border-radius: 9px; background: var(--train-divider); }
-.stats > div { display: flex; flex-direction: column; gap: 5px; padding: 10px 8px; background: var(--train-stat-background); }
+.stats > div { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 5px; padding: 10px 4px; background: var(--train-stat-background); }
 .stats span, .consist > span { color: var(--train-muted); font-size: 0.6875rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
 .stats strong { color: var(--train-strong); font-size: 0.75rem; white-space: nowrap; }
-.consist { align-items: baseline; flex-wrap: wrap; gap: 5px 9px; padding: 3px 1px 11px; }
-.consist strong { color: var(--train-strong); font-size: 0.75rem; }
+.consist { align-items: baseline; flex-wrap: wrap; justify-content: center; text-align: center; gap: 5px 9px; padding: 3px 1px 11px; }
+.consist strong { color: var(--train-strong); font-size: 0.75rem; white-space: nowrap; }
 .consist small { width: 100%; color: var(--train-subtle); font-size: 0.6875rem; }
-.consist small.wagonsInline { width: auto; }
+.consist small.wagonsInline { width: auto; white-space: nowrap; }
 .trainMedia { margin: 2px 0 14px; overflow: hidden; border: 1px solid var(--train-border); border-radius: 10px; background: var(--train-media-background); }
-.signalSection { padding-top: 14px; border-top: 1px solid var(--train-border); }
+.signalSection { padding-top: 14px; border-top: 1px solid var(--train-border); text-align: center; }
+.signalSection .kicker { display: block; }
 .signalDetails { margin: 9px 0 13px; color: var(--train-secondary); line-height: 1.65; }
 .compact { width: 280px; }
 .compact .avatar { width: 34px; height: 34px; border-radius: 8px; }
