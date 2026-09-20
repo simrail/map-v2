@@ -7,20 +7,25 @@ import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 
 import { getSteamProfileOrBot } from "@/components/steam";
 
-import { useSelectedTrain } from "../../contexts/SelectedTrainContext";
 import TrainText from "../TrainText";
 
 type TrainMarkerProps = {
 	train: Train;
 	stoppedSince?: number;
+	isSelected: boolean;
+	selectTrain: (train: Train) => void;
 };
 
-const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
-	const { selectedTrain, setSelectedTrain } = useSelectedTrain();
-
+const TrainMarker = ({
+	train,
+	stoppedSince,
+	isSelected,
+	selectTrain,
+}: TrainMarkerProps) => {
 	const [avatar, setAvatar] = useState<string | null>(null);
 	const [username, setUsername] = useState<string | null>(null);
 	const [bearing, setBearing] = useState<number | null>(null);
+	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const previousPosition = useRef<[number, number] | null>(null);
 
 	useEffect(() => {
@@ -84,9 +89,6 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 	const borderAreaClass = train.TrainData.InBorderStationArea
 		? " in-border-area"
 		: "";
-	const isSelected =
-		(selectedTrain?.id ?? selectedTrain?.TrainNoLocal) ===
-		(train.id ?? train.TrainNoLocal);
 	const avatarUrl =
 		train.TrainData.ControlledBySteamID && avatar ? avatar : botIcon;
 	const escapedAvatarUrl = avatarUrl.replace(
@@ -125,17 +127,21 @@ const TrainMarker = ({ train, stoppedSince }: TrainMarkerProps) => {
 			eventHandlers={{
 				mouseover: (event) => event.target.openPopup(),
 				mouseout: (event) => event.target.closePopup(),
-				mouseup: () => setSelectedTrain(train),
+				mouseup: () => selectTrain(train),
+				popupopen: () => setIsPopupOpen(true),
+				popupclose: () => setIsPopupOpen(false),
 			}}
 		>
 			<Popup className="train-map-popup" minWidth={280}>
-				<TrainText
-					train={train}
-					username={username}
-					avatar={avatar}
-					minified={true}
-					stoppedSince={stoppedSince}
-				/>
+				{isPopupOpen && (
+					<TrainText
+						train={train}
+						username={username}
+						avatar={avatar}
+						minified={true}
+						stoppedSince={stoppedSince}
+					/>
+				)}
 			</Popup>
 
 			<Tooltip

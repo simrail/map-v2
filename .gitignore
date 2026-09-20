@@ -37,3 +37,6 @@ next-env.d.ts
 
 **/dist
 .pnpm-store/
+
+# generator cache
+packages/map/scripts/.cache/

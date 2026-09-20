@@ -42,25 +42,54 @@
 .identity strong { overflow: hidden; color: var(--train-title); font-size: 0.9375rem; text-overflow: ellipsis; white-space: nowrap; }
 .close { display: grid; flex: none; width: 32px; height: 32px; padding: 0; color: var(--train-close); border: 1px solid var(--train-border); border-radius: 8px; background: var(--train-surface); place-items: center; cursor: pointer; }
 .close:hover { color: #ff7777; border-color: rgb(255 100 100 / 28%); }
-.serviceHeading { margin: 17px 0 11px; }
-.serviceHeading > span { color: var(--train-muted); font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-.serviceHeading h3 { margin: 4px 0 0; color: var(--train-title); font-family: "Saira", sans-serif; font-size: 1.3125rem; line-height: 1.1; }
+.serviceHeading { display: flex; align-items: stretch; justify-content: space-between; gap: 8px; margin: 17px 0 11px; }
+.serviceMeta { min-width: 0; }
+.serviceMeta > span { display: block; color: var(--train-muted); font-size: 0.6875rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 1; }
+.edrButton { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 0 16px; color: #17191e; font-size: 0.6875rem; font-weight: 800; border-radius: 8px; background: #ffad32; white-space: nowrap; }
+.edrButton:hover { background: #ffba51; }
+.serviceHeading h3 { margin: 0; color: var(--train-title); font-family: "Saira", sans-serif; font-size: 1.3125rem; line-height: 1.1; }
 .route { align-items: center; gap: 9px; padding: 10px 11px; color: var(--train-secondary); border: 1px solid var(--train-border); border-radius: 9px; background: var(--train-surface); }
 .route span { flex: 1; line-height: 1.35; }
 .route span:last-child { text-align: right; }
 .route i { color: var(--train-accent); font-style: normal; }
+.trainToggles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin: 12px 0 0; }
+.trainToggle { display: inline-flex; align-items: center; justify-content: center; min-width: 0; height: 32px; gap: 6px; padding: 0 8px; color: var(--train-muted); font: inherit; font-size: .6875rem; font-weight: 700; border: 1px solid var(--train-border); border-radius: 8px; background: var(--train-surface); cursor: pointer; white-space: nowrap; }
+.trainToggle:hover { color: var(--train-title); border-color: rgb(255 177 59 / 30%); }
+.trainToggle:focus-visible { outline: 2px solid var(--train-accent); outline-offset: 2px; }
+.trainToggle > span { width: 7px; height: 7px; flex: none; border: 1px solid var(--train-muted); border-radius: 50%; }
+.trainToggleActive { color: var(--train-title); border-color: rgb(255 177 59 / 38%); background: rgb(255 177 59 / 12%); }
+.trainToggleActive > span { border-color: var(--train-accent); background: var(--train-accent); box-shadow: 0 0 0 3px rgb(255 177 59 / 10%); }
+.routeLegend { display: flex; grid-column: 1 / -1; align-items: center; justify-content: center; gap: 9px; margin: 2px 0 0; color: var(--train-subtle); font-size: 9px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.routeLegend span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.routeLegend span::before { width: 5px; height: 5px; flex: none; border-radius: 50%; background: #888; content: ""; }
+.routeLegend span:first-child::before { background: #2ecc71; }
+.routeLegend span:nth-child(2)::before { background: #e74c3c; }
+.routeLegend a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; margin: 12px 0; overflow: hidden; border: 1px solid var(--train-border); border-radius: 9px; background: var(--train-divider); }
-.stats > div { display: flex; flex-direction: column; gap: 5px; padding: 10px 8px; background: var(--train-stat-background); }
+.stats > div { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 5px; padding: 10px 4px; background: var(--train-stat-background); }
 .stats span, .consist > span { color: var(--train-muted); font-size: 0.6875rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
 .stats strong { color: var(--train-strong); font-size: 0.75rem; white-space: nowrap; }
-.consist { align-items: baseline; flex-wrap: wrap; gap: 5px 9px; padding: 3px 1px 11px; }
-.consist strong { color: var(--train-strong); font-size: 0.75rem; }
+.consist { align-items: baseline; flex-wrap: wrap; justify-content: center; text-align: center; gap: 5px 9px; padding: 3px 1px 11px; }
+.consist strong { color: var(--train-strong); font-size: 0.75rem; white-space: nowrap; }
 .consist small { width: 100%; color: var(--train-subtle); font-size: 0.6875rem; }
+.consist small.wagonsInline { width: auto; white-space: nowrap; }
 .trainMedia { margin: 2px 0 14px; overflow: hidden; border: 1px solid var(--train-border); border-radius: 10px; background: var(--train-media-background); }
-.signalSection { padding-top: 14px; border-top: 1px solid var(--train-border); }
-.signalDetails { margin: 9px 0 13px; color: var(--train-secondary); line-height: 1.65; }
-.edrButton { display: flex; align-items: center; justify-content: space-between; min-height: 41px; padding: 0 13px; color: #17191e; font-size: 0.75rem; font-weight: 800; border-radius: 9px; background: #ffad32; }
-.edrButton:hover { background: #ffba51; }
+.signalSection { padding-top: 14px; border-top: 1px solid var(--train-border); text-align: center; }
+.signalSection .kicker { display: block; }
+.signalDetails { margin: 9px 0 13px; color: var(--train-secondary); }
+.signalCard { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; text-align: left; border: 1px solid var(--train-border); border-radius: 9px; background: var(--train-surface); }
+.signalPosition, .signalAspect > div { display: flex; flex-direction: column; }
+.signalPosition { min-width: 0; gap: 2px; }
+.signalPosition strong { overflow: hidden; color: var(--train-strong); font-size: .8125rem; text-overflow: ellipsis; white-space: nowrap; }
+.signalPosition span, .signalAspect span { color: var(--train-muted); font-size: .625rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.signalAspect { display: flex; flex: none; align-items: center; gap: 8px; padding-left: 12px; border-left: 1px solid var(--train-divider); }
+.signalAspect img { width: 24px; height: 24px; object-fit: contain; }
+.signalAspect > div { align-items: flex-start; gap: 1px; }
+.signalAspect strong { color: var(--train-strong); font-size: .75rem; white-space: nowrap; }
+.signalCompact { display: flex; justify-content: center; gap: 6px; font-size: .75rem; }
+.signalCompact strong { color: var(--train-strong); }
+.signalCompact span, .signalEmpty { color: var(--train-muted); }
+.signalEmpty { padding: 8px 0 2px; font-size: .75rem; }
 .compact { width: 280px; }
 .compact .avatar { width: 34px; height: 34px; border-radius: 8px; }
 .compact .serviceHeading { margin-top: 13px; }

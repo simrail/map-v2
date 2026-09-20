@@ -4,7 +4,10 @@
   top: 62px;
   right: 0;
   box-sizing: border-box;
-  width: min(360px, calc(100vw - 24px));
+  /* Content width matches the locomotive picture: all railcar images are
+     1699x720 (2.36 aspect); at the carousel's 112px height they render
+     264px wide. 264 + 2*24px padding + 2*1px border = 316px. */
+  width: min(316px, calc(100vw - 24px));
   max-width: none;
   max-height: calc(100dvh - 78px);
   padding: 10px 24px;

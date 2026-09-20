@@ -1,6 +1,5 @@
 import { Carousel } from "@mantine/carousel";
 import { Image } from "@mantine/core";
-import { readLocalStorageValue } from "@mantine/hooks";
 import type { Train } from "@simrail/types";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import { useRouter } from "next/router";
@@ -27,6 +26,26 @@ interface TrainRailcarInfo {
 	railcar: Railcar;
 	loadWeight: number | null;
 }
+
+type TrainToggleProps = {
+	active: boolean;
+	label: string;
+	title: string;
+	onToggle: () => void;
+};
+
+const TrainToggle = ({ active, label, title, onToggle }: TrainToggleProps) => (
+	<button
+		type="button"
+		className={`${styles.trainToggle} ${active ? styles.trainToggleActive : ""}`}
+		aria-pressed={active}
+		title={title}
+		onClick={onToggle}
+	>
+		<span aria-hidden="true" />
+		{label}
+	</button>
+);
 
 const railcarsByApiName = new Map(
 	(railcarJson as Railcar[]).map((railcar) => [railcar.apiName, railcar]),
@@ -80,7 +99,16 @@ const TrainText = ({
 }: TrainTextProps) => {
 	const router = useRouter();
 	const { id, trainId } = router.query;
-	const { setSelectedTrain } = useSelectedTrain();
+	const {
+		setSelectedTrain,
+		showSignalInfo,
+		showTrainRoute,
+		setShowTrainRoute,
+		followTrain,
+		setFollowTrain,
+		onlySelectedTrain,
+		setOnlySelectedTrain,
+	} = useSelectedTrain();
 
 	const usedRailcarInfo = useMemo(
 		() =>
@@ -153,10 +181,6 @@ const TrainText = ({
 		(minimum, info) => Math.min(minimum, info.railcar.maxSpeed),
 		Number.POSITIVE_INFINITY,
 	);
-	const showSignalInfo = readLocalStorageValue({
-		key: "showSignalInfo",
-		defaultValue: true,
-	});
 	const displayName = getTrainDisplayName(train.TrainName, train.TrainNoLocal);
 	const displayedMaxSpeed = Number.isFinite(minMaxSpeed)
 		? `${minMaxSpeed} km/h`
@@ -198,8 +222,20 @@ const TrainText = ({
 			</header>
 
 			<div className={styles.serviceHeading}>
-				<span>Train {train.TrainNoLocal}</span>
-				<h3>{displayName}</h3>
+				<div className={styles.serviceMeta}>
+					<span>Train {train.TrainNoLocal}</span>
+					<h3>{displayName}</h3>
+				</div>
+				{!minified && (
+					<a
+						target="_blank"
+						rel="noreferrer"
+						href={`https://edr.simrail.app/${String(id)}/train/${String(train.TrainNoLocal)}`}
+						className={styles.edrButton}
+					>
+						Open in EDR <span aria-hidden="true">↗</span>
+					</a>
+				)}
 			</div>
 
 			<div className={styles.route}>
@@ -207,6 +243,45 @@ const TrainText = ({
 				<i aria-hidden="true">→</i>
 				<span>{train.EndStation}</span>
 			</div>
+
+			{!minified && (
+				<div className={styles.trainToggles}>
+					<TrainToggle
+						active={followTrain}
+						label="Follow"
+						title="Keep the map centered on this train"
+						onToggle={() => setFollowTrain((enabled) => !enabled)}
+					/>
+					<TrainToggle
+						active={onlySelectedTrain}
+						label="Only train"
+						title="Hide every other train"
+						onToggle={() => setOnlySelectedTrain((enabled) => !enabled)}
+					/>
+					<TrainToggle
+						active={showTrainRoute}
+						label="Route"
+						title="Show this train's route on the map"
+						onToggle={() => setShowTrainRoute((enabled) => !enabled)}
+					/>
+					{showTrainRoute && (
+						<div className={styles.routeLegend}>
+							<span>Playable</span>
+							<span>Unplayable</span>
+							<span>
+								No{" "}
+								<a
+									href="https://wiki.simrail.eu/en/Interactive-map"
+									target="_blank"
+									rel="noreferrer"
+								>
+									wiki data
+								</a>
+							</span>
+						</div>
+					)}
+				</div>
+			)}
 
 			<div className={styles.stats}>
 				<div>
@@ -236,12 +311,16 @@ const TrainText = ({
 			</div>
 
 			<div className={styles.consist}>
-				<span>Locomotive</span>
+				<span>Loco</span>
 				<strong>{tractionUnitInfo || "Unknown"}</strong>
+				{wagons.length > 0 && (
+					<small className={styles.wagonsInline}>
+						+ {wagons.length} wagons
+					</small>
+				)}
 				{additionalUnits.length > 0 && (
 					<small>Additional units: {additionalUnits.join(", ")}</small>
 				)}
-				{wagons.length > 0 && <small>{wagons.length} wagons</small>}
 			</div>
 
 			{!minified && locomotiveImages.length > 0 && (
@@ -257,22 +336,12 @@ const TrainText = ({
 				</div>
 			)}
 
-			{!minified && (
-				<div className={styles.signalSection}>
-					<span className={styles.kicker}>Next signal</span>
-					<div className={styles.signalDetails}>
-						<TrainUpcomingSignal train={train} showMoreInfo={showSignalInfo} />
-					</div>
-					<a
-						target="_blank"
-						rel="noreferrer"
-						href={`https://edr.simrail.app/${String(id)}/train/${String(train.TrainNoLocal)}`}
-						className={styles.edrButton}
-					>
-						Open in EDR <span aria-hidden="true">↗</span>
-					</a>
+			<div className={styles.signalSection}>
+				<span className={styles.kicker}>Next signal</span>
+				<div className={styles.signalDetails}>
+					<TrainUpcomingSignal train={train} showMoreInfo={showSignalInfo} />
 				</div>
-			)}
+			</div>
 		</section>
 	);
 };

@@ -33,7 +33,6 @@ import Control from "react-leaflet-custom-control";
 
 import NonPlayableStations from "@/components/NonPlayableStations";
 import RemoteStations from "@/components/RemoteStations";
-import SelectedTrainRoute from "@/components/SelectedTrainRoute";
 import { TrainsList } from "@/components/TrainsList";
 
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
@@ -42,6 +41,7 @@ import SelectedTrainPopup from "./SelectedTrainPopup";
 import { MainlineSignals, OtherSignals } from "./Signals";
 import SneakpeekMarkers from "./Sneakpeeks";
 import SpotlightSearch from "./SpotlightSearch";
+import TrainRoute from "./TrainRoute";
 
 import style from "../styles/BottomLeftControls.module.css";
 import mapStyles from "../styles/Map.module.css";
@@ -99,15 +99,17 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		defaultValue: true,
 	});
 
-	const [showSignalInfo, setShowSignalInfo] = useLocalStorage({
-		key: "showSignalInfo",
-		defaultValue: true,
-	});
-
 	const [isSatellite, setIsSatellite] = useLocalStorage({
 		key: "isSatellite",
 		defaultValue: false,
 	});
+	const {
+		selectedTrain,
+		setSelectedTrain,
+		followTrain,
+		showSignalInfo,
+		setShowSignalInfo,
+	} = useSelectedTrain();
 
 	const { toggle: toggleFullscreen, fullscreen } = useFullscreen();
 	const FullscreenIcon = fullscreen ? MdFullscreenExit : MdFullscreen;
@@ -118,7 +120,6 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		renderPopup === true ? MdSpeakerNotes : MdSpeakerNotesOff;
 	const SatelliteIcon = isSatellite === true ? MdSatellite : MdSatelliteAlt;
 
-	const { selectedTrain, setSelectedTrain } = useSelectedTrain();
 	const [stations, setStations] = useState<Station[] | null>(null);
 	const [stoppedTrainsSince, setStoppedTrainsSince] = useState<
 		Record<string, number>
@@ -201,12 +202,14 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 			if (updatedTrain !== selectedTrain) {
 				setSelectedTrain(updatedTrain);
 			}
-			map.panTo(
-				[updatedTrain.TrainData.Latititute, updatedTrain.TrainData.Longitute],
-				{ animate: true, duration: 0.8, easeLinearity: 0.4 },
-			);
+			if (followTrain) {
+				map.panTo(
+					[updatedTrain.TrainData.Latititute, updatedTrain.TrainData.Longitute],
+					{ animate: true, duration: 0.8, easeLinearity: 0.4 },
+				);
+			}
 		}
-	}, [trains, selectedTrain, map, setSelectedTrain]);
+	}, [trains, selectedTrain, map, setSelectedTrain, followTrain]);
 
 	useEffect(() => {
 		if (trainId) {
@@ -313,7 +316,6 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 				preferCanvas={true}
 			>
 				<MapZoomAppearance />
-				<SelectedTrainRoute serverId={String(serverId)} stations={stations} />
 				<Control position="bottomleft">
 					<div className={style.container}>
 						<Tooltip label="Our GitHub" position="right">
@@ -560,6 +562,7 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						</LayerGroup>
 					</LayersControl.Overlay>
 				</LayersControl>
+				<TrainRoute />
 				<SpotlightSearch stations={stations} trains={trains} />
 			</MapContainer>
 		</>
