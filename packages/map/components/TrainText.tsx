@@ -81,6 +81,7 @@ const TrainText = ({
 	const { id, trainId } = router.query;
 	const {
 		setSelectedTrain,
+		showSignalInfo,
 		showTrainRoute,
 		setShowTrainRoute,
 		followTrain,
@@ -322,7 +323,10 @@ const TrainText = ({
 			<div className={styles.signalSection}>
 				<span className={styles.kicker}>Next signal</span>
 				<div className={styles.signalDetails}>
-					<TrainUpcomingSignal train={train} />
+					<TrainUpcomingSignal
+						train={train}
+						showMoreInfo={showSignalInfo}
+					/>
 				</div>
 			</div>
 		</section>

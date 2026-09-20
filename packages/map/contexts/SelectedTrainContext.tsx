@@ -13,6 +13,8 @@ import {
 interface SelectedTrainContextType {
 	selectedTrain: Train | null;
 	setSelectedTrain: (train: Train | null) => void;
+	showSignalInfo: boolean;
+	setShowSignalInfo: Dispatch<SetStateAction<boolean>>;
 	showTrainRoute: boolean;
 	setShowTrainRoute: Dispatch<SetStateAction<boolean>>;
 	followTrain: boolean;
@@ -24,6 +26,8 @@ interface SelectedTrainContextType {
 export const SelectedTrainContext = createContext<SelectedTrainContextType>({
 	selectedTrain: null,
 	setSelectedTrain: () => {},
+	showSignalInfo: true,
+	setShowSignalInfo: () => {},
 	showTrainRoute: true,
 	setShowTrainRoute: () => {},
 	followTrain: true,
@@ -40,6 +44,10 @@ export const SelectedTrainProvider = ({
 	children: ReactNode;
 }) => {
 	const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
+	const [showSignalInfo, setShowSignalInfo] = useLocalStorage({
+		key: "showSignalInfo",
+		defaultValue: true,
+	});
 	const [showTrainRoute, setShowTrainRoute] = useLocalStorage({
 		key: "showTrainRoute",
 		defaultValue: true,
@@ -56,6 +64,8 @@ export const SelectedTrainProvider = ({
 		() => ({
 			selectedTrain,
 			setSelectedTrain,
+			showSignalInfo,
+			setShowSignalInfo,
 			showTrainRoute,
 			setShowTrainRoute,
 			followTrain,
@@ -65,10 +75,12 @@ export const SelectedTrainProvider = ({
 		}),
 		[
 			selectedTrain,
+			showSignalInfo,
 			showTrainRoute,
 			followTrain,
 			onlySelectedTrain,
 			setShowTrainRoute,
+			setShowSignalInfo,
 			setFollowTrain,
 			setOnlySelectedTrain,
 		],

@@ -174,6 +174,28 @@ interface TimetableStop {
  */
 const timetableCache = new Map<string, Promise<TimetableStop[] | null>>();
 
+function cacheSuccessfulResult<T>(
+	cache: Map<string, Promise<T | null>>,
+	key: string,
+	load: () => Promise<T | null>,
+): Promise<T | null> {
+	const cached = cache.get(key);
+	if (cached) return cached;
+
+	const request = load().then(
+		(result) => {
+			if (result === null) cache.delete(key);
+			return result;
+		},
+		(error) => {
+			cache.delete(key);
+			throw error;
+		},
+	);
+	cache.set(key, request);
+	return request;
+}
+
 /**
  * Fetches a train's timetable from the community EDR API.
  * Results are cached per train (serverCode + trainNo) for the session.
@@ -184,15 +206,20 @@ function fetchTimetable(
 	trainNo: string,
 ): Promise<TimetableStop[] | null> {
 	const key = `${serverCode}|${trainNo}`;
-	if (!timetableCache.has(key)) {
-		timetableCache.set(
-			key,
-			fetch(`${EDR_TIMETABLE_URL}/${serverCode}/${trainNo}`)
-				.then((r) => (r.ok ? r.json() : null))
-				.catch(() => null),
-		);
-	}
-	return timetableCache.get(key)!;
+	return cacheSuccessfulResult(timetableCache, key, async () => {
+		try {
+			const response = await fetch(
+				`${EDR_TIMETABLE_URL}/${encodeURIComponent(serverCode)}/${encodeURIComponent(trainNo)}`,
+			);
+			if (!response.ok) return null;
+			const timetable: unknown = await response.json();
+			return Array.isArray(timetable) && timetable.length > 0
+				? (timetable as TimetableStop[])
+				: null;
+		} catch {
+			return null;
+		}
+	});
 }
 
 /**
@@ -226,10 +253,7 @@ export function getTrainRoute(train: {
 	TrainNoLocal: string;
 }): Promise<ColoredSegment[] | null> {
 	const key = `${train.ServerCode}|${train.TrainNoLocal}`;
-	if (!routeCache.has(key)) {
-		routeCache.set(key, computeRoute(train));
-	}
-	return routeCache.get(key)!;
+	return cacheSuccessfulResult(routeCache, key, () => computeRoute(train));
 }
 
 /**

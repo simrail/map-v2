@@ -3,6 +3,7 @@ import type React from "react";
 
 type TrainSignalProps = {
 	train: Train;
+	showMoreInfo: boolean;
 };
 
 function formatSignalDistance(distanceMeters: number): string {
@@ -43,7 +44,10 @@ const getSignalStatusText = (signalSpeed: number | string): string => {
 	return "Limited";
 };
 
-const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({ train }) => {
+const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
+	train,
+	showMoreInfo,
+}) => {
 	const {
 		TrainData: { SignalInFront, SignalInFrontSpeed, DistanceToSignalInFront },
 	} = train;
@@ -54,10 +58,19 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({ train }) => {
 
 	const signalName = SignalInFront.split("@")[0];
 	const signalColor = getSignalColor(SignalInFrontSpeed);
+	const signalDistance = formatSignalDistance(DistanceToSignalInFront);
+
+	if (!showMoreInfo) {
+		return (
+			<div>
+				{signalName} in {signalDistance}
+			</div>
+		);
+	}
 
 	return (
 		<div>
-			{signalName} in {formatSignalDistance(DistanceToSignalInFront)} - speed{" "}
+			{signalName} in {signalDistance} - speed{" "}
 			{formatSignalSpeed(SignalInFrontSpeed)} -{" "}
 			<span
 				aria-label={getSignalStatusText(SignalInFrontSpeed)}

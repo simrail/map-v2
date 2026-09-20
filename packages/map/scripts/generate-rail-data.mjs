@@ -403,15 +403,23 @@ async function main() {
 			);
 			if (resp.ok) {
 				const list = await resp.json();
-				const all = (Array.isArray(list) ? list : list.data || []).map(
-					(tt) => ({
+				const all = (Array.isArray(list) ? list : list.data || [])
+					.filter(
+						(tt) =>
+							tt.trainNoLocal &&
+							Array.isArray(tt.timetable) &&
+							tt.timetable.length > 0,
+					)
+					.map((tt) => ({
 						trainNo: tt.trainNoLocal,
-						timetable: tt.timetable || [],
-					}),
-				);
-				fs.writeFileSync(cachePath, JSON.stringify(all));
-				log(`  [timetables] Official: ${all.length} timetables`);
-				return;
+						timetable: tt.timetable,
+					}));
+				if (all.length > 0) {
+					fs.writeFileSync(cachePath, JSON.stringify(all));
+					log(`  [timetables] Official: ${all.length} timetables`);
+					return;
+				}
+				log("  [timetables] Official API returned no timetables");
 			}
 		} catch (err) {
 			log(`  [timetables] Official API failed: ${err.message}`);
@@ -438,6 +446,9 @@ async function main() {
 				// skip
 			}
 		});
+		if (all.length === 0) {
+			throw new Error("No timetables returned by either data source");
+		}
 		fs.writeFileSync(cachePath, JSON.stringify(all));
 		log(`  [timetables] Community EDR: ${all.length} timetables`);
 	})();

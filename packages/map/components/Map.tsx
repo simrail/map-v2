@@ -99,15 +99,17 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		defaultValue: true,
 	});
 
-	const [showSignalInfo, setShowSignalInfo] = useLocalStorage({
-		key: "showSignalInfo",
-		defaultValue: true,
-	});
-
 	const [isSatellite, setIsSatellite] = useLocalStorage({
 		key: "isSatellite",
 		defaultValue: false,
 	});
+	const {
+		selectedTrain,
+		setSelectedTrain,
+		followTrain,
+		showSignalInfo,
+		setShowSignalInfo,
+	} = useSelectedTrain();
 
 	const { toggle: toggleFullscreen, fullscreen } = useFullscreen();
 	const FullscreenIcon = fullscreen ? MdFullscreenExit : MdFullscreen;
@@ -118,7 +120,6 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		renderPopup === true ? MdSpeakerNotes : MdSpeakerNotesOff;
 	const SatelliteIcon = isSatellite === true ? MdSatellite : MdSatelliteAlt;
 
-	const { selectedTrain, setSelectedTrain, followTrain } = useSelectedTrain();
 	const [stations, setStations] = useState<Station[] | null>(null);
 	const [stoppedTrainsSince, setStoppedTrainsSince] = useState<
 		Record<string, number>
