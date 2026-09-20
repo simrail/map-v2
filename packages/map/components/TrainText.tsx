@@ -1,5 +1,5 @@
 import { Carousel } from "@mantine/carousel";
-import { Checkbox, Image } from "@mantine/core";
+import { Image } from "@mantine/core";
 import type { Train } from "@simrail/types";
 import { useSelectedTrain } from "contexts/SelectedTrainContext";
 import { useRouter } from "next/router";
@@ -26,6 +26,31 @@ interface TrainRailcarInfo {
 	railcar: Railcar;
 	loadWeight: number | null;
 }
+
+type TrainToggleProps = {
+	active: boolean;
+	label: string;
+	title: string;
+	onToggle: () => void;
+};
+
+const TrainToggle = ({
+	active,
+	label,
+	title,
+	onToggle,
+}: TrainToggleProps) => (
+	<button
+		type="button"
+		className={`${styles.trainToggle} ${active ? styles.trainToggleActive : ""}`}
+		aria-pressed={active}
+		title={title}
+		onClick={onToggle}
+	>
+		<span aria-hidden="true" />
+		{label}
+	</button>
+);
 
 const railcarsByApiName = new Map(
 	(railcarJson as Railcar[]).map((railcar) => [railcar.apiName, railcar]),
@@ -226,40 +251,34 @@ const TrainText = ({
 
 			{!minified && (
 				<div className={styles.trainToggles}>
-					<Checkbox
-						checked={followTrain}
-						onChange={(event) => setFollowTrain(event.currentTarget.checked)}
+					<TrainToggle
+						active={followTrain}
 						label="Follow"
-						size="xs"
-						color="blue"
+						title="Keep the map centered on this train"
+						onToggle={() => setFollowTrain((enabled) => !enabled)}
 					/>
-					<Checkbox
-						checked={onlySelectedTrain}
-						onChange={(event) =>
-							setOnlySelectedTrain(event.currentTarget.checked)
-						}
-						label="Single"
-						size="xs"
-						color="orange"
+					<TrainToggle
+						active={onlySelectedTrain}
+						label="Only train"
+						title="Hide every other train"
+						onToggle={() => setOnlySelectedTrain((enabled) => !enabled)}
 					/>
-					<Checkbox
-						checked={showTrainRoute}
-						onChange={(event) => setShowTrainRoute(event.currentTarget.checked)}
+					<TrainToggle
+						active={showTrainRoute}
 						label="Route"
-						size="xs"
-						color="green"
+						title="Show this train's route on the map"
+						onToggle={() => setShowTrainRoute((enabled) => !enabled)}
 					/>
 					{showTrainRoute && (
 						<div className={styles.routeLegend}>
-							<span style={{ color: "#2ecc71" }}>&gt; Playable</span>
-							<span style={{ color: "#e74c3c" }}>&gt; Unplayable</span>
-							<span style={{ color: "#888888" }}>
-								&gt; No{" "}
+							<span>Playable</span>
+							<span>Unplayable</span>
+							<span>
+								No{" "}
 								<a
 									href="https://wiki.simrail.eu/en/Interactive-map"
 									target="_blank"
 									rel="noreferrer"
-									style={{ color: "#888888", textDecoration: "underline" }}
 								>
 									wiki data
 								</a>
