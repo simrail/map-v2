@@ -3,7 +3,11 @@ import { memo, useEffect, useMemo, useState } from "react";
 import { Polyline, Marker, useMap } from "react-leaflet";
 
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
-import { getTrainRoute, type ColoredSegment, type RoutePoint } from "../lib/trainRoute";
+import {
+	getTrainRoute,
+	type ColoredSegment,
+	type RoutePoint,
+} from "../lib/trainRoute";
 
 const ROUTE_COLORS = {
 	green: "#2ecc71",

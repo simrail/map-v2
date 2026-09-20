@@ -74,10 +74,7 @@ function extractStationAnchor(gj) {
 	const arcLenKm = (ls) => {
 		let len = 0;
 		for (let i = 1; i < ls.length; i++) {
-			len += haversineKm(
-				[ls[i - 1][1], ls[i - 1][0]],
-				[ls[i][1], ls[i][0]],
-			);
+			len += haversineKm([ls[i - 1][1], ls[i - 1][0]], [ls[i][1], ls[i][0]]);
 		}
 		return len;
 	};
@@ -150,7 +147,9 @@ function extractStationAnchor(gj) {
 			return { anchor: vertexCentroid(best), loopOnly: true };
 		}
 		const only = lines.find((ls) => ls.length >= 1);
-		return only ? { anchor: [only[0][1], only[0][0]], loopOnly: false } : { anchor: null, loopOnly: false };
+		return only
+			? { anchor: [only[0][1], only[0][0]], loopOnly: false }
+			: { anchor: null, loopOnly: false };
 	}
 	if (rings.length > 0) {
 		const size = (r) => {
@@ -232,14 +231,19 @@ async function main() {
 					stationCoords.set(norm, anchor);
 					knownStations.add(norm);
 				}
-			} catch {
-			}
+			} catch {}
 		});
 		log(
 			`  [wiki] Stations with coords: ${stationCoords.size} (+${wikiLoopCentroids.size} loop-only, deferred)`,
 		);
 
-		return { wikiMapData, stationCoords, knownStations, routeFeatures, wikiLoopCentroids };
+		return {
+			wikiMapData,
+			stationCoords,
+			knownStations,
+			routeFeatures,
+			wikiLoopCentroids,
+		};
 	})();
 
 	const timetablesPromise = (async () => {
@@ -295,8 +299,7 @@ async function main() {
 				if (Array.isArray(tt) && tt.length > 0) {
 					all.push({ trainNo: train.TrainNoLocal, timetable: tt });
 				}
-			} catch {
-			}
+			} catch {}
 		});
 		if (all.length === 0) {
 			throw new Error("No timetables returned by either data source");
@@ -305,8 +308,13 @@ async function main() {
 		log(`  [timetables] Community EDR: ${all.length} timetables`);
 	})();
 
-	const { wikiMapData, stationCoords, knownStations, routeFeatures, wikiLoopCentroids } =
-		await wikiPromise;
+	const {
+		wikiMapData,
+		stationCoords,
+		knownStations,
+		routeFeatures,
+		wikiLoopCentroids,
+	} = await wikiPromise;
 	await timetablesPromise;
 
 	log("Step 1b: Supplement station coordinates from local files + API");
@@ -354,8 +362,7 @@ async function main() {
 					}
 				}
 			}
-		} catch {
-		}
+		} catch {}
 	}
 	log(`  Total stations with coords: ${stationCoords.size}`);
 
@@ -382,9 +389,7 @@ async function main() {
 		}
 	}
 	if (loopFallbackCount > 0) {
-		log(
-			`  Loop-centroid fallbacks (no game coordinate): ${loopFallbackCount}`,
-		);
+		log(`  Loop-centroid fallbacks (no game coordinate): ${loopFallbackCount}`);
 	}
 
 	log("Step 2: Collect segments from timetables");
@@ -512,9 +517,7 @@ async function main() {
 	const nodeIndexFor = (graph, coord) =>
 		graph.coordIndex.get(coordKey(coord[0], coord[1])) ?? -1;
 
-	log(
-		`  Snapping ${servedLines.size} stations to canonical nodes...`,
-	);
+	log(`  Snapping ${servedLines.size} stations to canonical nodes...`);
 	const canonicalNodes = new Map();
 	const droppedStations = [];
 	for (const [name, lines] of servedLines) {
@@ -765,8 +768,7 @@ async function main() {
 					}
 				}
 			}
-		} catch {
-		}
+		} catch {}
 	}
 	log(
 		`  Available lines: ${Object.keys(lineAvailableFeatures).length}, Not-available lines: ${Object.keys(lineNotAvailableFeatures).length}`,
@@ -834,8 +836,7 @@ async function main() {
 
 		const lines =
 			segmentLines[key] ||
-			(segments.get(key)?.allLines.filter((l) => wikiLineNumbers.has(l)) ??
-				[]);
+			(segments.get(key)?.allLines.filter((l) => wikiLineNumbers.has(l)) ?? []);
 		const availTracks = lines.flatMap((l) => lineAvailableFeatures[l] || []);
 		const notAvailTracks = lines.flatMap(
 			(l) => lineNotAvailableFeatures[l] || [],
@@ -900,7 +901,9 @@ async function main() {
 		}
 	}
 	if (greyRisk.length > 0) {
-		log(`  GREY RISK — ${greyRisk.length} uncomputed pairs > ${GREY_RISK_KM}km apart:`);
+		log(
+			`  GREY RISK — ${greyRisk.length} uncomputed pairs > ${GREY_RISK_KM}km apart:`,
+		);
 		for (const label of greyRisk) log(`    - ${label}`);
 	} else {
 		log(`  Grey-risk report: none > ${GREY_RISK_KM}km`);

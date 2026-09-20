@@ -90,7 +90,11 @@ export function buildGraphFromRoutes(routeFeatures) {
 
 	const bearingDeg = (a, b) => {
 		const cosLat = Math.cos((((a[0] + b[0]) / 2) * Math.PI) / 180);
-		return ((Math.atan2((b[1] - a[1]) * cosLat, b[0] - a[0]) * 180) / Math.PI + 360) % 360;
+		return (
+			((Math.atan2((b[1] - a[1]) * cosLat, b[0] - a[0]) * 180) / Math.PI +
+				360) %
+			360
+		);
 	};
 	const angleDiffDeg = (a, b) => {
 		const d = Math.abs(a - b) % 360;
@@ -199,7 +203,10 @@ export function buildGraphFromRoutes(routeFeatures) {
 		const jsNeighbors = neighbors.get(j);
 		if (!jsNeighbors || jsNeighbors.length === 0) return false;
 		for (const k of jsNeighbors) {
-			if (angleDiffDeg(bearingIJ, bearingDeg(coords[j], coords[k])) <= MAX_ALIGN_DEG) {
+			if (
+				angleDiffDeg(bearingIJ, bearingDeg(coords[j], coords[k])) <=
+				MAX_ALIGN_DEG
+			) {
 				return true;
 			}
 		}
@@ -255,7 +262,7 @@ export function buildGraphFromRoutes(routeFeatures) {
 
 	const degree = new Int32Array(nodeCount);
 	for (let e = 0; e < edgeCount; e++) {
-	degree[ea[e]]++;
+		degree[ea[e]]++;
 		degree[eb[e]]++;
 	}
 
@@ -277,14 +284,19 @@ export function buildGraphFromRoutes(routeFeatures) {
 		adjDist[p] = ed[e];
 	}
 
-	return { coords, start, adjEdge, adjOther, adjDist, erefs, coordIndex, nodeLines };
+	return {
+		coords,
+		start,
+		adjEdge,
+		adjOther,
+		adjDist,
+		erefs,
+		coordIndex,
+		nodeLines,
+	};
 }
 
-export function makeNearestNode(
-	graph,
-	gridSize = 0.02,
-	maxKm = 3.0,
-) {
+export function makeNearestNode(graph, gridSize = 0.02, maxKm = 3.0) {
 	const grid = new Map();
 	for (let i = 0; i < graph.coords.length; i++) {
 		const [lat, lon] = graph.coords[i];

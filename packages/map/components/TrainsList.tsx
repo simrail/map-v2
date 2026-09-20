@@ -2,6 +2,7 @@ import type { Train } from "@simrail/types";
 import type { FC } from "react";
 
 import TrainMarker from "@/components/Markers/TrainMarker";
+
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
 
 type Props = {
@@ -22,9 +23,7 @@ export const TrainsList: FC<Props> = ({ trains, stoppedTrainsSince }) => {
 	// train is selected; with no selection, all trains stay visible.
 	const visibleTrains =
 		onlySelectedTrain && selectedTrain
-			? trains.filter(
-					(train) => getTrainStopKey(train) === selectedTrainKey,
-				)
+			? trains.filter((train) => getTrainStopKey(train) === selectedTrainKey)
 			: trains;
 
 	return (

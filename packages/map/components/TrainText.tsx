@@ -34,12 +34,7 @@ type TrainToggleProps = {
 	onToggle: () => void;
 };
 
-const TrainToggle = ({
-	active,
-	label,
-	title,
-	onToggle,
-}: TrainToggleProps) => (
+const TrainToggle = ({ active, label, title, onToggle }: TrainToggleProps) => (
 	<button
 		type="button"
 		className={`${styles.trainToggle} ${active ? styles.trainToggleActive : ""}`}
@@ -319,7 +314,9 @@ const TrainText = ({
 				<span>Loco</span>
 				<strong>{tractionUnitInfo || "Unknown"}</strong>
 				{wagons.length > 0 && (
-					<small className={styles.wagonsInline}>+ {wagons.length} wagons</small>
+					<small className={styles.wagonsInline}>
+						+ {wagons.length} wagons
+					</small>
 				)}
 				{additionalUnits.length > 0 && (
 					<small>Additional units: {additionalUnits.join(", ")}</small>
@@ -342,10 +339,7 @@ const TrainText = ({
 			<div className={styles.signalSection}>
 				<span className={styles.kicker}>Next signal</span>
 				<div className={styles.signalDetails}>
-					<TrainUpcomingSignal
-						train={train}
-						showMoreInfo={showSignalInfo}
-					/>
+					<TrainUpcomingSignal train={train} showMoreInfo={showSignalInfo} />
 				</div>
 			</div>
 		</section>
