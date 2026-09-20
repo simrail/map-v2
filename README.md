@@ -24,18 +24,31 @@ Welcome to the **SimRail Map** project! 🌟
 ### Installation
 
 1. Clone the Repository:
+
 ```bash
 git clone https://github.com/simrail/map-v2.git
 cd map-v2
 ```
+
 2. Install Dependencies:
+
 ```bash
 pnpm install
 ```
+
 3. Run the Application:
+
 ```bash
 pnpm run dev
 ```
+
+4. Check linting, TypeScript diagnostics, and formatting:
+
+```bash
+pnpm check
+```
+
+Use `pnpm fix` to apply safe Oxlint fixes and format supported files with Oxfmt.
 
 ### Projects
 

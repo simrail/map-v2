@@ -1,15 +1,14 @@
 {
 	"name": "common",
 	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+	"private": true,
+	"type": "module",
+	"exports": {
+		".": "./index.ts",
+		"./ads": "./ads.ts",
+		"./links": "./links.ts"
 	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
 	"dependencies": {
-		"@mantine/core": "^7.15.1"
+		"@mantine/core": "^7.17.8"
 	}
 }

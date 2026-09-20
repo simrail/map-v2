@@ -2,6 +2,8 @@ import type { Station } from "@simrail/types";
 import L from "leaflet";
 import { Marker, Popup } from "react-leaflet";
 
+import styles from "../../styles/MarkerPopup.module.css";
+
 type StationMarkerProps = {
 	station: Station;
 };
@@ -25,11 +27,12 @@ export const RemoteStationMarker = ({ station }: StationMarkerProps) => {
 				mouseout: (event) => event.target.closePopup(),
 			}}
 		>
-			<Popup>
-				{station.Name}
-				<br />
-				Controlled from: {station.id}
-				<br />
+			<Popup className="simple-map-popup">
+				<div className={styles.simpleCard}>
+					<small>Remote station</small>
+					<strong>{station.Name}</strong>
+					<span>Controlled from {station.id}</span>
+				</div>
 			</Popup>
 		</Marker>
 	);

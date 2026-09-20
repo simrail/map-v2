@@ -1,25 +1,37 @@
 import type { Train } from "@simrail/types";
-import React, { useContext, useState } from "react";
+import {
+	type ReactNode,
+	createContext,
+	useContext,
+	useMemo,
+	useState,
+} from "react";
 
 interface SelectedTrainContextType {
 	selectedTrain: Train | null;
 	setSelectedTrain: (train: Train | null) => void;
 }
 
-export const SelectedTrainContext =
-	React.createContext<SelectedTrainContextType>({
-		selectedTrain: null,
-		setSelectedTrain: () => {},
-	});
+export const SelectedTrainContext = createContext<SelectedTrainContextType>({
+	selectedTrain: null,
+	setSelectedTrain: () => {},
+});
 
 export const useSelectedTrain = () => useContext(SelectedTrainContext);
 
-// @ts-ignore
-export const SelectedTrainProvider = ({ children }) => {
+export const SelectedTrainProvider = ({
+	children,
+}: {
+	children: ReactNode;
+}) => {
 	const [selectedTrain, setSelectedTrain] = useState<Train | null>(null);
+	const value = useMemo(
+		() => ({ selectedTrain, setSelectedTrain }),
+		[selectedTrain],
+	);
 
 	return (
-		<SelectedTrainContext.Provider value={{ selectedTrain, setSelectedTrain }}>
+		<SelectedTrainContext.Provider value={value}>
 			{children}
 		</SelectedTrainContext.Provider>
 	);

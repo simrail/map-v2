@@ -8,7 +8,7 @@ export default defineConfig({
 	plugins: [
 		react(),
 		webfontDownload([
-			"https://fonts.googleapis.com/css2?family=Saira:wght@900&display=swap",
+			"https://fonts.googleapis.com/css2?family=Saira:wght@700;800;900&family=Source+Code+Pro:wght@400;500;600;700;800&display=swap",
 		]),
 		ViteImageOptimizer({}),
 	],

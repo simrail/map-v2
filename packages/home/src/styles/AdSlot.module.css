@@ -1,0 +1,89 @@
+.slot {
+  color: #697180;
+  text-align: center;
+}
+
+.label {
+  display: block;
+  margin-bottom: 7px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.slot ins,
+.preview {
+  display: block;
+  width: 100%;
+  border: 1px solid rgb(255 255 255 / 6%);
+  border-radius: 10px;
+  background: rgb(255 255 255 / 2%);
+}
+
+.preview {
+  display: grid;
+  place-items: center;
+  color: #59616e;
+  font-size: 10px;
+}
+
+.leaderboard {
+  width: min(970px, 100%);
+  min-height: 118px;
+  margin: 0 auto 92px;
+}
+
+.leaderboard ins,
+.leaderboard .preview {
+  min-height: 90px;
+}
+
+.inFeed {
+  grid-column: 1 / -1;
+  width: min(970px, 100%);
+  min-height: 118px;
+  margin: 24px auto 4px;
+}
+
+.inFeed ins,
+.inFeed .preview {
+  min-height: 90px;
+}
+
+.rail {
+  position: absolute;
+  top: 208px;
+  left: calc(100% + 24px);
+  display: none;
+  width: 300px;
+  min-height: 275px;
+}
+
+.rail ins,
+.rail .preview {
+  min-height: 250px;
+}
+
+@media (min-width: 1580px) {
+  .rail { display: block; }
+}
+
+@media (max-width: 700px) {
+  .leaderboard {
+    min-height: 78px;
+    margin-bottom: 68px;
+  }
+
+  .leaderboard ins,
+  .leaderboard .preview,
+  .inFeed ins,
+  .inFeed .preview {
+    min-height: 50px;
+  }
+
+  .inFeed {
+    min-height: 78px;
+    margin-top: 16px;
+  }
+}

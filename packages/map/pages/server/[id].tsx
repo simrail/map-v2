@@ -1,11 +1,17 @@
-import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
-
-import { TopNavigation } from "@/components/TopNavigation";
 import type { Server } from "@simrail/types";
 import type { GetStaticPaths, GetStaticProps } from "next";
+import dynamic from "next/dynamic";
 import Head from "next/head";
+import { useRouter } from "next/router";
+
+import { DelayedAdBanner } from "@/components/DelayedAdBanner";
+import { TopNavigation } from "@/components/TopNavigation";
+
 import { SelectedTrainProvider } from "../../contexts/SelectedTrainContext";
+
+const MapWithNoSSR = dynamic(() => import("../../components/Map"), {
+	ssr: false,
+});
 
 export const getStaticPaths = (async () => {
 	const res = await fetch("https://panel.simrail.eu:8084/servers-open");
@@ -26,16 +32,12 @@ export const getStaticProps = (async () => {
 }) satisfies GetStaticProps;
 
 const Post = () => {
-	const MapWithNoSSR = dynamic(() => import("../../components/Map"), {
-		ssr: false,
-	});
-
 	const router = useRouter();
-	const { id, trainId } = router.query;
+	const { embed, id, trainId } = router.query;
 
 	const pageTitle = `${id?.toString().toUpperCase()} - SimRail Map`;
 
-	if (!id) return;
+	if (!id) return null;
 
 	return (
 		<>
@@ -43,21 +45,22 @@ const Post = () => {
 				<title>{pageTitle}</title>
 				<link
 					rel="canonical"
-					href={`https://map.simrail.app/server/${id}`}
+					href={`https://map.simrail.app/server/${id.toString()}`}
 					key="canonical"
 				/>
 			</Head>
 			<div
 				style={{
-					height: "100vh",
+					height: "100dvh",
 					width: "100vw",
 					display: "flex",
 					flexDirection: "column",
 				}}
 			>
 				<SelectedTrainProvider>
-					{!trainId && <TopNavigation />}
+					{!trainId && !embed && <TopNavigation />}
 					<MapWithNoSSR serverId={id} />
+					{!embed && <DelayedAdBanner />}
 				</SelectedTrainProvider>
 			</div>
 		</>

@@ -38,12 +38,10 @@ export const SneakpeekMarker = ({
 
 	if (ImageURL.endsWith(".mp4"))
 		images = (
-			<>
-				<video width="512" height="288" controls>
-					<source src={ImageURL} type="video/mp4" />
-					<track default kind="captions" srcLang="en" label="English" />
-				</video>
-			</>
+			<video width="512" height="288" controls>
+				<source src={ImageURL} type="video/mp4" />
+				<track default kind="captions" srcLang="en" label="English" />
+			</video>
 		);
 
 	if (Image2URL !== "") {
@@ -51,7 +49,12 @@ export const SneakpeekMarker = ({
 			<>
 				<img src={ImageURL} width="512" height="288" alt="Could not load" />{" "}
 				<br />
-				<img src={Image2URL} width="512" height="288" alt="Could not load" />{" "}
+				<img
+					src={Image2URL}
+					width="512"
+					height="288"
+					alt="Could not load"
+				/>{" "}
 				<br />
 			</>
 		);
