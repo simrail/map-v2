@@ -1,19 +1,32 @@
 import type { Train } from "@simrail/types";
 import type React from "react";
+import { useState } from "react";
 
 type TrainSignalProps = {
 	train: Train;
 	showMoreInfo: boolean;
 };
 
+const signalStates = {
+	open: "/signals/signal-open.png",
+	limited40: "/signals/signal-limited-40.png",
+	limited50: "/signals/signal-limited-50.png",
+	limited60: "/signals/signal-limited-60.png",
+	limited80: "/signals/signal-limited-80.png",
+	limited100: "/signals/signal-limited-100.png",
+	limited130: "/signals/signal-limited-130.png",
+	closed: "/signals/signal-closed.png",
+};
+
 function formatSignalDistance(distanceMeters: number): string {
 	if (distanceMeters > 5000) {
-		return ">5km";
+		return "> 5km";
 	}
 	if (distanceMeters > 1000) {
-		return `${(distanceMeters / 1000).toFixed(1)}km`;
+		const distanceKilometers = (distanceMeters / 1000).toFixed(1);
+		return `${distanceKilometers} km`;
 	}
-	return `${Math.round(distanceMeters)}m`;
+	return `${distanceMeters.toFixed(1)} m`;
 }
 
 function formatSignalSpeed(rawSpeedLimit: number): string {
@@ -23,25 +36,40 @@ function formatSignalSpeed(rawSpeedLimit: number): string {
 	return `${rawSpeedLimit} km/h`;
 }
 
-/** Status dot color for the upcoming signal aspect: clear, stop, or limited. */
-const getSignalColor = (signalSpeed: number | string): string => {
+const getSignalState = (signalSpeed: number | string): string | null => {
 	if (signalSpeed === "vmax" || signalSpeed === 32767) {
-		return "#2ecc71"; // clear
+		return "open";
 	}
-	if (signalSpeed === 0) {
-		return "#e74c3c"; // stop
-	}
-	return "#f5a623"; // limited aspect
-};
 
-const getSignalStatusText = (signalSpeed: number | string): string => {
-	if (signalSpeed === "vmax" || signalSpeed === 32767) {
-		return "Clear";
-	}
 	if (signalSpeed === 0) {
-		return "Stop";
+		return "closed";
 	}
-	return "Limited";
+
+	if (typeof signalSpeed === "number" && signalSpeed <= 40) {
+		return "limited40";
+	}
+
+	if (typeof signalSpeed === "number" && signalSpeed === 50) {
+		return "limited50";
+	}
+
+	if (typeof signalSpeed === "number" && signalSpeed <= 60) {
+		return "limited60";
+	}
+
+	if (signalSpeed === 80) {
+		return "limited80";
+	}
+
+	if (typeof signalSpeed === "number" && signalSpeed <= 100) {
+		return "limited100";
+	}
+
+	if (typeof signalSpeed === "number" && signalSpeed <= 130) {
+		return "limited130";
+	}
+
+	return null;
 };
 
 const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
@@ -52,38 +80,54 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
 		TrainData: { SignalInFront, SignalInFrontSpeed, DistanceToSignalInFront },
 	} = train;
 
-	if (!SignalInFront) {
-		return <div>Signal too far away</div>;
-	}
+	const signalName = SignalInFront?.split("@")[0];
+	const signalState = getSignalState(SignalInFrontSpeed);
+	const signalImageSrc = signalState
+		? signalStates[signalState as keyof typeof signalStates]
+		: null;
 
-	const signalName = SignalInFront.split("@")[0];
-	const signalColor = getSignalColor(SignalInFrontSpeed);
-	const signalDistance = formatSignalDistance(DistanceToSignalInFront);
+	const [failedSrc, setFailedSrc] = useState<string | null>(null);
+	const visibleSignalImageSrc =
+		signalImageSrc && failedSrc !== signalImageSrc ? signalImageSrc : null;
 
 	if (!showMoreInfo) {
 		return (
-			<div>
-				{signalName} in {signalDistance}
-			</div>
+			<>
+				Distance to {signalName ? signalName : "next signal"}:{" "}
+				{SignalInFront
+					? formatSignalDistance(DistanceToSignalInFront)
+					: "Signal too far away"}
+			</>
 		);
 	}
 
 	return (
-		<div>
-			{signalName} in {signalDistance} - speed{" "}
-			{formatSignalSpeed(SignalInFrontSpeed)} -{" "}
-			<span
-				aria-label={getSignalStatusText(SignalInFrontSpeed)}
-				title={getSignalStatusText(SignalInFrontSpeed)}
-				style={{
-					display: "inline-block",
-					width: "0.55em",
-					height: "0.55em",
-					borderRadius: "50%",
-					backgroundColor: signalColor,
-				}}
-			/>
-		</div>
+		<>
+			<div>
+				Distance to {signalName ? signalName : "next signal"}:{" "}
+				{SignalInFront
+					? formatSignalDistance(DistanceToSignalInFront)
+					: "Signal too far away"}
+			</div>
+			{SignalInFront && (
+				<>
+					<div>Signal speed: {formatSignalSpeed(SignalInFrontSpeed)}</div>
+					{visibleSignalImageSrc ? (
+						<div style={{ display: "flex", alignItems: "center" }}>
+							<span>Signal Status : </span>
+							<img
+								src={visibleSignalImageSrc}
+								alt={signalState || ""}
+								width={35}
+								height={35}
+								style={{ marginLeft: "0.5rem" }}
+								onError={() => setFailedSrc(signalImageSrc)}
+							/>
+						</div>
+					) : null}
+				</>
+			)}
+		</>
 	);
 };
 
