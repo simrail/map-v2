@@ -12,6 +12,7 @@ const signalStates = {
 	limited40: "/signals/signal-limited-40.png",
 	limited50: "/signals/signal-limited-50.png",
 	limited60: "/signals/signal-limited-60.png",
+	limited80: "/signals/signal-limited-80.png",
 	limited100: "/signals/signal-limited-100.png",
 	limited130: "/signals/signal-limited-130.png",
 	closed: "/signals/signal-closed.png",
@@ -55,6 +56,10 @@ const getSignalState = (signalSpeed: number | string): string | null => {
 
 	if (typeof signalSpeed === "number" && signalSpeed <= 60) {
 		return "limited60";
+	}
+
+	if (signalSpeed === 80) {
+		return "limited80";
 	}
 
 	if (typeof signalSpeed === "number" && signalSpeed <= 100) {
