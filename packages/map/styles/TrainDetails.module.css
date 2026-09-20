@@ -76,7 +76,20 @@
 .trainMedia { margin: 2px 0 14px; overflow: hidden; border: 1px solid var(--train-border); border-radius: 10px; background: var(--train-media-background); }
 .signalSection { padding-top: 14px; border-top: 1px solid var(--train-border); text-align: center; }
 .signalSection .kicker { display: block; }
-.signalDetails { margin: 9px 0 13px; color: var(--train-secondary); line-height: 1.65; }
+.signalDetails { margin: 9px 0 13px; color: var(--train-secondary); }
+.signalCard { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; text-align: left; border: 1px solid var(--train-border); border-radius: 9px; background: var(--train-surface); }
+.signalPosition, .signalAspect > div { display: flex; flex-direction: column; }
+.signalPosition { min-width: 0; gap: 2px; }
+.signalPosition strong { overflow: hidden; color: var(--train-strong); font-size: .8125rem; text-overflow: ellipsis; white-space: nowrap; }
+.signalPosition span, .signalAspect span { color: var(--train-muted); font-size: .625rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.signalAspect { display: flex; flex: none; align-items: center; gap: 8px; padding-left: 12px; border-left: 1px solid var(--train-divider); }
+.signalAspect img { width: 24px; height: 24px; object-fit: contain; }
+.signalAspect > div { align-items: flex-start; gap: 1px; }
+.signalAspect strong { color: var(--train-strong); font-size: .75rem; white-space: nowrap; }
+.signalCompact { display: flex; justify-content: center; gap: 6px; font-size: .75rem; }
+.signalCompact strong { color: var(--train-strong); }
+.signalCompact span, .signalEmpty { color: var(--train-muted); }
+.signalEmpty { padding: 8px 0 2px; font-size: .75rem; }
 .compact { width: 280px; }
 .compact .avatar { width: 34px; height: 34px; border-radius: 8px; }
 .compact .serviceHeading { margin-top: 13px; }

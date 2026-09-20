@@ -2,6 +2,8 @@ import type { Train } from "@simrail/types";
 import type React from "react";
 import { useState } from "react";
 
+import styles from "../styles/TrainDetails.module.css";
+
 type TrainSignalProps = {
 	train: Train;
 	showMoreInfo: boolean;
@@ -18,15 +20,16 @@ const signalStates = {
 	closed: "/signals/signal-closed.png",
 };
 
+type SignalState = keyof typeof signalStates;
+
 function formatSignalDistance(distanceMeters: number): string {
 	if (distanceMeters > 5000) {
-		return "> 5km";
+		return ">5 km";
 	}
 	if (distanceMeters > 1000) {
-		const distanceKilometers = (distanceMeters / 1000).toFixed(1);
-		return `${distanceKilometers} km`;
+		return `${(distanceMeters / 1000).toFixed(1)} km`;
 	}
-	return `${distanceMeters.toFixed(1)} m`;
+	return `${Math.round(distanceMeters)} m`;
 }
 
 function formatSignalSpeed(rawSpeedLimit: number): string {
@@ -36,7 +39,7 @@ function formatSignalSpeed(rawSpeedLimit: number): string {
 	return `${rawSpeedLimit} km/h`;
 }
 
-const getSignalState = (signalSpeed: number | string): string | null => {
+const getSignalState = (signalSpeed: number | string): SignalState | null => {
 	if (signalSpeed === "vmax" || signalSpeed === 32767) {
 		return "open";
 	}
@@ -72,6 +75,13 @@ const getSignalState = (signalSpeed: number | string): string | null => {
 	return null;
 };
 
+const getSignalStatus = (state: SignalState | null): string => {
+	if (state === "open") return "Clear";
+	if (state === "closed") return "Stop";
+	if (!state) return "Unknown";
+	return "Limited";
+};
+
 const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
 	train,
 	showMoreInfo,
@@ -82,9 +92,7 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
 
 	const signalName = SignalInFront?.split("@")[0];
 	const signalState = getSignalState(SignalInFrontSpeed);
-	const signalImageSrc = signalState
-		? signalStates[signalState as keyof typeof signalStates]
-		: null;
+	const signalImageSrc = signalState ? signalStates[signalState] : null;
 
 	const [failedSrc, setFailedSrc] = useState<string | null>(null);
 	const visibleSignalImageSrc =
@@ -92,42 +100,45 @@ const TrainUpcomingSignal: React.FC<TrainSignalProps> = ({
 
 	if (!showMoreInfo) {
 		return (
-			<>
-				Distance to {signalName ? signalName : "next signal"}:{" "}
-				{SignalInFront
-					? formatSignalDistance(DistanceToSignalInFront)
-					: "Signal too far away"}
-			</>
+			<div className={styles.signalCompact}>
+				{SignalInFront ? (
+					<>
+						<strong>{signalName}</strong>
+						<span>{formatSignalDistance(DistanceToSignalInFront)} ahead</span>
+					</>
+				) : (
+					<span>Signal too far away</span>
+				)}
+			</div>
 		);
 	}
 
+	if (!SignalInFront) {
+		return <div className={styles.signalEmpty}>Signal too far away</div>;
+	}
+
 	return (
-		<>
-			<div>
-				Distance to {signalName ? signalName : "next signal"}:{" "}
-				{SignalInFront
-					? formatSignalDistance(DistanceToSignalInFront)
-					: "Signal too far away"}
+		<div className={styles.signalCard}>
+			<div className={styles.signalPosition}>
+				<strong>{signalName}</strong>
+				<span>{formatSignalDistance(DistanceToSignalInFront)} ahead</span>
 			</div>
-			{SignalInFront && (
-				<>
-					<div>Signal speed: {formatSignalSpeed(SignalInFrontSpeed)}</div>
-					{visibleSignalImageSrc ? (
-						<div style={{ display: "flex", alignItems: "center" }}>
-							<span>Signal Status : </span>
-							<img
-								src={visibleSignalImageSrc}
-								alt={signalState || ""}
-								width={35}
-								height={35}
-								style={{ marginLeft: "0.5rem" }}
-								onError={() => setFailedSrc(signalImageSrc)}
-							/>
-						</div>
-					) : null}
-				</>
-			)}
-		</>
+			<div className={styles.signalAspect}>
+				{visibleSignalImageSrc && (
+					<img
+						src={visibleSignalImageSrc}
+						alt=""
+						width={24}
+						height={24}
+						onError={() => setFailedSrc(signalImageSrc)}
+					/>
+				)}
+				<div>
+					<span>{getSignalStatus(signalState)}</span>
+					<strong>{formatSignalSpeed(SignalInFrontSpeed)}</strong>
+				</div>
+			</div>
+		</div>
 	);
 };
 
