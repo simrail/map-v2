@@ -12,6 +12,8 @@ const ROUTE_COLORS = {
 } as const;
 
 const ARROW_SPACING_KM = 3;
+const MAX_VISIBLE_ARROWS = 120;
+const arrowIconCache = new Map<string, L.DivIcon>();
 
 function haversineKm(a: [number, number], b: [number, number]): number {
 	const R = 6371;
@@ -47,16 +49,23 @@ interface ArrowData {
 function createArrowIcon(rotation: number, zoom: number): L.DivIcon {
 	const scale = Math.max(0.5, Math.min(2.5, (zoom - 6) / 5));
 	const size = Math.round(18 * scale);
+	const roundedRotation = Math.round(rotation / 5) * 5;
+	const cacheKey = `${size}:${roundedRotation}`;
+	const cachedIcon = arrowIconCache.get(cacheKey);
+	if (cachedIcon) return cachedIcon;
+
 	// SVG triangle (not a text glyph — font metrics render ">" off-center
 	// in Firefox). The shape is centered in the viewBox, so the anchor at
 	// the box center is exact in every browser.
-	const html = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="display: block; transform: rotate(${rotation}deg); filter: drop-shadow(0 1px 3px rgba(0,0,0,0.7));"><path d="M8 4 L20 12 L8 20 Z" fill="#ffffff"/></svg>`;
-	return L.divIcon({
+	const html = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="display: block; transform: rotate(${roundedRotation}deg); filter: drop-shadow(0 1px 3px rgba(0,0,0,0.7));"><path d="M8 4 L20 12 L8 20 Z" fill="#ffffff"/></svg>`;
+	const icon = L.divIcon({
 		className: "route-arrow",
 		html,
 		iconSize: [size, size],
 		iconAnchor: [Math.round(size / 2), Math.round(size / 2)],
 	});
+	arrowIconCache.set(cacheKey, icon);
+	return icon;
 }
 
 const TrainRoute = () => {
@@ -64,12 +73,18 @@ const TrainRoute = () => {
 	const [segments, setSegments] = useState<ColoredSegment[] | null>(null);
 	const map = useMap();
 	const [zoom, setZoom] = useState(map.getZoom());
+	const [viewportBounds, setViewportBounds] = useState(() =>
+		map.getBounds().pad(0.25),
+	);
 
 	useEffect(() => {
-		const onZoom = () => setZoom(map.getZoom());
-		map.on("zoomend", onZoom);
+		const updateViewport = () => {
+			setZoom(map.getZoom());
+			setViewportBounds(map.getBounds().pad(0.25));
+		};
+		map.on("moveend zoomend", updateViewport);
 		return () => {
-			map.off("zoomend", onZoom);
+			map.off("moveend zoomend", updateViewport);
 		};
 	}, [map]);
 
@@ -135,6 +150,19 @@ const TrainRoute = () => {
 		return result;
 	}, [segments]);
 
+	const visibleArrows = useMemo(() => {
+		const inView = arrows.filter((arrow) =>
+			viewportBounds.contains(arrow.position),
+		);
+		if (inView.length <= MAX_VISIBLE_ARROWS) return inView;
+
+		const step = inView.length / MAX_VISIBLE_ARROWS;
+		return Array.from(
+			{ length: MAX_VISIBLE_ARROWS },
+			(_, index) => inView[Math.floor(index * step)],
+		);
+	}, [arrows, viewportBounds]);
+
 	if (!shouldShow || !segments || segments.length === 0) return null;
 
 	return (
@@ -150,7 +178,7 @@ const TrainRoute = () => {
 					}}
 				/>
 			))}
-			{arrows.map((arrow) => (
+			{visibleArrows.map((arrow) => (
 				<Marker
 					key={arrow.key}
 					position={arrow.position}
