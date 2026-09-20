@@ -1,103 +1,5 @@
 #!/usr/bin/env node
-/**
- * generate-rail-data.mjs — Generator script for railData.json.
- *
- * This script fetches data from the SimRail wiki interactive map and the
- * SimRail timetable API, then pre-computes track-following route geometries
- * between every pair of consecutive timetable stops. The output is committed
- * to the repository as components/railData.json and loaded at runtime by
- * lib/trainRoute.ts.
- *
- * Data sources:
- *   1. Wiki interactive map (wiki.simrail.eu/map/) — provides:
- *      - Route GeoJSON files: exact OSM track geometry per railway line (LK1,
- *        LK4, LK62, etc.), split into "available" (drivable in SimRail) and
- *        "not available" (not drivable) sections. Some lines have two entries
- *        with different URLs (e.g. lk1.geojson vs lk1u.geojson).
- *      - Station GeoJSON files: track/platform geometry at each station,
- *        used to extract a station's center point (arc-length midpoint of the
- *        longest track LineString, or the platform Polygon centroid).
- *      - map-data.json: master index of routes and stations with metadata
- *        (type: "po"/"border"/"playable:false", available: true/false).
- *   2. SimRail official timetable API (api1.aws.simrail.eu) — provides all
- *      train timetables (stop lists with line numbers). Falls back to the
- *      community EDR API (simrail-edr.emeraldnetwork.xyz) if the official
- *      API is down.
- *   3. Local station files (components/stations.json, stationsRemote.json) —
- *      supplement the wiki's 161 stations with additional coordinates for
- *      small stops (e.g. Sprowa, Józefinów) that aren't in the wiki.
- *   4. SimRail stations-open API (panel.simrail.eu:8084) — provides
- *      coordinates for dispatch stations (e.g. Pruszków, Grodzisk Mazowiecki).
- *   5. scripts/station-overrides.json — curated coordinates for stations with
- *      known-bad source geometry (applied last, wins over all other sources).
- *
- * Pipeline:
- *   Step 1:  Fetch wiki map-data.json + route GeoJSONs + station GeoJSONs +
- *            timetables (all in parallel). Cache all responses to disk.
- *            Station coordinates are extracted as geometry CENTERS (not the
- *            first coordinate, which sits at the station's edge).
- *   Step 1b: Supplement station coordinates from local files + stations-open API,
- *            then apply curated overrides.
- *   Step 2:  Collect unique segments from timetables. A segment is a pair of
- *            consecutive stops that both have coordinates, keyed by the SORTED
- *            pair of normalized station names (direction-agnostic: "a|b" and
- *            "b|a" are the same segment, computed once and reversed at lookup
- *            time). Stops without coordinates are skipped and the surrounding
- *            resolvable stops are connected directly. Each segment accumulates
- *            allLines — the union of line numbers used by every train on that
- *            pair, in both directions — used for A* line preference.
- *   Step 2.5: Canonical station nodes. Each station is snapped ONCE to the
- *            nearest graph node on any of its served lines (the lines of all
- *            segments touching it), within 3km. Every segment touching the
- *            station then routes to/from the same node, so consecutive
- *            segments chain exactly with no gaps or straight-line bridges.
- *            Stations that fail to snap (>3km from any track — e.g. wrong
- *            source coordinates, like Maków Podhalański) are dropped from the
- *            gazetteer and reported; the runtime treats them as unknown stops.
- *   Step 3:  Compute A* routes for each segment: canonical node → canonical
- *            node. Try the available-tracks graph first (guarantees an
- *            all-green path); fall back to the full graph for segments that
- *            traverse non-drivable tracks. A* prefers the segment's
- *            accumulated lines (non-preferred edges cost 10x more but remain
- *            traversable for junction connectors). Paths are validated: a
- *            detour guard (>2x straight-line + 5km = rejected) and a
- *            non-timetable-line usage guard (>5km on a foreign line = the wiki
- *            doesn't have the right tracks → leave the segment uncomputed so
- *            the runtime draws it grey).
- *   Step 4:  Determine per-segment drivability (green/red) by classifying each
- *            point along the path against the wiki's available and
- *            not-available track geometry of all the segment's lines. A point
- *            is red only if it's NOT on an available track (>50m away) AND
- *            close to a not-available track (<200m). This avoids false reds
- *            from parallel available/not-available tracks. Store results as
- *            color boundaries: [startIndex, colorCode] pairs.
- *            colorCode: 0=green, 1=red, 2=grey (no wiki data).
- *   Step 5:  Write the output JSON file. Also print a grey-risk report:
- *            uncomputed consecutive-stop pairs whose stations are >50km apart
- *            (these would draw very long grey straight lines at runtime and
- *            usually indicate data rot in the wiki).
- *
- * Usage: node packages/map/scripts/generate-rail-data.mjs [--refresh]
- *
- * --refresh: Forces re-fetching from the APIs (ignores cache).
- *            Without --refresh, all API responses are cached in scripts/.cache/
- *            and reused on subsequent runs for fast iteration (~1s vs ~5s).
- *
- * Output format (railData.json):
- *   {
- *     knownStations: string[],              // All stations that resolved AND snapped to the graph (in-game resolvable stations)
- *     stations: { [name]: [lat, lon] },    // Station gazetteer (normalized name → canonical on-track coordinate)
- *     segments: { [key]: string },          // Google Encoded Polylines (key = sorted pair "aNorm|bNorm", a < b)
- *     segmentColors: { [key]: number[][] } // Color boundaries: [[startIndex, colorCode], ...]
- *                                          // colorCode: 0=green (drivable), 1=red (non-drivable), 2=grey (no data)
- *   }
- *
- * The runtime (lib/trainRoute.ts) decodes each segment's polyline (reversing
- * it when the travel direction is opposite the sorted key) and splits it at
- * the color boundaries to render green/red/grey sub-segments on the map.
- * Consecutive segments share exact endpoints (canonical station nodes), so
- * adjacent sub-segments chain seamlessly.
- */
+
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -129,10 +31,6 @@ const TIMETABLE_SERVER = "int1";
 fs.mkdirSync(CACHE_DIR, { recursive: true });
 const refresh = process.argv.includes("--refresh");
 
-/**
- * Fetches JSON from a URL and caches it to disk.
- * On subsequent runs (without --refresh), the cached file is used directly.
- */
 async function cachedFetchJson(url, cacheName) {
 	const cachePath = path.join(CACHE_DIR, cacheName);
 	if (!refresh && fs.existsSync(cachePath)) {
@@ -145,10 +43,6 @@ async function cachedFetchJson(url, cacheName) {
 	return json;
 }
 
-/**
- * Runs async tasks with bounded concurrency.
- * Creates `limit` concurrent workers that pull from a shared index.
- */
 async function pool(items, limit, fn) {
 	let idx = 0;
 	const workers = Array.from(
@@ -163,26 +57,6 @@ async function pool(items, limit, fn) {
 	await Promise.all(workers);
 }
 
-/**
- * Extracts a station's representative center coordinate from its wiki GeoJSON.
- *
- * The wiki draws stations in two ways, and the first coordinate of the first
- * feature sits at the station's EDGE (throat), which made routes visually end
- * where a station begins. Instead, return the station's middle:
- *   - OPEN LineStrings (through tracks): the arc-length midpoint of the
- *     longest one (the through-track's middle, interpolated).
- *   - CLOSED LineStrings only (drawn station-area outlines, ~66 stations):
- *     the vertex-average centroid of the largest loop. The arc midpoint of a
- *     loop is an arbitrary point on the outline. Loop-only outlines are
- *     area drawings rather than tracks, so they are marked loopOnly — the
- *     caller prefers the precise game-source coordinate (Step 1b) and only
- *     falls back to the centroid.
- *   - Else Polygon rings: the vertex-average centroid of the largest ring.
- *   - Else a Point: as-is.
- *
- * @param {object} gj - Station GeoJSON (FeatureCollection)
- * @returns {{anchor: [number, number]|null, loopOnly: boolean}}
- */
 function extractStationAnchor(gj) {
 	const lines = [];
 	const rings = [];
@@ -217,7 +91,6 @@ function extractStationAnchor(gj) {
 		return [lat / ls.length, lon / ls.length];
 	};
 	if (lines.length > 0) {
-		// Split into open through-tracks and closed outline loops.
 		const open = [];
 		const loops = [];
 		for (const ls of lines) {
@@ -232,7 +105,6 @@ function extractStationAnchor(gj) {
 			if (closed) loops.push(ls);
 			else open.push(ls);
 		}
-		// Prefer open through-tracks: arc-length midpoint of the longest.
 		if (open.length > 0) {
 			let best = null;
 			let bestLen = -1;
@@ -265,7 +137,6 @@ function extractStationAnchor(gj) {
 			const last = best[best.length - 1];
 			return { anchor: [last[1], last[0]], loopOnly: false };
 		}
-		// Only loops: centroid of the largest outline, flagged as loopOnly.
 		if (loops.length > 0) {
 			let best = null;
 			let bestLen = -1;
@@ -282,7 +153,6 @@ function extractStationAnchor(gj) {
 		return only ? { anchor: [only[0][1], only[0][0]], loopOnly: false } : { anchor: null, loopOnly: false };
 	}
 	if (rings.length > 0) {
-		// Largest ring by bounding-box diagonal; centroid = vertex average.
 		const size = (r) => {
 			let mnLat = 1e9,
 				mnLon = 1e9,
@@ -310,10 +180,6 @@ async function main() {
 	const log = (msg) =>
 		console.log(`[${((Date.now() - t0) / 1000).toFixed(1)}s] ${msg}`);
 
-	// ========================================================================
-	// Step 1: Fetch wiki map-data.json + timetables (parallel)
-	// ========================================================================
-
 	log("Step 1: Fetch wiki map-data.json + timetables (parallel)");
 
 	const wikiPromise = (async () => {
@@ -326,10 +192,6 @@ async function main() {
 			`  [wiki] Routes: ${wikiMapData.routes.length}, Stations: ${wikiMapData.stations.length}`,
 		);
 
-		// --- Fetch route GeoJSON files ---
-		// Each route has a URL to a GeoJSON file with track geometry (LineStrings).
-		// Some lines have TWO entries: "available" (drivable) and "not available"
-		// (not drivable), with different URLs (e.g. lk1.geojson vs lk1u.geojson).
 		log("  [wiki] Fetching route geometries...");
 		const routeFeatures = [];
 		await pool(wikiMapData.routes, 10, async (route) => {
@@ -337,7 +199,6 @@ async function main() {
 			if (!match) return;
 			const lineNo = match[1];
 			const isAvailable = route.available !== false;
-			// Cache name includes availability flag to avoid collisions.
 			const cacheName = `wiki_route_${route.name.replace(/[^a-zA-Z0-9]/g, "_")}_${isAvailable ? "avail" : "notavail"}.json`;
 			try {
 				const gj = await cachedFetchJson(WIKI_BASE + route.url, cacheName);
@@ -354,13 +215,6 @@ async function main() {
 		});
 		log(`  [wiki] Route features: ${routeFeatures.length}`);
 
-		// --- Fetch station GeoJSON files ---
-		// Each station has a URL to a GeoJSON file. We extract a CENTER
-		// coordinate (midpoint of the longest track / platform centroid), NOT
-		// the first vertex — the first vertex sits at the station's edge.
-		// Stations drawn ONLY as closed outline loops are deferred: the game
-		// sources (Step 1b) provide precise in-game coordinates, and only
-		// stations with no game source fall back to the loop centroid.
 		log("  [wiki] Fetching station coordinates...");
 		const stationCoords = new Map();
 		const knownStations = new Set();
@@ -379,7 +233,6 @@ async function main() {
 					knownStations.add(norm);
 				}
 			} catch {
-				// skip
 			}
 		});
 		log(
@@ -443,7 +296,6 @@ async function main() {
 					all.push({ trainNo: train.TrainNoLocal, timetable: tt });
 				}
 			} catch {
-				// skip
 			}
 		});
 		if (all.length === 0) {
@@ -457,10 +309,6 @@ async function main() {
 		await wikiPromise;
 	await timetablesPromise;
 
-	// Supplement station coordinates with local files and the SimRail API.
-	// The wiki station list (161 stations) doesn't include all timetable stops
-	// (e.g. Pruszków, Grodzisk Mazowiecki, Sprowa, Korytów). These are available
-	// from the local stations.json/stationsRemote.json files and the stations-open API.
 	log("Step 1b: Supplement station coordinates from local files + API");
 	const localBundled = JSON.parse(
 		fs.readFileSync(
@@ -507,15 +355,10 @@ async function main() {
 				}
 			}
 		} catch {
-			// skip
 		}
 	}
 	log(`  Total stations with coords: ${stationCoords.size}`);
 
-	// Curated station coordinate overrides (scripts/station-overrides.json).
-	// Applied last so they win over every other source. Used for stations with
-	// known-bad source geometry (e.g. Maków Podhalański's wiki geometry is
-	// misplaced ~211km north near Skierniewice).
 	const overridesPath = path.join(__dirname, "station-overrides.json");
 	if (fs.existsSync(overridesPath)) {
 		const overrides = JSON.parse(fs.readFileSync(overridesPath, "utf8"));
@@ -530,8 +373,6 @@ async function main() {
 		}
 	}
 
-	// Last-resort fallback: wiki stations drawn only as outline loops that
-	// have no game-source coordinate use the loop centroid.
 	let loopFallbackCount = 0;
 	for (const [norm, coord] of wikiLoopCentroids) {
 		if (!stationCoords.has(norm)) {
@@ -546,13 +387,6 @@ async function main() {
 		);
 	}
 
-	// ========================================================================
-	// Step 2: Collect segments from timetables
-	// ========================================================================
-	// A "segment" is a pair of consecutive stops that both have coordinates.
-	// Stops without coordinates (signal boxes, off-map stations) are skipped,
-	// and the surrounding resolvable stops are connected directly.
-
 	log("Step 2: Collect segments from timetables");
 	const allTimetables = JSON.parse(
 		fs.readFileSync(path.join(CACHE_DIR, "all_timetables.json"), "utf8"),
@@ -560,12 +394,6 @@ async function main() {
 
 	const wikiStationList = wikiMapData.stations;
 
-	/**
-	 * Resolves a raw station name to a normalized name with coordinates.
-	 * First tries exact match, then fuzzy "contains" matching against the
-	 * wiki station list (e.g. "Warszawa Główna Towarowa" matches
-	 * "Warszawa Główna Towarowa WOA").
-	 */
 	function resolveStationCoords(rawName) {
 		const norm = normalizeName(rawName);
 		if (stationCoords.has(norm)) return norm;
@@ -583,9 +411,6 @@ async function main() {
 		return null;
 	}
 
-	// Segments are keyed by the SORTED pair of normalized names (a|b, a<b)
-	// so both travel directions of the same hop share one entry and one
-	// A* computation — out-and-back trains draw identical geometry.
 	const segments = new Map();
 	for (const tt of allTimetables) {
 		const entries = tt.timetable;
@@ -608,12 +433,6 @@ async function main() {
 						: `${resolved}|${fromResolved}`;
 				const line = Number(entries[lastResolved].line) || 0;
 				const toLine = Number(entries[i].line) || 0;
-				// Collect ALL line numbers between the from and to stops
-				// (including skipped intermediate stops). This ensures the
-				// A* prefers the correct connecting lines even when intermediate
-				// stops without coordinates are skipped. Lines accumulate across
-				// ALL trains and BOTH directions of this pair (union), which
-				// makes corridor choice direction-consistent.
 				const allLines = new Set();
 				if (line > 0) allLines.add(String(line));
 				if (toLine > 0) allLines.add(String(toLine));
@@ -643,7 +462,6 @@ async function main() {
 	}
 	log(`  Unique segments: ${segments.size}`);
 
-	// Prepare work segments: replace station names with coordinates.
 	const workSegments = [];
 	let noCoordsCount = 0;
 	for (const seg of segments.values()) {
@@ -659,32 +477,13 @@ async function main() {
 	}
 	log(`  Work segments: ${workSegments.length} (skipped ${noCoordsCount})`);
 
-	// Build a set of line numbers that exist in the wiki route data.
-	// Used to skip segments whose timetable line number doesnt correspond
-	// to any wiki track (e.g. line 131 in the timetable corresponds to
-	// wiki LK543/LK542, not LK131).
 	const wikiLineNumbers = new Set();
 	for (const r of wikiMapData.routes) {
 		const match = r.name.match(/^LK(\d+)$/);
 		if (match) wikiLineNumbers.add(match[1]);
 	}
 
-	// ========================================================================
-	// Step 2.5: Canonical station nodes
-	// ========================================================================
-	// Each station participating in at least one segment is snapped ONCE to a
-	// single graph node: the nearest node on any of its served lines (union of
-	// the lines of all segments touching it, both directions), preferring
-	// available (drivable) tracks, falling back to any track. Every segment
-	// touching the station then routes to/from that same node, so consecutive
-	// segments chain exactly — no straight-line bridges, and the route passes
-	// through the station's middle rather than stopping at its edge.
-	// Stations that cannot be snapped at all (>3km from any track — wrong
-	// source coordinates) are dropped from the gazetteer and reported; the
-	// runtime treats them like any other stop without coordinates.
-
-	// Served lines per station (only lines that exist as wiki routes).
-	const servedLines = new Map(); // normalized name → Set<lineNo>
+	const servedLines = new Map();
 	for (const seg of segments.values()) {
 		const [a, b] = seg.key.split("|");
 		if (!servedLines.has(a)) servedLines.set(a, new Set());
@@ -709,8 +508,6 @@ async function main() {
 		`  Graph avail: ${graphAvail.coords.length} nodes, full: ${graphFull.coords.length} nodes`,
 	);
 
-	// Resolve an exact [lat, lon] (a canonical node coordinate) to its node
-	// index in the given graph, via the coordinate-dedup key.
 	const coordKey = (lat, lon) => `${lat.toFixed(6)},${lon.toFixed(6)}`;
 	const nodeIndexFor = (graph, coord) =>
 		graph.coordIndex.get(coordKey(coord[0], coord[1])) ?? -1;
@@ -718,35 +515,28 @@ async function main() {
 	log(
 		`  Snapping ${servedLines.size} stations to canonical nodes...`,
 	);
-	const canonicalNodes = new Map(); // normalized name → [lat, lon]
+	const canonicalNodes = new Map();
 	const droppedStations = [];
 	for (const [name, lines] of servedLines) {
 		const anchor = stationCoords.get(name);
-		if (!anchor) continue; // no coordinate at all — segment prep will skip
+		if (!anchor) continue;
 		let snap = null;
 		let snapGraph = null;
-		// 1. Nearest node on a served line, on available tracks (drivable).
 		if (lines.size > 0) {
 			snap = nearestAvail(anchor, lines);
 			snapGraph = graphAvail;
-			// 2. Nearest node on a served line, on any track (non-drivable
-			//    stations, e.g. Jęzor which sits on non-available LK171).
 			if (snap.index < 0 || snap.distKm > SNAP_MAX_KM) {
 				snap = nearestFull(anchor, lines);
 				snapGraph = graphFull;
 			}
 		}
-		// 3. Unrestricted: nearest node on any track.
 		if (snap === null || snap.index < 0 || snap.distKm > SNAP_MAX_KM) {
 			snap = nearestFull(anchor, null);
 			snapGraph = graphFull;
 		}
 		if (snap.index >= 0 && snap.distKm <= SNAP_MAX_KM) {
-			// Coordinate MUST come from the graph the snap index belongs to —
-			// graphAvail and graphFull have independent node numbering.
 			const nodeCoord = snapGraph.coords[snap.index];
 			canonicalNodes.set(name, nodeCoord);
-			// Update the gazetteer to the validated on-track coordinate.
 			stationCoords.set(name, nodeCoord);
 		} else {
 			droppedStations.push(name);
@@ -764,7 +554,6 @@ async function main() {
 		`  Canonical nodes: ${canonicalNodes.size}, dropped: ${droppedStations.length}`,
 	);
 
-	// Rebuild work segments after pruning dropped stations.
 	const workSegmentsPruned = [];
 	for (const seg of workSegments) {
 		const [a, b] = seg.key.split("|");
@@ -777,27 +566,16 @@ async function main() {
 	);
 	const workList = workSegmentsPruned;
 
-	// ========================================================================
-	// Step 3: Compute A* routes (canonical node → canonical node)
-	// ========================================================================
-	// Try the available-tracks graph first (guarantees an all-green path);
-	// fall back to the full graph for segments that traverse non-drivable
-	// tracks. A* prefers the segment's accumulated lines; paths are validated
-	// by a detour guard and a non-timetable-line usage guard.
-
 	log("Step 3: Compute A* routes");
 
 	const routeSegments = {};
-	const segmentLines = {}; // key → lines actually traversed by the path
+	const segmentLines = {};
 	const segmentUsedFullGraph = new Set();
 	let computed = 0;
 	let fallback = 0;
 	let computedAvail = 0;
 	let computedFull = 0;
 
-	// Try to route a segment on the given graph. Endpoints are the canonical
-	// station nodes (resolved by exact coordinate). Returns an encoded
-	// polyline or null.
 	function tryRoute(seg, graph, router) {
 		const [aName, bName] = seg.key.split("|");
 		const fromIdx = nodeIndexFor(graph, canonicalNodes.get(aName));
@@ -810,8 +588,6 @@ async function main() {
 		const straightKm = haversineKm(fromCoord, toCoord);
 		let pathIndices = null;
 
-		// Helper: compute total path distance (canonical nodes are on the
-		// track, so the path length IS the full segment length).
 		function pathKmOf(indices) {
 			let total = 0;
 			let prev = fromCoord;
@@ -823,14 +599,6 @@ async function main() {
 			return total;
 		}
 
-		// Helper: reject paths with excessive detour. The threshold scales
-		// with distance: short segments (where rail curves add proportionally
-		// more distance) get a more lenient allowance via an absolute bonus.
-		//   maxPathKm = straightKm * 2 + 5  (5km absolute bonus, 2× ratio)
-		// So a 1.25km segment allows up to 7.5km, while a 85km segment
-		// allows up to 175km. This accommodates real rail routes that zigzag
-		// through junctions (e.g. Płyćwia→Bełchów via Skierniewice is 22.6km
-		// for 12km straight).
 		function acceptPath(indices) {
 			if (!indices || indices.length < 2) return false;
 			if (straightKm > 0) {
@@ -840,21 +608,11 @@ async function main() {
 			return true;
 		}
 
-		// Helper: verify the path only uses lines listed in the timetable.
-		// Edges with no line ref (snap/connector edges) are always allowed.
-		// Non-timetable lines are allowed for short distances (junction
-		// connectors, e.g. LK537 bridges LK535 and LK1 at Koluszki).
-		// If the path uses a non-timetable line for more than 5km total,
-		// the wiki doesn't have the correct tracks for this segment and the
-		// route should be shown as grey instead.
 		const timetableLines = new Set(lines);
 		function usesOnlyTimetableLines(indices, allowedLines) {
 			if (!indices) return false;
-			// No line hints in the timetable (freight runs often have line 0
-			// everywhere) — there is nothing to validate against; rely on the
-			// detour guard alone.
 			if (allowedLines.size === 0) return true;
-			const nonTtKm = new Map(); // lineNo → km on non-timetable lines
+			const nonTtKm = new Map();
 			for (let i = 0; i < indices.length - 1; i++) {
 				for (
 					let p = graph.start[indices[i]];
@@ -863,7 +621,7 @@ async function main() {
 				) {
 					if (graph.adjOther[p] !== indices[i + 1]) continue;
 					const refs = graph.erefs[graph.adjEdge[p]];
-					if (!refs || refs.length === 0) continue; // connector edge
+					if (!refs || refs.length === 0) continue;
 					for (const r of refs) {
 						if (!allowedLines.has(r)) {
 							const edgeKm = graph.adjDist[p];
@@ -873,22 +631,18 @@ async function main() {
 					break;
 				}
 			}
-			// Reject if any non-timetable line is used for more than 5km.
 			for (const km of nonTtKm.values()) {
 				if (km > 5) return false;
 			}
 			return true;
 		}
 
-		// Try A* with the segment's union of timetable lines (non-preferred
-		// edges cost 10x more but remain traversable for junction connectors).
 		if (lines.length > 0) {
 			const p = router(fromIdx, toIdx, lines);
 			if (acceptPath(p) && usesOnlyTimetableLines(p, timetableLines))
 				pathIndices = p;
 		}
 
-		// Fallback: unconstrained A* with the same guards.
 		if (!pathIndices) {
 			const p = router(fromIdx, toIdx, null);
 			if (acceptPath(p) && usesOnlyTimetableLines(p, timetableLines))
@@ -897,7 +651,6 @@ async function main() {
 
 		if (!pathIndices || pathIndices.length < 2) return null;
 
-		// Collect the lines actually traversed by the accepted path.
 		const usedLineSet = new Set();
 		for (let i = 0; i < pathIndices.length - 1; i++) {
 			for (
@@ -912,10 +665,8 @@ async function main() {
 			}
 		}
 
-		// Use the A* path as-is — snapped nodes are already on the track.
 		const points = pathIndices.map((idx) => graph.coords[idx]);
 
-		// Remove backtracking points (Z-shaped edges) throughout the path.
 		let changed = true;
 		while (changed && points.length > 2) {
 			changed = false;
@@ -933,9 +684,6 @@ async function main() {
 			}
 		}
 
-		// Drop consecutive points that collapse to the same encoded coordinate
-		// (polyline precision is 1e-5 ≈ 1.1m; distinct graph nodes can be
-		// closer than that and would decode to zero-length edges).
 		const deduped = [];
 		let lastRlat = null;
 		let lastRlon = null;
@@ -951,9 +699,6 @@ async function main() {
 
 		return {
 			encoded: encodePolyline(deduped),
-			// Lines actually traversed by the path (used for availability
-			// classification in Step 4 — more accurate than timetable hints,
-			// and the only source for hint-less freight segments).
 			usedLines: [...usedLineSet],
 		};
 	}
@@ -961,18 +706,13 @@ async function main() {
 	for (let i = 0; i < workList.length; i++) {
 		const seg = workList[i];
 
-		// Skip segments whose lines don't exist in wiki route data. Segments
-		// with NO line hints at all (freight runs with line 0 everywhere)
-		// still get a chance: the detour guard decides.
 		const hasHints = seg.allLines.length > 0;
 		const hasWikiLine = seg.allLines.some((l) => wikiLineNumbers.has(l));
 		if (hasHints && !hasWikiLine) continue;
 
-		// Try available-only graph first (produces all-green paths).
 		let result = tryRoute(seg, graphAvail, routerAvail);
 		let usedFull = false;
 
-		// Fall back to full graph if no available path exists.
 		if (!result) {
 			result = tryRoute(seg, graphFull, routerFull);
 			usedFull = true;
@@ -994,17 +734,8 @@ async function main() {
 		`  Computed: ${computed} (avail: ${computedAvail}, full: ${computedFull}), Fallback (grey): ${fallback}`,
 	);
 
-	// ========================================================================
-	// Step 4: Compute per-segment availability from wiki track data
-	// ========================================================================
-	// Some lines have both drivable and non-drivable sections (e.g. LK1 has
-	// a non-drivable gap between Myszków and Rozprza). We classify each
-	// segment by sampling points along its path and voting: closer to
-	// available tracks → green, closer to not-available tracks → red.
-
 	log("Step 4: Compute per-segment availability");
 
-	// Load available and not-available track geometries per line.
 	const lineAvailableFeatures = {};
 	const lineNotAvailableFeatures = {};
 	for (const routeEntry of wikiMapData.routes) {
@@ -1035,14 +766,12 @@ async function main() {
 				}
 			}
 		} catch {
-			// skip
 		}
 	}
 	log(
 		`  Available lines: ${Object.keys(lineAvailableFeatures).length}, Not-available lines: ${Object.keys(lineNotAvailableFeatures).length}`,
 	);
 
-	// Distance from a point to a LineString (km), using equirectangular projection.
 	function distToLineKm(point, line) {
 		let min = Infinity;
 		const cosLat = Math.cos((point[0] * Math.PI) / 180);
@@ -1065,7 +794,6 @@ async function main() {
 		return min;
 	}
 
-	// Decode Google Encoded Polyline to [lat, lon] points.
 	function decodePolyline(str) {
 		let idx = 0;
 		let lat = 0;
@@ -1094,28 +822,16 @@ async function main() {
 		return pts;
 	}
 
-	// Classify each segment: determine availability (green/red) at each point
-	// along the path, and store color boundaries as [startIndex, colorCode]
-	// pairs. colorCode: 0=green, 1=red, 2=grey (no wiki data).
-	// The runtime decodes the full polyline from "segments" and splits it
-	// at these boundaries, avoiding duplicate polyline data.
-	//
-	// For segments with no wiki track data, a single grey entry [0, 2] is stored.
 	const segmentColors = {};
 	let availCount = 0;
 	let notAvailCount = 0;
 	for (const [key, encoded] of Object.entries(routeSegments)) {
-		// Segments routed on the available-only graph are entirely green.
 		if (!segmentUsedFullGraph.has(key)) {
 			segmentColors[key] = [[0, 0]];
 			availCount++;
 			continue;
 		}
 
-		// Classify against the wiki track geometry of the lines the path
-		// actually traversed (segmentLines — more accurate than timetable
-		// hints, and the only source for hint-less freight segments). A hop
-		// may legitimately traverse several lines.
 		const lines =
 			segmentLines[key] ||
 			(segments.get(key)?.allLines.filter((l) => wikiLineNumbers.has(l)) ??
@@ -1125,19 +841,16 @@ async function main() {
 			(l) => lineNotAvailableFeatures[l] || [],
 		);
 
-		// No wiki track data for this line — mark as grey.
 		if (availTracks.length === 0 && notAvailTracks.length === 0) {
 			segmentColors[key] = [[0, 2]];
 			continue;
 		}
-		// No not-available tracks — entirely green.
 		if (notAvailTracks.length === 0) {
 			segmentColors[key] = [[0, 0]];
 			availCount++;
 			continue;
 		}
 
-		// Decode the polyline and classify each point.
 		const pts = decodePolyline(encoded);
 		const pointColors = pts.map((pt) => {
 			let minAvail = Infinity;
@@ -1152,11 +865,10 @@ async function main() {
 				if (d < minNotAvail) minNotAvail = d;
 				if (minNotAvail < 0.05) break;
 			}
-			if (minAvail > 0.05 && minNotAvail < 0.2) return 1; // red
-			return 0; // green
+			if (minAvail > 0.05 && minNotAvail < 0.2) return 1;
+			return 0;
 		});
 
-		// Build boundary list: [startIndex, colorCode] at each color change.
 		const boundaries = [[0, pointColors[0]]];
 		for (let i = 1; i < pointColors.length; i++) {
 			if (pointColors[i] !== pointColors[i - 1]) {
@@ -1165,7 +877,6 @@ async function main() {
 				else notAvailCount++;
 			}
 		}
-		// Count the last segment.
 		if (pointColors[pointColors.length - 1] === 0) availCount++;
 		else notAvailCount++;
 
@@ -1175,15 +886,8 @@ async function main() {
 		`  Available sub-segments: ${availCount}, Not available: ${notAvailCount}`,
 	);
 
-	// ========================================================================
-	// Step 5: Write output + grey-risk report
-	// ========================================================================
 	log("Step 5: Write output");
 
-	// Grey-risk report: uncomputed consecutive-stop pairs whose stations are
-	// far apart (>50km). At runtime these draw very long grey straight lines
-	// and usually indicate data rot in the wiki (missing/wrong tracks), not
-	// genuinely missing routes — worth investigating before shipping.
 	const GREY_RISK_KM = 50;
 	const greyRisk = [];
 	for (const seg of workList) {

@@ -116,7 +116,6 @@ const TrainRoute = () => {
 		for (let si = 0; si < segments.length; si++) {
 			const pts = segments[si].points;
 			if (pts.length < 1) continue;
-			// If this segment doesn't chain onto the previous point, reset.
 			if (!prev || prev[0] !== pts[0][0] || prev[1] !== pts[0][1]) {
 				prev = pts[0];
 				distSinceLast = ARROW_SPACING_KM;
