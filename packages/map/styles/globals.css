@@ -280,6 +280,12 @@ html[data-mantine-color-scheme="light"] .leaflet-popup-close-button:hover {
   background: rgb(31 41 55 / 12%) !important;
 }
 
+.leaflet-popup.popup-below .leaflet-popup-tip-container {
+  top: -20px;
+  margin-top: 1px;
+  transform: rotate(180deg);
+}
+
 .train-map-popup .leaflet-popup-content {
   width: auto !important;
   margin: 16px !important;

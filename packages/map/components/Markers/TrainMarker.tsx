@@ -2,12 +2,13 @@ import { useMantineColorScheme } from "@mantine/core";
 import type { Train } from "@simrail/types";
 import L from "leaflet";
 import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { Popup, Tooltip } from "react-leaflet";
+import { Tooltip } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 
 import { getSteamProfileOrBot } from "@/components/steam";
 
 import TrainText from "../TrainText";
+import HoverPopup from "./HoverPopup";
 
 type TrainMarkerProps = {
 	train: Train;
@@ -132,7 +133,7 @@ const TrainMarker = ({
 				popupclose: () => setIsPopupOpen(false),
 			}}
 		>
-			<Popup className="train-map-popup" minWidth={280}>
+			<HoverPopup className="train-map-popup" minWidth={280}>
 				{isPopupOpen && (
 					<TrainText
 						train={train}
@@ -142,7 +143,7 @@ const TrainMarker = ({
 						stoppedSince={stoppedSince}
 					/>
 				)}
-			</Popup>
+			</HoverPopup>
 
 			<Tooltip
 				className="train-number-tooltip"

@@ -32,6 +32,7 @@ import {
 import Control from "react-leaflet-custom-control";
 
 import NonPlayableStations from "@/components/NonPlayableStations";
+import PassengerStations from "@/components/PassengerStations";
 import RemoteStations from "@/components/RemoteStations";
 import { TrainsList } from "@/components/TrainsList";
 
@@ -520,6 +521,18 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 					>
 						<LayerGroup>
 							<NonPlayableStations />
+						</LayerGroup>
+					</LayersControl.Overlay>
+
+					<LayersControl.Overlay
+						checked={
+							localStorage.getItem("layer-passenger stations") === null ||
+							localStorage.getItem("layer-passenger stations") === "true"
+						}
+						name="Passenger stations"
+					>
+						<LayerGroup>
+							<PassengerStations />
 						</LayerGroup>
 					</LayersControl.Overlay>
 

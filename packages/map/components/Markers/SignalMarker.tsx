@@ -1,6 +1,8 @@
 import type { Signal } from "@simrail/types";
 import { memo } from "react";
-import { CircleMarker, Popup } from "react-leaflet";
+import { CircleMarker } from "react-leaflet";
+
+import HoverPopup from "./HoverPopup";
 
 import styles from "../../styles/MarkerPopup.module.css";
 
@@ -26,12 +28,12 @@ export const SignalMarker = memo(({ signal }: SignalMarkerProps) => {
 				mouseout: (event) => event.target.closePopup(),
 			}}
 		>
-			<Popup className="simple-map-popup">
+			<HoverPopup className="simple-map-popup">
 				<div className={styles.simpleCard}>
 					<small>Signal</small>
 					<strong>{signal.Name}</strong>
 				</div>
-			</Popup>
+			</HoverPopup>
 		</CircleMarker>
 	);
 });
