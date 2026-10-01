@@ -1,20 +1,23 @@
 import type { Station } from "@simrail/types";
 import L from "leaflet";
-import { Marker, Popup } from "react-leaflet";
+import { Marker } from "react-leaflet";
+
+import HoverPopup from "./HoverPopup";
 
 import styles from "../../styles/MarkerPopup.module.css";
+
+// Shared by every marker of this kind.
+const icon = L.icon({
+	iconUrl: "/markers/icon-train-station.png",
+	iconSize: [16, 16],
+	popupAnchor: [0, -16],
+});
 
 type StationMarkerProps = {
 	station: Station;
 };
 
 export const NonPlayableStationMarker = ({ station }: StationMarkerProps) => {
-	const icon = L.icon({
-		iconUrl: "/markers/icon-train-station.png",
-		iconSize: [16, 16],
-		popupAnchor: [0, -16],
-	});
-
 	return (
 		<Marker
 			key={station.id}
@@ -26,12 +29,12 @@ export const NonPlayableStationMarker = ({ station }: StationMarkerProps) => {
 				mouseout: (event) => event.target.closePopup(),
 			}}
 		>
-			<Popup className="simple-map-popup">
+			<HoverPopup className="simple-map-popup">
 				<div className={styles.simpleCard}>
 					<small>Unplayable station</small>
 					<strong>{station.Name}</strong>
 				</div>
-			</Popup>
+			</HoverPopup>
 		</Marker>
 	);
 };

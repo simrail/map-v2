@@ -1,5 +1,3 @@
-import railDataJson from "../components/railData.json";
-
 export type RoutePoint = [number, number];
 
 export interface ColoredSegment {
@@ -10,15 +8,59 @@ export interface ColoredSegment {
 interface RailData {
 	knownStations: string[];
 	stations: Record<string, number[]>;
+	/** Polyline per station pair "a|b" (a < b), drawn from a to b. */
 	segments: Record<string, string>;
+	/** Colour runs per segment: [first point index, colour code]. */
 	segmentColors: Record<string, [number, number][]>;
+	/**
+	 * Replacement for the joint between two legs "p|s|n" (p < n) where plain
+	 * concatenation would be wrong: drop `cut[0]` points from the end of the
+	 * p→s leg and `cut[1]` from the start of the s→n leg, and put `points`
+	 * (drawn p-side to n-side, colour runs in `colors`) in between.
+	 */
+	joins: Record<
+		string,
+		{ cut: [number, number]; points: string; colors: [number, number][] }
+	>;
 }
+
+/** Map colours of route pieces, shared with the Playable area layer. */
+export const ROUTE_COLORS = {
+	green: "#2ecc71",
+	red: "#e74c3c",
+	grey: "#888888",
+} as const;
 
 const COLOR_NAMES = ["green", "red", "grey"] as const;
 
-const railData = railDataJson as unknown as RailData;
+/** Colour of each stretch between consecutive points, from colour runs. */
+function stretchColors(
+	pointCount: number,
+	runs: [number, number][],
+): ColoredSegment["color"][] {
+	return Array.from({ length: Math.max(0, pointCount - 1) }, (_, p) => {
+		let code = runs[0][1];
+		for (const [start, c] of runs) if (start <= p) code = c;
+		return COLOR_NAMES[code] ?? "grey";
+	});
+}
 
-const knownSet = new Set(railData.knownStations);
+// The route data is only needed once a route is shown, so it's loaded on
+// demand rather than bundled with the map.
+let railDataRequest:
+	| Promise<{ railData: RailData; knownSet: Set<string> }>
+	| undefined;
+const loadRailData = () =>
+	(railDataRequest ??= import("../components/railData.json").then(
+		(module) => {
+			const railData = module.default as unknown as RailData;
+			return { railData, knownSet: new Set(railData.knownStations) };
+		},
+		(error: unknown) => {
+			railDataRequest = undefined; // retry on the next route
+			throw error;
+		},
+	));
 
 const EDR_TIMETABLE_URL = "https://simrail-edr.emeraldnetwork.xyz/train";
 
@@ -26,7 +68,7 @@ function normalizeName(name: string): string {
 	return name.normalize("NFC").trim().replace(/\s+/g, " ").toLowerCase();
 }
 
-function decodePolyline(str: string): RoutePoint[] {
+export function decodePolyline(str: string): RoutePoint[] {
 	let idx = 0;
 	let lat = 0;
 	let lon = 0;
@@ -111,6 +153,7 @@ interface ResolvedStop {
 	coord: RoutePoint;
 	name: string;
 	isKnown: boolean;
+	line: number;
 }
 
 const routeCache = new Map<string, Promise<ColoredSegment[] | null>>();
@@ -127,7 +170,10 @@ async function computeRoute(train: {
 	ServerCode: string;
 	TrainNoLocal: string;
 }): Promise<ColoredSegment[] | null> {
-	const stops = await fetchTimetable(train.ServerCode, train.TrainNoLocal);
+	const [stops, { railData, knownSet }] = await Promise.all([
+		fetchTimetable(train.ServerCode, train.TrainNoLocal),
+		loadRailData(),
+	]);
 	if (!stops || stops.length < 2) return null;
 
 	const resolved: ResolvedStop[] = [];
@@ -137,10 +183,13 @@ async function computeRoute(train: {
 		const norm = normalizeName(name);
 		const coordArr = railData.stations[norm];
 		if (!coordArr) continue;
+		// A station listed twice in a row is one stop, as in the generator.
+		if (resolved[resolved.length - 1]?.name === norm) continue;
 		resolved.push({
 			coord: [coordArr[0], coordArr[1]],
 			name: norm,
 			isKnown: knownSet.has(norm),
+			line: stop.line ?? 0,
 		});
 	}
 
@@ -157,8 +206,21 @@ async function computeRoute(train: {
 	const effective = resolved.slice(first, last + 1);
 	if (effective.length < 2) return null;
 
-	const segments: ColoredSegment[] = [];
-	let prevConnected = false;
+	// The route as one point list; colors[i] is the colour of the stretch
+	// from points[i] to points[i + 1], null where nothing is drawn.
+	const points: RoutePoint[] = [];
+	const colors: (ColoredSegment["color"] | null)[] = [];
+	const append = (
+		pts: RoutePoint[],
+		pieceColors: ColoredSegment["color"][],
+	) => {
+		pts.forEach((p, i) => {
+			if (i > 0) colors.push(pieceColors[i - 1]);
+			points.push(p);
+		});
+	};
+	// Whether the previous leg ended at the current stop along the tracks.
+	let prevLegRouted = false;
 
 	for (let i = 0; i < effective.length - 1; i++) {
 		const a = effective[i];
@@ -168,48 +230,82 @@ async function computeRoute(train: {
 		const encoded = railData.segments[key];
 
 		if (!encoded) {
-			segments.push({ color: "grey", points: [a.coord, b.coord] });
-			prevConnected = false;
+			prevLegRouted = false;
+			// Skip grey lines when either stop has line 0 (off the drivable
+			// network). These stations often have wrong wiki coordinates
+			// (e.g. Koło is misplaced near Łęczyca), creating misleading
+			// long grey lines.
+			// Also skip them at the beginning or end of the route — there's
+			// nothing to connect to, so they just dangle.
+			if (
+				a.line === 0 ||
+				b.line === 0 ||
+				i === 0 ||
+				i === effective.length - 2
+			) {
+				continue;
+			}
+			if (points.length > 0) colors.push(null);
+			append([a.coord, b.coord], ["grey"]);
 			continue;
 		}
 
-		const reversed = a.name > b.name;
-		const allPts = decodePolyline(encoded);
-
-		const boundaries = railData.segmentColors?.[key] ?? [[0, 0]];
-
-		const subs: {
-			color: "green" | "red" | "grey";
-			points: RoutePoint[];
-		}[] = [];
-		for (let bi = 0; bi < boundaries.length; bi++) {
-			const [startIdx, colorCode] = boundaries[bi];
-			const endIdx =
-				bi < boundaries.length - 1 ? boundaries[bi + 1][0] : allPts.length;
-			const subPts = allPts.slice(
-				startIdx,
-				bi < boundaries.length - 1 ? endIdx + 1 : endIdx,
-			);
-			subs.push({
-				color: COLOR_NAMES[colorCode] ?? "grey",
-				points: subPts,
-			});
-		}
-		if (reversed) {
-			subs.reverse();
-			for (const sub of subs) sub.points.reverse();
+		let legPts = decodePolyline(encoded);
+		let legColors = stretchColors(
+			legPts.length,
+			railData.segmentColors[key] ?? [[0, 0]],
+		);
+		if (a.name > b.name) {
+			legPts.reverse();
+			legColors.reverse();
 		}
 
-		for (const { color, points: subPts } of subs) {
-			const lastSeg = segments[segments.length - 1];
-			if (prevConnected && lastSeg && lastSeg.color === color) {
-				lastSeg.points.push(...subPts.slice(1));
-			} else {
-				segments.push({ color, points: subPts });
+		const prev = effective[i - 1];
+		if (prevLegRouted && prev && prev.name !== b.name) {
+			const forward = prev.name < b.name;
+			const join =
+				railData.joins[
+					forward
+						? `${prev.name}|${a.name}|${b.name}`
+						: `${b.name}|${a.name}|${prev.name}`
+				];
+			if (join) {
+				const [cutIn, cutOut] = forward ? join.cut : [join.cut[1], join.cut[0]];
+				points.splice(points.length - cutIn);
+				colors.splice(colors.length - cutIn);
+				const joinPts = decodePolyline(join.points);
+				const joinColors = stretchColors(joinPts.length, join.colors);
+				if (!forward) {
+					joinPts.reverse();
+					joinColors.reverse();
+				}
+				points.pop(); // the join starts on it
+				append(joinPts, joinColors);
+				legPts = legPts.slice(cutOut);
+				legColors = legColors.slice(cutOut);
 			}
-			prevConnected = true;
 		}
+
+		if (prevLegRouted) {
+			// The previous piece ends where this one starts.
+			points.pop();
+		} else if (points.length > 0) {
+			colors.push(null);
+		}
+		append(legPts, legColors);
+		prevLegRouted = true;
 	}
 
+	const segments: ColoredSegment[] = [];
+	for (let i = 0; i < colors.length; i++) {
+		const color = colors[i];
+		if (color === null) continue;
+		const lastSeg = segments[segments.length - 1];
+		if (lastSeg && lastSeg.color === color && colors[i - 1] === color) {
+			lastSeg.points.push(points[i + 1]);
+		} else {
+			segments.push({ color, points: [points[i], points[i + 1]] });
+		}
+	}
 	return segments;
 }

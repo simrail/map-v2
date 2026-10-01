@@ -1,13 +1,21 @@
 import { useMantineColorScheme } from "@mantine/core";
 import type { Train } from "@simrail/types";
 import L from "leaflet";
-import { memo, useEffect, useMemo, useRef, useState } from "react";
-import { Popup, Tooltip } from "react-leaflet";
+import {
+	memo,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+	type ComponentRef,
+} from "react";
+import { Tooltip } from "react-leaflet";
 import ReactLeafletDriftMarker from "react-leaflet-drift-marker";
 
 import { getSteamProfileOrBot } from "@/components/steam";
 
 import TrainText from "../TrainText";
+import HoverPopup from "./HoverPopup";
 
 type TrainMarkerProps = {
 	train: Train;
@@ -27,6 +35,7 @@ const TrainMarker = ({
 	const [bearing, setBearing] = useState<number | null>(null);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const previousPosition = useRef<[number, number] | null>(null);
+	const markerRef = useRef<ComponentRef<typeof ReactLeafletDriftMarker>>(null);
 
 	useEffect(() => {
 		let active = true;
@@ -102,23 +111,37 @@ const TrainMarker = ({
 				">": "&gt;",
 			})[character] ?? character,
 	);
+	// The bearing changes on nearly every update of a moving train. It isn't
+	// part of the icon: a new icon makes Leaflet rebuild the marker's DOM
+	// (avatar image included), so the arrow is rotated in place instead.
+	const hasBearing = bearing !== null;
 	const icon = useMemo(
 		() =>
 			L.divIcon({
-				html: `<span class="train-direction-arrow" style="transform: rotate(${bearing ?? 0}deg)" aria-hidden="true"></span><img class="steam-avatar${borderAreaClass}" src="${escapedAvatarUrl}" alt="">`,
+				html: `<span class="train-direction-arrow" aria-hidden="true"></span><img class="steam-avatar${borderAreaClass}" src="${escapedAvatarUrl}" alt="">`,
 				iconSize: [34, 34],
 				iconAnchor: [17, 17],
 				popupAnchor: [0, -17],
-				className: `train-direction-marker${isSelected ? " is-selected" : ""}${bearing === null ? " direction-unknown" : ""}`,
+				className: `train-direction-marker${isSelected ? " is-selected" : ""}${hasBearing ? "" : " direction-unknown"}`,
 			}),
-		[bearing, borderAreaClass, escapedAvatarUrl, isSelected],
+		[hasBearing, borderAreaClass, escapedAvatarUrl, isSelected],
 	);
+
+	// Runs after the marker's own effects, so its (possibly new) icon element
+	// is already on the map.
+	useEffect(() => {
+		const arrow = markerRef.current
+			?.getElement()
+			?.querySelector<HTMLElement>(".train-direction-arrow");
+		if (arrow) arrow.style.transform = `rotate(${bearing ?? 0}deg)`;
+	}, [bearing, icon, username]);
 
 	if (!username || !train.TrainData.Latititute || !train.TrainData.Longitute)
 		return null;
 
 	return (
 		<ReactLeafletDriftMarker
+			ref={markerRef}
 			key={train.TrainNoLocal}
 			icon={icon}
 			position={[train.TrainData.Latititute, train.TrainData.Longitute]}
@@ -132,7 +155,7 @@ const TrainMarker = ({
 				popupclose: () => setIsPopupOpen(false),
 			}}
 		>
-			<Popup className="train-map-popup" minWidth={280}>
+			<HoverPopup className="train-map-popup" minWidth={280}>
 				{isPopupOpen && (
 					<TrainText
 						train={train}
@@ -142,7 +165,7 @@ const TrainMarker = ({
 						stoppedSince={stoppedSince}
 					/>
 				)}
-			</Popup>
+			</HoverPopup>
 
 			<Tooltip
 				className="train-number-tooltip"

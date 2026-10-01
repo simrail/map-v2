@@ -1,21 +1,127 @@
 #!/usr/bin/env node
 
+/**
+ * generate-rail-data.mjs — Precomputes the train route geometry the map
+ * draws for a selected train (lib/trainRoute.ts).
+ *
+ *   pnpm generate:rail-data            # uses scripts/.cache where present
+ *   pnpm generate:rail-data --refresh  # re-downloads everything
+ *
+ * Output: components/railData.json, components/playableArea.json
+ *
+ * ── Inputs ────────────────────────────────────────────────────────────────
+ *   - SimRail wiki map (wiki.simrail.eu/map): one GeoJSON per railway line
+ *     (LK1, LK4, …), split into the part available in the game and the part
+ *     that isn't, plus station shapes. Line geometry is raw OpenStreetMap:
+ *     one feature per track (a double-track line is two parallel ways),
+ *     only `usage=main` tracks — so the crossovers between them are missing
+ *     — and bridges/tunnels tagged `bridge`/`tunnel`/`layer`.
+ *   - Station coordinates: wiki station shapes, local stations*.json, the
+ *     SimRail panel API and scripts/station-overrides.json (wins).
+ *   - Timetables of every train on one server (official API, community EDR
+ *     as fallback). Each point has a name and `line`: the line the train
+ *     departs that point on. Most points (junction posts, "PZS …") have no
+ *     coordinates, but their line numbers still tell us every line a train
+ *     uses between two stations.
+ *
+ * ── Pipeline ──────────────────────────────────────────────────────────────
+ *   1. Fetch the inputs (cached in scripts/.cache).
+ *   2. Collect station pairs: consecutive timetable points that have
+ *      coordinates form a leg A→B. For each pair, record the lines its legs
+ *      use, the line at A and at B. Legs touching line 0 or a line the wiki
+ *      doesn't have are left out: there's no track to draw them on.
+ *   3. Build the track graph (rail-helpers.mjs, buildRailGraph). Lines join
+ *      only where OSM gives them a shared node, i.e. real junctions — never
+ *      where they merely cross, as on a bridge. Connectors stand in for what
+ *      the export lacks: crossovers between tracks of one line (≤20m apart,
+ *      parallel, not on bridges/tunnels), clipped way ends (≤30m), and
+ *      "line connectors" between different lines running side by side,
+ *      which only line changes may use (below).
+ *   4. Route each leg with A* strictly on its timetable lines, from the
+ *      track of A's line nearest to A to the track of B's line nearest to B.
+ *   5. Join consecutive legs. Where two legs meet at station S, simply
+ *      concatenating them can be wrong: the train may change lines at S
+ *      (the legs end on different tracks), or S's nearest track may not be
+ *      the one the train passes on (the legs overshoot and come back). For
+ *      every (previous station, S, next station) seen in a timetable, the
+ *      last ~1km into S and first ~1km out of it are re-routed as one path.
+ *      Only here, within 2km of S, may the route use S's other lines and
+ *      switch between side-by-side lines. The result is stored only where it
+ *      differs from plain concatenation.
+ *   6. Write railData.json; stations are placed on their busiest line.
+ *   7. Write playableArea.json: every track of every wiki line, for the
+ *      map's "Playable area" layer.
+ *   8. Draw every timetable's route with the app's code and check it for
+ *      off-track jumps and hairpins (check-routes.mjs). Exits with code 1 if
+ *      the check fails.
+ *
+ * ── Output (railData.json) ────────────────────────────────────────────────
+ *   stations       name → [lat, lon]
+ *   knownStations  names the route may start/end at
+ *   segments       "a|b" (a < b) → encoded polyline (precision 1e5), a→b
+ *   segmentColors  "a|b" → [[first point index, 0 = available | 1 = not
+ *                  available in the game], …]
+ *   joins          "p|s|n" (p < n) → { cut: [points to drop from the end of
+ *                  the p→s leg, points to drop from the start of the s→n
+ *                  leg], points: encoded polyline p-side → n-side,
+ *                  colors: colour runs of points, as in segmentColors }
+ *
+ * ── Output (playableArea.json) ────────────────────────────────────────────
+ *   lines          line number → { title, subtitle?, lkname?, link?,
+ *                  available: encoded polylines (one per track),
+ *                  unavailable: encoded polylines }
+ *
+ * ── Reading the log ───────────────────────────────────────────────────────
+ *   "off the wiki network"  legs over lines the wiki lacks — expected; the
+ *                           app draws them grey or skips them.
+ *   "failed"                a leg whose stations aren't near its lines or
+ *                           whose lines don't connect: usually a wrong
+ *                           station coordinate (fix in station-overrides
+ *                           .json) or a gap in the wiki geometry.
+ *   "Dropped"               a station with no track within 3km — again
+ *                           usually a wrong coordinate.
+ *   Route check failures list where jumps/hairpins happen and an example
+ *   train; render that train on the map to see what's wrong.
+ */
+
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { checkRoutes } from "./check-routes.mjs";
 import {
-	buildGraphFromRoutes,
+	buildRailGraph,
 	encodePolyline,
+	findPath,
 	haversineKm,
-	makeNearestNode,
-	makeRouter,
+	nearestNode,
 	normalizeName,
+	parseWikiRoute,
+	simplifyIndices,
+	waysFromRouteGeoJson,
 } from "./rail-helpers.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CACHE_DIR = path.join(__dirname, ".cache");
 const OUTPUT_PATH = path.join(__dirname, "..", "components", "railData.json");
+// The repository formatter; generated files are committed, so they're kept
+// in its format (`pnpm format:check` runs in CI).
+const OXFMT = path.join(
+	__dirname,
+	"..",
+	"..",
+	"..",
+	"node_modules",
+	".bin",
+	"oxfmt",
+);
+const PLAYABLE_AREA_PATH = path.join(
+	__dirname,
+	"..",
+	"components",
+	"playableArea.json",
+);
 
 const OFFICIAL_TIMETABLE_BASE =
 	"https://api1.aws.simrail.eu:8082/api/getAllTimetables";
@@ -25,7 +131,19 @@ const WIKI_MAP_DATA_URL =
 	"https://wiki.simrail.eu/map/main-files/map-data.json";
 const WIKI_BASE = "https://wiki.simrail.eu";
 const USER_AGENT = "simrail-app-map-route-generator/1.0";
+// Max distance from a station's coordinate to the track it's placed on.
 const SNAP_MAX_KM = 3.0;
+// Douglas-Peucker tolerance for the output polylines. Also smooths out the
+// few-metre hops between parallel tracks.
+const SIMPLIFY_KM = 0.005;
+// Radius around a station in which a join may use the station's other
+// lines and switch between side-by-side lines.
+const STATION_AREA_KM = 2;
+// How far into and out of a station a join re-routes the legs.
+const JOIN_KM = 1;
+// segmentColors codes.
+const GREEN = 0; // available in the game
+const RED = 1; // not available
 const TIMETABLE_SERVER = "int1";
 
 fs.mkdirSync(CACHE_DIR, { recursive: true });
@@ -192,27 +310,21 @@ async function main() {
 		);
 
 		log("  [wiki] Fetching route geometries...");
-		const routeFeatures = [];
-		await pool(wikiMapData.routes, 10, async (route) => {
-			const match = route.name.match(/^LK(\d+)$/);
-			if (!match) return;
-			const lineNo = match[1];
-			const isAvailable = route.available !== false;
-			const cacheName = `wiki_route_${route.name.replace(/[^a-zA-Z0-9]/g, "_")}_${isAvailable ? "avail" : "notavail"}.json`;
+		// Kept in the wiki's route order, not fetch completion order: the
+		// graph's node numbering (and so path tie-breaks) follows it.
+		const waysByRoute = wikiMapData.routes.map(() => []);
+		await pool(wikiMapData.routes, 10, async (route, i) => {
+			const lk = parseWikiRoute(route);
+			if (!lk) return;
 			try {
-				const gj = await cachedFetchJson(WIKI_BASE + route.url, cacheName);
-				for (const f of gj.features || []) {
-					routeFeatures.push({
-						geometry: f.geometry,
-						refs: [lineNo],
-						available: isAvailable,
-					});
-				}
+				const gj = await cachedFetchJson(WIKI_BASE + route.url, lk.cacheName);
+				waysByRoute[i] = waysFromRouteGeoJson(gj, lk.line, lk.available);
 			} catch (err) {
 				log(`  [wiki] Failed ${route.name}: ${err.message}`);
 			}
 		});
-		log(`  [wiki] Route features: ${routeFeatures.length}`);
+		const routeWays = waysByRoute.flat();
+		log(`  [wiki] Track ways: ${routeWays.length}`);
 
 		log("  [wiki] Fetching station coordinates...");
 		const stationCoords = new Map();
@@ -241,7 +353,7 @@ async function main() {
 			wikiMapData,
 			stationCoords,
 			knownStations,
-			routeFeatures,
+			routeWays,
 			wikiLoopCentroids,
 		};
 	})();
@@ -312,25 +424,22 @@ async function main() {
 		wikiMapData,
 		stationCoords,
 		knownStations,
-		routeFeatures,
+		routeWays,
 		wikiLoopCentroids,
 	} = await wikiPromise;
 	await timetablesPromise;
 
 	log("Step 1b: Supplement station coordinates from local files + API");
-	const localBundled = JSON.parse(
-		fs.readFileSync(
-			path.join(__dirname, "..", "components", "stations.json"),
-			"utf8",
+	const localCatalogs = [
+		"stations.json",
+		"stationsPassenger.json",
+		"stationsRemote.json",
+	].flatMap((file) =>
+		JSON.parse(
+			fs.readFileSync(path.join(__dirname, "..", "components", file), "utf8"),
 		),
 	);
-	const localRemote = JSON.parse(
-		fs.readFileSync(
-			path.join(__dirname, "..", "components", "stationsRemote.json"),
-			"utf8",
-		),
-	);
-	for (const s of [...localBundled, ...localRemote]) {
+	for (const s of localCatalogs) {
 		if (s.Name && s.Latititude && s.Longitude) {
 			const norm = normalizeName(s.Name);
 			if (!stationCoords.has(norm)) {
@@ -392,533 +501,382 @@ async function main() {
 		log(`  Loop-centroid fallbacks (no game coordinate): ${loopFallbackCount}`);
 	}
 
-	log("Step 2: Collect segments from timetables");
+	log("Step 2: Collect station pairs from timetables");
 	const allTimetables = JSON.parse(
 		fs.readFileSync(path.join(CACHE_DIR, "all_timetables.json"), "utf8"),
 	);
 
-	const wikiStationList = wikiMapData.stations;
-
-	function resolveStationCoords(rawName) {
-		const norm = normalizeName(rawName);
-		if (stationCoords.has(norm)) return norm;
-		for (const ws of wikiStationList) {
-			const sn = normalizeName(ws.name);
-			if (sn.includes(norm) || norm.includes(sn)) {
-				const c = stationCoords.get(sn);
-				if (c) {
-					stationCoords.set(norm, c);
-					knownStations.add(norm);
-					return norm;
-				}
-			}
-		}
-		return null;
-	}
-
-	const segments = new Map();
-	for (const tt of allTimetables) {
-		const entries = tt.timetable;
-		if (!Array.isArray(entries)) continue;
-		let lastResolved = -1;
-		for (let i = 0; i < entries.length; i++) {
-			const name = entries[i].nameOfPoint || entries[i].nameForPerson;
-			if (!name) continue;
-			const resolved = resolveStationCoords(name);
-			const hasCoords = !!resolved;
-			if (hasCoords && lastResolved >= 0 && lastResolved !== i) {
-				const fromName =
-					entries[lastResolved].nameOfPoint ||
-					entries[lastResolved].nameForPerson;
-				const fromResolved =
-					resolveStationCoords(fromName) || normalizeName(fromName);
-				const key =
-					fromResolved < resolved
-						? `${fromResolved}|${resolved}`
-						: `${resolved}|${fromResolved}`;
-				const line = Number(entries[lastResolved].line) || 0;
-				const toLine = Number(entries[i].line) || 0;
-				const allLines = new Set();
-				if (line > 0) allLines.add(String(line));
-				if (toLine > 0) allLines.add(String(toLine));
-				for (let j = lastResolved + 1; j < i; j++) {
-					const midLine = Number(entries[j]?.line) || 0;
-					if (midLine > 0) allLines.add(String(midLine));
-				}
-				if (!segments.has(key)) {
-					segments.set(key, {
-						key,
-						from: fromName,
-						to: name,
-						allLines: [...allLines],
-						label: `${fromName} → ${name}`,
-					});
-				} else {
-					const existing = segments.get(key);
-					for (const l of allLines) {
-						if (!existing.allLines.includes(l)) {
-							existing.allLines.push(l);
-						}
-					}
-				}
-			}
-			if (hasCoords) lastResolved = i;
-		}
-	}
-	log(`  Unique segments: ${segments.size}`);
-
-	const workSegments = [];
-	let noCoordsCount = 0;
-	for (const seg of segments.values()) {
-		const fromCoord = stationCoords.get(normalizeName(seg.from));
-		const toCoord = stationCoords.get(normalizeName(seg.to));
-		if (!fromCoord || !toCoord) {
-			noCoordsCount++;
-			continue;
-		}
-		seg.from = fromCoord;
-		seg.to = toCoord;
-		workSegments.push(seg);
-	}
-	log(`  Work segments: ${workSegments.length} (skipped ${noCoordsCount})`);
-
-	const wikiLineNumbers = new Set();
-	for (const r of wikiMapData.routes) {
-		const match = r.name.match(/^LK(\d+)$/);
-		if (match) wikiLineNumbers.add(match[1]);
-	}
-
-	const servedLines = new Map();
-	for (const seg of segments.values()) {
-		const [a, b] = seg.key.split("|");
-		if (!servedLines.has(a)) servedLines.set(a, new Set());
-		if (!servedLines.has(b)) servedLines.set(b, new Set());
-		for (const l of seg.allLines) {
-			if (wikiLineNumbers.has(l)) {
-				servedLines.get(a).add(l);
-				servedLines.get(b).add(l);
-			}
-		}
-	}
-
-	const graphAvail = buildGraphFromRoutes(
-		routeFeatures.filter((f) => f.available),
-	);
-	const graphFull = buildGraphFromRoutes(routeFeatures);
-	const nearestAvail = makeNearestNode(graphAvail, 0.02, SNAP_MAX_KM);
-	const nearestFull = makeNearestNode(graphFull, 0.02, SNAP_MAX_KM);
-	const routerAvail = makeRouter(graphAvail);
-	const routerFull = makeRouter(graphFull);
-	log(
-		`  Graph avail: ${graphAvail.coords.length} nodes, full: ${graphFull.coords.length} nodes`,
-	);
-
-	const coordKey = (lat, lon) => `${lat.toFixed(6)},${lon.toFixed(6)}`;
-	const nodeIndexFor = (graph, coord) =>
-		graph.coordIndex.get(coordKey(coord[0], coord[1])) ?? -1;
-
-	log(`  Snapping ${servedLines.size} stations to canonical nodes...`);
-	const canonicalNodes = new Map();
-	const droppedStations = [];
-	for (const [name, lines] of servedLines) {
-		const anchor = stationCoords.get(name);
-		if (!anchor) continue;
-		let snap = null;
-		let snapGraph = null;
-		if (lines.size > 0) {
-			snap = nearestAvail(anchor, lines);
-			snapGraph = graphAvail;
-			if (snap.index < 0 || snap.distKm > SNAP_MAX_KM) {
-				snap = nearestFull(anchor, lines);
-				snapGraph = graphFull;
-			}
-		}
-		if (snap === null || snap.index < 0 || snap.distKm > SNAP_MAX_KM) {
-			snap = nearestFull(anchor, null);
-			snapGraph = graphFull;
-		}
-		if (snap.index >= 0 && snap.distKm <= SNAP_MAX_KM) {
-			const nodeCoord = snapGraph.coords[snap.index];
-			canonicalNodes.set(name, nodeCoord);
-			stationCoords.set(name, nodeCoord);
-		} else {
-			droppedStations.push(name);
-			stationCoords.delete(name);
-			knownStations.delete(name);
-		}
-	}
-	if (droppedStations.length > 0) {
-		log(
-			`  Dropped stations (no track within ${SNAP_MAX_KM}km — likely bad source coordinates):`,
-		);
-		for (const name of droppedStations) log(`    - ${name}`);
-	}
-	log(
-		`  Canonical nodes: ${canonicalNodes.size}, dropped: ${droppedStations.length}`,
-	);
-
-	const workSegmentsPruned = [];
-	for (const seg of workSegments) {
-		const [a, b] = seg.key.split("|");
-		if (canonicalNodes.has(a) && canonicalNodes.has(b)) {
-			workSegmentsPruned.push(seg);
-		}
-	}
-	log(
-		`  Work segments after prune: ${workSegmentsPruned.length} (was ${workSegments.length})`,
-	);
-	const workList = workSegmentsPruned;
-
-	log("Step 3: Compute A* routes");
-
-	const routeSegments = {};
-	const segmentLines = {};
-	const segmentUsedFullGraph = new Set();
-	let computed = 0;
-	let fallback = 0;
-	let computedAvail = 0;
-	let computedFull = 0;
-
-	function tryRoute(seg, graph, router) {
-		const [aName, bName] = seg.key.split("|");
-		const fromIdx = nodeIndexFor(graph, canonicalNodes.get(aName));
-		const toIdx = nodeIndexFor(graph, canonicalNodes.get(bName));
-		if (fromIdx < 0 || toIdx < 0) return null;
-
-		const lines = seg.allLines;
-		const fromCoord = graph.coords[fromIdx];
-		const toCoord = graph.coords[toIdx];
-		const straightKm = haversineKm(fromCoord, toCoord);
-		let pathIndices = null;
-
-		function pathKmOf(indices) {
-			let total = 0;
-			let prev = fromCoord;
-			for (const idx of indices) {
-				total += haversineKm(prev, graph.coords[idx]);
-				prev = graph.coords[idx];
-			}
-			total += haversineKm(prev, toCoord);
-			return total;
-		}
-
-		function acceptPath(indices) {
-			if (!indices || indices.length < 2) return false;
-			if (straightKm > 0) {
-				const maxPathKm = straightKm * 2 + 5;
-				if (pathKmOf(indices) > maxPathKm) return false;
-			}
-			return true;
-		}
-
-		const timetableLines = new Set(lines);
-		function usesOnlyTimetableLines(indices, allowedLines) {
-			if (!indices) return false;
-			if (allowedLines.size === 0) return true;
-			const nonTtKm = new Map();
-			for (let i = 0; i < indices.length - 1; i++) {
-				for (
-					let p = graph.start[indices[i]];
-					p < graph.start[indices[i] + 1];
-					p++
-				) {
-					if (graph.adjOther[p] !== indices[i + 1]) continue;
-					const refs = graph.erefs[graph.adjEdge[p]];
-					if (!refs || refs.length === 0) continue;
-					for (const r of refs) {
-						if (!allowedLines.has(r)) {
-							const edgeKm = graph.adjDist[p];
-							nonTtKm.set(r, (nonTtKm.get(r) || 0) + edgeKm);
-						}
-					}
-					break;
-				}
-			}
-			for (const km of nonTtKm.values()) {
-				if (km > 5) return false;
-			}
-			return true;
-		}
-
-		if (lines.length > 0) {
-			const p = router(fromIdx, toIdx, lines);
-			if (acceptPath(p) && usesOnlyTimetableLines(p, timetableLines))
-				pathIndices = p;
-		}
-
-		if (!pathIndices) {
-			const p = router(fromIdx, toIdx, null);
-			if (acceptPath(p) && usesOnlyTimetableLines(p, timetableLines))
-				pathIndices = p;
-		}
-
-		if (!pathIndices || pathIndices.length < 2) return null;
-
-		const usedLineSet = new Set();
-		for (let i = 0; i < pathIndices.length - 1; i++) {
-			for (
-				let p = graph.start[pathIndices[i]];
-				p < graph.start[pathIndices[i] + 1];
-				p++
-			) {
-				if (graph.adjOther[p] !== pathIndices[i + 1]) continue;
-				const refs = graph.erefs[graph.adjEdge[p]];
-				if (refs) for (const r of refs) usedLineSet.add(r);
-				break;
-			}
-		}
-
-		const points = pathIndices.map((idx) => graph.coords[idx]);
-
-		let changed = true;
-		while (changed && points.length > 2) {
-			changed = false;
-			for (let j = 1; j < points.length - 1; j++) {
-				const a = points[j - 1],
-					b = points[j],
-					c = points[j + 1];
-				const dot =
-					(b[0] - a[0]) * (c[0] - b[0]) + (b[1] - a[1]) * (c[1] - b[1]);
-				if (dot < 0) {
-					points.splice(j, 1);
-					changed = true;
-					break;
-				}
-			}
-		}
-
-		const deduped = [];
-		let lastRlat = null;
-		let lastRlon = null;
-		for (const p of points) {
-			const rlat = Math.round(p[0] * 1e5);
-			const rlon = Math.round(p[1] * 1e5);
-			if (rlat !== lastRlat || rlon !== lastRlon) {
-				deduped.push(p);
-				lastRlat = rlat;
-				lastRlon = rlon;
-			}
-		}
-
-		return {
-			encoded: encodePolyline(deduped),
-			usedLines: [...usedLineSet],
-		};
-	}
-
-	for (let i = 0; i < workList.length; i++) {
-		const seg = workList[i];
-
-		const hasHints = seg.allLines.length > 0;
-		const hasWikiLine = seg.allLines.some((l) => wikiLineNumbers.has(l));
-		if (hasHints && !hasWikiLine) continue;
-
-		let result = tryRoute(seg, graphAvail, routerAvail);
-		let usedFull = false;
-
-		if (!result) {
-			result = tryRoute(seg, graphFull, routerFull);
-			usedFull = true;
-		}
-
-		if (!result) {
-			fallback++;
-			continue;
-		}
-
-		routeSegments[seg.key] = result.encoded;
-		segmentLines[seg.key] = result.usedLines;
-		if (usedFull) segmentUsedFullGraph.add(seg.key);
-		computed++;
-		if (usedFull) computedFull++;
-		else computedAvail++;
-	}
-	log(
-		`  Computed: ${computed} (avail: ${computedAvail}, full: ${computedFull}), Fallback (grey): ${fallback}`,
-	);
-
-	log("Step 4: Compute per-segment availability");
-
-	const lineAvailableFeatures = {};
-	const lineNotAvailableFeatures = {};
-	for (const routeEntry of wikiMapData.routes) {
-		const match = routeEntry.name.match(/^LK(\d+)$/);
-		if (!match) continue;
-		const lineNo = match[1];
-		const isAvailable = routeEntry.available !== false;
-		const cacheName = `wiki_route_${routeEntry.name.replace(/[^a-zA-Z0-9]/g, "_")}_${isAvailable ? "avail" : "notavail"}.json`;
-		try {
-			const gj = JSON.parse(
-				fs.readFileSync(path.join(CACHE_DIR, cacheName), "utf8"),
-			);
-			const target = isAvailable
-				? lineAvailableFeatures
-				: lineNotAvailableFeatures;
-			if (!target[lineNo]) target[lineNo] = [];
-			for (const f of gj.features || []) {
-				const g = f.geometry;
-				if (!g) continue;
-				let lines = [];
-				if (g.type === "LineString") lines = [g.coordinates];
-				else if (g.type === "MultiLineString") lines = g.coordinates;
-				else continue;
-				for (const line of lines) {
-					if (line.length >= 2) {
-						target[lineNo].push(line.map((c) => [c[1], c[0]]));
-					}
-				}
-			}
-		} catch {}
-	}
-	log(
-		`  Available lines: ${Object.keys(lineAvailableFeatures).length}, Not-available lines: ${Object.keys(lineNotAvailableFeatures).length}`,
-	);
-
-	function distToLineKm(point, line) {
-		let min = Infinity;
-		const cosLat = Math.cos((point[0] * Math.PI) / 180);
-		const px = point[1] * cosLat * 111.32;
-		const py = point[0] * 111.32;
-		for (let i = 0; i < line.length - 1; i++) {
-			const ax = line[i][1] * cosLat * 111.32;
-			const ay = line[i][0] * 111.32;
-			const bx = line[i + 1][1] * cosLat * 111.32;
-			const by = line[i + 1][0] * 111.32;
-			const dx = bx - ax;
-			const dy = by - ay;
-			const len2 = dx * dx + dy * dy;
-			let t = len2 === 0 ? 0 : ((px - ax) * dx + (py - ay) * dy) / len2;
-			t = Math.max(0, Math.min(1, t));
-			const fx = px - (ax + t * dx);
-			const fy = py - (ay + t * dy);
-			min = Math.min(min, Math.sqrt(fx * fx + fy * fy));
-		}
-		return min;
-	}
-
-	function decodePolyline(str) {
-		let idx = 0;
-		let lat = 0;
-		let lon = 0;
-		const pts = [];
-		while (idx < str.length) {
-			let shift = 0;
-			let result = 0;
-			let byte;
-			do {
-				byte = str.charCodeAt(idx++) - 63;
-				result |= (byte & 0x1f) << shift;
-				shift += 5;
-			} while (byte >= 0x20);
-			lat += result & 1 ? ~(result >> 1) : result >> 1;
-			shift = 0;
-			result = 0;
-			do {
-				byte = str.charCodeAt(idx++) - 63;
-				result |= (byte & 0x1f) << shift;
-				shift += 5;
-			} while (byte >= 0x20);
-			lon += result & 1 ? ~(result >> 1) : result >> 1;
-			pts.push([lat / 1e5, lon / 1e5]);
-		}
-		return pts;
-	}
-
-	const segmentColors = {};
-	let availCount = 0;
-	let notAvailCount = 0;
-	for (const [key, encoded] of Object.entries(routeSegments)) {
-		if (!segmentUsedFullGraph.has(key)) {
-			segmentColors[key] = [[0, 0]];
-			availCount++;
-			continue;
-		}
-
-		const lines =
-			segmentLines[key] ||
-			(segments.get(key)?.allLines.filter((l) => wikiLineNumbers.has(l)) ?? []);
-		const availTracks = lines.flatMap((l) => lineAvailableFeatures[l] || []);
-		const notAvailTracks = lines.flatMap(
-			(l) => lineNotAvailableFeatures[l] || [],
-		);
-
-		if (availTracks.length === 0 && notAvailTracks.length === 0) {
-			segmentColors[key] = [[0, 2]];
-			continue;
-		}
-		if (notAvailTracks.length === 0) {
-			segmentColors[key] = [[0, 0]];
-			availCount++;
-			continue;
-		}
-
-		const pts = decodePolyline(encoded);
-		const pointColors = pts.map((pt) => {
-			let minAvail = Infinity;
-			for (const track of availTracks) {
-				const d = distToLineKm(pt, track);
-				if (d < minAvail) minAvail = d;
-				if (minAvail < 0.05) break;
-			}
-			let minNotAvail = Infinity;
-			for (const track of notAvailTracks) {
-				const d = distToLineKm(pt, track);
-				if (d < minNotAvail) minNotAvail = d;
-				if (minNotAvail < 0.05) break;
-			}
-			if (minAvail > 0.05 && minNotAvail < 0.2) return 1;
-			return 0;
+	/** The timetable's points that have a position: { name, index }[]. */
+	function timetableStations(timetable) {
+		const out = [];
+		timetable.forEach((entry, index) => {
+			const raw = entry.nameOfPoint || entry.nameForPerson;
+			if (!raw) return;
+			const name = normalizeName(raw);
+			// Points without coordinates (junction posts, PZS…) are skipped.
+			if (!stationCoords.has(name)) return;
+			if (name !== out[out.length - 1]?.name) out.push({ name, index });
 		});
-
-		const boundaries = [[0, pointColors[0]]];
-		for (let i = 1; i < pointColors.length; i++) {
-			if (pointColors[i] !== pointColors[i - 1]) {
-				boundaries.push([i, pointColors[i]]);
-				if (pointColors[i - 1] === 0) availCount++;
-				else notAvailCount++;
-			}
-		}
-		if (pointColors[pointColors.length - 1] === 0) availCount++;
-		else notAvailCount++;
-
-		segmentColors[key] = boundaries;
+		return out;
 	}
+
+	// A timetable point's `line` is the line the train departs it on, so a
+	// leg A→B leaves A on A's line and arrives at B on the line of the point
+	// before B. Intermediate points (junction posts, PZS…) have no
+	// coordinates but still tell us every line the leg uses.
+	const wikiLines = new Set(routeWays.map((w) => w.line));
+	const lineOf = (entry) => String(Number(entry.line) || "") || null;
+	const count = (map, key) => map.set(key, (map.get(key) ?? 0) + 1);
+	// Line counts, most frequent first; ties by line number, so the result
+	// doesn't depend on the order the timetables come in.
+	const byFrequency = (counts) =>
+		[...counts.entries()]
+			.sort((a, b) => b[1] - a[1] || Number(a[0]) - Number(b[0]))
+			.map(([line]) => line);
+	const mostCommon = (counts) => byFrequency(counts)[0] ?? null;
+	const pairs = new Map();
+	for (const { timetable } of allTimetables) {
+		if (!Array.isArray(timetable)) continue;
+		const stops = timetableStations(timetable);
+		for (let k = 1; k < stops.length; k++) {
+			const from = stops[k - 1];
+			const to = stops[k];
+			const legEntries = timetable.slice(from.index, to.index);
+			const fromLine = lineOf(timetable[from.index]);
+			const toLine = lineOf(timetable[to.index - 1]);
+			const [a, b, aLine, bLine] =
+				from.name < to.name
+					? [from.name, to.name, fromLine, toLine]
+					: [to.name, from.name, toLine, fromLine];
+			const key = `${a}|${b}`;
+			let pair = pairs.get(key);
+			if (!pair) {
+				pair = {
+					key,
+					a,
+					b,
+					aLines: new Map(),
+					bLines: new Map(),
+					lines: new Set(),
+				};
+				pairs.set(key, pair);
+			}
+			// Skip timetables where part of the leg runs on track the wiki
+			// doesn't have (line 0 = outside the playable area); other trains
+			// may still run the same leg on known lines.
+			const legLines = legEntries.map(lineOf);
+			if (legLines.some((line) => !line || !wikiLines.has(line))) continue;
+			if (aLine) count(pair.aLines, aLine);
+			if (bLine) count(pair.bLines, bLine);
+			for (const line of legLines) pair.lines.add(line);
+		}
+	}
+	log(`  Station pairs: ${pairs.size}`);
+
+	log("Step 3: Build track graph");
+	const graph = buildRailGraph(routeWays);
 	log(
-		`  Available sub-segments: ${availCount}, Not available: ${notAvailCount}`,
+		`  Nodes: ${graph.stats.nodes}, edges: ${graph.stats.edges} (track connectors: ${graph.stats.trackConnectors}, line connectors: ${graph.stats.lineConnectors}, dead-end connectors: ${graph.stats.deadEndConnectors}, ignored fragments: ${graph.stats.fragments})`,
 	);
 
-	log("Step 5: Write output");
-
-	const GREY_RISK_KM = 50;
-	const greyRisk = [];
-	for (const seg of workList) {
-		if (routeSegments[seg.key]) continue;
-		const [a, b] = seg.key.split("|");
-		const ca = stationCoords.get(a);
-		const cb = stationCoords.get(b);
-		if (ca && cb && haversineKm(ca, cb) > GREY_RISK_KM) {
-			greyRisk.push(seg.label);
+	// Lines each station is served by, busiest first.
+	const stationLineCounts = new Map();
+	for (const pair of pairs.values()) {
+		for (const [name, lines] of [
+			[pair.a, pair.aLines],
+			[pair.b, pair.bLines],
+		]) {
+			if (!stationLineCounts.has(name)) stationLineCounts.set(name, new Map());
+			const counts = stationLineCounts.get(name);
+			for (const [l, n] of lines) counts.set(l, (counts.get(l) ?? 0) + n);
 		}
 	}
-	if (greyRisk.length > 0) {
-		log(
-			`  GREY RISK — ${greyRisk.length} uncomputed pairs > ${GREY_RISK_KM}km apart:`,
-		);
-		for (const label of greyRisk) log(`    - ${label}`);
-	} else {
-		log(`  Grey-risk report: none > ${GREY_RISK_KM}km`);
-	}
+	const stationLines = new Map(
+		[...stationLineCounts].map(([name, counts]) => [name, byFrequency(counts)]),
+	);
 
-	const output = {
-		version: 1,
-		knownStations: [...knownStations],
-		stations: Object.fromEntries(stationCoords),
-		segments: routeSegments,
-		segmentColors,
+	// A station's point on a given line: the track of that line nearest to
+	// the station.
+	const stationNodeCache = new Map();
+	const stationNode = (name, line) => {
+		const key = `${name}|${line}`;
+		if (!stationNodeCache.has(key)) {
+			const anchor = stationCoords.get(name);
+			stationNodeCache.set(
+				key,
+				anchor
+					? nearestNode(
+							graph,
+							anchor,
+							line ? new Set([line]) : null,
+							SNAP_MAX_KM,
+						)
+					: -1,
+			);
+		}
+		return stationNodeCache.get(key);
 	};
-	const json = JSON.stringify(output);
-	fs.writeFileSync(OUTPUT_PATH, json);
-	log(`  Written ${OUTPUT_PATH} (${(json.length / 1024).toFixed(0)} KB)`);
+
+	// Turns a path into its simplified vertices (node ids) plus colour runs
+	// [first vertex index, colour]. Connectors take the colour of the track
+	// before them.
+	const simplifyPath = (from, edgePath) => {
+		const nodes = [from];
+		const colors = [];
+		for (const e of edgePath) {
+			const edge = graph.edges[e];
+			nodes.push(edge.a === nodes[nodes.length - 1] ? edge.b : edge.a);
+			colors.push(edge.line === null ? null : edge.available ? GREEN : RED);
+		}
+		for (let i = 0; i < colors.length; i++) {
+			colors[i] ??=
+				i > 0 ? colors[i - 1] : (colors.find((c) => c !== null) ?? GREEN);
+		}
+		const keep = new Set([0]);
+		const runStarts = [];
+		for (let i = 0; i < colors.length;) {
+			let j = i;
+			while (j < colors.length && colors[j] === colors[i]) j++;
+			runStarts.push([i, colors[i]]);
+			const run = nodes.slice(i, j + 1);
+			for (const k of simplifyIndices(
+				run.map((n) => graph.coords[n]),
+				SIMPLIFY_KM,
+			)) {
+				keep.add(i + k);
+			}
+			i = j;
+		}
+		const kept = [...keep].sort((a, b) => a - b);
+		const vertexOf = new Map(kept.map((k, v) => [k, v]));
+		return {
+			nodes: kept.map((k) => nodes[k]),
+			boundaries:
+				runStarts.length > 0
+					? runStarts.map(([i, color]) => [vertexOf.get(i), color])
+					: [[0, GREEN]],
+		};
+	};
+	const polylineKm = (nodes) => {
+		let km = 0;
+		for (let i = 1; i < nodes.length; i++) {
+			km += haversineKm(graph.coords[nodes[i - 1]], graph.coords[nodes[i]]);
+		}
+		return km;
+	};
+	const encodeNodes = (nodes) =>
+		encodePolyline(nodes.map((n) => graph.coords[n]));
+
+	log("Step 4: Route legs between stations");
+	// A leg runs strictly on the lines its timetable points are on, from
+	// the departure line's track at A to the arrival line's track at B.
+	const legs = new Map();
+	const failures = [];
+	let offNetwork = 0;
+	for (const pair of pairs.values()) {
+		if (pair.lines.size === 0) {
+			offNetwork++;
+			continue;
+		}
+		const endOn = (name, preferred) => {
+			for (const line of new Set([preferred, ...pair.lines])) {
+				if (!line) continue;
+				const node = stationNode(name, line);
+				if (node >= 0) return node;
+			}
+			return -1;
+		};
+		const from = endOn(pair.a, mostCommon(pair.aLines));
+		const to = endOn(pair.b, mostCommon(pair.bLines));
+		if (from < 0 || to < 0) {
+			failures.push(`${pair.key}: station not near its lines`);
+			continue;
+		}
+		// It may switch between two of its lines where they run side by side
+		// (the switch is at a timetable point without coordinates).
+		const onLeg = (node) =>
+			[...graph.nodeLines[node]].some((l) => pair.lines.has(l));
+		const edgePath = findPath(graph, from, to, (e) =>
+			e.line === null
+				? !e.crossLine || (onLeg(e.a) && onLeg(e.b))
+				: pair.lines.has(e.line),
+		);
+		if (!edgePath) {
+			failures.push(
+				`${pair.key}: no path on lines ${[...pair.lines].join(",")}`,
+			);
+			continue;
+		}
+		legs.set(pair.key, { ...simplifyPath(from, edgePath), lines: pair.lines });
+	}
+	log(
+		`  Routed: ${legs.size}/${pairs.size}, off the wiki network: ${offNetwork}, failed: ${failures.length}`,
+	);
+	for (const f of failures) log(`    - ${f}`);
+
+	log("Step 5: Join consecutive legs at stations");
+	// Two legs meeting at S each end on their own line's track nearest to
+	// S, which needn't be where the train passes: it may change lines at S,
+	// or S's nearest track may be a parallel one. A join replaces the last
+	// ~1km of the leg into S and the first ~1km of the leg out of it with
+	// the shortest path between those points. It may use the station's
+	// other lines — and switch between lines running side by side — only
+	// within the station area.
+	const orientedLeg = (from, to) => {
+		const leg = legs.get(from < to ? `${from}|${to}` : `${to}|${from}`);
+		if (!leg) return null;
+		return { ...leg, nodes: from < to ? leg.nodes : [...leg.nodes].reverse() };
+	};
+	const joins = {};
+	const seenTriples = new Set();
+	let joinFailures = 0;
+	for (const { timetable } of allTimetables) {
+		if (!Array.isArray(timetable)) continue;
+		const names = timetableStations(timetable).map((stop) => stop.name);
+		for (let i = 1; i < names.length - 1; i++) {
+			// Canonical direction: from the alphabetically smaller neighbour.
+			// A train reversing at S (same neighbour both sides) keeps its
+			// out-and-back.
+			const [prev, station, next] =
+				names[i - 1] < names[i + 1]
+					? [names[i - 1], names[i], names[i + 1]]
+					: [names[i + 1], names[i], names[i - 1]];
+			const key = `${prev}|${station}|${next}`;
+			if (prev === next || seenTriples.has(key)) continue;
+			seenTriples.add(key);
+			const inLeg = orientedLeg(prev, station);
+			const outLeg = orientedLeg(station, next);
+			if (!inLeg || !outLeg) continue;
+
+			// Reach back at most to the middle of each leg, so the joins at
+			// both ends of a short leg never overlap.
+			const inMid = Math.ceil((inLeg.nodes.length - 1) / 2);
+			const outMid = Math.floor((outLeg.nodes.length - 1) / 2);
+			let cutIn = inLeg.nodes.length - 1;
+			while (cutIn > inMid && polylineKm(inLeg.nodes.slice(cutIn)) < JOIN_KM)
+				cutIn--;
+			let cutOut = 0;
+			while (
+				cutOut < outMid &&
+				polylineKm(outLeg.nodes.slice(0, cutOut + 1)) < JOIN_KM
+			)
+				cutOut++;
+
+			const center = graph.coords[inLeg.nodes[inLeg.nodes.length - 1]];
+			const stationOwn = new Set(stationLines.get(station) ?? []);
+			const inArea = (e) =>
+				haversineKm(graph.coords[e.a], center) <= STATION_AREA_KM;
+			const edgePath = findPath(
+				graph,
+				inLeg.nodes[cutIn],
+				outLeg.nodes[cutOut],
+				(e) =>
+					(e.line === null && !e.crossLine) ||
+					inLeg.lines.has(e.line) ||
+					outLeg.lines.has(e.line) ||
+					((e.crossLine || stationOwn.has(e.line)) && inArea(e)),
+			);
+			const legsMeet = inLeg.nodes[inLeg.nodes.length - 1] === outLeg.nodes[0];
+			if (!edgePath) {
+				if (!legsMeet) joinFailures++;
+				continue;
+			}
+			const { nodes, boundaries } = simplifyPath(inLeg.nodes[cutIn], edgePath);
+			const concatKm =
+				polylineKm(inLeg.nodes.slice(cutIn)) +
+				polylineKm(outLeg.nodes.slice(0, cutOut + 1));
+			// Only worth storing where plain concatenation is wrong.
+			if (legsMeet && polylineKm(nodes) > concatKm - 0.02) continue;
+			joins[key] = {
+				cut: [inLeg.nodes.length - 1 - cutIn, cutOut],
+				points: encodeNodes(nodes),
+				// A join may cross track that isn't available in the game.
+				colors: boundaries,
+			};
+		}
+	}
+	log(
+		`  Joins: ${Object.keys(joins).length} (of ${seenTriples.size} station passes), unroutable line changes: ${joinFailures}`,
+	);
+
+	log("Step 6: Write output");
+	const segments = {};
+	const segmentColors = {};
+	for (const [key, leg] of legs) {
+		segments[key] = encodeNodes(leg.nodes);
+		segmentColors[key] = leg.boundaries;
+	}
+	const stations = {};
+	for (const [name, coord] of stationCoords) {
+		const lines = stationLines.get(name);
+		if (!lines) {
+			stations[name] = coord;
+			continue;
+		}
+		// Draw the station on its busiest line.
+		const node = [...lines, null]
+			.map((line) => stationNode(name, line))
+			.find((n) => n >= 0);
+		if (node === undefined) {
+			log(`  Dropped (no track within ${SNAP_MAX_KM}km): ${name}`);
+			knownStations.delete(name);
+			continue;
+		}
+		stations[name] = graph.coords[node];
+	}
+	// Sorted by plain code-unit order (not locale-aware), so regenerating
+	// only produces a diff when the data changes.
+	const byName = (a, b) => (a < b ? -1 : a > b ? 1 : 0);
+	const sortKeys = (obj) =>
+		Object.fromEntries(Object.entries(obj).sort(([a], [b]) => byName(a, b)));
+	const output = {
+		version: 2,
+		knownStations: [...knownStations]
+			.filter((name) => name in stations)
+			.sort(byName),
+		stations: sortKeys(stations),
+		segments: sortKeys(segments),
+		segmentColors: sortKeys(segmentColors),
+		joins: sortKeys(joins),
+	};
+	fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output));
+	execFileSync(OXFMT, [OUTPUT_PATH], { stdio: "ignore" });
+	log(
+		`  Written ${OUTPUT_PATH} (${(fs.statSync(OUTPUT_PATH).size / 1024).toFixed(0)} KB)`,
+	);
+
+	log("Step 7: Write the playable area");
+	// Every track of every wiki line, for the map's "Playable area" layer.
+	// Parallel tracks of a line are kept (they overlap at map scale), so the
+	// layer shows exactly what the wiki shows, split by availability.
+	const lines = {};
+	for (const route of wikiMapData.routes) {
+		const lk = parseWikiRoute(route);
+		if (!lk) continue;
+		// The available and unavailable parts of a line are separate wiki
+		// entries; merge their info (e.g. LK1's "Wiedenka" is only on one).
+		const info = (lines[lk.line] ??= { available: [], unavailable: [] });
+		for (const field of ["title", "subtitle", "lkname", "link"]) {
+			if (route[field] && !info[field]) info[field] = route[field];
+		}
+	}
+	for (const way of routeWays) {
+		const kept = simplifyIndices(way.coords, SIMPLIFY_KM).map(
+			(i) => way.coords[i],
+		);
+		lines[way.line][way.available ? "available" : "unavailable"].push(
+			encodePolyline(kept),
+		);
+	}
+	fs.writeFileSync(PLAYABLE_AREA_PATH, JSON.stringify({ lines }));
+	execFileSync(OXFMT, [PLAYABLE_AREA_PATH], { stdio: "ignore" });
+	log(
+		`  Written ${PLAYABLE_AREA_PATH} (${Object.keys(lines).length} lines, ${(fs.statSync(PLAYABLE_AREA_PATH).size / 1024).toFixed(0)} KB)`,
+	);
+
+	log("Step 8: Check the routes (scripts/check-routes.mjs)");
+	const { ok } = await checkRoutes({ log });
+	if (!ok) process.exitCode = 1;
 	log(`Done in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
 }
 

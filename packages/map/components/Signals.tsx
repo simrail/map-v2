@@ -1,8 +1,8 @@
 import type { Signal } from "@simrail/types";
 import type { FC } from "react";
 
+import { LazyLayer } from "./LazyLayer";
 import { SignalMarker } from "./Markers/SignalMarker";
-import signalJson from "./signals.json";
 
 type SignalJsonType = { Name: string; Latitude: number; Longitude: number };
 
@@ -14,33 +14,37 @@ const convertToSignal = (data: SignalJsonType[]): Signal[] => {
 	}));
 };
 
-const signalsData: Signal[] = convertToSignal(signalJson as SignalJsonType[]);
+// Both signal layers are off by default, so the data is only loaded once
+// one of them is shown.
+let signalsRequest:
+	| Promise<{ mainline: Signal[]; other: Signal[] }>
+	| undefined;
+const loadSignals = () =>
+	(signalsRequest ??= import("./signals.json").then(
+		(module) => {
+			const signals = convertToSignal(module.default as SignalJsonType[]);
+			return {
+				mainline: signals.filter((signal) => signal.Name.startsWith("L")),
+				other: signals.filter((signal) => !signal.Name.startsWith("L")),
+			};
+		},
+		(error: unknown) => {
+			signalsRequest = undefined;
+			throw error;
+		},
+	));
+const loadMainlineSignals = () => loadSignals().then((s) => s.mainline);
+const loadOtherSignals = () => loadSignals().then((s) => s.other);
 
-const mainlineSignals = signalsData.filter((signal) =>
-	signal.Name.startsWith("L"),
+const renderSignals = (signals: Signal[]) =>
+	signals.map((signal) => <SignalMarker key={signal.Name} signal={signal} />);
+
+const MainlineSignals: FC = () => (
+	<LazyLayer load={loadMainlineSignals}>{renderSignals}</LazyLayer>
 );
-const otherSignals = signalsData.filter(
-	(signal) => !signal.Name.startsWith("L"),
+
+const OtherSignals: FC = () => (
+	<LazyLayer load={loadOtherSignals}>{renderSignals}</LazyLayer>
 );
-
-const MainlineSignals: FC = () => {
-	return (
-		<>
-			{mainlineSignals.map((signal) => (
-				<SignalMarker key={signal.Name} signal={signal} />
-			))}
-		</>
-	);
-};
-
-const OtherSignals: FC = () => {
-	return (
-		<>
-			{otherSignals.map((signal) => (
-				<SignalMarker key={signal.Name} signal={signal} />
-			))}
-		</>
-	);
-};
 
 export { MainlineSignals, OtherSignals };

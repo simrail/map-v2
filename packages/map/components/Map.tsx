@@ -13,6 +13,8 @@ import "leaflet/dist/leaflet.css";
 import {
 	MdFullscreen,
 	MdFullscreenExit,
+	MdLayers,
+	MdLayersClear,
 	MdOutlineTraffic,
 	MdSatellite,
 	MdSatelliteAlt,
@@ -32,11 +34,13 @@ import {
 import Control from "react-leaflet-custom-control";
 
 import NonPlayableStations from "@/components/NonPlayableStations";
+import PassengerStations from "@/components/PassengerStations";
 import RemoteStations from "@/components/RemoteStations";
 import { TrainsList } from "@/components/TrainsList";
 
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
 import { StationMarker } from "./Markers/StationMarker";
+import PlayableArea from "./PlayableArea";
 import SelectedTrainPopup from "./SelectedTrainPopup";
 import { MainlineSignals, OtherSignals } from "./Signals";
 import SneakpeekMarkers from "./Sneakpeeks";
@@ -103,6 +107,11 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 		key: "isSatellite",
 		defaultValue: false,
 	});
+
+	const [showLayersMenu, setShowLayersMenu] = useLocalStorage({
+		key: "showLayersMenu",
+		defaultValue: true,
+	});
 	const {
 		selectedTrain,
 		setSelectedTrain,
@@ -119,6 +128,16 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 	const RenderPopupIcon =
 		renderPopup === true ? MdSpeakerNotes : MdSpeakerNotesOff;
 	const SatelliteIcon = isSatellite === true ? MdSatellite : MdSatelliteAlt;
+	const LayersMenuIcon = showLayersMenu === true ? MdLayers : MdLayersClear;
+
+	// The layers menu is hidden with CSS rather than unmounted: unmounting
+	// LayersControl would also remove every layer it controls from the map.
+	useEffect(() => {
+		if (!map) return;
+		const container = map.getContainer();
+		if (showLayersMenu) delete container.dataset.layersMenuHidden;
+		else container.dataset.layersMenuHidden = "";
+	}, [map, showLayersMenu]);
 
 	const [stations, setStations] = useState<Station[] | null>(null);
 	const [stoppedTrainsSince, setStoppedTrainsSince] = useState<
@@ -415,6 +434,21 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 						</Tooltip>
 
 						<Tooltip
+							label={`${showLayersMenu ? "Hide" : "Show"} layers menu`}
+							position="right"
+						>
+							<button
+								type="button"
+								className={style.icon}
+								onClick={() => setShowLayersMenu((prev) => !prev)}
+								aria-label={`${showLayersMenu ? "Hide" : "Show"} layers menu`}
+								aria-pressed={showLayersMenu}
+							>
+								<LayersMenuIcon size={24} />
+							</button>
+						</Tooltip>
+
+						<Tooltip
 							label={fullscreen ? "Exit fullscreen" : "Enter fullscreen"}
 							position="right"
 						>
@@ -525,6 +559,18 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 
 					<LayersControl.Overlay
 						checked={
+							localStorage.getItem("layer-passenger stations") === null ||
+							localStorage.getItem("layer-passenger stations") === "true"
+						}
+						name="Passenger stations"
+					>
+						<LayerGroup>
+							<PassengerStations />
+						</LayerGroup>
+					</LayersControl.Overlay>
+
+					<LayersControl.Overlay
+						checked={
 							localStorage.getItem("layer-signalling (not 100% accurate)") ===
 							"true"
 						}
@@ -550,6 +596,15 @@ const LeaftletMap = ({ serverId }: MapProps) => {
 								url="https://{s}.tiles.openrailwaymap.org/maxspeed/{z}/{x}/{y}.png"
 								// Looks a bit wired in dark mode due to .css putting everything in a greyscale but it is still possible to differ the signalling systems.
 							/>
+						</LayerGroup>
+					</LayersControl.Overlay>
+
+					<LayersControl.Overlay
+						checked={localStorage.getItem("layer-playable area") === "true"}
+						name="Playable area"
+					>
+						<LayerGroup>
+							<PlayableArea />
 						</LayerGroup>
 					</LayersControl.Overlay>
 
