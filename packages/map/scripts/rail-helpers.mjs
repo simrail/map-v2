@@ -37,448 +37,456 @@ export function encodePolyline(points) {
 	return out;
 }
 
-export function decodePolyline(str) {
-	let idx = 0;
-	let lat = 0;
-	let lon = 0;
-	const pts = [];
-	while (idx < str.length) {
-		let shift = 0;
-		let result = 0;
-		let byte;
-		do {
-			byte = str.charCodeAt(idx++) - 63;
-			result |= (byte & 0x1f) << shift;
-			shift += 5;
-		} while (byte >= 0x20);
-		lat += result & 1 ? ~(result >> 1) : result >> 1;
-
-		shift = 0;
-		result = 0;
-		do {
-			byte = str.charCodeAt(idx++) - 63;
-			result |= (byte & 0x1f) << shift;
-			shift += 5;
-		} while (byte >= 0x20);
-		lon += result & 1 ? ~(result >> 1) : result >> 1;
-
-		pts.push([lat / 1e5, lon / 1e5]);
-	}
-	return pts;
+/**
+ * The wiki map's LK route entry for a line, or null for sidings and other
+ * non-line routes. A line can have two entries: the part available in the
+ * game and the part that isn't.
+ */
+export function parseWikiRoute(route) {
+	const match = route.name.match(/^LK(\d+)$/);
+	if (!match) return null;
+	const available = route.available !== false;
+	return {
+		line: match[1],
+		available,
+		cacheName: `wiki_route_${route.name.replace(/[^a-zA-Z0-9]/g, "_")}_${available ? "avail" : "notavail"}.json`,
+	};
 }
 
-export function buildGraphFromRoutes(routeFeatures) {
-	const coordIndex = new Map();
+/**
+ * Track ways from a wiki route GeoJSON. Each feature is one OSM way — one
+ * track, since double-track lines are mapped per track.
+ */
+export function waysFromRouteGeoJson(geojson, line, available) {
+	const ways = [];
+	for (const f of geojson.features || []) {
+		const g = f.geometry;
+		const parts =
+			g?.type === "LineString"
+				? [g.coordinates]
+				: g?.type === "MultiLineString"
+					? g.coordinates
+					: [];
+		const p = f.properties ?? {};
+		const elevated =
+			!!p.bridge || !!p.tunnel || (p.layer != null && Number(p.layer) !== 0);
+		for (const part of parts) {
+			if (part.length < 2) continue;
+			ways.push({
+				coords: part.map(([lon, lat]) => [lat, lon]),
+				line,
+				available,
+				elevated,
+			});
+		}
+	}
+	return ways;
+}
+
+// Graph tuning. Tracks of a double-track line are ~4-6m apart and are
+// separate OSM ways; the wiki export only contains `usage=main` ways, so the
+// crossovers between them are missing. We recreate them as connectors.
+const DENSIFY_KM = 0.025; // max node spacing, so parallel tracks have nearby nodes
+const TRACK_CONNECT_KM = 0.02; // max gap bridged between tracks of the same line
+const DEAD_END_CONNECT_KM = 0.03; // max gap bridged at a clipped way end
+const PARALLEL_MAX_DEG = 30;
+const CONNECTOR_PENALTY_KM = 0.2; // discourages zig-zagging between tracks
+const GRID_DEG = 0.0005;
+// Connected pieces shorter than this are OSM leftovers (stubs, clipped
+// fragments). Stations must not snap onto them: nothing leads anywhere.
+const MIN_COMPONENT_KM = 1;
+
+const coordKey = (c) => `${c[0].toFixed(6)},${c[1].toFixed(6)}`;
+const cellKey = (lat, lon) =>
+	`${Math.floor(lat / GRID_DEG)},${Math.floor(lon / GRID_DEG)}`;
+
+function bearingDeg(a, b) {
+	const cosLat = Math.cos((((a[0] + b[0]) / 2) * Math.PI) / 180);
+	return (
+		((Math.atan2((b[1] - a[1]) * cosLat, b[0] - a[0]) * 180) / Math.PI + 360) %
+		360
+	);
+}
+
+// Angle between two undirected track directions (0-90).
+function axisDiffDeg(a, b) {
+	const d = Math.abs(a - b) % 180;
+	return d > 90 ? 180 - d : d;
+}
+
+function densify(coords) {
+	const out = [coords[0]];
+	for (let i = 1; i < coords.length; i++) {
+		const a = coords[i - 1];
+		const b = coords[i];
+		const steps = Math.ceil(haversineKm(a, b) / DENSIFY_KM);
+		for (let s = 1; s < steps; s++) {
+			const t = s / steps;
+			out.push([a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]);
+		}
+		out.push(b);
+	}
+	return out;
+}
+
+/**
+ * Builds a routable graph from OSM track ways.
+ *
+ * ways: { coords: [lat, lon][], line: string, available: boolean,
+ *         elevated: boolean }[]
+ *
+ * Edges come from three sources only:
+ *   1. Way geometry. Ways of different lines connect only where OSM gives
+ *      them a shared node — those are the real junctions. Lines crossing on a
+ *      bridge never share a node, so trains can't jump there.
+ *   2. Track connectors: nodes of the same line, on different ways, ≤20m
+ *      apart and parallel. Stand-ins for the missing crossovers.
+ *   3. Dead-end connectors: a way end that touches nothing else (the wiki
+ *      clips lines at arbitrary points) joins the nearest aligned node ≤30m.
+ *   4. Line connectors: like track connectors, but between different lines
+ *      running side by side (e.g. LK1 and LK447 through Warszawa Włochy).
+ *      Marked `crossLine`: only for switching lines inside a station.
+ * Connectors are never made on bridges/tunnels and have `line: null`.
+ */
+export function buildRailGraph(ways) {
 	const coords = [];
-	const resolveCoord = (lat, lon) => {
-		const key = `${lat.toFixed(6)},${lon.toFixed(6)}`;
-		let i = coordIndex.get(key);
+	const nodeIndex = new Map();
+	const nodeElevated = [];
+	const nodeLines = [];
+	const nodeWays = [];
+	// For each node, the local track direction per way through it.
+	const nodeBearings = [];
+
+	const nodeFor = (c) => {
+		const key = coordKey(c);
+		let i = nodeIndex.get(key);
 		if (i === undefined) {
 			i = coords.length;
-			coordIndex.set(key, i);
-			coords.push([lat, lon]);
+			nodeIndex.set(key, i);
+			coords.push([Number(c[0].toFixed(6)), Number(c[1].toFixed(6))]);
+			nodeElevated.push(false);
+			nodeLines.push(new Set());
+			nodeWays.push(new Set());
+			nodeBearings.push([]);
 		}
 		return i;
 	};
 
-	const ea = [];
-	const eb = [];
-	const ed = [];
-	const erefs = [];
-	const endpointNodes = new Set();
-	const endpointBearings = new Map();
+	const edges = []; // { a, b, km, line, available, crossLine? }
+	const addEdge = (a, b, km, line, available) =>
+		edges.push({ a, b, km, line, available });
 
-	const bearingDeg = (a, b) => {
-		const cosLat = Math.cos((((a[0] + b[0]) / 2) * Math.PI) / 180);
-		return (
-			((Math.atan2((b[1] - a[1]) * cosLat, b[0] - a[0]) * 180) / Math.PI +
-				360) %
-			360
-		);
-	};
-	const angleDiffDeg = (a, b) => {
-		const d = Math.abs(a - b) % 360;
-		return d > 180 ? 360 - d : d;
-	};
-	const addEndpointBearing = (idx, deg) => {
-		let list = endpointBearings.get(idx);
-		if (!list) endpointBearings.set(idx, (list = []));
-		list.push(deg);
-	};
-
-	for (const feat of routeFeatures) {
-		const refs = feat.refs || [];
-		let lines = [];
-		const g = feat.geometry;
-		if (!g) continue;
-		if (g.type === "LineString") lines = [g.coordinates];
-		else if (g.type === "MultiLineString") lines = g.coordinates;
-		else continue;
-
-		for (const line of lines) {
-			if (line.length === 0) continue;
-			const firstIdx = resolveCoord(line[0][1], line[0][0]);
-			endpointNodes.add(firstIdx);
-			if (line.length > 1) {
-				const lastC = line[line.length - 1];
-				const lastIdx = resolveCoord(lastC[1], lastC[0]);
-				endpointNodes.add(lastIdx);
-				const second = line[1];
-				addEndpointBearing(
-					firstIdx,
-					bearingDeg([line[0][1], line[0][0]], [second[1], second[0]]),
-				);
-				const prevLast = line[line.length - 2];
-				addEndpointBearing(
-					lastIdx,
-					bearingDeg([prevLast[1], prevLast[0]], [lastC[1], lastC[0]]),
+	ways.forEach((way, w) => {
+		const pts = densify(way.coords);
+		let prev = -1;
+		for (let i = 0; i < pts.length; i++) {
+			const n = nodeFor(pts[i]);
+			nodeLines[n].add(way.line);
+			nodeWays[n].add(w);
+			if (way.elevated) nodeElevated[n] = true;
+			const from = pts[Math.max(0, i - 1)];
+			const to = pts[Math.min(pts.length - 1, i + 1)];
+			nodeBearings[n].push(bearingDeg(from, to));
+			if (prev >= 0 && prev !== n) {
+				addEdge(
+					prev,
+					n,
+					haversineKm(coords[prev], coords[n]),
+					way.line,
+					way.available,
 				);
 			}
-
-			let prevIdx = -1;
-			for (const c of line) {
-				const i = resolveCoord(c[1], c[0]);
-				if (prevIdx >= 0 && prevIdx !== i) {
-					ea.push(prevIdx);
-					eb.push(i);
-					ed.push(haversineKm(coords[prevIdx], coords[i]));
-					erefs.push(refs);
-				}
-				prevIdx = i;
-			}
+			prev = n;
 		}
+	});
+
+	const degree = new Int32Array(coords.length);
+	for (const e of edges) {
+		degree[e.a]++;
+		degree[e.b]++;
 	}
 
-	const endpointToleranceKm = 0.5;
-	const epGridSize = 0.005;
-	const epGrid = new Map();
-	for (let i = 0; i < coords.length; i++) {
-		if (!endpointNodes.has(i)) continue;
-		const [lat, lon] = coords[i];
-		const key = `${Math.floor(lat / epGridSize)},${Math.floor(lon / epGridSize)}`;
-		let cell = epGrid.get(key);
-		if (!cell) {
-			cell = [];
-			epGrid.set(key, cell);
-		}
+	const grid = new Map();
+	coords.forEach(([lat, lon], i) => {
+		const key = cellKey(lat, lon);
+		let cell = grid.get(key);
+		if (!cell) grid.set(key, (cell = []));
 		cell.push(i);
-	}
-	const allGrid = new Map();
-	for (let i = 0; i < coords.length; i++) {
+	});
+	const nearby = (i, maxKm) => {
 		const [lat, lon] = coords[i];
-		const key = `${Math.floor(lat / epGridSize)},${Math.floor(lon / epGridSize)}`;
-		let cell = allGrid.get(key);
-		if (!cell) {
-			cell = [];
-			allGrid.set(key, cell);
-		}
-		cell.push(i);
-	}
-	const adjSet = new Set();
-	const neighbors = new Map();
-	for (let e = 0; e < ea.length; e++) {
-		adjSet.add(`${Math.min(ea[e], eb[e])}|${Math.max(ea[e], eb[e])}`);
-		let n1 = neighbors.get(ea[e]);
-		if (!n1) neighbors.set(ea[e], (n1 = []));
-		n1.push(eb[e]);
-		let n2 = neighbors.get(eb[e]);
-		if (!n2) neighbors.set(eb[e], (n2 = []));
-		n2.push(ea[e]);
-	}
-
-	const MAX_ALIGN_DEG = 60;
-
-	const isPlausibleContinuation = (i, j) => {
-		const bearingIJ = bearingDeg(coords[i], coords[j]);
-		const bearingsI = endpointBearings.get(i);
-		if (!bearingsI || bearingsI.length === 0) return false;
-		let okI = false;
-		for (const b of bearingsI) {
-			if (angleDiffDeg(bearingIJ, b) <= MAX_ALIGN_DEG) {
-				okI = true;
-				break;
-			}
-		}
-		if (!okI) return false;
-		const jsNeighbors = neighbors.get(j);
-		if (!jsNeighbors || jsNeighbors.length === 0) return false;
-		for (const k of jsNeighbors) {
-			if (
-				angleDiffDeg(bearingIJ, bearingDeg(coords[j], coords[k])) <=
-				MAX_ALIGN_DEG
-			) {
-				return true;
-			}
-		}
-		return false;
-	};
-
-	for (const i of endpointNodes) {
-		const [lat, lon] = coords[i];
-		const cx = Math.floor(lat / epGridSize);
-		const cy = Math.floor(lon / epGridSize);
-		const candidates = [];
+		const cx = Math.floor(lat / GRID_DEG);
+		const cy = Math.floor(lon / GRID_DEG);
+		const out = [];
 		for (let dx = -1; dx <= 1; dx++) {
 			for (let dy = -1; dy <= 1; dy++) {
-				const cell = allGrid.get(`${cx + dx},${cy + dy}`);
-				if (!cell) continue;
-				for (const j of cell) {
+				for (const j of grid.get(`${cx + dx},${cy + dy}`) ?? []) {
 					if (j === i) continue;
-					const ek = `${Math.min(i, j)}|${Math.max(i, j)}`;
-					if (adjSet.has(ek)) continue;
-					const d = haversineKm(coords[i], coords[j]);
-					if (d <= endpointToleranceKm) candidates.push({ j, d });
+					const km = haversineKm(coords[i], coords[j]);
+					if (km <= maxKm) out.push({ j, km });
 				}
 			}
 		}
-		candidates.sort((a, b) => a.d - b.d);
-		let connected = -1;
-		for (let c = 0; c < candidates.length && c < 8; c++) {
-			if (isPlausibleContinuation(i, candidates[c].j)) {
-				connected = candidates[c].j;
-				break;
+		return out.sort((p, q) => p.km - q.km);
+	};
+	const isParallel = (i, j) =>
+		nodeBearings[i].some((bi) =>
+			nodeBearings[j].some((bj) => axisDiffDeg(bi, bj) <= PARALLEL_MAX_DEG),
+		);
+	const shareLine = (i, j) =>
+		[...nodeLines[i]].some((l) => nodeLines[j].has(l));
+	const shareWay = (i, j) => [...nodeWays[i]].some((w) => nodeWays[j].has(w));
+
+	const connected = new Set();
+	const addConnector = (i, j, km, crossLine = false) => {
+		const key = i < j ? `${i}|${j}` : `${j}|${i}`;
+		if (connected.has(key)) return false;
+		connected.add(key);
+		addEdge(i, j, km + CONNECTOR_PENALTY_KM, null, true);
+		if (crossLine) edges[edges.length - 1].crossLine = true;
+		return true;
+	};
+
+	let trackConnectors = 0;
+	let lineConnectors = 0;
+	let deadEndConnectors = 0;
+	for (let i = 0; i < coords.length; i++) {
+		if (nodeElevated[i]) continue;
+		// One connector per neighbouring way: the closest node on it.
+		const seenWays = new Set();
+		for (const { j, km } of nearby(i, TRACK_CONNECT_KM)) {
+			if (nodeElevated[j] || shareWay(i, j)) continue;
+			const newWays = [...nodeWays[j]].filter((w) => !seenWays.has(w));
+			if (newWays.length === 0) continue;
+			for (const w of newWays) seenWays.add(w);
+			if (!isParallel(i, j)) continue;
+			if (shareLine(i, j)) {
+				if (addConnector(i, j, km)) trackConnectors++;
+			} else if (addConnector(i, j, km, true)) {
+				lineConnectors++;
 			}
 		}
-		if (connected >= 0) {
-			const ek = `${Math.min(i, connected)}|${Math.max(i, connected)}`;
-			adjSet.add(ek);
-			ea.push(i);
-			eb.push(connected);
-			ed.push(haversineKm(coords[i], coords[connected]));
-			erefs.push([]); // Endpoint-snap edges have no line association
+	}
+
+	for (let i = 0; i < coords.length; i++) {
+		if (degree[i] !== 1 || nodeElevated[i]) continue;
+		const out = nodeBearings[i][0];
+		for (const { j, km } of nearby(i, DEAD_END_CONNECT_KM)) {
+			if (nodeElevated[j] || shareWay(i, j)) continue;
+			// The gap must continue the dead end's direction and join a
+			// track running the same way.
+			if (
+				km > 0.002 &&
+				axisDiffDeg(out, bearingDeg(coords[i], coords[j])) > PARALLEL_MAX_DEG
+			)
+				continue;
+			if (!isParallel(i, j)) continue;
+			if (addConnector(i, j, km)) deadEndConnectors++;
+			break;
 		}
 	}
 
-	const nodeLines = new Array(coords.length);
-	for (let e = 0; e < ea.length; e++) {
-		for (const u of [ea[e], eb[e]]) {
-			if (!nodeLines[u]) nodeLines[u] = new Set();
-			for (const r of erefs[e]) nodeLines[u].add(r);
-		}
+	// CSR adjacency.
+	const n = coords.length;
+	const start = new Int32Array(n + 1);
+	for (const e of edges) {
+		start[e.a + 1]++;
+		start[e.b + 1]++;
 	}
-
-	const nodeCount = coords.length;
-	const edgeCount = ea.length;
-
-	const degree = new Int32Array(nodeCount);
-	for (let e = 0; e < edgeCount; e++) {
-		degree[ea[e]]++;
-		degree[eb[e]]++;
-	}
-
-	const start = new Int32Array(nodeCount + 1);
-	for (let i = 0; i < nodeCount; i++) start[i + 1] = start[i] + degree[i];
-
+	for (let i = 0; i < n; i++) start[i + 1] += start[i];
 	const cursor = Int32Array.from(start);
-	const adjEdge = new Int32Array(edgeCount * 2);
-	const adjOther = new Int32Array(edgeCount * 2);
-	const adjDist = new Float64Array(edgeCount * 2);
-	for (let e = 0; e < edgeCount; e++) {
-		let p = cursor[ea[e]]++;
-		adjEdge[p] = e;
-		adjOther[p] = eb[e];
-		adjDist[p] = ed[e];
-		p = cursor[eb[e]]++;
-		adjEdge[p] = e;
-		adjOther[p] = ea[e];
-		adjDist[p] = ed[e];
+	const adjEdge = new Int32Array(edges.length * 2);
+	const adjOther = new Int32Array(edges.length * 2);
+	edges.forEach((e, idx) => {
+		adjEdge[cursor[e.a]] = idx;
+		adjOther[cursor[e.a]++] = e.b;
+		adjEdge[cursor[e.b]] = idx;
+		adjOther[cursor[e.b]++] = e.a;
+	});
+
+	const snappable = new Uint8Array(n);
+	const visited = new Uint8Array(n);
+	let fragments = 0;
+	for (let s = 0; s < n; s++) {
+		if (visited[s]) continue;
+		const members = [s];
+		visited[s] = 1;
+		let km = 0;
+		for (let k = 0; k < members.length; k++) {
+			const u = members[k];
+			for (let p = start[u]; p < start[u + 1]; p++) {
+				const v = adjOther[p];
+				if (v > u) km += edges[adjEdge[p]].km;
+				if (!visited[v]) {
+					visited[v] = 1;
+					members.push(v);
+				}
+			}
+		}
+		if (km >= MIN_COMPONENT_KM) for (const u of members) snappable[u] = 1;
+		else fragments++;
 	}
 
 	return {
 		coords,
+		edges,
 		start,
 		adjEdge,
 		adjOther,
-		adjDist,
-		erefs,
-		coordIndex,
 		nodeLines,
+		snappable,
+		grid,
+		stats: {
+			nodes: n,
+			edges: edges.length,
+			trackConnectors,
+			lineConnectors,
+			deadEndConnectors,
+			fragments,
+		},
 	};
 }
 
-export function makeNearestNode(graph, gridSize = 0.02, maxKm = 3.0) {
-	const grid = new Map();
-	for (let i = 0; i < graph.coords.length; i++) {
-		const [lat, lon] = graph.coords[i];
-		const key = `${Math.floor(lat / gridSize)},${Math.floor(lon / gridSize)}`;
-		let cell = grid.get(key);
-		if (!cell) {
-			cell = [];
-			grid.set(key, cell);
-		}
-		cell.push(i);
-	}
-
-	return (point, allowedLines = null) => {
-		const [lat, lon] = point;
-		const cx = Math.floor(lat / gridSize);
-		const cy = Math.floor(lon / gridSize);
-		let bestIdx = -1;
-		let bestDist = Infinity;
-
-		for (let r = 0; r <= 10; r++) {
-			for (let dx = -r; dx <= r; dx++) {
-				for (let dy = -r; dy <= r; dy++) {
-					if (r > 0 && Math.abs(dx) !== r && Math.abs(dy) !== r) continue;
-					const cell = grid.get(`${cx + dx},${cy + dy}`);
-					if (!cell) continue;
-					for (const idx of cell) {
-						if (allowedLines) {
-							const lines = graph.nodeLines[idx];
-							let ok = false;
-							if (lines) {
-								for (const l of lines) {
-									if (allowedLines.has(l)) {
-										ok = true;
-										break;
-									}
-								}
-							}
-							if (!ok) continue;
-						}
-						const d = haversineKm(graph.coords[idx], point);
-						if (d < bestDist) {
-							bestDist = d;
-							bestIdx = idx;
-						}
+/** Nearest node to `point` on one of `lines` (a Set; any line when null). */
+export function nearestNode(graph, point, lines, maxKm) {
+	const { coords, grid, nodeLines, snappable } = graph;
+	const cx = Math.floor(point[0] / GRID_DEG);
+	const cy = Math.floor(point[1] / GRID_DEG);
+	// A grid cell is at least ~34m wide at these latitudes.
+	const rings = Math.ceil(maxKm / 0.034);
+	let best = -1;
+	let bestKm = Infinity;
+	for (let r = 0; r <= rings; r++) {
+		for (let dx = -r; dx <= r; dx++) {
+			for (let dy = -r; dy <= r; dy++) {
+				if (Math.abs(dx) !== r && Math.abs(dy) !== r) continue;
+				for (const i of grid.get(`${cx + dx},${cy + dy}`) ?? []) {
+					if (!snappable[i]) continue;
+					if (lines && ![...nodeLines[i]].some((l) => lines.has(l))) continue;
+					const km = haversineKm(point, coords[i]);
+					if (km < bestKm) {
+						bestKm = km;
+						best = i;
 					}
 				}
 			}
-			if (bestIdx >= 0 && bestDist < maxKm) break;
 		}
-
-		return { index: bestIdx, distKm: bestDist };
-	};
+		// Anything in a further ring is at least r cells away.
+		if (best >= 0 && bestKm <= r * 0.034) break;
+	}
+	return best >= 0 && bestKm <= maxKm ? best : -1;
 }
 
-export function makeRouter(graph) {
-	const { coords, start, adjEdge, adjOther, adjDist, erefs } = graph;
-	const n = coords.length;
-
-	const dist = new Float64Array(n);
-	const prev = new Int32Array(n);
-	const done = new Uint32Array(n);
-	let stamp = 0;
-
-	let heapF = new Float64Array(4096);
-	let heapG = new Float64Array(4096);
-	let heapN = new Int32Array(4096);
-	let heapSize = 0;
-
-	const grow = () => {
-		const cap = heapF.length * 2;
-		const nf = new Float64Array(cap);
-		const ng = new Float64Array(cap);
-		const nn = new Int32Array(cap);
-		nf.set(heapF);
-		ng.set(heapG);
-		nn.set(heapN);
-		heapF = nf;
-		heapG = ng;
-		heapN = nn;
-	};
-
-	const push = (f, g, node) => {
-		if (heapSize === heapF.length) grow();
-		let c = heapSize++;
-		heapF[c] = f;
-		heapG[c] = g;
-		heapN[c] = node;
+/**
+ * A* over the graph, using only edges for which `allowEdge(edge)` holds.
+ * Returns the path as a list of edge indices, or null.
+ */
+export function findPath(graph, from, to, allowEdge) {
+	const { coords, edges, start, adjEdge, adjOther } = graph;
+	const dist = new Map([[from, 0]]);
+	const via = new Map();
+	const done = new Set();
+	const heap = [[haversineKm(coords[from], coords[to]), from]];
+	const push = (item) => {
+		heap.push(item);
+		let c = heap.length - 1;
 		while (c > 0) {
 			const p = (c - 1) >> 1;
-			if (heapF[p] <= heapF[c]) break;
-			const tf = heapF[p];
-			heapF[p] = heapF[c];
-			heapF[c] = tf;
-			const tg = heapG[p];
-			heapG[p] = heapG[c];
-			heapG[c] = tg;
-			const tn = heapN[p];
-			heapN[p] = heapN[c];
-			heapN[c] = tn;
+			if (heap[p][0] <= heap[c][0]) break;
+			[heap[p], heap[c]] = [heap[c], heap[p]];
 			c = p;
 		}
 	};
-
 	const pop = () => {
-		const rf = heapF[0];
-		const rg = heapG[0];
-		const rn = heapN[0];
-		heapSize--;
-		if (heapSize > 0) {
-			heapF[0] = heapF[heapSize];
-			heapG[0] = heapG[heapSize];
-			heapN[0] = heapN[heapSize];
+		const top = heap[0];
+		const last = heap.pop();
+		if (heap.length > 0) {
+			heap[0] = last;
 			let c = 0;
 			for (;;) {
 				const l = 2 * c + 1;
-				const r = 2 * c + 2;
+				const r = l + 1;
 				let m = c;
-				if (l < heapSize && heapF[l] < heapF[m]) m = l;
-				if (r < heapSize && heapF[r] < heapF[m]) m = r;
+				if (l < heap.length && heap[l][0] < heap[m][0]) m = l;
+				if (r < heap.length && heap[r][0] < heap[m][0]) m = r;
 				if (m === c) break;
-				const tf = heapF[m];
-				heapF[m] = heapF[c];
-				heapF[c] = tf;
-				const tg = heapG[m];
-				heapG[m] = heapG[c];
-				heapG[c] = tg;
-				const tn = heapN[m];
-				heapN[m] = heapN[c];
-				heapN[c] = tn;
+				[heap[m], heap[c]] = [heap[c], heap[m]];
 				c = m;
 			}
 		}
-		return [rf, rg, rn];
+		return top;
 	};
 
-	return function route(startIdx, endIdx, lineFilter) {
-		stamp++;
-		dist.fill(Infinity);
-		dist[startIdx] = 0;
-		prev[startIdx] = -1;
-		heapSize = 0;
-		push(haversineKm(coords[startIdx], coords[endIdx]), 0, startIdx);
-
-		const filterSet = Array.isArray(lineFilter)
-			? new Set(lineFilter)
-			: lineFilter
-				? new Set([lineFilter])
-				: null;
-
-		while (heapSize > 0) {
-			const [, g, u] = pop();
-			if (done[u] === stamp) continue;
-			done[u] = stamp;
-			if (u === endIdx) break;
-			if (g > dist[u]) continue;
-
-			for (let p = start[u]; p < start[u + 1]; p++) {
-				const e = adjEdge[p];
-				const refs = erefs[e];
-				const v = adjOther[p];
-				if (done[v] === stamp) continue;
-
-				let edgeCost = adjDist[p];
-				if (filterSet && refs.length > 0) {
-					const onPreferred = refs.some((r) => filterSet.has(r));
-					if (!onPreferred) edgeCost *= 10;
-				}
-
-				const ng = g + edgeCost;
-				if (ng < dist[v]) {
-					dist[v] = ng;
-					prev[v] = u;
-					push(ng + haversineKm(coords[v], coords[endIdx]), ng, v);
-				}
+	while (heap.length > 0) {
+		const [, u] = pop();
+		if (done.has(u)) continue;
+		done.add(u);
+		if (u === to) break;
+		for (let p = start[u]; p < start[u + 1]; p++) {
+			const e = edges[adjEdge[p]];
+			if (!allowEdge(e)) continue;
+			const v = adjOther[p];
+			const g = dist.get(u) + e.km;
+			if (g < (dist.get(v) ?? Infinity)) {
+				dist.set(v, g);
+				via.set(v, adjEdge[p]);
+				push([g + haversineKm(coords[v], coords[to]), v]);
 			}
 		}
+	}
+	if (!done.has(to)) return null;
 
-		if (done[endIdx] !== stamp) return null;
+	const path = [];
+	for (let u = to; u !== from;) {
+		const e = via.get(u);
+		path.push(e);
+		u = edges[e].a === u ? edges[e].b : edges[e].a;
+	}
+	return path.reverse();
+}
 
-		const pathIdx = [];
-		for (let u = endIdx; u !== -1; u = prev[u]) pathIdx.push(u);
-		pathIdx.reverse();
-		return pathIdx;
-	};
+function perpendicularKm(p, a, b) {
+	const cosLat = Math.cos((p[0] * Math.PI) / 180);
+	const toXY = (c) => [c[1] * cosLat * 111.32, c[0] * 111.32];
+	const [px, py] = toXY(p);
+	const [ax, ay] = toXY(a);
+	const [bx, by] = toXY(b);
+	const dx = bx - ax;
+	const dy = by - ay;
+	const len2 = dx * dx + dy * dy;
+	const t =
+		len2 === 0
+			? 0
+			: Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / len2));
+	return Math.hypot(px - (ax + t * dx), py - (ay + t * dy));
+}
+
+/**
+ * Douglas-Peucker; returns the indices of the points to keep. Also irons out
+ * the few-metre hops between parallel tracks.
+ */
+export function simplifyIndices(points, toleranceKm) {
+	if (points.length <= 2) return points.map((_, i) => i);
+	const keep = new Uint8Array(points.length);
+	keep[0] = keep[points.length - 1] = 1;
+	const stack = [[0, points.length - 1]];
+	while (stack.length > 0) {
+		const [s, e] = stack.pop();
+		let maxD = 0;
+		let idx = -1;
+		for (let i = s + 1; i < e; i++) {
+			const d = perpendicularKm(points[i], points[s], points[e]);
+			if (d > maxD) {
+				maxD = d;
+				idx = i;
+			}
+		}
+		if (idx >= 0 && maxD > toleranceKm) {
+			keep[idx] = 1;
+			stack.push([s, idx], [idx, e]);
+		}
+	}
+	const out = [];
+	for (let i = 0; i < points.length; i++) if (keep[i]) out.push(i);
+	return out;
 }

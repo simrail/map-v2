@@ -7,7 +7,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "pnpm --workspace-root exec oxlint packages/map",
-		"generate:rail-data": "node scripts/generate-rail-data.mjs"
+		"generate:rail-data": "node scripts/generate-rail-data.mjs",
+		"generate:stations": "node scripts/generate-stations.mjs",
+		"check:routes": "node scripts/check-routes.mjs"
 	},
 	"dependencies": {
 		"@mantine/carousel": "^7.17.8",

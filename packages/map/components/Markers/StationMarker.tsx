@@ -3,10 +3,11 @@ import type { Station } from "@simrail/types";
 import L from "leaflet";
 import { usePathname, useRouter } from "next/navigation";
 import { memo, useEffect, useState } from "react";
-import { Marker, Popup, Tooltip } from "react-leaflet";
+import { Marker, Tooltip } from "react-leaflet";
 
 import stationsList from "../EDR_station.json";
 import { getSteamProfileOrBot } from "../steam";
+import HoverPopup from "./HoverPopup";
 
 import styles from "../../styles/MarkerPopup.module.css";
 
@@ -94,7 +95,7 @@ export const StationMarker = memo(({ station }: StationMarkerProps) => {
 				},
 			}}
 		>
-			<Popup className="station-map-popup" minWidth={250}>
+			<HoverPopup className="station-map-popup" minWidth={250}>
 				<div className={styles.stationCard}>
 					<div className={styles.stationImage}>
 						<img src={station.MainImageURL} alt="" width={250} height={104} />
@@ -113,7 +114,7 @@ export const StationMarker = memo(({ station }: StationMarkerProps) => {
 						<span className={styles.openHint}>Open station in EDR ↗</span>
 					</div>
 				</div>
-			</Popup>
+			</HoverPopup>
 			<Tooltip
 				className="station-name-tooltip"
 				offset={[0, 20]}

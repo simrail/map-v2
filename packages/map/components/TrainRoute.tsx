@@ -5,15 +5,10 @@ import { Polyline, Marker, useMap } from "react-leaflet";
 import { useSelectedTrain } from "../contexts/SelectedTrainContext";
 import {
 	getTrainRoute,
+	ROUTE_COLORS,
 	type ColoredSegment,
 	type RoutePoint,
 } from "../lib/trainRoute";
-
-const ROUTE_COLORS = {
-	green: "#2ecc71",
-	red: "#e74c3c",
-	grey: "#888888",
-} as const;
 
 const ARROW_SPACING_KM = 3;
 const MAX_VISIBLE_ARROWS = 120;

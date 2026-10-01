@@ -163,6 +163,33 @@ input {
 
 .leaflet-tooltip::before { display: none; }
 
+.playable-area-tooltip {
+  line-height: 1.3;
+}
+
+.playable-area-line {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
+.playable-area-line + .playable-area-line {
+  margin-top: 5px;
+}
+
+.playable-area-swatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 1px;
+  border-radius: 2px;
+}
+
+.playable-area-title {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
 .leaflet-zoom-anim .leaflet-tooltip {
   visibility: hidden;
 }
@@ -280,6 +307,12 @@ html[data-mantine-color-scheme="light"] .leaflet-popup-close-button:hover {
   background: rgb(31 41 55 / 12%) !important;
 }
 
+.leaflet-popup.popup-below .leaflet-popup-tip-container {
+  top: -20px;
+  margin-top: 1px;
+  transform: rotate(180deg);
+}
+
 .train-map-popup .leaflet-popup-content {
   width: auto !important;
   margin: 16px !important;
@@ -301,6 +334,11 @@ html[data-mantine-color-scheme="light"] .leaflet-popup-close-button:hover {
   box-shadow: 0 8px 28px rgb(0 0 0 / 24%) !important;
   backdrop-filter: blur(12px);
   overflow: hidden;
+}
+
+/* Toggled by the "Hide layers menu" button (Map.tsx). */
+.leaflet-container[data-layers-menu-hidden] .leaflet-control-layers {
+  display: none;
 }
 
 .leaflet-control-layers-expanded {
