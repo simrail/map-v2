@@ -250,5 +250,17 @@
 		"Latititude": 52.020445,
 		"Longitude": 19.821213,
 		"id": "Głowno"
+	},
+	{
+		"Name": "Żychlin",
+		"Prefix": "",
+		"DifficultyLevel": 0,
+		"MainImageURL": "",
+		"AdditionalImage1URL": "",
+		"AdditionalImage2URL": "",
+		"DispatchedBy": [],
+		"Latititude": 52.213957,
+		"Longitude": 19.614769,
+		"id": "Jackowice"
 	}
 ]
